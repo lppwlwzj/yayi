@@ -10,6 +10,14 @@
         "navigationStyle": "custom"
       }
     },
+    // {
+    //   "path": "pages/afterSalesLogin/afterSalesLogin",
+    //   "style": {
+    //     "navigationBarTitleText": "",
+    //     "enablePullDownRefresh": false,
+    //     "navigationStyle": "custom"
+    //   }
+    // },
     {
       "path": "pages/index/index",
       "style": {
@@ -26,7 +34,7 @@
       }
     },
     {
-      "path": "pages/record/record",
+      "path": "pages/afterSalesLogin/afterSalesLogin",
       "style": {
         "navigationBarTitleText": "账户记录",
         "onReachBottomDistance": 100,
@@ -121,35 +129,7 @@
             
         }
     ],
-  "tabBar": {
-    "color": "#666666", //字体颜色
-    "selectedColor": "#02C3A8", //选中时字体颜色
-    "borderStyle": "black", //底部的上边框线条
-    "backgroundColor": "#FFFFFF", //底部背景色
-    "fontSize": "25upx", //字体大小
-    // "spacing": "", //字体到图标的距离
-    // "height": "140upx" ,//底部高
-    "list": [
-      {
-        "iconPath": "static/img/icon11.png",
-        "selectedIconPath": "static/img/icon10.png",
-        "text": "活动",
-        "pagePath": "pages/index/index"
-      },
-      {
-        "iconPath": "static/img/icon21.png",
-        "selectedIconPath": "static/img/icon20.png",
-        "text": "会员库",
-        "pagePath": "pages/member/member"
-      },
-      {
-        "iconPath": "static/img/icon31.png",
-        "selectedIconPath": "static/img/icon30.png",
-        "text": "我的",
-        "pagePath": "pages/desk/desk"
-      }
-    ]
-  },
+
   "globalStyle": {
     "navigationBarTextStyle": "black",
     // "navigationBarTitleText": "uni-app",

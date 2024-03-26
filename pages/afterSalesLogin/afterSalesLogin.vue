@@ -2,24 +2,7 @@
   <view class="register fc">
     <u--form labelWidth="auto" labelPosition="left" :model="form" ref="uForm">
       <view class="info fc">
-        <image
-          src="../../static/images/ECO UI-02.png"
-          mode="widthFix"
-          class="logo"
-        ></image>
-
-        <!-- 昵称 -->
-        <u-form-item label="昵称" prop="nickname">
-          <u--input
-            placeholder=""
-            disabledColor="#fff"
-            v-model="form.nickname"
-            border="none"
-            inputAlign="right"
-            suffixIcon="edit-pen"
-            suffixIconStyle=" color: #dd524dab !important;"
-          ></u--input>
-        </u-form-item>
+        <view class="title"> 售后登录 </view>
 
         <u-form-item label="昵称" prop="nickname">
           <u--input
@@ -274,12 +257,12 @@ export default {
 .register {
   width: 100%;
   height: 100vh;
-  // background-color: #37352c;
   background: $uni-color-bg !important;
 
-  .logo {
-    width: 220rpx;
-    height: 220rpx;
+
+  .title {
+    color: black;
+    font-size: 24px;
     margin: 0 auto 20rpx;
   }
 
@@ -318,7 +301,7 @@ export default {
 .u-form-item {
   margin: 20rpx 0;
   width: 100%;
-  padding: 0rpx 18rpx;
+  padding: 0rpx 20rpx;
   box-sizing: border-box;
   border: solid 1px $uni-color-theme;
   border-radius: 46rpx;
