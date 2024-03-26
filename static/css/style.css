@@ -1,0 +1,127 @@
+/*布局*/
+.u-flex {
+	display: flex;
+	flex-direction: row;	
+}
+.u-flex-column {
+	display: flex;
+	flex-direction: column;
+}
+.u-flex-1{
+	flex: 1;
+}
+/* 换行 */
+.u-flex-wrap {
+	flex-wrap: wrap;
+}
+
+/* 不换行 */
+.u-flex-nowrap {
+	flex-wrap: nowrap;
+}
+/* 垂直居中 */
+.u-col-center {
+	align-items: center;
+}
+
+/* 顶部对齐 */
+.u-col-top {
+	align-items: flex-start;
+}
+
+/* 底部对齐 */
+.u-col-bottom {
+	align-items: flex-end;
+}
+
+/* 左边对齐 */
+.u-row-left {
+	justify-content: flex-start;
+}
+
+/* 水平居中 */
+.u-row-center {
+	justify-content: center;
+}
+
+/* 右边对齐 */
+.u-row-right {
+	justify-content: flex-end;
+}
+
+/* 水平两端对齐，项目之间的间隔都相等 */
+.u-row-between {
+	justify-content: space-between;
+}
+
+/* 水平每个项目两侧的间隔相等，所以项目之间的间隔比项目与父元素两边的间隔大一倍 */
+.u-row-around {
+	justify-content: space-around;
+}
+
+/*内边距*/
+.u-p-10{
+	padding: 10upx;
+}
+.u-p-20{
+	padding: 20upx;
+}
+.u-p-l-10{
+	padding-left: 10upx;
+}
+.u-p-l-20{
+	padding-left: 20upx;
+}
+/*外边距*/
+.u-m-t-10{
+	margin-top: 10upx;
+}
+.u-m-t-20{
+	margin-top: 20upx;
+}
+.u-m-b-10{
+	margin-bottom: 10upx;
+}
+.u-m-b-20{
+	margin-bottom: 20upx;
+}
+.u-m-r-10{
+	margin-right: 10upx;
+}
+.u-m-r-20{
+	margin-right: 20upx;
+}
+
+/*文字对齐方式*/
+.u-text-left {
+	text-align: left;
+}
+
+/* 文字居中对齐 */
+.u-text-center {
+	text-align: center;
+}
+
+/* 文字右对齐 */
+.u-text-right {
+	text-align: right;
+}
+
+/*字体大小*/
+.u-font-24{
+	font-size: 24upx;
+}
+.u-font-28{
+	font-size: 28upx;
+}
+.u-font-32{
+	font-size: 32upx;
+}
+.u-font-36{
+	font-size: 36upx;
+}
+.u-font-40{
+	font-size: 40upx;
+}
+
+

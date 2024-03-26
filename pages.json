@@ -1,0 +1,160 @@
+{
+  "easycom": {
+    "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+  },
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/login/login",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "活动",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/member/member",
+      "style": {
+        "navigationBarTitleText": "会员库",
+        "onReachBottomDistance": 100,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/record/record",
+      "style": {
+        "navigationBarTitleText": "账户记录",
+        "onReachBottomDistance": 100,
+        
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/myActivies/myActivies",
+      "style": {
+        "navigationBarTitleText": "我的活动",
+        "onReachBottomDistance": 100,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/contact/contact",
+      "style": {
+        "navigationBarTitleText": "我的联系人",
+        "navigationStyle": "custom",
+        "onReachBottomDistance": 100
+      }
+    },
+    {
+      "path": "pages/member/detail",
+      "style": {
+        "navigationBarTitleText": "会员详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/desk/desk",
+      "style": {
+        "navigationBarTitleText": "工作台",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/bychase/bychase",
+      "style": {
+        "navigationBarTitleText": "购买会员",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/active/active",
+      "style": {
+        "navigationBarTitleText": "活动详情",
+        "navigationStyle": "custom"
+      }
+    },
+
+    {
+      "path": "pages/register/register",
+      "style": {
+        "navigationBarTitleText": "注册",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/withdraw/success",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/withdraw/withdraw",
+      "style": {
+        "navigationBarTitleText": "提现",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/invite/invite",
+      "style": {
+        "navigationBarTitleText": "邀请好友",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
+    }
+      ,{
+            "path" : "pages/privacy/privacy",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+  "tabBar": {
+    "color": "#666666", //字体颜色
+    "selectedColor": "#02C3A8", //选中时字体颜色
+    "borderStyle": "black", //底部的上边框线条
+    "backgroundColor": "#FFFFFF", //底部背景色
+    "fontSize": "25upx", //字体大小
+    // "spacing": "", //字体到图标的距离
+    // "height": "140upx" ,//底部高
+    "list": [
+      {
+        "iconPath": "static/img/icon11.png",
+        "selectedIconPath": "static/img/icon10.png",
+        "text": "活动",
+        "pagePath": "pages/index/index"
+      },
+      {
+        "iconPath": "static/img/icon21.png",
+        "selectedIconPath": "static/img/icon20.png",
+        "text": "会员库",
+        "pagePath": "pages/member/member"
+      },
+      {
+        "iconPath": "static/img/icon31.png",
+        "selectedIconPath": "static/img/icon30.png",
+        "text": "我的",
+        "pagePath": "pages/desk/desk"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    // "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#fff"
+    // "backgroundColor": "#F8F8F8"，
+  },
+  "uniIdRouter": {}
+}
