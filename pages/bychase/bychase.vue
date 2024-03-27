@@ -8,11 +8,15 @@
         <checkbox style="zoom: 0.8" @click="checked = !checked"></checkbox>
         <view class="tip">
           <text>我已阅读并同意</text>
-          <text @click="jump('service')" style="color: #02c3a8; font-weight: 600"
+          <text
+            @click="jump('service')"
+            style="color: #02c3a8; font-weight: 600"
             >《服务协议》</text
           >
           及
-          <text @click="jump('privacy')" style="color: #02c3a8; font-weight: 600"
+          <text
+            @click="jump('privacy')"
+            style="color: #02c3a8; font-weight: 600"
             >《隐私协议》</text
           >
         </view>
@@ -104,10 +108,10 @@ export default {
       }
     },
     jump(type) {
-				uni.navigateTo({
-					url: `/pages/privacy/privacy?type=${type}`,
-				});
-			},
+      uni.navigateTo({
+        url: `/pages/privacy/privacy?type=${type}`
+      });
+    }
   }
 };
 </script>

@@ -1,61 +1,155 @@
 <template>
   <view class="content">
-    <u-sticky bgColor="#fff" style="top: 0">
-      <u-tabs
-        :list="tabs"
-        lineWidth="60"
-        lineColor="#02C3A8"
-        :activeStyle="{
-          color: '#02C3A8',
-          fontWeight: 'bold',
-          transform: 'scale(1.05)'
-        }"
-        :inactiveStyle="{
-          color: '#606266',
-          transform: 'scale(1)'
-        }"
-        keyName="label"
-        itemStyle="padding-left: 15px; padding-right: 15px;width:300rpx; height: 44px;"
-        @click="change"
-      ></u-tabs>
-    </u-sticky>
+    <view class="rfa">
+      <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
 
-    <view class="menu-area">
-      <view
-        v-for="(item, index) in activeList"
-        :key="index"
-        class="keynote_con"
-      >
-        <view class="keynote_content">
-          <image
-            class="images"
-            :src="item.backgroundimage"
-            mode="aspectFill"
-          ></image>
-          <view class="key_a">
-            <view class="key_b"> {{ item.title }} </view>
-            <view class="">
-              <view class="key_c">
-                <view class="dot orange"></view>
-                <view class="tip">
-                  {{ item.begin_range }}
-                </view>
-              </view>
-              <view class="key_c">
-                <view class="dot green"></view>
-                <view class="tip">{{ item.address }}</view>
-              </view>
-            </view>
-          </view>
+      <u-icon size="26" name="../../static/images/ECO-UI-02.png"></u-icon>
+    </view>
+    <view class="rfaw" style="margin: 18rpx 0">
+      <view class="input">
+        <u--input
+          placeholder="客户姓名"
+          disabledColor="#fff"
+          :placeholderStyle="{
+            color: '#dd524d63'
+          }"
+          v-model="form.user"
+          border="none"
+          :customStyle="{
+            padding: '18rpx 12rpx'
+          }"
+          suffixIcon="edit-pen"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+      <view class="input">
+        <u--input
+          :customStyle="{
+            padding: '18rpx 12rpx'
+          }"
+          :placeholderStyle="{
+            color: '#dd524d63'
+          }"
+          placeholder="日期"
+          disabledColor="#fff"
+          v-model="form.user"
+          border="none"
+          suffixIcon="edit-pen"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+      <view class="input">
+        <u--input
+          placeholder="面诊医生"
+          disabledColor="#fff"
+          v-model="form.user"
+          border="none"
+          :customStyle="{
+            padding: '18rpx 20rpx'
+          }"
+          :placeholderStyle="{
+            color: '#dd524d63'
+          }"
+          suffixIcon="edit-pen"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+      <view class="input">
+        <u--input
+          placeholder=""
+          disabledColor="#fff"
+          v-model="form.user"
+          border="none"
+          :customStyle="{
+            padding: '18rpx 12rpx'
+          }"
+          :placeholderStyle="{
+            color: '#dd524d63'
+          }"
+          suffixIcon="edit-pen"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+    </view>
+    <view class="diagnose">
+      <ti-xing>
+        <view class="rfc" style="padding-top: 18rpx">
+          <u-icon size="16" name="../../static/images/ECO-UI-07.png"></u-icon>
+          <text style="padding-left: 10rpx">面诊</text>
         </view>
-        <!-- <navigator
-          :url="item.end_status ? `/pages/active/active?id=${item.id}` : ''"
-          :class="['btn', item.end_status ? 'green' : 'gray']"
-        >
-          {{ item.end_status ? "已报名" : "活动截止" }}
-        </navigator> -->
-        <view :class="['btn', item.end_status ? '' : '']">
-          {{ item.end_status ? "已报名" : "活动截止" }}
+      </ti-xing>
+      <view class="diagnose-el">
+        <view class="rfc">
+          <Upload style="flex: 1">
+            <view class="upload-img-el fc">
+              <image
+                src="../../static//images/upload.png"
+                mode="widthFix"
+                class="upload-img"
+              ></image>
+              <image
+                src="../../static//images/add.png"
+                mode="widthFix"
+                style="width: 30px; height: 30px; margin-bottom: 8px"
+              ></image>
+              <text style="color: #fff; font-size: 12px; z-index: 9999"
+                >客户微笑正脸照</text
+              >
+            </view>
+          </Upload>
+          <view class="diagnose-text"> </view>
+        </view>
+        <view class="rfa image-list">
+          <Upload>
+            <view class="image fc">
+              <image
+                src="../../static//images/add.png"
+                mode="widthFix"
+                style="width: 16px; height: 16px; margin-bottom: 4px"
+              ></image>
+              <text style="color: #fff; font-size: 12px">左45度</text>
+            </view>
+          </Upload>
+          <Upload>
+            <view class="image fc">
+              <image
+                src="../../static//images/add.png"
+                mode="widthFix"
+                style="width: 16px; height: 16px; margin-bottom: 4px"
+              ></image>
+              <text style="color: #fff; font-size: 12px">右45度</text>
+            </view>
+          </Upload>
+          <Upload>
+            <view class="image fc">
+              <image
+                src="../../static//images/add.png"
+                mode="widthFix"
+                style="width: 16px; height: 16px; margin-bottom: 4px"
+              ></image>
+              <text style="color: #fff; font-size: 12px">右45度</text>
+            </view>
+          </Upload>
+          <Upload>
+            <view class="image fc">
+              <image
+                src="../../static//images/add.png"
+                mode="widthFix"
+                style="width: 16px; height: 16px; margin-bottom: 4px"
+              ></image>
+              <text style="color: #fff; font-size: 12px">右45度</text>
+            </view>
+          </Upload>
+          <Upload>
+            <view class="image fc">
+              <image
+                src="../../static//images/add.png"
+                mode="widthFix"
+                style="width: 16px; height: 16px; margin-bottom: 4px"
+              ></image>
+              <text style="color: #fff; font-size: 12px">右45度</text>
+            </view>
+          </Upload>
         </view>
       </view>
     </view>
@@ -63,31 +157,29 @@
 </template>
 
 <script>
+import TiXing from "../../components/tixing";
+import Upload from "../../components/my-upload/my-upload.vue";
+
 export default {
   data() {
     return {
-      tabs: [
-        {
-          label: "线上活动",
-          value: "online"
-        },
-        {
-          label: "线下活动",
-          value: "offline"
-        }
-      ],
       active: "online",
       online_page: 1,
       offline_page: 1,
       online_last_page: 1,
       offline_last_page: 1,
       onlineList: [],
-      offlineList: []
+      offlineList: [],
+      form: {}
     };
   },
+  components: {
+    TiXing,
+    Upload
+  },
   onLoad() {
-    this.getOnlineActiveList();
-    this.getOfflineActiveList();
+    // this.getOnlineActiveList();
+    // this.getOfflineActiveList();
   },
   computed: {
     activeList() {
@@ -125,122 +217,76 @@ export default {
         activity_type: 1
       });
       this.online_last_page = res.last_page;
-      this.onlineList = [
-        ...this.onlineList,
-        ...res.data
-      ];
+      this.onlineList = [...this.onlineList, ...res.data];
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-page{
-  background-color:#f4f5f6 ;
+page {
+  background-color: #f4f5f6;
 }
+
 .content {
   width: 100%;
+  height: 100vh;
   box-sizing: border-box;
-  background-color: #f4f5f6;
-
-  .menu-area {
-    // margin-top: 50upx;
-    width: 700rpx;
-    margin: 0 auto;
-    padding-bottom: 40upx;
-    .keynote_con {
+  background-color: #cccccc59;
+  padding: 0 30rpx;
+  .input {
+    width: 45% !important;
+    box-shadow: 2px 2px 5px #33333340;
+    margin: 12rpx 0;
+    border-radius: 40rpx;
+  }
+  .diagnose {
+    margin: 12rpx 0;
+    font-size: 14px;
+    color: #dd524d63;
+    &-el {
       width: 100%;
-      padding: 26upx 24upx 24upx;
-      box-sizing: border-box;
-      background-color: #fff;
-      margin: 30rpx auto;
-
-      border-radius: 24rpx;
-
-      .keynote_content {
-        display: flex;
-        align-items: center;
-        margin-bottom: 26upx;
-        height: 220rpx;
-
-        .images {
-          width: 320rpx;
-          height: 220rpx;
-          margin-right: 20upx;
-        }
-
-        .key_a {
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          justify-content: space-between;
-
-          .tip {
-            flex: 1;
-            font-size: 24upx;
-            font-weight: 400;
-            color: #999999;
-            margin-bottom: 8upx;
-          }
-
-          image {
-            width: 28upx;
-            height: 28upx;
-          }
-
-          .key_b {
-            margin-bottom: 20upx;
-            color: #0d0d0d;
-            font-size: 32rpx;
-            font-weight: 600;
-          }
-
-          .key_c {
-            display: flex;
-            justify-content: flex-start;
-            align-items: baseline;
-          }
-
-          .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            margin-right: 6upx;
-          }
-        }
-      }
+      border-radius: 40rpx;
+      padding: 26rpx;
+      box-shadow: 2px 2px 5px #33333340;
     }
+  }
+  .diagnose-text {
+    margin: 0 12rpx;
+    width: 70%;
+    background-color: #fff;
+    height: 200rpx;
+    border-radius: 40rpx;
+  }
+  .upload-bg {
+    flex: 1;
+    margin: 12rpx;
+    flex-wrap: nowrap;
+  }
+  .upload-img-el {
+    position: relative;
+    width: 180rpx;
+    height: 180rpx;
+  }
 
-    // .btn {
-    //   width: 166rpx;
-    //   height: 62rpx;
-    //   font-size: 24rpx;
-    //   color: #ffffff;
-    //   line-height: 62rpx;
-    //   border-radius: 30upx;
-    //   text-align: center;
-    //   margin-top: 10upx;
-    //   margin-left: 75%;
-    // }
-    .btn {
-      font-size: 32rpx;
-      color: #ff8a00;
-      margin-top: 10upx;
-      margin-left: 78%;
-      font-weight: 600;
-    }
-
-    .gray {
-      //   background-color: #d9d9d9;
-    }
-
-    .orange {
-      background: #ef615a;
-    }
-
-    .green {
-      background: #02c3a8;
-    }
+  .upload-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  .image-list {
+    width: 100%;
+  }
+  .image {
+    width: 110rpx;
+    height: 110rpx;
+    background: #898787c4;
+    border-radius: 16rpx;
+    margin: 20rpx 0rpx;
   }
 }
 </style>
