@@ -26,9 +26,9 @@
       }
     },
     {
-      "path": "pages/member/member",
+      "path": "pages/backLogin/backLogin",
       "style": {
-        "navigationBarTitleText": "会员库",
+        "navigationBarTitleText": "",
         "onReachBottomDistance": 100,
         "navigationStyle": "custom"
       }
@@ -58,13 +58,13 @@
         "onReachBottomDistance": 100
       }
     },
-    {
-      "path": "pages/member/detail",
-      "style": {
-        "navigationBarTitleText": "会员详情",
-        "navigationStyle": "custom"
-      }
-    },
+    // {
+    //   "path": "pages/member/detail",
+    //   "style": {
+    //     "navigationBarTitleText": "会员详情",
+    //     "navigationStyle": "custom"
+    //   }
+    // },
     {
       "path": "pages/desk/desk",
       "style": {
