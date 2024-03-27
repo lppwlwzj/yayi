@@ -21,7 +21,7 @@
     {
       "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "活动",
+        "navigationBarTitleText": "",
         "navigationStyle": "custom"
       }
     },
@@ -36,16 +36,16 @@
     {
       "path": "pages/afterSalesLogin/afterSalesLogin",
       "style": {
-        "navigationBarTitleText": "账户记录",
+        "navigationBarTitleText": "",
         "onReachBottomDistance": 100,
         
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/myActivies/myActivies",
+      "path": "pages/add/add",
       "style": {
-        "navigationBarTitleText": "我的活动",
+        "navigationBarTitleText": "",
         "onReachBottomDistance": 100,
         "navigationStyle": "custom"
       }

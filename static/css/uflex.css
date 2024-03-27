@@ -178,8 +178,8 @@
 
 .footer{
 	width: 100%;
-	min-height: 120rpx;
-	padding: 20rpx 30rpx;
+	min-height: 80rpx;
+	padding: 20rpx 0rpx;
 	position: fixed;
 	bottom: 0;
 	left: 0;

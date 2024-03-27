@@ -17,6 +17,18 @@
   align-items: center;
   flex-direction: column;
 }
+.rfc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.rfa {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+}
 $uni-color-bg: #cccccc59;
 /* 颜色变量 */
 $uni-color-theme: #dd524d63;

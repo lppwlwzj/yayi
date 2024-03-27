@@ -10,7 +10,7 @@
     ></u-swiper> -->
     <view class="top fc">
       <image
-        src="../../static/images/ECO UI-02.png"
+        src="../../static/images/ECO-UI-02.png"
         mode="widthFix"
         class="logo"
       ></image>
@@ -33,18 +33,31 @@
           suffixIcon="search"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
-        <u-icon
-          name="plus-circle"
-          color="#dd524d63"
-          size="28"
-          top="10rpx"
-        ></u-icon>
+        <navigator :url="`/pages/add/add`" class="keynote_con">
+          <u-icon
+            name="plus-circle"
+            color="#dd524d63"
+            size="28"
+            top="10rpx"
+          ></u-icon>
+        </navigator>
       </view>
     </view>
-    <view class="menu-area">
-      <!-- <view style="color: #0d0d0d; font-size: 32upx; font-weight: 600"
-        >活动列表</view
-      > -->
+    <view class="list-area">
+      <view class="list-item rfc" v-for="(item, index) in list" :key="index">
+        <view class="list-item-left rfc">
+          <view class="lef-info">
+            {{ item.name }} / {{ item.time }} /
+            {{ item.info }}dwdfef非常热反而风格
+          </view>
+          <u-icon size="26" name="../../static/images/ECO-UI-05.png"></u-icon>
+        </view>
+        <view class="list-item-right"> 李总 </view>
+      </view>
+      <view class="footer rfa">
+        <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+        <u-icon size="26" name="../../static/images/ECO-UI-09.png"></u-icon>
+      </view>
       <!-- <view>
         <navigator
           :url="`/pages/active/active?id=${item.id}`"
@@ -90,7 +103,49 @@
 export default {
   data() {
     return {
-      info: ""
+      info: "",
+      list: [
+        {
+          name: "林一",
+          time: "2024.3.15",
+          detail: "湖泊吧啊啦啦啦"
+        },
+        {
+          name: "林一",
+          time: "2024.3.15",
+          detail: "湖泊吧啊啦啦啦"
+        },
+        {
+          name: "林一",
+          time: "2024.3.15",
+          detail: "湖泊吧啊啦啦啦"
+        },
+        {
+          name: "林一",
+          time: "2024.3.15",
+          detail: "湖泊吧啊啦啦啦"
+        },
+        {
+          name: "林一",
+          time: "2024.3.15",
+          detail: "湖泊吧啊啦啦啦"
+        },
+        {
+          name: "林一",
+          time: "2024.3.15",
+          detail: "湖泊吧啊啦啦啦"
+        },
+        {
+          name: "林一",
+          time: "2024.3.15",
+          detail: "湖泊吧啊啦啦啦"
+        },
+        {
+          name: "林一",
+          time: "2024.3.15",
+          detail: "湖泊吧啊啦啦啦"
+        }
+      ]
     };
   },
   onLoad() {
@@ -152,7 +207,50 @@ export default {
       flex-direction: row;
     }
   }
+  .list-area {
+    width: 680rpx;
+    margin: 20rpx auto;
+    padding-bottom: 160rpx;
+    .list-item {
+      width: 100%;
+      margin: 30rpx 0;
+      font-size: 14px;
 
+      .list-item-left {
+        width: 540rpx;
+        height: 80rpx;
+        line-height: 80rpx;
+        padding: 0rpx 30rpx;
+        box-sizing: border-box;
+        background: #fff;
+        border-top-left-radius: 50rpx;
+        border-bottom-left-radius: 50rpx;
+      }
+      .lef-info {
+        width: 500rpx;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-right: 10rpx;
+      }
+      .list-item-right {
+        width: 140rpx;
+        height: 80rpx;
+        line-height: 80rpx;
+        padding: 0rpx 30rpx;
+        box-sizing: border-box;
+        background: #fff;
+        border-top-right-radius: 50rpx;
+        border-bottom-right-radius: 50rpx;
+        text-align: center;
+        background: $uni-color-theme;
+      }
+    }
+  }
+  .footer {
+    width: 100%;
+    background: #fff;
+  }
   // .menu-area {
   //   margin-top: 50upx;
 

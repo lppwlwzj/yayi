@@ -3,17 +3,17 @@
     <u--form labelWidth="auto" labelPosition="left" :model="form" ref="uForm">
       <view class="info fc">
         <image
-          src="../../static/images/ECO UI-02.png"
+          src="../../static/images/ECO-UI-02.png"
           mode="widthFix"
           class="logo"
         ></image>
 
         <!-- 昵称 -->
-        <u-form-item label="昵称" prop="nickname">
+        <u-form-item label="账号" prop="nickname">
           <u--input
             placeholder=""
             disabledColor="#fff"
-            v-model="form.nickname"
+            v-model="form.user"
             border="none"
             inputAlign="right"
             suffixIcon="edit-pen"
@@ -21,11 +21,11 @@
           ></u--input>
         </u-form-item>
 
-        <u-form-item label="昵称" prop="nickname">
+        <u-form-item label="密码" prop="nickname">
           <u--input
             placeholder=""
             disabledColor="#fff"
-            v-model="form.nickname"
+            v-model="form.password"
             border="none"
             inputAlign="left"
             suffixIcon="eye"
