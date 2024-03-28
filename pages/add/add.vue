@@ -10,9 +10,7 @@
         <u--input
           placeholder="客户姓名"
           disabledColor="#ccc"
-          :placeholderStyle="{
-            color: '#dd524d63'
-          }"
+          placeholderStyle="color:#dd524d63"
           v-model="form.user"
           border="none"
           :customStyle="{
@@ -27,9 +25,7 @@
           :customStyle="{
             padding: '18rpx 12rpx'
           }"
-          :placeholderStyle="{
-            color: '#dd524d63'
-          }"
+          placeholderStyle="color:#dd524d63"
           placeholder="日期"
           disabledColor="#ccc"
           v-model="form.user"
@@ -47,9 +43,7 @@
           :customStyle="{
             padding: '18rpx 20rpx'
           }"
-          :placeholderStyle="{
-            color: '#dd524d63'
-          }"
+          placeholderStyle="color:#dd524d63"
           suffixIcon="edit-pen"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
@@ -63,9 +57,7 @@
           :customStyle="{
             padding: '18rpx 12rpx'
           }"
-          :placeholderStyle="{
-            color: '#dd524d63'
-          }"
+          placeholderStyle="color:#dd524d63"
           suffixIcon="edit-pen"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
@@ -246,9 +238,7 @@
         <u--input
           placeholder="瓷品"
           disabledColor="#ccc"
-          :placeholderStyle="{
-            color: '#dd524d63'
-          }"
+          placeholderStyle="color:#dd524d63"
           v-model="form.user"
           border="none"
           :customStyle="{
@@ -263,9 +253,7 @@
           :customStyle="{
             padding: '18rpx 12rpx'
           }"
-          :placeholderStyle="{
-            color: '#dd524d63'
-          }"
+          placeholderStyle="color:#dd524d63"
           placeholder="贴片颜色"
           disabledColor="#ccc"
           v-model="form.user"
@@ -279,12 +267,14 @@
     <view style="margin: 18rpx 0">
       <view class="item" v-for="(item, index) in list" :key="index">
         <view class="rfc" style="margin: 18rpx 0">
-          <u-radio
-            :customStyle="{ marginBottom: '8px' }"
-            activeColor="#dd524d63"
-            @change="radioChange"
-          >
-          </u-radio>
+          <u-radio-group>
+            <u-radio
+              @change="radioChange"
+              :customStyle="{ marginBottom: '8px' }"
+              activeColor="#dd524d63"
+            >
+            </u-radio>
+          </u-radio-group>
           <u--image
             :showLoading="true"
             :src="item.url"
@@ -334,9 +324,7 @@
         <u--input
           placeholder="CAD设计师"
           disabledColor="#ccc"
-          :placeholderStyle="{
-            color: '#dd524d63'
-          }"
+          placeholderStyle="color:#dd524d63"
           v-model="form.user"
           border="none"
           :customStyle="{
@@ -351,9 +339,7 @@
           :customStyle="{
             padding: '20rpx 12rpx'
           }"
-          :placeholderStyle="{
-            color: '#dd524d63'
-          }"
+          placeholderStyle="color:#dd524d63"
           placeholder="车瓷设计师"
           disabledColor="#ccc"
           v-model="form.user"
@@ -450,6 +436,13 @@ export default {
           value: 0,
           open: false,
           url: "../../static/images/9.png"
+        },
+        {
+          id: 10,
+          text: "切端渐变层",
+          value: 0,
+          open: false,
+          url: "../../static/images/10.jpg"
         }
       ]
     };
@@ -592,13 +585,18 @@ page {
   /deep/.uni-slider-handle-wrapper {
     background-color: #fff !important;
   }
+  /deep/.u-radio-group{
+     width: 80rpx !important;
+	 margin-right: 16rpx;
+	 flex: 0;
+  }
   .btn {
     margin-top: 50rpx;
     width: 100%;
     background-color: #dd524d63;
     text-align: center;
     height: 88rpx;
-    line-height:88rpx;
+    line-height: 88rpx;
     border-radius: 40rpx;
     color: #fff;
     font-size: 16px;

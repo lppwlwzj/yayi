@@ -23,9 +23,7 @@
             borderRadius: '40rpx',
             marginRight: '12rpx'
           }"
-          :placeholderStyle="{
-            color: '#dd524d63'
-          }"
+          placeholderStyle="color:#dd524d63"
           placeholder="姓名/日期/瓷品"
           disabledColor="#fff"
           v-model="nickname"
@@ -165,7 +163,9 @@ export default {
       if (item.end_status == 1) {
         return;
       }
-      const res = await this.$api.join({ activity_id: item.id });
+      const res = await this.$api.join({
+        activity_id: item.id
+      });
       if (res?.code == 0) {
         uni.showToast({
           icon: "none",
@@ -190,16 +190,19 @@ export default {
   box-sizing: border-box;
   background: $uni-color-bg !important;
   min-height: 100vh;
+
   .top {
     background-color: #ffff;
     height: 400rpx;
     border-bottom-left-radius: 60rpx;
     border-bottom-right-radius: 60rpx;
+
     .logo {
       width: 180rpx;
       height: 180rpx;
       margin: 0 auto 20rpx;
     }
+
     .search {
       display: flex;
       justify-content: center;
@@ -207,10 +210,12 @@ export default {
       flex-direction: row;
     }
   }
+
   .list-area {
     width: 680rpx;
     margin: 20rpx auto;
     padding-bottom: 160rpx;
+
     .list-item {
       width: 100%;
       margin: 30rpx 0;
@@ -226,6 +231,7 @@ export default {
         border-top-left-radius: 50rpx;
         border-bottom-left-radius: 50rpx;
       }
+
       .lef-info {
         width: 500rpx;
         text-overflow: ellipsis;
@@ -233,6 +239,7 @@ export default {
         overflow: hidden;
         margin-right: 10rpx;
       }
+
       .list-item-right {
         width: 140rpx;
         height: 80rpx;
@@ -247,10 +254,12 @@ export default {
       }
     }
   }
+
   .footer {
     width: 100%;
     background: #fff;
   }
+
   // .menu-area {
   //   margin-top: 50upx;
 
