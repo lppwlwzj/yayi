@@ -36,6 +36,13 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+.rfsw {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 $uni-color-bg: #cccccc59;
 /* 颜色变量 */
 $uni-color-theme: #dd524d63;

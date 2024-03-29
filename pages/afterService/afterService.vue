@@ -66,7 +66,7 @@
     </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
       <u-collapse @change="change" @close="close" @open="open">
-        <u-collapse-item title="试戴次数" name="Docs guide" :border="false">
+        <u-collapse-item title="试戴次数" name="Docs guide" border="false">
           <view v-for="(item, idx) in tryInfo" :key="idx">
             <view class="rfc">
               <view class="rfaw">
