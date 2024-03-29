@@ -50,13 +50,13 @@ export default {
 				// 	url:'/pages/register/register'
 				// })
 			} else {
-				if (res.userinfo) {
-					console.log(res.userinfo);
-					uni.setStorageSync('userInfo', res.userinfo);
-					uni.switchTab({
-						url: '/pages/index/index'
-					});
-				}
+				// if (res.userinfo) {
+				// 	console.log(res.userinfo);
+				// 	uni.setStorageSync('userInfo', res.userinfo);
+				// 	uni.switchTab({
+				// 		url: '/pages/index/index'
+				// 	});
+				// }
 			}
 		}
 	}

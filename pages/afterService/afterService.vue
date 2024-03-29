@@ -44,7 +44,8 @@
                 src="../../static//images/add.png"
                 mode="widthFix"
                 style="width: 20px; height: 20px"
-              ></image>
+              >
+              </image>
             </view>
           </Upload>
         </view>
@@ -65,27 +66,65 @@
     </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
       <u-collapse @change="change" @close="close" @open="open">
-        <u-collapse-item title="文档指南" name="Docs guide">
-          <text class="u-collapse-content"
-            >涵盖uniapp各个方面，给开发者方向指导和设计理念，让您茅塞顿开，一马平川</text
-          >
+        <u-collapse-item title="试戴次数" name="Docs guide" :border="false">
+          <view v-for="(item, idx) in tryInfo" :key="idx">
+            <view class="rfc">
+              <view class="rfaw">
+                <Upload v-for="(_, index) in item.tryImg" :key="index + idx">
+                  <view class="upload-img-el fc">
+                    <image
+                      src="../../static//images/upload.png"
+                      mode="widthFix"
+                      class="upload-img"
+                    >
+                    </image>
+                    <image
+                      src="../../static//images/add.png"
+                      mode="widthFix"
+                      style="width: 30px; height: 30px"
+                    ></image>
+                  </view>
+                </Upload>
+              </view>
+              <view class="diagnose-text"> </view>
+            </view>
+          </view>
         </u-collapse-item>
       </u-collapse>
     </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
       <u-collapse @change="change" @close="close" @open="open">
-        <u-collapse-item title="文档指南" name="Docs guide">
-          <text class="u-collapse-content"
-            >涵盖uniapp各个方面，给开发者方向指导和设计理念，让您茅塞顿开，一马平川</text
-          >
+        <u-collapse-item title="修复次数" name="Docs guide">
+          <view v-for="(item, idx) in recoverInfo" :key="idx">
+            <view class="rfc">
+              <view class="rfaw">
+                <Upload v-for="(_, index) in item.recoverImg" :key="index + idx">
+                  <view class="upload-img-el fc">
+                    <image
+                      src="../../static//images/upload.png"
+                      mode="widthFix"
+                      class="upload-img"
+                    >
+                    </image>
+                    <image
+                      src="../../static//images/add.png"
+                      mode="widthFix"
+                      style="width: 30px; height: 30px"
+                    ></image>
+                  </view>
+                </Upload>
+              </view>
+              <view class="diagnose-text"> </view>
+            </view>
+          </view>
         </u-collapse-item>
       </u-collapse>
     </view>
 
-    <view class="btn afc"> 确认 </view>
+    <!-- <view class="btn afc"> 确认 </view> -->
     <view class="footer rfa">
-      <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
-      <u-icon size="26" name="../../static/images/ECO-UI-09.png"></u-icon>
+      <u-icon size="26" name="../../static/images/ECO-UI-22.png"></u-icon>
+      <u-icon size="26" name="../../static/images/ECO-UI-05.png"></u-icon>
     </view>
   </view>
 </template>
@@ -107,77 +146,24 @@ export default {
       form: {},
       imgList: new Array(6),
       infoList: new Array(6),
-      list: [
+      tryInfo: [
         {
-          id: 1,
-          text: "边缘",
-          value: 0,
-          open: false,
-          url: "../../static/images/1.png"
+          tryImg: new Array(4),
+          remark: ""
         },
         {
-          id: 2,
-          text: "角度方圆",
-          value: 0,
-          open: false,
-          url: "../../static/images/2.png"
-        },
-
+          tryImg: new Array(4),
+          remark: ""
+        }
+      ],
+      recoverInfo: [
         {
-          id: 3,
-          text: "1号2号落差",
-          value: 0,
-          open: false,
-          url: "../../static/images/3.png"
+          recoverImg: new Array(4),
+          remark: ""
         },
         {
-          id: 4,
-          text: "窄细角度",
-          value: 0,
-          open: false,
-          url: "../../static/images/4.png"
-        },
-        {
-          id: 5,
-          text: "尖or钝",
-          value: 0,
-          open: false,
-          url: "../../static/images/5.png"
-        },
-        {
-          id: 6,
-          text: "2号远中切端上扬幅度",
-          value: 0,
-          open: false,
-          url: "../../static/images/6.png"
-        },
-        {
-          id: 7,
-          text: "纹理",
-          value: 0,
-          open: false,
-          url: "../../static/images/7.png"
-        },
-        {
-          id: 8,
-          text: "颈部光点",
-          value: 0,
-          open: false,
-          url: "../../static/images/8.png"
-        },
-        {
-          id: 9,
-          text: "透亮",
-          value: 0,
-          open: false,
-          url: "../../static/images/9.png"
-        },
-        {
-          id: 10,
-          text: "切端渐变层",
-          value: 0,
-          open: false,
-          url: "../../static/images/10.jpg"
+          recoverImg: new Array(4),
+          remark: ""
         }
       ]
     };
@@ -236,16 +222,19 @@ export default {
 page {
   background-color: #fff;
 }
+
 .footer {
   width: 100%;
   background: #fff;
 }
+
 .content {
   width: 100%;
   box-sizing: border-box;
   background-color: $uni-color-bg;
-  padding: 0 30rpx;
+  padding: 50rpx 30rpx 0;
   padding-bottom: 160rpx;
+
   .input {
     width: 45% !important;
     box-shadow: 2px 2px 5px #33333340;
@@ -253,10 +242,12 @@ page {
     border-radius: 40rpx;
     background-color: #fff;
   }
+
   .diagnose {
     margin: 20rpx 0;
     font-size: 14px;
     color: #dd524d63;
+
     &-el {
       width: 100%;
       border-radius: 40rpx;
@@ -265,22 +256,18 @@ page {
       box-shadow: 2px 2px 5px #33333340;
     }
   }
-  .diagnose-text {
-    margin: 0 12rpx;
-    width: 70%;
-    background-color: #fff;
-    height: 200rpx;
-    border-radius: 40rpx;
-  }
+
   .upload-bg {
     flex: 1;
     margin: 12rpx;
     flex-wrap: nowrap;
   }
+
   .upload-img-el {
     position: relative;
-    width: 180rpx;
-    height: 180rpx;
+    width: 140rpx;
+    height: 140rpx;
+    margin: 16rpx 0;
   }
 
   .upload-img {
@@ -292,9 +279,11 @@ page {
     top: 0;
     bottom: 0;
   }
+
   .image-list {
     width: 100%;
   }
+
   .image {
     width: 200rpx;
     height: 200rpx;
@@ -304,6 +293,7 @@ page {
     background: url("../../static/images/upload.png") center no-repeat;
     background-size: 100% 100%;
   }
+
   .image-2 {
     width: 160rpx;
     height: 160rpx;
@@ -311,22 +301,27 @@ page {
     border-radius: 16rpx;
     margin: 20rpx 0rpx;
   }
+
   .u-page__slide-item {
     flex: 1;
     margin-top: 30rpx;
+
     .text {
       text-align: center;
       color: #33333340;
     }
   }
+
   /deep/.uni-slider-handle-wrapper {
     background-color: #fff !important;
   }
+
   /deep/.u-radio-group {
     width: 80rpx !important;
     margin-right: 16rpx;
     flex: 0;
   }
+
   .btn {
     margin-top: 50rpx;
     width: 100%;
@@ -338,9 +333,17 @@ page {
     color: #fff;
     font-size: 16px;
   }
-  uni-view.u-collapse-item {
+
+  /deep/uni-view.u-cell__body {
     border-radius: 30rpx;
     background-color: #fff;
   }
+}
+.diagnose-text {
+  margin: 0 12rpx;
+  width: 480rpx;
+  background-color: #fff;
+  height: 320rpx;
+  border-radius: 40rpx;
 }
 </style>

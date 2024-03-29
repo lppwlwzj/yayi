@@ -542,7 +542,7 @@ page {
     margin: 12rpx;
     flex-wrap: nowrap;
   }
-  .upload-img-el {
+  .upload-img-e l {
     position: relative;
     width: 180rpx;
     height: 180rpx;
