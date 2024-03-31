@@ -2,25 +2,25 @@
 export default {
 	onLaunch: function(options) {
 		// TODO:记得注释掉
-		uni.setStorageSync('openid', 'od-AX6IkbseRcOAebloryqO8I_pE');
-		console.log(options, 'options');
-		if (options.query.qrcode) {
-			let qrcode = options.query.qrcode;
-			uni.setStorageSync('qrcode', qrcode);
-		}
-		let openid = uni.getStorageSync('openid');
-		if (openid) {
-			this.login(openid);
-		} else {
-			const code = this.queryURLParams('code');
-			if (code) {
-				this.getOpenId(code);
-			} else {
-				const redirectUri = encodeURIComponent(window.location.href.split('?code')[0]);
-				const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${'wx6a23d20cdaa17e17'}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
-				location.href = url;
-			}
-		}
+		// uni.setStorageSync('openid', 'od-AX6IkbseRcOAebloryqO8I_pE');
+		// console.log(options, 'options');
+		// if (options.query.qrcode) {
+		// 	let qrcode = options.query.qrcode;
+		// 	uni.setStorageSync('qrcode', qrcode);
+		// }
+		// let openid = uni.getStorageSync('openid');
+		// if (openid) {
+		// 	this.login(openid);
+		// } else {
+		// 	const code = this.queryURLParams('code');
+		// 	if (code) {
+		// 		this.getOpenId(code);
+		// 	} else {
+		// 		const redirectUri = encodeURIComponent(window.location.href.split('?code')[0]);
+		// 		const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${'wx6a23d20cdaa17e17'}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
+		// 		location.href = url;
+		// 	}
+		// }
 	},
 	methods: {
 		queryURLParams(key) {
@@ -41,7 +41,7 @@ export default {
 			uni.setStorageSync('avatar', res.avatar);
 			this.login(res.open_id);
 		},
-		async login(open_id) {
+		async login() {
 			const res = await this.$api.login({
 				open_id
 			});

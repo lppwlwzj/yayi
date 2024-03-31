@@ -9,7 +9,7 @@ const install = (Vue, vm) => {
         custom: { auth: false }
       }),
     getOpenId: (params) => vm.$u.http.get("/api/user/callback", { params }),
-    login: (data) => vm.$u.http.post("/api/user/login", data),
+    login: (data) => vm.$u.http.post("/user/login", data),
     //获取主页信息
     getIndexData: (params) =>
       vm.$u.http.get("/api/base/getIndexData", { params }),

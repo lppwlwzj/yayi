@@ -352,7 +352,9 @@
     <view class="btn afc"> 确认 </view>
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
-      <u-icon size="26" name="../../static/images/ECO-UI-09.png"></u-icon>
+      <navigator :url="`/pages/afterSalesLogin/afterSalesLogin`">
+        <u-icon size="26" name="../../static/images/ECO-UI-04.png" style=""></u-icon>
+      </navigator>
     </view>
   </view>
 </template>
@@ -443,6 +445,13 @@ export default {
           value: 0,
           open: false,
           url: "../../static/images/10.jpg"
+        },
+        {
+          id: 11,
+          text: "厚度",
+          value: 0,
+          open: false,
+          url: "../../static/images/11.jpg"
         }
       ]
     };
@@ -542,7 +551,7 @@ page {
     margin: 12rpx;
     flex-wrap: nowrap;
   }
-  .upload-img-e l {
+  .upload-img-el {
     position: relative;
     width: 180rpx;
     height: 180rpx;
@@ -585,10 +594,10 @@ page {
   /deep/.uni-slider-handle-wrapper {
     background-color: #fff !important;
   }
-  /deep/.u-radio-group{
-     width: 80rpx !important;
-	 margin-right: 16rpx;
-	 flex: 0;
+  /deep/.u-radio-group {
+    width: 80rpx !important;
+    margin-right: 16rpx;
+    flex: 0;
   }
   .btn {
     margin-top: 50rpx;
