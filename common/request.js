@@ -34,7 +34,7 @@ module.exports = (vm) => {
       // }
 	  const userInfo = uni.getStorageSync("userInfo");
       if (userInfo && userInfo.token)
-        config.header.token = userInfo.token;
+        config.header['Authorization'] = userInfo.token;
       return config;
     },
     (config) => {
@@ -46,6 +46,7 @@ module.exports = (vm) => {
   // 响应拦截
   uni.$u.http.interceptors.response.use(
     (response) => {
+      console.log("🚀 ~ response:", response)
       /* 对响应成功做点什么 可使用async await 做异步操作*/
       //没有正确响应时候的操作
       if (response.statusCode !== 200) {
@@ -61,13 +62,13 @@ module.exports = (vm) => {
       const { data, config } = response;
       // 自定义参数
       // const custom = config?.custom
-
+      return data;
       //后台返回请求成功的状态码，我这里状态值0，代表成功
-      if (data.code !== 1) {
-        // 如果需要catch返回，则进行reject
-        return data;
-      }
-      return data.data === undefined ? {} : data.data;
+      // if (data.code !== 1) {
+      //   // 如果需要catch返回，则进行reject
+      //   return data;
+      // }
+      // return data.data === undefined ? {} : data.data;
     },
     (response) => {
       // 对响应错误做点什么 （statusCode !== 200）

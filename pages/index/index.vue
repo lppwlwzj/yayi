@@ -26,7 +26,7 @@
           placeholderStyle="color:#dd524d63"
           placeholder="姓名/日期/瓷品"
           disabledColor="#fff"
-          v-model="nickname"
+          v-model="search"
           border="surround"
           suffixIcon="search"
           suffixIconStyle=" color: #dd524dab !important;"
@@ -102,6 +102,7 @@ export default {
   data() {
     return {
       info: "",
+      search:'',
       list: [
         {
           name: "林一",

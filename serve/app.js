@@ -68,12 +68,18 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // 使用 .unless({ path: [/^\/user\//] }) 指定哪些接口不需要进行 Token 的身份认证
-app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/user/] }))
+//TODO：访问图片会抱错
+app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/user/ , /^\/img/] }))
 
+//TODO：路由整合
 
 // 导入并使用首页路由模块
 const userRouter = require('./router/user')
 app.use('/user',userRouter)
+
+
+const uploadController = require('./router/upload')
+app.use('/api/upload',uploadController.upload)
 // 导入并使用首页路由模块
 const homeRouter = require('./router/home')
 app.use('/home',homeRouter)

@@ -4,11 +4,11 @@
       <view class="info fc">
         <view class="title"> 售后登录 </view>
 
-        <u-form-item label="昵称" prop="nickname">
+        <u-form-item label="昵称" prop="password">
           <u--input
             placeholder=""
             disabledColor="#fff"
-            v-model="form.nickname"
+            v-model="password"
             border="none"
             inputAlign="left"
             suffixIcon="eye"
@@ -22,174 +22,17 @@
 </template>
 
 <script>
-import address from "../../static/picker-region";
 export default {
   data() {
     return {
-      form: {
-        /**
-         * 详细地址
-         */
-        address: "",
-        /**
-         * 城市
-         */
-        city: "",
-        /**
-         * 公司
-         */
-        company: "",
-        /**
-         * 我的需求
-         */
-        demand: "",
-        /**
-         * 区
-         */
-        distinct: "",
-        /**
-         * 邮箱
-         */
-        email: "",
-        /**
-         * 性别 0 女 1男
-         */
-        gender: 1,
-        /**
-         * 职位
-         */
-        job: "",
-        /**
-         * 身份类型 通过身份列表获取
-         */
-        membertype: "",
-        /**
-         * 手机号
-         */
-        mobile: "",
-        /**
-         * 昵称
-         */
-        nickname: "",
-        /**
-         * 省份
-         */
-        province: "",
-        /**
-         * 真实姓名
-         */
-        realname: "",
-        /**
-         * 个人简介
-         */
-        remark: "",
-        /**
-         * 可分享资源
-         */
-        source: "",
-        /**
-         * 微信号
-         */
-        wx_no: "",
-
-        code: ""
-      },
-      membertypeList: [],
-      membertypeShow: false,
-      show: false,
-      rules: {
-        nickname: [
-          {
-            required: true,
-            message: "请填写昵称",
-            trigger: ["change", "blur"]
-          }
-        ],
-        // gender:[{
-        // 	min:1,
-        // 	required: true,
-        // 	message: '请选择性别',
-        // 	trigger: ['change']
-        // }],
-        company: [
-          {
-            required: true,
-            message: "请填写公司",
-            trigger: ["change", "blur"]
-          }
-        ],
-        job: [
-          {
-            required: true,
-            message: "请填写职位",
-            trigger: ["change", "blur"]
-          }
-        ],
-        membertype: [
-          {
-            required: true,
-            message: "请选择身份类型",
-            trigger: ["change", "blur"]
-          }
-        ],
-        mobile: [
-          {
-            required: true,
-            message: "请填写联系方法",
-            trigger: ["change", "blur"]
-          }
-        ],
-        realname: [
-          {
-            required: true,
-            message: "请填写真实姓名",
-            trigger: ["change", "blur"]
-          }
-        ],
-        wx_no: [
-          {
-            required: true,
-            message: "请填写微信号",
-            trigger: ["change", "blur"]
-          }
-        ],
-        email: [
-          {
-            required: true,
-            message: "请填写联系邮箱",
-            trigger: ["change", "blur"]
-          }
-        ],
-        distinct: [
-          {
-            required: true,
-            message: "请选择所在地",
-            trigger: ["change"]
-          }
-        ],
-        address: [
-          {
-            required: true,
-            message: "请填写详细地址",
-            trigger: ["change", "blur"]
-          }
-        ],
-        remark: [
-          {
-            required: true,
-            message: "请填写个人简历",
-            trigger: ["change", "blur"]
-          }
-        ]
-      },
-      address: []
+        password:''
     };
   },
   created() {
-    this.address = address;
-    this.getMembertype();
-    this.form.nickname = uni.getStorageSync("nickname") || "";
-    this.form.code = uni.getStorageSync("qrcode") || "";
+    // this.address = address;
+    // this.getMembertype();
+    // this.form.nickname = uni.getStorageSync("nickname") || "";
+    // this.form.code = uni.getStorageSync("qrcode") || "";
   },
   methods: {
     async getMembertype() {

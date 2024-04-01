@@ -1,5 +1,5 @@
 <template>
-  <view class="content">
+  <view class="content" :style="{ paddingTop: statusBarHeight }">
     <view class="rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
 
@@ -9,35 +9,57 @@
       <view class="input">
         <u--input
           placeholder="客户姓名"
-          disabledColor="#ccc"
+          u
+          disabledColor="#fff"
           placeholderStyle="color:#dd524d63"
-          v-model="form.user"
+          v-model="form.customer"
           border="none"
           :customStyle="{
-            padding: '18rpx 12rpx'
+            padding: '18rpx'
           }"
           suffixIcon="edit-pen"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
       <view class="input">
-        <u--input
+        <u-button
+          @click="show = true"
+          class="rfa date-btn"
+          :style="{
+            color:form.dateTime  ? '#000' : '#dd524d63'
+          }"
+        >
+          <view>
+            {{ `${form.dateTime || "日期"}` }}
+          </view>
+          <u-icon size="19" name="edit-pen" color="#dd524d63"></u-icon>
+        </u-button>
+        <!-- <u--input
           :customStyle="{
-            padding: '18rpx 12rpx'
+            padding: '18rpx'
           }"
           placeholderStyle="color:#dd524d63"
           placeholder="日期"
-          disabledColor="#ccc"
-          v-model="form.user"
+          disabledColor="#fff"
+          disabled
+          v-model="form.dateTime"
           border="none"
           suffixIcon="edit-pen"
           suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
+          @click="show = true"
+        ></u--input> -->
+        <u-datetime-picker
+          :show="show"
+          mode="date"
+          closeOnClickOverlay
+          @close="close"
+          @confirm="confirm"
+        ></u-datetime-picker>
       </view>
       <view class="input">
         <u--input
           placeholder="面诊医生"
-          disabledColor="#ccc"
+          disabledColor="#fff"
           v-model="form.user"
           border="none"
           :customStyle="{
@@ -50,12 +72,12 @@
       </view>
       <view class="input">
         <u--input
-          placeholder=""
-          disabledColor="#ccc"
-          v-model="form.user"
+          placeholder="代理人"
+          disabledColor="#fff"
+          v-model="form.proxy"
           border="none"
           :customStyle="{
-            padding: '18rpx 12rpx'
+            padding: '18rpx'
           }"
           placeholderStyle="color:#dd524d63"
           suffixIcon="edit-pen"
@@ -72,7 +94,7 @@
       </ti-xing>
       <view class="diagnose-el">
         <view class="rfc">
-          <Upload style="flex: 1">
+          <Upload style="flex: 1" name="frontPhoto">
             <view class="upload-img-el fc">
               <image
                 src="../../static//images/upload.png"
@@ -237,12 +259,13 @@
       <view class="input">
         <u--input
           placeholder="瓷品"
-          disabledColor="#ccc"
+          u
+          disabledColor="#fff"
           placeholderStyle="color:#dd524d63"
           v-model="form.user"
           border="none"
           :customStyle="{
-            padding: '18rpx 12rpx'
+            padding: '18rpx'
           }"
           suffixIcon="edit-pen"
           suffixIconStyle=" color: #dd524dab !important;"
@@ -251,11 +274,12 @@
       <view class="input">
         <u--input
           :customStyle="{
-            padding: '18rpx 12rpx'
+            padding: '18rpx'
           }"
           placeholderStyle="color:#dd524d63"
           placeholder="贴片颜色"
-          disabledColor="#ccc"
+          u
+          disabledColor="#fff"
           v-model="form.user"
           border="none"
           suffixIcon="edit-pen"
@@ -275,13 +299,13 @@
             >
             </u-radio>
           </u-radio-group>
-          <u--image
+          <!-- <u--image
             :showLoading="true"
-            :src="item.url"
+            :src="required(item.url)"
             width="120rpx"
             height="120rpx"
-          ></u--image>
-
+          ></u--image> -->
+          <image class="icon-image" :src="item.url" />
           <view class="u-page__slide-item">
             <u-slider
               :value="item.value"
@@ -323,7 +347,8 @@
       <view class="input">
         <u--input
           placeholder="CAD设计师"
-          disabledColor="#ccc"
+          u
+          disabledColor="#fff"
           placeholderStyle="color:#dd524d63"
           v-model="form.user"
           border="none"
@@ -341,7 +366,8 @@
           }"
           placeholderStyle="color:#dd524d63"
           placeholder="车瓷设计师"
-          disabledColor="#ccc"
+          u
+          disabledColor="#fff"
           v-model="form.user"
           border="none"
           suffixIcon="edit-pen"
@@ -353,27 +379,52 @@
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
       <navigator :url="`/pages/afterSalesLogin/afterSalesLogin`">
-        <u-icon size="26" name="../../static/images/ECO-UI-04.png" style=""></u-icon>
+        <u-icon
+          size="26"
+          name="../../static/images/ECO-UI-04.png"
+          style=""
+        ></u-icon>
       </navigator>
     </view>
   </view>
 </template>
 
 <script>
+import moment from "moment";
 import TiXing from "../../components/tixing";
 import Upload from "../../components/my-upload/my-upload.vue";
 
 export default {
   data() {
     return {
-      active: "online",
-      online_page: 1,
-      offline_page: 1,
-      online_last_page: 1,
-      offline_last_page: 1,
-      onlineList: [],
-      offlineList: [],
-      form: {},
+      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
+      form: {
+        customer: "",
+        dateTime: "",
+        doctor: "",
+        proxy: "",
+        diagnoseInfo: {
+          frontPhoto: "",
+          adviceContent: "",
+          leftFv: "",
+          rightFv: "",
+          front: "",
+          leftFvEdge: "",
+          rightFvEdge: ""
+        },
+        designAdvice: {
+          intentImg: "",
+          content: ""
+        },
+        porcelain: "",
+        tiepianColor: "",
+        toothList: [],
+        CADImg: "",
+        checiImg: "",
+        CAD: "",
+        checi: ""
+      },
+      show: false,
       list: [
         {
           id: 1,
@@ -483,25 +534,33 @@ export default {
     }
   },
   methods: {
-    change(item) {
-      this.active = item.value;
+    close(item) {
+      console.log("fjdoepjopjop");
+      this.show = false;
     },
-    async getOfflineActiveList() {
-      const res = await this.$api.getMyActivityList({
-        page: this.offline_page,
-        activity_type: 2
-      });
-      this.offline_last_page = res.last_page;
-      this.offlineList = [...this.offlineList, ...res.data];
-    },
-    async getOnlineActiveList() {
-      const res = await this.$api.getMyActivityList({
-        page: this.online_page,
-        activity_type: 1
-      });
-      this.online_last_page = res.last_page;
-      this.onlineList = [...this.onlineList, ...res.data];
+    confirm(value) {
+      console.log("点击关闭u啦？？", moment(value).format("YYYY-MM-DD"));
+      this.show = false;
+      const time = moment(value).format("YYYY-MM-DD");
+      this.form.dateTime = time;
+      console.log("🚀 ~ confirm ~ this.form:", this.form, time);
     }
+    // async getOfflineActiveList() {
+    //   const res = await this.$api.getMyActivityList({
+    //     page: this.offline_page,
+    //     activity_type: 2
+    //   });
+    //   this.offline_last_page = res.last_page;
+    //   this.offlineList = [...this.offlineList, ...res.data];
+    // },
+    // async getOnlineActiveList() {
+    //   const res = await this.$api.getMyActivityList({
+    //     page: this.online_page,
+    //     activity_type: 1
+    //   });
+    //   this.online_last_page = res.last_page;
+    //   this.onlineList = [...this.onlineList, ...res.data];
+    // }
   }
 };
 </script>
@@ -610,5 +669,16 @@ page {
     color: #fff;
     font-size: 16px;
   }
+}
+.icon-image {
+  width: 120rpx;
+  height: 120rpx;
+}
+.date-btn {
+  padding: 18rpx;
+  color: #dd524d63;
+  justify-content: space-between;
+  border-radius: 40rpx;
+  font-size: 30rpx;
 }
 </style>

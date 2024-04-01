@@ -3,6 +3,7 @@
     <u-upload
       :accept="accept"
       :fileList="data"
+      :previewFullImage="true"
       @afterRead="afterRead"
       @delete="deletePic"
       :name="name"
@@ -36,7 +37,7 @@ export default {
     multiple: {
       //是否多选
       type: Boolean,
-      default: true
+      default: false
     },
     accept: {
       type: String,
@@ -72,7 +73,6 @@ export default {
   },
   mounted() {
     this.data = this.fileList;
-    console.log("🚀 ~ mounted ~ this.data:", this.customBg);
   },
   methods: {
     // 删除图片
@@ -82,40 +82,118 @@ export default {
     },
     // 新增图片
     async afterRead(event) {
-      // 当设置 multiple 为 true 时, file 为数组格式，否则为对象格式
-      let lists = [].concat(event.file);
-      let fileListLen = this.data.length;
-      lists.map((item) => {
-        this.data.push({
-          ...item,
-          status: "uploading",
-          message: "上传中"
-        });
+      const userInfo = uni.getStorageSync("userInfo"); //设置缓存
+      console.log("🚀 ~ afterRead ~ event:", event);
+
+      let formData = new FormData();
+      formData.append("file", event.file);
+      formData.append("id", userInfo.usercount);
+      formData.append("name", event.name);
+      uni.uploadFile({
+        url: "http://127.0.0.1:3006/api/upload", //文件服务器地址
+        filePath: event.file.thumb, //文件路径
+        name: "file",
+        header: {
+          Authorization: userInfo.token
+        },
+        formData: {
+          id:userInfo.usercount,
+          name:event.name
+        },
+        success: (res) => {
+          console.log("🚀 ~ afterRead ~ res:", res)
+          // if (res.statusCode == 200) {
+          // }
+        }
       });
-      for (let i = 0; i < lists.length; i++) {
-        let result = "";
-        await this.$api
-          .uploadImg(lists[i].url)
-          .then((res) => {
-            result = res.data;
-          })
-          .catch((res) => {
-            console.log(res);
-          });
-        this.$emit("successCall", result);
-        let item = this.data[fileListLen];
-        this.data.splice(
-          fileListLen,
-          1,
-          Object.assign(item, {
-            status: "success",
-            message: "",
-            url: result
-          })
-        );
-        fileListLen++;
-      }
+      //uniapp使用uni.request传递formData格式时报错：“errMsg: "request:fail parameter data. Expected Object, String, Array, ArrayBuffer, got FormData
+      //是因为uni.request 不支持formData类型的数据
+      //  this.$api
+      //   .uploadImg(formData)
+      //   .then((res) => {
+      //     if(res.code) {
+      //       uni.showToast({
+      //         title: res.message,
+      //         icon: 'none'
+      //       });
+      //       return;
+      //     }
+      //     // result = res.data;
+      //   })
+      //   .catch((res) => {
+      //     console.log(res);
+      //   });
+
+      // 当设置 multiple 为 true 时, file 为数组格式，否则为对象格式
+      // let lists = [].concat(event.file);
+      // let fileListLen = this.data.length;
+      // lists.map((item) => {
+      //   this.data.push({
+      //     ...item,
+      //     status: "uploading",
+      //     message: "上传中"
+      //   });
+      // });
+      // for (let i = 0; i < lists.length; i++) {
+      //   let result = "";
+      //   await this.$api
+      //     .uploadImg(lists[i].url)
+      //     .then((res) => {
+      //       result = res.data;
+      //     })
+      //     .catch((res) => {
+      //       console.log(res);
+      //     });
+      //   this.$emit("successCall", result);
+      //   let item = this.data[fileListLen];
+      //   this.data.splice(
+      //     fileListLen,
+      //     1,
+      //     Object.assign(item, {
+      //       status: "success",
+      //       message: "",
+      //       url: result
+      //     })
+      //   );
+      //   fileListLen++;
+      // }
     }
+    // // 新增图片
+    // async afterRead(event) {
+    //   // 当设置 multiple 为 true 时, file 为数组格式，否则为对象格式
+    //   let lists = [].concat(event.file);
+    //   let fileListLen = this.data.length;
+    //   lists.map((item) => {
+    //     this.data.push({
+    //       ...item,
+    //       status: "uploading",
+    //       message: "上传中"
+    //     });
+    //   });
+    //   for (let i = 0; i < lists.length; i++) {
+    //     let result = "";
+    //     await this.$api
+    //       .uploadImg(lists[i].url)
+    //       .then((res) => {
+    //         result = res.data;
+    //       })
+    //       .catch((res) => {
+    //         console.log(res);
+    //       });
+    //     this.$emit("successCall", result);
+    //     let item = this.data[fileListLen];
+    //     this.data.splice(
+    //       fileListLen,
+    //       1,
+    //       Object.assign(item, {
+    //         status: "success",
+    //         message: "",
+    //         url: result
+    //       })
+    //     );
+    //     fileListLen++;
+    //   }
+    // }
   }
 };
 </script>

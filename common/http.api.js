@@ -2,14 +2,10 @@
 const install = (Vue, vm) => {
   Vue.prototype.$api = {
     //图片上传
-    uploadImg: (filePath) =>
-      vm.$u.http.upload("/api/upload", {
-        filePath,
-        name: "file",
-        custom: { auth: false }
-      }),
-    getOpenId: (params) => vm.$u.http.get("/api/user/callback", { params }),
+    uploadImg: (formData) =>
+      vm.$u.http.upload("/api/upload", formData),
     login: (data) => vm.$u.http.post("/user/login", data),
+    getOpenId: (params) => vm.$u.http.get("/api/user/callback", { params }),
     //获取主页信息
     getIndexData: (params) =>
       vm.$u.http.get("/api/base/getIndexData", { params }),

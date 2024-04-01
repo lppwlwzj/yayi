@@ -71,23 +71,12 @@ export default {
     };
   },
   created() {
+
     // this.getMembertype();
     // this.form.nickname = uni.getStorageSync("nickname") || "";
     // this.form.code = uni.getStorageSync("qrcode") || "";
   },
   methods: {
-    async getMembertype() {
-      const res = await this.$api.getMembertype();
-      const membertypeList = Object.entries(res.membertype).map((item) => ({
-        label: item[1],
-        value: item[0]
-      }));
-      this.membertypeList = [membertypeList];
-    },
-    selectMembertype(e) {
-      this.form.membertype = e.value[0].label;
-      this.membertypeShow = false;
-    },
     async login() {
       this.$refs.uForm
         .validate()
@@ -102,9 +91,13 @@ export default {
       const res = await this.$api.login({
         ...this.form
       });
-      console.log("🚀 ~ handleRegister ~ res:", res)
       if (res.code === 0) {
-        uni.setStorageSync("userInfo", res.userinfo); //设置缓存
+        const userInfo = {
+          token:res.re.token,
+          ...res.re.userinfo
+        }
+        uni.setStorageSync("userInfo",userInfo); //设置缓存
+
         uni.showToast({
           title: "登录成功",
           success() {
@@ -112,7 +105,7 @@ export default {
               uni.navigateTo({
                 url: "/pages/index/index"
               });
-            }, 1500);
+            }, 100);
           }
         });
       } else {
