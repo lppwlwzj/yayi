@@ -5,16 +5,12 @@ class UploadController {
   async upload(req, res) {
     try {
       const uploadRes = await uploadAvatar(req, res);
-      console.log("🚀 ~ UploadController ~ upload ~ uploadRes:", uploadRes)
       res.send({
         code: 0,
         message: "上传成功！",
-        re: {
-          img_url: uploadRes
-        }
+        re: uploadRes
       });
     } catch (error) {
-      console.log("🚀 ~ UploadController ~ upload ~ error:", error)
       return res.cc(error.error)
     }
   }

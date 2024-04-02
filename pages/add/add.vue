@@ -26,7 +26,7 @@
           @click="show = true"
           class="rfa date-btn"
           :style="{
-            color:form.dateTime  ? '#000' : '#dd524d63'
+            color: form.dateTime ? '#000' : '#dd524d63'
           }"
         >
           <view>
@@ -94,8 +94,16 @@
       </ti-xing>
       <view class="diagnose-el">
         <view class="rfc">
-          <Upload style="flex: 1" name="frontPhoto">
-            <view class="upload-img-el fc">
+          <Upload
+            style="flex: 1"
+            name="frontPhoto"
+            @change="
+              (value) => {
+                handleImgae('frontPhoto', value);
+              }
+            "
+          >
+            <view class="upload-img-el fc" v-if="!form.diagnoseInfo.frontPhoto">
               <image
                 src="../../static//images/upload.png"
                 mode="widthFix"
@@ -109,6 +117,13 @@
               <text style="color: #fff; font-size: 12px; z-index: 9999"
                 >客户正面微笑照</text
               >
+            </view>
+            <view class="upload-img-el fc" v-if="form.diagnoseInfo.frontPhoto">
+              <image
+                :src="form.diagnoseInfo.frontPhoto"
+                mode="widthFix"
+                class="upload-img"
+              ></image>
             </view>
           </Upload>
           <view class="diagnose-text"> </view>
@@ -535,15 +550,18 @@ export default {
   },
   methods: {
     close(item) {
-      console.log("fjdoepjopjop");
       this.show = false;
     },
+    handleImgae(key, value) {
+      console.log("🚀 ~ handleImgae ~ value:", key,value)
+      this.$set(this.form.diagnoseInfo, [key], value);
+      console.log("🚀 ~ handleImgae ~ this.form.diagnoseInfo:", this.form.diagnoseInfo)
+
+    },
     confirm(value) {
-      console.log("点击关闭u啦？？", moment(value).format("YYYY-MM-DD"));
       this.show = false;
       const time = moment(value).format("YYYY-MM-DD");
       this.form.dateTime = time;
-      console.log("🚀 ~ confirm ~ this.form:", this.form, time);
     }
     // async getOfflineActiveList() {
     //   const res = await this.$api.getMyActivityList({

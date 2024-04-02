@@ -67,7 +67,7 @@ app.use(express.urlencoded({ extended: false }))
 // 通过 express.json() 这个中间件，解析表单中的 JSON 格式的数据
 app.use(express.json())
 
-// 使用 .unless({ path: [/^\/user\//] }) 指定哪些接口不需要进行 Token 的身份认证
+// 使用 .unless({ path: [/^\/user\//] }) 指定哪些接口不需要进行 Token 的身份认证 , /^\/img/
 //TODO：访问图片会抱错
 app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/user/ , /^\/img/] }))
 

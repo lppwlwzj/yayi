@@ -97,13 +97,28 @@ export default {
           Authorization: userInfo.token
         },
         formData: {
-          id:userInfo.usercount,
-          name:event.name
+          id: userInfo.usercount,
+          name: event.name
         },
         success: (res) => {
-          console.log("🚀 ~ afterRead ~ res:", res)
-          // if (res.statusCode == 200) {
-          // }
+          if (res?.statusCode == 401) {
+            uni.clearStorageSync("userInfo");
+            uni.redirectTo({
+              url: "/pages/login/login"
+            });
+          } else if (res?.statusCode == 200) {
+            const data = JSON.parse(res.data);
+            if (!data.code) {
+              console.log("🚀 ~ afterRead ~ data.re.img_url:", data)
+
+              this.$emit("change", data.re.img_url);
+            } else {
+              uni.showToast({
+                icon: "none",
+                title: res.message
+              });
+            }
+          }
         }
       });
       //uniapp使用uni.request传递formData格式时报错：“errMsg: "request:fail parameter data. Expected Object, String, Array, ArrayBuffer, got FormData
