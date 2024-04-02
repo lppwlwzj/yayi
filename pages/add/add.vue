@@ -1,4 +1,5 @@
 <template>
+  <!-- 有空了再优化上传图片 -->
   <view class="content" :style="{ paddingTop: statusBarHeight }">
     <view class="rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
@@ -99,19 +100,19 @@
             name="frontPhoto"
             @change="
               (value) => {
-                handleImgae('frontPhoto', value);
+                handleImage('frontPhoto', value);
               }
             "
           >
             <view class="upload-img-el fc" v-if="!form.diagnoseInfo.frontPhoto">
               <image
                 src="../../static//images/upload.png"
-                mode="widthFix"
+                mode="aspectFill"
                 class="upload-img"
               ></image>
               <image
                 src="../../static//images/add.png"
-                mode="widthFix"
+                mode="aspectFill"
                 style="width: 30px; height: 30px; margin-bottom: 8px"
               ></image>
               <text style="color: #fff; font-size: 12px; z-index: 9999"
@@ -121,62 +122,178 @@
             <view class="upload-img-el fc" v-if="form.diagnoseInfo.frontPhoto">
               <image
                 :src="form.diagnoseInfo.frontPhoto"
-                mode="widthFix"
+                mode="aspectFill"
                 class="upload-img"
               ></image>
+              <image
+                @tap.stop="preview(form.diagnoseInfo.frontPhoto)"
+                src="../../static//images/preview.png"
+                class="preview"
+                mode="aspectFill"
+              ></image>
             </view>
           </Upload>
-          <view class="diagnose-text"> </view>
+          <view class="diagnose-text">
+            <u--textarea
+              v-model="form.diagnoseInfo.adviceContent"
+              border="none"
+              placeholder="请输入内容"
+            ></u--textarea>
+          </view>
         </view>
         <view class="rfa image-list">
-          <Upload>
-            <view class="image fc">
+          <!-- 左45度 -->
+          <Upload
+            name="leftFv"
+            @change="
+              (value) => {
+                handleImage('leftFv', value);
+              }
+            "
+          >
+            <view class="image fc" v-if="!form.diagnoseInfo.leftFv">
               <image
                 src="../../static//images/add.png"
-                mode="widthFix"
+                mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
-              <text style="color: #fff; font-size: 12px">左45度</text>
+              <text style="color: #fff; font-size: 24rpx">左45度</text>
+            </view>
+            <view class="image fc" v-else>
+              <image
+                :src="form.diagnoseInfo.leftFv"
+                mode="aspectFill"
+                style="width: 100%; height: 100%"
+              ></image>
+              <image
+                @tap.stop="preview(form.diagnoseInfo.leftFv)"
+                src="../../static//images/preview.png"
+                class="preview"
+                mode="aspectFill"
+              ></image>
             </view>
           </Upload>
-          <Upload>
-            <view class="image fc">
+          <!-- 右45度 -->
+          <Upload
+            name="rightFv"
+            @change="
+              (value) => {
+                handleImage('rightFv', value);
+              }
+            "
+          >
+            <view class="image fc" v-if="!form.diagnoseInfo.rightFv">
               <image
                 src="../../static//images/add.png"
-                mode="widthFix"
+                mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
-              <text style="color: #fff; font-size: 12px">右45度</text>
+              <text style="color: #fff; font-size: 24rpx">右45度</text>
+            </view>
+            <view class="image fc" v-else>
+              <image
+                :src="form.diagnoseInfo.rightFv"
+                mode="aspectFill"
+                style="width: 100%; height: 100%"
+              ></image>
+              <image
+                @tap.stop="preview(form.diagnoseInfo.rightFv)"
+                src="../../static//images/preview.png"
+                class="preview"
+                mode="aspectFill"
+              ></image>
             </view>
           </Upload>
-          <Upload>
-            <view class="image fc">
+          <!-- 正面扩口 -->
+          <Upload
+            name="front"
+            @change="
+              (value) => {
+                handleImage('front', value);
+              }
+            "
+          >
+            <view class="image fc" v-if="!form.diagnoseInfo.front">
               <image
                 src="../../static//images/add.png"
-                mode="widthFix"
+                mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
-              <text style="color: #fff; font-size: 12px">正面扩口</text>
+              <text style="color: #fff; font-size: 24rpx">正面扩口</text>
+            </view>
+            <view class="image fc" v-else>
+              <image
+                :src="form.diagnoseInfo.front"
+                mode="aspectFill"
+                style="width: 100%; height: 100%"
+              ></image>
+              <image
+                @tap.stop="preview(form.diagnoseInfo.front)"
+                src="../../static//images/preview.png"
+                class="preview"
+                mode="aspectFill"
+              ></image>
             </view>
           </Upload>
-          <Upload>
-            <view class="image fc">
+          <!-- 右45度扩口 -->
+          <Upload
+            name="leftFvEdge"
+            @change="
+              (value) => {
+                handleImage('leftFvEdge', value);
+              }
+            "
+          >
+            <view class="image fc" v-if="!form.diagnoseInfo.leftFvEdge">
               <image
                 src="../../static//images/add.png"
-                mode="widthFix"
+                mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
-              <text style="color: #fff; font-size: 12px">右45度扩口</text>
+              <text style="color: #fff; font-size: 24rpx">右45度扩口</text>
+            </view>
+            <view class="image fc" v-else>
+              <image
+                :src="form.diagnoseInfo.leftFvEdge"
+                mode="aspectFill"
+                style="width: 100%; height: 100%"
+              ></image>
+              <image
+                @tap.stop="preview(form.diagnoseInfo.leftFvEdge)"
+                src="../../static//images/preview.png"
+                class="preview"
+                mode="aspectFill"
+              ></image>
             </view>
           </Upload>
-          <Upload>
-            <view class="image fc">
+          <Upload
+            name="rightFvEdge"
+            @change="
+              (value) => {
+                handleImage('rightFvEdge', value);
+              }
+            "
+          >
+            <view class="image fc" v-if="!form.diagnoseInfo.rightFvEdge">
               <image
                 src="../../static//images/add.png"
-                mode="widthFix"
+                mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
-              <text style="color: #fff; font-size: 12px">左45度扩口</text>
+              <text style="color: #fff; font-size: 24rpx">左45度扩口</text>
+            </view>
+            <view class="image fc" v-else>
+              <image
+                :src="form.diagnoseInfo.rightFvEdge"
+                mode="aspectFill"
+                style="width: 100%; height: 100%"
+              ></image>
+              <image
+                @tap.stop="preview(form.diagnoseInfo.rightFvEdge)"
+                src="../../static//images/preview.png"
+                class="preview"
+                mode="aspectFill"
+              ></image>
             </view>
           </Upload>
         </view>
@@ -197,74 +314,83 @@
       </ti-xing>
       <view class="diagnose-el">
         <view class="rfc">
-          <Upload style="flex: 1">
-            <view class="upload-img-el fc">
+          <Upload
+            style="flex: 1"
+            name="intentImg"
+            @change="
+              (value) => {
+                handleDesignAdviceImage('intentImg', value);
+              }
+            "
+          >
+            <view class="upload-img-el fc" v-if="!form.designAdvice.intentImg">
               <image
                 src="../../static//images/upload.png"
-                mode="widthFix"
+                mode="aspectFill"
                 class="upload-img"
               ></image>
               <image
                 src="../../static//images/add.png"
-                mode="widthFix"
+                mode="aspectFill"
                 style="width: 30px; height: 30px; margin-bottom: 8px"
               ></image>
               <text style="color: #fff; font-size: 12px; z-index: 9999"
                 >客户意向照</text
               >
             </view>
+            <view class="upload-img-el fc" v-if="form.designAdvice.intentImg">
+              <image
+                :src="form.designAdvice.intentImg"
+                mode="aspectFill"
+                class="upload-img"
+              ></image>
+              <image
+                @tap.stop="preview(form.designAdvice.intentImg)"
+                src="../../static//images/preview.png"
+                class="preview"
+                mode="aspectFill"
+              ></image>
+            </view>
           </Upload>
-          <view class="diagnose-text"> </view>
+          <view class="diagnose-text">
+            <u--textarea
+              v-model="form.designAdvice.content"
+              border="none"
+              placeholder="请输入内容"
+            ></u--textarea>
+          </view>
         </view>
-        <view class="rfa image-list">
-          <Upload>
+        <view class="rfsw image-list">
+          <view
+            style="margin-right: 8rpx"
+            v-for="(item, index) in designList"
+            :key="index"
+          >
             <view class="image fc">
+              <image :src="item" mode="aspectFill" class="upload-img"></image>
               <image
-                src="../../static//images/add.png"
-                mode="widthFix"
-                style="width: 16px; height: 16px; margin-bottom: 4px"
+                @tap.stop="preview(item)"
+                src="../../static//images/preview.png"
+                class="preview"
+                mode="aspectFill"
               ></image>
-              <text style="color: #fff; font-size: 12px">左45度</text>
             </view>
-          </Upload>
-          <Upload>
+          </view>
+          <Upload
+            :name="`design${designList.length + 1}`"
+            @change="
+              (value) => {
+                handleDesignImage(value);
+              }
+            "
+          >
             <view class="image fc">
               <image
                 src="../../static//images/add.png"
-                mode="widthFix"
+                mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
-              <text style="color: #fff; font-size: 12px">右45度</text>
-            </view>
-          </Upload>
-          <Upload>
-            <view class="image fc">
-              <image
-                src="../../static//images/add.png"
-                mode="widthFix"
-                style="width: 16px; height: 16px; margin-bottom: 4px"
-              ></image>
-              <text style="color: #fff; font-size: 12px">右45度</text>
-            </view>
-          </Upload>
-          <Upload>
-            <view class="image fc">
-              <image
-                src="../../static//images/add.png"
-                mode="widthFix"
-                style="width: 16px; height: 16px; margin-bottom: 4px"
-              ></image>
-              <text style="color: #fff; font-size: 12px">右45度</text>
-            </view>
-          </Upload>
-          <Upload>
-            <view class="image fc">
-              <image
-                src="../../static//images/add.png"
-                mode="widthFix"
-                style="width: 16px; height: 16px; margin-bottom: 4px"
-              ></image>
-              <text style="color: #fff; font-size: 12px">右45度</text>
+              <text style="color: #fff; font-size: 12px">点击上传</text>
             </view>
           </Upload>
         </view>
@@ -274,10 +400,9 @@
       <view class="input">
         <u--input
           placeholder="瓷品"
-          u
           disabledColor="#fff"
           placeholderStyle="color:#dd524d63"
-          v-model="form.user"
+          v-model="form.porcelain"
           border="none"
           :customStyle="{
             padding: '18rpx'
@@ -293,9 +418,8 @@
           }"
           placeholderStyle="color:#dd524d63"
           placeholder="贴片颜色"
-          u
           disabledColor="#fff"
-          v-model="form.user"
+          v-model="form.tiepianColor"
           border="none"
           suffixIcon="edit-pen"
           suffixIconStyle=" color: #dd524dab !important;"
@@ -336,21 +460,36 @@
     </view>
     <!-- 设计图 -->
     <view class="rfa" style="margin: 18rpx 0">
-      <Upload>
-        <view class="image-2 fc">
+      <Upload
+        name="CADImg"
+        @change="
+          (value) => {
+            handleFormChange('CADImg', value);
+          }
+        "
+      >
+        <view class="image-2 fc" v-if="!form.CADImg">
           <image
             src="../../static//images/add.png"
-            mode="widthFix"
+            mode="aspectFill"
             style="width: 20px; height: 20px; margin-bottom: 4px"
           ></image>
           <text style="color: #fff; font-size: 14px">CAD设计图</text>
         </view>
       </Upload>
-      <Upload>
+      <Upload
+        name="checiImg"
+        class=" fc"
+        @change="
+          (value) => {
+            handleFormChange('checi', value);
+          }
+        "
+      >
         <view class="image-2 fc">
           <image
             src="../../static//images/add.png"
-            mode="widthFix"
+            mode="aspectFill"
             style="width: 20px; height: 20px; margin-bottom: 4px"
           ></image>
           <text style="color: #fff; font-size: 14px">车瓷设计图</text>
@@ -362,10 +501,9 @@
       <view class="input">
         <u--input
           placeholder="CAD设计师"
-          u
           disabledColor="#fff"
           placeholderStyle="color:#dd524d63"
-          v-model="form.user"
+          v-model="form.CAD"
           border="none"
           :customStyle="{
             padding: '20rpx 12rpx'
@@ -381,15 +519,27 @@
           }"
           placeholderStyle="color:#dd524d63"
           placeholder="车瓷设计师"
-          u
           disabledColor="#fff"
-          v-model="form.user"
+          v-model="form.checi"
           border="none"
           suffixIcon="edit-pen"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
     </view>
+    <u-popup
+      :show="popupShow"
+      closeable
+      mode="center"
+      @close="popupClose"
+      :overlayStyle="{
+        background: '#000000d6'
+      }"
+    >
+      <view class="fc">
+        <image :src="previewImg" mode="widthFix"></image>
+      </view>
+    </u-popup>
     <view class="btn afc"> 确认 </view>
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
@@ -412,6 +562,8 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      previewImg: "",
+      popupShow: false,
       statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       form: {
         customer: "",
@@ -429,7 +581,8 @@ export default {
         },
         designAdvice: {
           intentImg: "",
-          content: ""
+          content: "",
+          designList: []
         },
         porcelain: "",
         tiepianColor: "",
@@ -526,42 +679,40 @@ export default {
     TiXing,
     Upload
   },
-  onLoad() {
-    // this.getOnlineActiveList();
-    // this.getOfflineActiveList();
-  },
+  onLoad() {},
   computed: {
-    activeList() {
-      return this[`${this.active}List`] || [];
-    }
-  },
-  onReachBottom() {
-    if (this.active === "online") {
-      if (this.online_page < this.online_last_page) {
-        this.online_page++;
-        this.getOnlineActiveList();
-      }
-    } else {
-      if (this.offline_page < this.offline_last_page) {
-        this.offline_page++;
-        this.getOfflineActiveList();
-      }
+    designList() {
+      return this.form.designAdvice.designList;
     }
   },
   methods: {
     close(item) {
       this.show = false;
     },
-    handleImgae(key, value) {
-      console.log("🚀 ~ handleImgae ~ value:", key,value)
+    handleImage(key, value) {
       this.$set(this.form.diagnoseInfo, [key], value);
-      console.log("🚀 ~ handleImgae ~ this.form.diagnoseInfo:", this.form.diagnoseInfo)
-
+    },
+    handleFormChange(key, value) {
+      this.$set(this.form, [key], value);
+    },
+    handleDesignAdviceImage(key, value) {
+      this.$set(this.form.designAdvice, [key], value);
+    },
+    handleDesignImage(value) {
+      this.form.designAdvice.designList.push(value);
     },
     confirm(value) {
       this.show = false;
       const time = moment(value).format("YYYY-MM-DD");
       this.form.dateTime = time;
+    },
+    preview(img_url) {
+      this.popupShow = true;
+      this.previewImg = img_url;
+    },
+    popupClose() {
+      this.popupShow = false;
+      this.previewImg = "";
     }
     // async getOfflineActiveList() {
     //   const res = await this.$api.getMyActivityList({
@@ -620,8 +771,12 @@ page {
     margin: 0 12rpx;
     width: 70%;
     background-color: #fff;
-    height: 200rpx;
-    border-radius: 40rpx;
+    // height: 200rpx;
+    // border-radius: 36rpx;
+  }
+  //TODO:没生效
+  /deep/.u-textarea {
+    border-radius: 36rpx !important;
   }
   .upload-bg {
     flex: 1;
@@ -652,10 +807,20 @@ page {
     background: #898787a3;
     border-radius: 16rpx;
     margin: 20rpx 0rpx;
+    position: relative;
+  }
+  .preview {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    right: 10rpx;
+    bottom: 10rpx;
   }
   .image-2 {
     width: 160rpx;
     height: 160rpx;
+    // width: 100%;
+    // height: 100%;
     background: #898787a3;
     border-radius: 16rpx;
     margin: 20rpx 0rpx;

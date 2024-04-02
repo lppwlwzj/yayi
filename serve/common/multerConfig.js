@@ -37,7 +37,7 @@ let storage = multer.diskStorage({
 // 4. 添加配置
 const multerConfig = multer({
   storage: storage,
-  limits: { fileSize: 2097152 } // 2M
+  limits: { fileSize: 10485760 } // 10M
 });
 
 // 5. 导出配置好的multerConfig

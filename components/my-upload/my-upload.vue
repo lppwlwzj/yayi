@@ -11,8 +11,25 @@
       :maxCount="maxCount"
       :width="width"
       :height="height"
+      :previewImage="true"
     >
       <slot />
+      <!-- <view class="upload-img-bg">
+        <slot v-if="!img_url" />
+        <view class="upload-img-wrapper fc" v-else>
+          <image
+            :src="img_url"
+            mode="aspectFill"
+            class="upload-img"
+          ></image>
+          <image
+            @tap.stop="preview(img_url)"
+            src="../../static//images/preview.png"
+            class="preview"
+            mode="aspectFill"
+          ></image>
+        </view>
+      </view> -->
     </u-upload>
   </view>
 </template>
@@ -53,7 +70,13 @@ export default {
       type: String,
       default: "1"
     },
-    customBg: {
+    img_url: {
+      //名称
+      type: String,
+      default: ""
+    },
+
+    customClass: {
       type: Boolean,
       default: false
     }
@@ -109,8 +132,7 @@ export default {
           } else if (res?.statusCode == 200) {
             const data = JSON.parse(res.data);
             if (!data.code) {
-              console.log("🚀 ~ afterRead ~ data.re.img_url:", data)
-
+              console.log("🚀 ~ afterRead ~ data.re.img_url:", data);
               this.$emit("change", data.re.img_url);
             } else {
               uni.showToast({
@@ -119,6 +141,9 @@ export default {
               });
             }
           }
+        },
+        fail: (err) => {
+          console.log("🚀 ~ afterRead ~ err:", err);
         }
       });
       //uniapp使用uni.request传递formData格式时报错：“errMsg: "request:fail parameter data. Expected Object, String, Array, ArrayBuffer, got FormData
@@ -218,5 +243,10 @@ export default {
   position: relative;
 
   background: #000;
+}
+.upload-img-bg {
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 </style>
