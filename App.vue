@@ -22,7 +22,6 @@ export default {
     // 	}
     // }
     const userInfo = uni.getStorageSync("userInfo"); //设置缓存
-    console.log("🚀 ~ userInfo:", userInfo)
     if (userInfo) {
       uni.redirectTo({
         url: "/pages/index/index"

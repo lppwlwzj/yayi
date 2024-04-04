@@ -5,6 +5,7 @@ const install = (Vue, vm) => {
     uploadImg: (formData) =>
       vm.$u.http.upload("/api/upload", formData),
     login: (data) => vm.$u.http.post("/user/login", data),
+    addCustomer:(data) => vm.$u.http.post("/customer/add", data),
     getOpenId: (params) => vm.$u.http.get("/api/user/callback", { params }),
     //获取主页信息
     getIndexData: (params) =>

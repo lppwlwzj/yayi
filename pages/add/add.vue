@@ -1,5 +1,4 @@
 <template>
-  <!-- 有空了再优化上传图片 -->
   <view class="content" :style="{ paddingTop: statusBarHeight }">
     <view class="rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
@@ -10,7 +9,6 @@
       <view class="input">
         <u--input
           placeholder="客户姓名"
-          u
           disabledColor="#fff"
           placeholderStyle="color:#dd524d63"
           v-model="form.customer"
@@ -35,25 +33,11 @@
           </view>
           <u-icon size="19" name="edit-pen" color="#dd524d63"></u-icon>
         </u-button>
-        <!-- <u--input
-          :customStyle="{
-            padding: '18rpx'
-          }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="日期"
-          disabledColor="#fff"
-          disabled
-          v-model="form.dateTime"
-          border="none"
-          suffixIcon="edit-pen"
-          suffixIconStyle=" color: #dd524dab !important;"
-          @click="show = true"
-        ></u--input> -->
         <u-datetime-picker
           :show="show"
           mode="date"
           closeOnClickOverlay
-          @close="close"
+          @close="show = false"
           @confirm="confirm"
         ></u-datetime-picker>
       </view>
@@ -61,7 +45,7 @@
         <u--input
           placeholder="面诊医生"
           disabledColor="#fff"
-          v-model="form.user"
+          v-model="form.doctor"
           border="none"
           :customStyle="{
             padding: '18rpx 20rpx'
@@ -96,18 +80,18 @@
       <view class="diagnose-el">
         <view class="rfc">
           <Upload
-            :img_url="form.diagnoseInfo.frontPhoto"
+            :img_url="form.frontPhoto"
             name="frontPhoto"
             customClass="upload-img-el"
             @change="
               (value) => {
-                handleImage('frontPhoto', value);
+                handleFormChange('frontPhoto', value);
               }
             "
           >
-            <view class="upload-img-el fc" v-if="!form.diagnoseInfo.frontPhoto">
+            <view class="upload-img-el fc">
               <image
-                src="../../static//images/upload.png"
+                src="../../static/images/upload.png"
                 mode="aspectFill"
                 class="upload-img"
               ></image>
@@ -124,7 +108,7 @@
               ></video> -->
               <!-- http://127.0.0.1:3006/img/images/adminfrontPhoto.9826ecf281e12929f07949f957ef40dc.mp4 -->
               <image
-                src="../../static//images/add.png"
+                src="../../static/images/add.png"
                 mode="aspectFill"
                 style="width: 30px; height: 30px; margin-bottom: 8px"
               ></image>
@@ -135,7 +119,7 @@
           </Upload>
           <view class="diagnose-text">
             <u--textarea
-              v-model="form.diagnoseInfo.adviceContent"
+              v-model="form.adviceContent"
               border="none"
               placeholder="请输入内容"
             ></u--textarea>
@@ -145,106 +129,101 @@
           <!-- 左45度 -->
           <Upload
             name="leftFv"
-            :img_url="form.diagnoseInfo.leftFv"
+            :img_url="form.leftFv"
             customClass="image"
             @change="
               (value) => {
-                handleImage('leftFv', value);
+                handleFormChange('leftFv', value);
               }
             "
           >
-            <view class="image fc" v-if="!form.diagnoseInfo.leftFv">
+            <view class="image fc" v-if="!form.leftFv">
               <image
-                src="../../static//images/add.png"
+                src="../../static/images/add.png"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
               <text style="color: #fff; font-size: 24rpx">左45度</text>
             </view>
-         
           </Upload>
           <!-- 右45度 -->
           <Upload
             name="rightFv"
-            :img_url="form.diagnoseInfo.rightFv"
+            :img_url="form.rightFv"
             customClass="image"
             @change="
               (value) => {
-                handleImage('rightFv', value);
+                handleFormChange('rightFv', value);
               }
             "
           >
-            <view class="image fc" v-if="!form.diagnoseInfo.rightFv">
+            <view class="image fc">
               <image
-                src="../../static//images/add.png"
+                src="../../static/images/add.png"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
               <text style="color: #fff; font-size: 24rpx">右45度</text>
             </view>
-          
           </Upload>
           <!-- 正面扩口 -->
           <Upload
             name="front"
-            :img_url="form.diagnoseInfo.front"
+            :img_url="form.front"
             customClass="image"
             @change="
               (value) => {
-                handleImage('front', value);
+                handleFormChange('front', value);
               }
             "
           >
-            <view class="image fc" v-if="!form.diagnoseInfo.front">
+            <view class="image fc">
               <image
-                src="../../static//images/add.png"
+                src="../../static/images/add.png"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
               <text style="color: #fff; font-size: 24rpx">正面扩口</text>
             </view>
-          
           </Upload>
           <!-- 右45度扩口 -->
           <Upload
             name="leftFvEdge"
-            :img_url="form.diagnoseInfo.leftFvEdge"
+            :img_url="form.leftFvEdge"
             customClass="image"
             @change="
               (value) => {
-                handleImage('leftFvEdge', value);
+                handleFormChange('leftFvEdge', value);
               }
             "
           >
-            <view class="image fc" v-if="!form.diagnoseInfo.leftFvEdge">
+            <view class="image fc">
               <image
-                src="../../static//images/add.png"
-                mode="aspectFill"
-                style="width: 16px; height: 16px; margin-bottom: 4px"
-              ></image>
-              <text style="color: #fff; font-size: 24rpx">右45度扩口</text>
-            </view>
-          
-          </Upload>
-          <Upload
-            name="rightFvEdge"
-            :img_url="form.diagnoseInfo.rightFvEdge"
-            customClass="image"
-            @change="
-              (value) => {
-                handleImage('rightFvEdge', value);
-              }
-            "
-          >
-            <view class="image fc" v-if="!form.diagnoseInfo.rightFvEdge">
-              <image
-                src="../../static//images/add.png"
+                src="../../static/images/add.png"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
               <text style="color: #fff; font-size: 24rpx">左45度扩口</text>
             </view>
-           
+          </Upload>
+          <Upload
+            name="rightFvEdge"
+            :img_url="form.rightFvEdge"
+            customClass="image"
+            @change="
+              (value) => {
+                handleFormChange('rightFvEdge', value);
+              }
+            "
+          >
+            <view class="image fc">
+              <image
+                src="../../static/images/add.png"
+                mode="aspectFill"
+                style="width: 16px; height: 16px; margin-bottom: 4px"
+              ></image>
+              <text style="color: #fff; font-size: 24rpx">右45度扩口</text>
+            </view>
           </Upload>
         </view>
       </view>
@@ -267,22 +246,22 @@
           <Upload
             style="flex: 1"
             name="intentImg"
-            :img_url="form.diagnoseInfo.intentImg"
+            :img_url="form.intentImg"
             customClass="upload-img-el"
             @change="
               (value) => {
-                handleDesignAdviceImage('intentImg', value);
+                handleFormChange('intentImg', value);
               }
             "
           >
-            <view class="upload-img-el fc" v-if="!form.designAdvice.intentImg">
+            <view class="upload-img-el fc">
               <image
-                src="../../static//images/upload.png"
+                src="../../static/images/upload.png"
                 mode="aspectFill"
                 class="upload-img"
               ></image>
               <image
-                src="../../static//images/add.png"
+                src="../../static/images/add.png"
                 mode="aspectFill"
                 style="width: 30px; height: 30px; margin-bottom: 8px"
               ></image>
@@ -290,11 +269,10 @@
                 >客户意向照</text
               >
             </view>
-         
           </Upload>
           <view class="diagnose-text">
             <u--textarea
-              v-model="form.designAdvice.content"
+              v-model="form.designAdvice"
               border="none"
               placeholder="请输入内容"
             ></u--textarea>
@@ -310,7 +288,7 @@
               <image :src="item" mode="aspectFill" class="upload-img"></image>
               <image
                 @tap.stop="preview(item)"
-                src="../../static//images/preview.png"
+                src="../../static/images/preview.png"
                 class="preview"
                 mode="aspectFill"
               ></image>
@@ -327,7 +305,7 @@
           >
             <view class="image fc">
               <image
-                src="../../static//images/add.png"
+                src="../../static/images/add.png"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
@@ -369,22 +347,25 @@
     </view>
     <!-- 进度条 -->
     <view style="margin: 18rpx 0">
-      <view class="item" v-for="(item, index) in list" :key="index">
+      <view class="item" v-for="(item, index) in dentistList" :key="index">
         <view class="rfc" style="margin: 18rpx 0">
-          <u-radio-group>
-            <u-radio
-              @change="radioChange"
+          <u-checkbox-group
+            v-model="item.open"
+            placement="column"
+            @change="
+              (value) => {
+                hanldeListChange(value, index, 'open');
+              }
+            "
+          >
+            <u-checkbox
+              shape="circle"
+              :name="item.id"
               :customStyle="{ marginBottom: '8px' }"
               activeColor="#dd524d63"
             >
-            </u-radio>
-          </u-radio-group>
-          <!-- <u--image
-            :showLoading="true"
-            :src="required(item.url)"
-            width="120rpx"
-            height="120rpx"
-          ></u--image> -->
+            </u-checkbox>
+          </u-checkbox-group>
           <image class="icon-image" :src="item.url" />
           <view class="u-page__slide-item">
             <u-slider
@@ -392,6 +373,11 @@
               min="0"
               max="100"
               activeColor="#dd524d63"
+              @change="
+                (value) => {
+                  hanldeListChange(value, index, 'value');
+                }
+              "
             ></u-slider>
             <view class="text">{{ item.text }}</view>
           </view>
@@ -399,19 +385,45 @@
         </view>
       </view>
     </view>
+    <view class="rfc">
+      <text style="color: #ccc; padding-right: 24rpx"> 预计戴牙日期 </text>
+      <view class="input">
+        <u-button
+          @click="daiyaShow = true"
+          class="rfa date-btn"
+          :style="{
+            color: form.daiyaTime ? '#000' : '#dd524d63'
+          }"
+        >
+          <view>
+            {{ `${form.daiyaTime || "日期"}` }}
+          </view>
+          <u-icon size="19" name="edit-pen" color="#dd524d63"></u-icon>
+        </u-button>
+        <u-datetime-picker
+          :show="daiyaShow"
+          mode="date"
+          closeOnClickOverlay
+          @close="daiyaShow = false"
+          @confirm="handleDaiYaTime"
+        ></u-datetime-picker>
+      </view>
+    </view>
     <!-- 设计图 -->
     <view class="rfa" style="margin: 18rpx 0">
       <Upload
         name="CADImg"
+        :img_url="form.CADImg"
+        customClass="image-2"
         @change="
           (value) => {
             handleFormChange('CADImg', value);
           }
         "
       >
-        <view class="image-2 fc" v-if="!form.CADImg">
+        <view class="image-2 fc">
           <image
-            src="../../static//images/add.png"
+            src="../../static/images/add.png"
             mode="aspectFill"
             style="width: 20px; height: 20px; margin-bottom: 4px"
           ></image>
@@ -420,16 +432,18 @@
       </Upload>
       <Upload
         name="checiImg"
+        :img_url="form.checiImg"
+        customClass="image-2"
         class="fc"
         @change="
           (value) => {
-            handleFormChange('checi', value);
+            handleFormChange('checiImg', value);
           }
         "
       >
         <view class="image-2 fc">
           <image
-            src="../../static//images/add.png"
+            src="../../static/images/add.png"
             mode="aspectFill"
             style="width: 20px; height: 20px; margin-bottom: 4px"
           ></image>
@@ -468,7 +482,7 @@
         ></u--input>
       </view>
     </view>
-      <u-popup
+    <u-popup
       :show="popupShow"
       closeable
       mode="center"
@@ -478,11 +492,19 @@
       }"
     >
       <view class="fc">
-        <image :src="previewImg"  v-if="previewImg.indexOf('image') > -1"   mode="widthFix"></image>
-        <video :src="previewImg"  v-if="previewImg.indexOf('video') > -1" style="width: 100%;height: 200rpx;"></video>
+        <image
+          :src="previewImg"
+          v-if="previewImg.indexOf('image') > -1"
+          mode="widthFix"
+        ></image>
+        <video
+          :src="previewImg"
+          v-if="previewImg.indexOf('video') > -1"
+          style="width: 100%; height: 200rpx"
+        ></video>
       </view>
     </u-popup>
-    <view class="btn afc"> 确认 </view>
+    <view class="btn afc" @tap.stop="submit"> 确认 </view>
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
       <navigator :url="`/pages/afterSalesLogin/afterSalesLogin`">
@@ -512,108 +534,138 @@ export default {
       form: {
         customer: "",
         dateTime: "",
+        daiyaTime: "",
         doctor: "",
         proxy: "",
-        diagnoseInfo: {
-          frontPhoto: "",
-          adviceContent: "",
-          leftFv: "",
-          rightFv: "",
-          front: "",
-          leftFvEdge: "",
-          rightFvEdge: ""
-        },
-        designAdvice: {
-          intentImg: "",
-          content: "",
-          designList: []
-        },
-        porcelain: "",
         tiepianColor: "",
-        toothList: [],
         CADImg: "",
         checiImg: "",
         CAD: "",
-        checi: ""
+        checi: "",
+        porcelain: "",
+        frontPhoto: "",
+        adviceContent: "",
+        leftFv: "",
+        rightFv: "",
+        front: "",
+        leftFvEdge: "",
+        rightFvEdge: "",
+        intentImg: "",
+        designAdvice: "",
+        designList: [],
+        bianyuanOpen:false,
+        bianyuanValue:'',
+        roundOpen:false,
+        roundValue:'',
+        luochaOpen:false,
+        luochaValue:'',
+        angleOpen:false,
+        angleValue:'',
+        jiandunOpen:false,
+        jiandunValue:'',
+        qieduanOpen:false,
+        qieduanValue:'',
+        textureOpen:false,
+        textureValue:'',
+        dotOpen:false,
+        dotValue:'',
+        touliangOpen:false,
+        touliangValue:'',
+        linearOpen:false,
+        linearValue:'',
+        thicknessOpen:false,
+        thicknessValue:''
       },
       show: false,
-      list: [
+      daiyaShow: false,
+      dentistList: [
         {
           id: 1,
+          key: "bianyuan",
           text: "边缘",
           value: 0,
-          open: false,
+          open: [],
           url: "../../static/images/1.png"
         },
         {
           id: 2,
+          key: "round",
           text: "角度方圆",
           value: 0,
-          open: false,
+          open: [],
           url: "../../static/images/2.png"
         },
 
         {
           id: 3,
+          key: "luocha",
           text: "1号2号落差",
           value: 0,
-          open: false,
+          open: [],
           url: "../../static/images/3.png"
         },
         {
           id: 4,
           text: "窄细角度",
           value: 0,
-          open: false,
+          key: "angle",
+          open: [],
           url: "../../static/images/4.png"
         },
         {
           id: 5,
           text: "尖or钝",
           value: 0,
-          open: false,
+          open: [],
+          key: "jiandun",
           url: "../../static/images/5.png"
         },
         {
           id: 6,
           text: "2号远中切端上扬幅度",
           value: 0,
-          open: false,
+          open: [],
+          key: "qieduan",
           url: "../../static/images/6.png"
         },
         {
           id: 7,
           text: "纹理",
           value: 0,
-          open: false,
+          open: [],
+          key: "texture",
           url: "../../static/images/7.png"
         },
         {
           id: 8,
           text: "颈部光点",
           value: 0,
-          open: false,
+          key: "dot",
+          open: [],
           url: "../../static/images/8.png"
         },
         {
           id: 9,
           text: "透亮",
           value: 0,
-          open: false,
+          open: [],
+          key: "touliang",
           url: "../../static/images/9.png"
         },
         {
           id: 10,
+          key: "linear",
           text: "切端渐变层",
           value: 0,
-          open: false,
+          open: [],
           url: "../../static/images/10.jpg"
         },
         {
           id: 11,
+          key: "thickness",
           text: "厚度",
           value: 0,
-          open: false,
+          open: [],
           url: "../../static/images/11.jpg"
         }
       ]
@@ -630,10 +682,31 @@ export default {
   //   },
   computed: {
     designList() {
-      return this.form.designAdvice.designList;
+      return this.form.designList;
     }
   },
   methods: {
+    async submit() {
+      // this.dentistList.forEach((item) => {
+      //   this.form[`${item.key}Open`] = !!item.open.length;
+      //   this.form[`${item.key}Value`] = item.value;
+      // });
+      // console.log("this----", this.form);
+      this.form ={"customer":"李希希","dateTime":"2022-01-01","daiyaTime":"2014-01-01","doctor":"刘医生","proxy":"黄医生","tiepianColor":"贴片颜色","CADImg":"http://127.0.0.1:3006/img/images/adminCADImg.e459c4d57b88c124d33445910f1e6e63.jpg","checiImg":"http://127.0.0.1:3006/img/images/admincheciImg.71ca6bc3be751df21605b9c022c31721.jpg","CAD":"cad","checi":"车次","porcelain":"瓷品","frontPhoto":"http://127.0.0.1:3006/img/images/adminfrontPhoto.df16b963a92221b83428b4031786b817.jpg","adviceContent":"面诊建设","leftFv":"http://127.0.0.1:3006/img/images/adminleftFv.363832e41e6524bdddc0da61ae1d888a.jpg","rightFv":"http://127.0.0.1:3006/img/images/adminrightFv.ce4eba42cf8e2e3568786262dc5f4303.jpg","front":"http://127.0.0.1:3006/img/images/adminfront.9358d8fae1223b235b1fa5bd00a662d6.jpg","leftFvEdge":"http://127.0.0.1:3006/img/images/adminleftFvEdge.af48b39f1876df847c12a235dd0e36e5.jpg","rightFvEdge":"http://127.0.0.1:3006/img/images/adminrightFvEdge.83f44f0251b23c18678a4c0596ef8938.jpg","intentImg":"http://127.0.0.1:3006/img/images/adminintentImg.6fe7bbe594c42bdf8ec6c1e4ec86c814.jpg","designAdvice":"设计师建议","designList":["http://127.0.0.1:3006/img/images/admindesign1.4aba3ab9a7362172f088470aa9ee109c.jpg","http://127.0.0.1:3006/img/images/admindesign2.a3e8634ef34f17eefa2a9f41d37a0836.jpg","http://127.0.0.1:3006/img/images/admindesign3.7d7f4c70ba96ec8759776939bc62caba.jpg"],"bianyuanOpen":true,"bianyuanValue":69,"roundOpen":false,"roundValue":0,"luochaOpen":true,"luochaValue":27,"angleOpen":false,"angleValue":0,"jiandunOpen":false,"jiandunValue":0,"qieduanOpen":false,"qieduanValue":0,"textureOpen":false,"textureValue":0,"dotOpen":false,"dotValue":0,"touliangOpen":false,"touliangValue":0,"linearOpen":false,"linearValue":0,"thicknessOpen":false,"thicknessValue":0}
+      const res = await this.$api.addCustomer({
+        ...this.form
+      });
+      console.log("this---------", res);
+      
+    },
+    hanldeListChange(value, index, key) {
+      const item = this.dentistList[index];
+      item[key] = value;
+
+      this.$set(this.dentistList, index, {
+        ...item
+      });
+    },
     preview(url) {
       this.popupShow = true;
       this.previewImg = url;
@@ -642,27 +715,27 @@ export default {
       this.popupShow = false;
     },
     getDesignListImg(index) {
-      return this.form.designAdvice.designList[index];
+      return this.form.designList[index];
     },
-    close(item) {
-      this.show = false;
-    },
-    handleImage(key, value) {
-      this.$set(this.form.diagnoseInfo, [key], value);
-    },
+    // close(item) {
+    //   this.show = false;
+    // },
+
     handleFormChange(key, value) {
       this.$set(this.form, [key], value);
     },
-    handleDesignAdviceImage(key, value) {
-      this.$set(this.form.designAdvice, [key], value);
-    },
     handleDesignImage(value) {
-      this.form.designAdvice.designList.push(value);
+      this.form.designList.push(value);
     },
-    confirm(value) {
+    confirm(timeV) {
       this.show = false;
-      const time = moment(value).format("YYYY-MM-DD");
+      const time = moment(timeV.value).format("YYYY-MM-DD");
       this.form.dateTime = time;
+    },
+    handleDaiYaTime(timeV) {
+      this.daiyaShow = false;
+      const time = moment(timeV.value).format("YYYY-MM-DD");
+      this.form.daiyaTime = time;
     }
   }
 };

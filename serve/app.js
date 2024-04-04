@@ -92,9 +92,8 @@ app.use('/pics',picsRouter)
 const newsRouter = require('./router/news')
 app.use('/news',newsRouter)
 
-// 导入并使用商品路由模块
-const shopRouter = require('./router/shop')
-app.use('/shop',shopRouter)
+const customerRouter = require('./router/customer')
+app.use('/customer',customerRouter)
 
 
 
