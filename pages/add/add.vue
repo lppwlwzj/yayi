@@ -161,19 +161,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">左45度</text>
             </view>
-            <!-- <view class="image fc" v-else>
-              <image
-                :src="form.diagnoseInfo.leftFv"
-                mode="aspectFill"
-                style="width: 100%; height: 100%"
-              ></image>
-              <image
-                @tap.stop="preview(form.diagnoseInfo.leftFv)"
-                src="../../static//images/preview.png"
-                class="preview"
-                mode="aspectFill"
-              ></image>
-            </view> -->
+         
           </Upload>
           <!-- 右45度 -->
           <Upload
@@ -194,19 +182,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">右45度</text>
             </view>
-            <!-- <view class="image fc" v-else>
-              <image
-                :src="form.diagnoseInfo.rightFv"
-                mode="aspectFill"
-                style="width: 100%; height: 100%"
-              ></image>
-              <image
-                @tap.stop="preview(form.diagnoseInfo.rightFv)"
-                src="../../static//images/preview.png"
-                class="preview"
-                mode="aspectFill"
-              ></image>
-            </view> -->
+          
           </Upload>
           <!-- 正面扩口 -->
           <Upload
@@ -227,19 +203,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">正面扩口</text>
             </view>
-            <!-- <view class="image fc" v-else>
-              <image
-                :src="form.diagnoseInfo.front"
-                mode="aspectFill"
-                style="width: 100%; height: 100%"
-              ></image>
-              <image
-                @tap.stop="preview(form.diagnoseInfo.front)"
-                src="../../static//images/preview.png"
-                class="preview"
-                mode="aspectFill"
-              ></image>
-            </view> -->
+          
           </Upload>
           <!-- 右45度扩口 -->
           <Upload
@@ -260,19 +224,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">右45度扩口</text>
             </view>
-            <!-- <view class="image fc" v-else>
-              <image
-                :src="form.diagnoseInfo.leftFvEdge"
-                mode="aspectFill"
-                style="width: 100%; height: 100%"
-              ></image>
-              <image
-                @tap.stop="preview(form.diagnoseInfo.leftFvEdge)"
-                src="../../static//images/preview.png"
-                class="preview"
-                mode="aspectFill"
-              ></image>
-            </view> -->
+          
           </Upload>
           <Upload
             name="rightFvEdge"
@@ -292,19 +244,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">左45度扩口</text>
             </view>
-            <!-- <view class="image fc" v-else>
-              <image
-                :src="form.diagnoseInfo.rightFvEdge"
-                mode="aspectFill"
-                style="width: 100%; height: 100%"
-              ></image>
-              <image
-                @tap.stop="preview(form.diagnoseInfo.rightFvEdge)"
-                src="../../static//images/preview.png"
-                class="preview"
-                mode="aspectFill"
-              ></image>
-            </view> -->
+           
           </Upload>
         </view>
       </view>
@@ -350,19 +290,7 @@
                 >客户意向照</text
               >
             </view>
-            <!-- <view class="upload-img-el fc" v-if="form.designAdvice.intentImg">
-              <image
-                :src="form.designAdvice.intentImg"
-                mode="aspectFill"
-                class="upload-img"
-              ></image>
-              <image
-                @tap.stop="preview(form.designAdvice.intentImg)"
-                src="../../static//images/preview.png"
-                class="preview"
-                mode="aspectFill"
-              ></image>
-            </view> -->
+         
           </Upload>
           <view class="diagnose-text">
             <u--textarea
@@ -390,6 +318,7 @@
           </view>
           <Upload
             :name="`design${designList.length + 1}`"
+            customClass="image"
             @change="
               (value) => {
                 handleDesignImage(value);
@@ -539,7 +468,7 @@
         ></u--input>
       </view>
     </view>
-    <!-- <u-popup
+      <u-popup
       :show="popupShow"
       closeable
       mode="center"
@@ -552,7 +481,7 @@
         <image :src="previewImg"  v-if="previewImg.indexOf('image') > -1"   mode="widthFix"></image>
         <video :src="previewImg"  v-if="previewImg.indexOf('video') > -1" style="width: 100%;height: 200rpx;"></video>
       </view>
-    </u-popup> -->
+    </u-popup>
     <view class="btn afc"> 确认 </view>
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
@@ -705,8 +634,15 @@ export default {
     }
   },
   methods: {
-    videoErrorCallback(ß) {
-      console.log("🚀 ~ videoErrorCallback ~ err:", err);
+    preview(url) {
+      this.popupShow = true;
+      this.previewImg = url;
+    },
+    popupClose() {
+      this.popupShow = false;
+    },
+    getDesignListImg(index) {
+      return this.form.designAdvice.designList[index];
     },
     close(item) {
       this.show = false;
@@ -728,31 +664,6 @@ export default {
       const time = moment(value).format("YYYY-MM-DD");
       this.form.dateTime = time;
     }
-    // preview(img_url) {
-    //   this.popupShow = true;
-    //   this.previewImg = img_url;
-    //   this.fileExt = img_url.indexOf('.mp4') > -1;
-    // },
-    // popupClose() {
-    //   this.popupShow = false;
-    //   this.previewImg = "";
-    // }
-    // async getOfflineActiveList() {
-    //   const res = await this.$api.getMyActivityList({
-    //     page: this.offline_page,
-    //     activity_type: 2
-    //   });
-    //   this.offline_last_page = res.last_page;
-    //   this.offlineList = [...this.offlineList, ...res.data];
-    // },
-    // async getOnlineActiveList() {
-    //   const res = await this.$api.getMyActivityList({
-    //     page: this.online_page,
-    //     activity_type: 1
-    //   });
-    //   this.online_last_page = res.last_page;
-    //   this.onlineList = [...this.onlineList, ...res.data];
-    // }
   }
 };
 </script>

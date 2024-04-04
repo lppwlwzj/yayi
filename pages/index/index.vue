@@ -48,43 +48,6 @@
         <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
         <u-icon size="26" name="../../static/images/ECO-UI-09.png"></u-icon>
       </view>
-      <!-- <view>
-        <navigator
-          :url="`/pages/active/active?id=${item.id}`"
-          v-for="(item, index) in activeList"
-          :key="index"
-          class="keynote_con"
-        >
-          <view class="keynote_content">
-            <image
-              class="images"
-              :src="item.backgroundimage"
-              mode="aspectFill"
-            ></image>
-            <view class="key_a">
-              <view class="key_b"> {{ item.title }} </view>
-              <view class="">
-                <view class="key_c">
-                  <view class="dot orange"></view>
-                  <view class="tip">
-                    {{ item.begin_range }}
-                  </view>
-                </view>
-                <view class="key_c">
-                  <view class="dot green"></view>
-                  <view class="tip">{{ item.address }}</view>
-                </view>
-              </view>
-            </view>
-          </view>
-          <view
-            :class="['btn', item.end_status == 0 ? 'green' : 'gray']"
-            @click.stop="join(item)"
-          >
-            {{ item.end_status == 0 ? "加入活动" : "活动截止" }}
-          </view>
-        </navigator>
-      </view> -->
     </view>
   </view>
 </template>

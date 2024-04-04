@@ -117,16 +117,6 @@ export default {
     };
   },
   watch: {
-    img_url: {
-      deep: true,
-      handler(newVal, oldVal) {
-        console.log(
-          "🚀 ~ handler ~ newVal:",
-          newVal,
-          this.img_url.indexOf("mp4") > -1
-        );
-      }
-    },
     fileList: {
       deep: true,
       handler(newVal, oldVal) {
@@ -134,9 +124,7 @@ export default {
       }
     }
   },
-  // mounted() {
-  //   this.data = this.fileList;
-  // },
+
   methods: {
     preview() {
       this.popupShow = true;
@@ -152,7 +140,6 @@ export default {
     // 新增图片
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
-      console.log("🚀 ~ afterRead ~ event:", event);
 
       uni.uploadFile({
         url: "http://127.0.0.1:3006/api/upload", //文件服务器地址
@@ -175,7 +162,6 @@ export default {
           } else if (res?.statusCode == 200) {
             const data = JSON.parse(res.data);
             if (!data.code) {
-              console.log("🚀 ~ afterRead ~ data.re.img_url:", data);
               this.$emit("change", data.re.img_url);
             } else {
               uni.showToast({
