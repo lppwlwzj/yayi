@@ -13,15 +13,21 @@
       :height="height"
       :previewImage="true"
     >
-      <slot />
-      <!-- <view class="upload-img-bg">
+      <view :class="['upload-bg']">
         <slot v-if="!img_url" />
-        <view class="upload-img-wrapper fc" v-else>
+        <view :class="[customClass, 'fc']" v-else>
           <image
             :src="img_url"
             mode="aspectFill"
+            v-if="img_url.indexOf('image') > -1"
             class="upload-img"
           ></image>
+          <video
+            :src="img_url"
+            v-if="img_url.indexOf('mp4') > -1"
+            class="upload-img"
+          ></video>
+
           <image
             @tap.stop="preview(img_url)"
             src="../../static//images/preview.png"
@@ -29,8 +35,30 @@
             mode="aspectFill"
           ></image>
         </view>
-      </view> -->
+      </view>
     </u-upload>
+    <u-popup
+      :show="popupShow"
+      closeable
+      mode="center"
+      @close="popupClose"
+      :overlayStyle="{
+        background: '#000000d6'
+      }"
+    >
+      <view class="fc">
+        <image
+          :src="img_url"
+          v-if="img_url.indexOf('image') > -1"
+          mode="widthFix"
+        ></image>
+        <video
+          :src="img_url"
+          v-if="img_url.indexOf('video') > -1"
+          style="width: 100%; height: 200rpx"
+        ></video>
+      </view>
+    </u-popup>
   </view>
 </template>
 
@@ -58,7 +86,7 @@ export default {
     },
     accept: {
       type: String,
-      default: "image"
+      default: "all"
     },
     maxCount: {
       //最大上传数量
@@ -77,16 +105,28 @@ export default {
     },
 
     customClass: {
-      type: Boolean,
-      default: false
+      type: String,
+      default: ""
     }
   },
   data() {
     return {
-      data: []
+      data: [],
+
+      popupShow: false
     };
   },
   watch: {
+    img_url: {
+      deep: true,
+      handler(newVal, oldVal) {
+        console.log(
+          "🚀 ~ handler ~ newVal:",
+          newVal,
+          this.img_url.indexOf("mp4") > -1
+        );
+      }
+    },
     fileList: {
       deep: true,
       handler(newVal, oldVal) {
@@ -94,10 +134,16 @@ export default {
       }
     }
   },
-  mounted() {
-    this.data = this.fileList;
-  },
+  // mounted() {
+  //   this.data = this.fileList;
+  // },
   methods: {
+    preview() {
+      this.popupShow = true;
+    },
+    popupClose() {
+      this.popupShow = false;
+    },
     // 删除图片
     deletePic(event) {
       this.data.splice(event.index, 1);
@@ -108,20 +154,17 @@ export default {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
       console.log("🚀 ~ afterRead ~ event:", event);
 
-      let formData = new FormData();
-      formData.append("file", event.file);
-      formData.append("id", userInfo.usercount);
-      formData.append("name", event.name);
       uni.uploadFile({
         url: "http://127.0.0.1:3006/api/upload", //文件服务器地址
-        filePath: event.file.thumb, //文件路径
+        filePath: event.file.url, //文件路径
         name: "file",
         header: {
           Authorization: userInfo.token
         },
         formData: {
           id: userInfo.usercount,
-          name: event.name
+          name: event.name,
+          file: event.file
         },
         success: (res) => {
           if (res?.statusCode == 401) {
@@ -146,8 +189,13 @@ export default {
           console.log("🚀 ~ afterRead ~ err:", err);
         }
       });
+
       //uniapp使用uni.request传递formData格式时报错：“errMsg: "request:fail parameter data. Expected Object, String, Array, ArrayBuffer, got FormData
       //是因为uni.request 不支持formData类型的数据
+      // let formData = new FormData();
+      // formData.append("file", event.file);
+      // formData.append("id", userInfo.usercount);
+      // formData.append("name", event.name);
       //  this.$api
       //   .uploadImg(formData)
       //   .then((res) => {
@@ -244,9 +292,39 @@ export default {
 
   background: #000;
 }
-.upload-img-bg {
-  height: 100%;
-  width: 100%;
+.upload-img-el {
   position: relative;
+  width: 180rpx;
+  height: 180rpx;
+}
+.image-2 {
+  width: 160rpx;
+  height: 160rpx;
+  // width: 100%;
+  // height: 100%;
+  background: #898787a3;
+  border-radius: 16rpx;
+  margin: 20rpx 0rpx;
+}
+.upload-bg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.preview {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  right: 10rpx;
+  bottom: 10rpx;
+}
+.upload-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 </style>

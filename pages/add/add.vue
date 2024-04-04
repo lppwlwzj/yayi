@@ -96,8 +96,9 @@
       <view class="diagnose-el">
         <view class="rfc">
           <Upload
-            style="flex: 1"
+            :img_url="form.diagnoseInfo.frontPhoto"
             name="frontPhoto"
+            customClass="upload-img-el"
             @change="
               (value) => {
                 handleImage('frontPhoto', value);
@@ -110,6 +111,18 @@
                 mode="aspectFill"
                 class="upload-img"
               ></image>
+              <!-- TODO：待解决 -->
+              <!-- <video object-fit="cover"id="myVideo" src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4"
+              @error="videoErrorCallback" enable-danmu danmu-btn controls></video> -->
+              <!-- <video
+                id="myVideo"
+                :src="videoSrc"
+                poster="视频封面图的URL"
+                direction="90"
+                object-fit="contain"
+                binderror="videoErrorCallback"
+              ></video> -->
+              <!-- http://127.0.0.1:3006/img/images/adminfrontPhoto.9826ecf281e12929f07949f957ef40dc.mp4 -->
               <image
                 src="../../static//images/add.png"
                 mode="aspectFill"
@@ -118,19 +131,6 @@
               <text style="color: #fff; font-size: 12px; z-index: 9999"
                 >客户正面微笑照</text
               >
-            </view>
-            <view class="upload-img-el fc" v-if="form.diagnoseInfo.frontPhoto">
-              <image
-                :src="form.diagnoseInfo.frontPhoto"
-                mode="aspectFill"
-                class="upload-img"
-              ></image>
-              <image
-                @tap.stop="preview(form.diagnoseInfo.frontPhoto)"
-                src="../../static//images/preview.png"
-                class="preview"
-                mode="aspectFill"
-              ></image>
             </view>
           </Upload>
           <view class="diagnose-text">
@@ -145,6 +145,8 @@
           <!-- 左45度 -->
           <Upload
             name="leftFv"
+            :img_url="form.diagnoseInfo.leftFv"
+            customClass="image"
             @change="
               (value) => {
                 handleImage('leftFv', value);
@@ -159,7 +161,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">左45度</text>
             </view>
-            <view class="image fc" v-else>
+            <!-- <view class="image fc" v-else>
               <image
                 :src="form.diagnoseInfo.leftFv"
                 mode="aspectFill"
@@ -171,11 +173,13 @@
                 class="preview"
                 mode="aspectFill"
               ></image>
-            </view>
+            </view> -->
           </Upload>
           <!-- 右45度 -->
           <Upload
             name="rightFv"
+            :img_url="form.diagnoseInfo.rightFv"
+            customClass="image"
             @change="
               (value) => {
                 handleImage('rightFv', value);
@@ -190,7 +194,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">右45度</text>
             </view>
-            <view class="image fc" v-else>
+            <!-- <view class="image fc" v-else>
               <image
                 :src="form.diagnoseInfo.rightFv"
                 mode="aspectFill"
@@ -202,11 +206,13 @@
                 class="preview"
                 mode="aspectFill"
               ></image>
-            </view>
+            </view> -->
           </Upload>
           <!-- 正面扩口 -->
           <Upload
             name="front"
+            :img_url="form.diagnoseInfo.front"
+            customClass="image"
             @change="
               (value) => {
                 handleImage('front', value);
@@ -221,7 +227,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">正面扩口</text>
             </view>
-            <view class="image fc" v-else>
+            <!-- <view class="image fc" v-else>
               <image
                 :src="form.diagnoseInfo.front"
                 mode="aspectFill"
@@ -233,11 +239,13 @@
                 class="preview"
                 mode="aspectFill"
               ></image>
-            </view>
+            </view> -->
           </Upload>
           <!-- 右45度扩口 -->
           <Upload
             name="leftFvEdge"
+            :img_url="form.diagnoseInfo.leftFvEdge"
+            customClass="image"
             @change="
               (value) => {
                 handleImage('leftFvEdge', value);
@@ -252,7 +260,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">右45度扩口</text>
             </view>
-            <view class="image fc" v-else>
+            <!-- <view class="image fc" v-else>
               <image
                 :src="form.diagnoseInfo.leftFvEdge"
                 mode="aspectFill"
@@ -264,10 +272,12 @@
                 class="preview"
                 mode="aspectFill"
               ></image>
-            </view>
+            </view> -->
           </Upload>
           <Upload
             name="rightFvEdge"
+            :img_url="form.diagnoseInfo.rightFvEdge"
+            customClass="image"
             @change="
               (value) => {
                 handleImage('rightFvEdge', value);
@@ -282,7 +292,7 @@
               ></image>
               <text style="color: #fff; font-size: 24rpx">左45度扩口</text>
             </view>
-            <view class="image fc" v-else>
+            <!-- <view class="image fc" v-else>
               <image
                 :src="form.diagnoseInfo.rightFvEdge"
                 mode="aspectFill"
@@ -294,7 +304,7 @@
                 class="preview"
                 mode="aspectFill"
               ></image>
-            </view>
+            </view> -->
           </Upload>
         </view>
       </view>
@@ -317,6 +327,8 @@
           <Upload
             style="flex: 1"
             name="intentImg"
+            :img_url="form.diagnoseInfo.intentImg"
+            customClass="upload-img-el"
             @change="
               (value) => {
                 handleDesignAdviceImage('intentImg', value);
@@ -338,7 +350,7 @@
                 >客户意向照</text
               >
             </view>
-            <view class="upload-img-el fc" v-if="form.designAdvice.intentImg">
+            <!-- <view class="upload-img-el fc" v-if="form.designAdvice.intentImg">
               <image
                 :src="form.designAdvice.intentImg"
                 mode="aspectFill"
@@ -350,7 +362,7 @@
                 class="preview"
                 mode="aspectFill"
               ></image>
-            </view>
+            </view> -->
           </Upload>
           <view class="diagnose-text">
             <u--textarea
@@ -479,7 +491,7 @@
       </Upload>
       <Upload
         name="checiImg"
-        class=" fc"
+        class="fc"
         @change="
           (value) => {
             handleFormChange('checi', value);
@@ -527,7 +539,7 @@
         ></u--input>
       </view>
     </view>
-    <u-popup
+    <!-- <u-popup
       :show="popupShow"
       closeable
       mode="center"
@@ -537,9 +549,10 @@
       }"
     >
       <view class="fc">
-        <image :src="previewImg" mode="widthFix"></image>
+        <image :src="previewImg"  v-if="previewImg.indexOf('image') > -1"   mode="widthFix"></image>
+        <video :src="previewImg"  v-if="previewImg.indexOf('video') > -1" style="width: 100%;height: 200rpx;"></video>
       </view>
-    </u-popup>
+    </u-popup> -->
     <view class="btn afc"> 确认 </view>
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
@@ -562,6 +575,8 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      videoSrc:
+        "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4",
       previewImg: "",
       popupShow: false,
       statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
@@ -679,13 +694,20 @@ export default {
     TiXing,
     Upload
   },
-  onLoad() {},
+  // onReady: function(res) {
+  //       // #ifndef MP-ALIPAY
+  //       this.videoContext = uni.createVideoContext('myVideo')
+  //       // #endif
+  //   },
   computed: {
     designList() {
       return this.form.designAdvice.designList;
     }
   },
   methods: {
+    videoErrorCallback(ß) {
+      console.log("🚀 ~ videoErrorCallback ~ err:", err);
+    },
     close(item) {
       this.show = false;
     },
@@ -705,15 +727,16 @@ export default {
       this.show = false;
       const time = moment(value).format("YYYY-MM-DD");
       this.form.dateTime = time;
-    },
-    preview(img_url) {
-      this.popupShow = true;
-      this.previewImg = img_url;
-    },
-    popupClose() {
-      this.popupShow = false;
-      this.previewImg = "";
     }
+    // preview(img_url) {
+    //   this.popupShow = true;
+    //   this.previewImg = img_url;
+    //   this.fileExt = img_url.indexOf('.mp4') > -1;
+    // },
+    // popupClose() {
+    //   this.popupShow = false;
+    //   this.previewImg = "";
+    // }
     // async getOfflineActiveList() {
     //   const res = await this.$api.getMyActivityList({
     //     page: this.offline_page,

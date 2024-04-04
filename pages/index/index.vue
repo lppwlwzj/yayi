@@ -1,13 +1,5 @@
 <template>
   <view class="content">
-    <!-- <u-swiper
-      :list="bannerList"
-      keyName="cover"
-      indicator
-      height="200"
-      indicatorMode="line"
-      circular
-    ></u-swiper> -->
     <view class="top fc">
       <image
         src="../../static/images/ECO-UI-02.png"
