@@ -102,7 +102,6 @@ exports.addCustomer = (req, res) => {
 	) values ('${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${linearOpen}','${linearValue}','${thicknessOpen}','${thicknessValue}')`;
   // 更新参数表
   db.query(sql, req.body, (err, results) => {
-    console.log("🚀 ~ db.query ~ results:", err, results);
     if (err) return res.cc(err);
     if (results.affectedRows !== 1) return res.cc("新增失败！");
     res.send({
@@ -210,7 +209,6 @@ exports.editCustomer = (req, res) => {
 			thicknessValue='${thicknessValue}' where id=${id}`;
   // 更新参数表
   db.query(sql, (err, results) => {
-    console.log("🚀 ~ db.query ~ results:", err, results);
     if (err) return res.cc(err);
     res.send({
       code: 200,
@@ -229,7 +227,6 @@ exports.getCustomerDetailById = (req, res) => {
   const sql = `select * from  customer where id=${id}`;
   // 更新参数表
   db.query(sql, (err, results) => {
-    console.log("🚀 ~ db.query ~ results:", err, results);
     if (err) return res.cc(err);
     res.send({
       code: 0,

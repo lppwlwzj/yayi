@@ -1,9 +1,9 @@
 <template>
   <view class="content">
-    <view class="rfa">
-      <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+    <view class="rfb">
+      <u-icon size="30" name="../../static/images/ECO-UI-03.png"></u-icon>
 
-      <u-icon size="26" name="../../static/images/ECO-UI-02.png"></u-icon>
+      <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
     </view>
 
     <view class="fc" style="margin: 18rpx 0; font-size: 40rpx">
@@ -12,10 +12,11 @@
     <view class="rfaw" style="margin: 18rpx 0">
       <view class="input">
         <u--input
+          :disabled="true"
           placeholder="客户姓名"
           disabledColor="#fff"
           placeholderStyle="color:#dd524d63"
-          v-model="form.user"
+          v-model="form.customer"
           border="none"
           :customStyle="{
             padding: '18rpx 12rpx'
@@ -23,21 +24,72 @@
         ></u--input>
       </view>
       <view class="input">
-        <u--input
-          :customStyle="{
-            padding: '18rpx 12rpx'
+        <u-button
+          @click="show = true"
+          class="rfa date-btn"
+          :disabled="true"
+          :style="{
+            color: form.dateTime ? '#000' : '#dd524d63'
           }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="日期"
-          disabledColor="#fff"
-          v-model="form.user"
-          border="none"
-        ></u--input>
+        >
+          <view>
+            {{ `${form.dateTime || "日期"}` }}
+          </view>
+        </u-button>
+        <!-- <u-datetime-picker
+          :show="show"
+          mode="date"
+          closeOnClickOverlay
+          @close="show = false"
+          @confirm="confirm"
+        ></u-datetime-picker> -->
       </view>
     </view>
     <view class="diagnose">
       <view class="diagnose-el">
-        <view class="rfaw image-list">
+        <view class="rfsw image-list">
+          <view
+            style="margin-right: 8rpx"
+            v-for="(item, index) in imgList"
+            :key="index"
+          >
+            <view class="image fc">
+              <image :src="item" mode="aspectFill"></image>
+              <image
+                @tap.stop="preview(item)"
+                src="../../static/images/preview.png"
+                class="preview"
+                mode="aspectFill"
+              ></image>
+              <u-icon
+                v-show="disabled"
+                @click="deleteImg(index)"
+                class="image-close"
+                size="16"
+                color="#fff"
+                name="close-circle"
+              ></u-icon>
+            </view>
+          </view>
+          <Upload
+            :name="`service${imgList.length + 1}`"
+            customClass="image"
+            @change="
+              (value) => {
+                handleImage(value);
+              }
+            "
+          >
+            <view class="image fc">
+              <image
+                src="../../static/images/add.png"
+                mode="aspectFill"
+                style="width: 16px; height: 16px; margin-bottom: 4px"
+              ></image>
+            </view>
+          </Upload>
+        </view>
+        <!-- <view class="rfaw image-list">
           <Upload v-for="(item, index) in imgList" :key="index">
             <view class="image fc">
               <image
@@ -48,7 +100,7 @@
               </image>
             </view>
           </Upload>
-        </view>
+        </view> -->
       </view>
     </view>
 
@@ -56,7 +108,8 @@
       <view class="input" v-for="(item, index) in infoList" :key="index">
         <u--input
           disabledColor="#fff"
-          v-model="form.user"
+          :disabled="true"
+          :value="form[item.key]"
           border="none"
           :customStyle="{
             padding: '18rpx 12rpx'
@@ -64,13 +117,17 @@
         ></u--input>
       </view>
     </view>
+    <view class="fc" style="margin: 18rpx 0; font-size: 40rpx"> 售后服务 </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
-      <u-collapse @change="change" @close="close" @open="open">
-        <u-collapse-item title="试戴次数" name="Docs guide" border="false">
-          <view v-for="(item, idx) in tryInfo" :key="idx">
-            <view class="rfc">
-              <view class="rfaw">
-                <Upload v-for="(_, index) in item.tryImg" :key="index + idx">
+      <u-collapse style="width: 100%;">
+        <u-collapse-item title="试戴次数" name="Docs guide" :border="false">
+          <view v-for="(item, idx) in tryInfo" :key="idx" style="margin-top: 16rpx;" >
+            <view class="rfc" style="align-items: flex-start;" >
+              <view class="rfsw" style="width: 55%;">
+                <view
+                  v-for="(img_url, index) in item.tryImg"
+                  :key="index + idx"
+                >
                   <view class="upload-img-el fc">
                     <image
                       src="../../static//images/upload.png"
@@ -79,11 +136,36 @@
                     >
                     </image>
                     <image
-                      src="../../static//images/add.png"
-                      mode="widthFix"
-                      style="width: 30px; height: 30px"
+                      @tap.stop="preview(img_url)"
+                      src="../../static/images/preview.png"
+                      class="preview"
+                      mode="aspectFill"
                     ></image>
                   </view>
+                </view>
+                <Upload
+                  :name="`try${item.tryImg.length + 1}`"
+                  customClass="upload-img"
+                  @change="
+                    (value) => {
+                      handleTryImage(value);
+                    }
+                  "
+                >
+                  <view class="upload-img-el rfc">
+                    <image
+                      src="../../static//images/upload.png"
+                      mode="widthFix"
+                    >
+                    </image>
+                    <image
+                      src="../../static//images/add.png"
+                      mode="widthFix"
+                      class="upload-add"
+                      style="width: 30px; height: 30px;"
+                    ></image>
+                  </view>
+              
                 </Upload>
               </view>
               <view class="diagnose-text"> </view>
@@ -93,12 +175,15 @@
       </u-collapse>
     </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
-      <u-collapse @change="change" @close="close" @open="open">
+      <u-collapse  style="width: 100%;">
         <u-collapse-item title="修复次数" name="Docs guide">
-          <view v-for="(item, idx) in recoverInfo" :key="idx">
-            <view class="rfc">
-              <view class="rfaw">
-                <Upload v-for="(_, index) in item.recoverImg" :key="index + idx">
+          <view v-for="(item, idx) in recoverInfo" :key="idx" style="margin-top: 16rpx;" >
+            <view class="rfc" style="align-items: flex-start;" >
+              <view class="rfsw" style="width: 55%;">
+                <view
+                  v-for="(img_url, index) in item.recoverImg"
+                  :key="index + idx"
+                >
                   <view class="upload-img-el fc">
                     <image
                       src="../../static//images/upload.png"
@@ -107,11 +192,36 @@
                     >
                     </image>
                     <image
-                      src="../../static//images/add.png"
-                      mode="widthFix"
-                      style="width: 30px; height: 30px"
+                      @tap.stop="preview(img_url)"
+                      src="../../static/images/preview.png"
+                      class="preview"
+                      mode="aspectFill"
                     ></image>
                   </view>
+                </view>
+                <Upload
+                  :name="`try${item.recoverImg.length + 1}`"
+                  customClass="upload-img"
+                  @change="
+                    (value) => {
+                      handleTryImage(value);
+                    }
+                  "
+                >
+                  <view class="upload-img-el rfc">
+                    <image
+                      src="../../static//images/upload.png"
+                      mode="widthFix"
+                    >
+                    </image>
+                    <image
+                      src="../../static//images/add.png"
+                      mode="widthFix"
+                      class="upload-add"
+                      style="width: 30px; height: 30px;"
+                    ></image>
+                  </view>
+              
                 </Upload>
               </view>
               <view class="diagnose-text"> </view>
@@ -120,7 +230,28 @@
         </u-collapse-item>
       </u-collapse>
     </view>
-
+    <u-popup
+      :show="popupShow"
+      closeable
+      mode="center"
+      @close="popupClose"
+      :overlayStyle="{
+        background: '#000000d6'
+      }"
+    >
+      <view class="fc">
+        <image
+          :src="previewImg"
+          v-if="previewImg.indexOf('image') > -1"
+          mode="widthFix"
+        ></image>
+        <video
+          :src="previewImg"
+          v-if="previewImg.indexOf('video') > -1"
+          style="width: 100%; height: 200rpx"
+        ></video>
+      </view>
+    </u-popup>
     <!-- <view class="btn afc"> 确认 </view> -->
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-22.png"></u-icon>
@@ -130,89 +261,99 @@
 </template>
 
 <script>
-import TiXing from "../../components/tixing";
 import Upload from "../../components/my-upload/my-upload.vue";
 
 export default {
   data() {
     return {
-      active: "online",
-      online_page: 1,
-      offline_page: 1,
-      online_last_page: 1,
-      offline_last_page: 1,
-      onlineList: [],
-      offlineList: [],
+      previewImg: "",
+      popupShow: false,
       form: {},
-      imgList: new Array(6),
-      infoList: new Array(6),
+      imgList: [],
+      infoList: [
+        {
+          key: "porcelain"
+        },
+        {
+          key: "daiyaTime"
+        },
+        {
+          key: "doctor"
+        },
+        {
+          key: "proxy"
+        },
+        {
+          key: "CAD"
+        },
+        {
+          key: "checi"
+        }
+      ],
       tryInfo: [
         {
-          tryImg: new Array(4),
+          tryImg: [],
           remark: ""
         },
         {
-          tryImg: new Array(4),
+          tryImg: [],
           remark: ""
         }
       ],
       recoverInfo: [
         {
-          recoverImg: new Array(4),
+          recoverImg: [],
           remark: ""
         },
         {
-          recoverImg: new Array(4),
+          recoverImg: [],
           remark: ""
         }
       ]
     };
   },
   components: {
-    TiXing,
     Upload
   },
-  onLoad() {
-    // this.getOnlineActiveList();
-    // this.getOfflineActiveList();
+  onLoad: function (option) {
+    if (option.id) {
+      this.customer_id = option.id;
+      // this.operateType = option.type;
+      this.getCustomerDetailById(option.id);
+    }
   },
   computed: {
-    activeList() {
-      return this[`${this.active}List`] || [];
-    }
+    // tryImg() {
+    //   thi
+    // }
   },
-  onReachBottom() {
-    if (this.active === "online") {
-      if (this.online_page < this.online_last_page) {
-        this.online_page++;
-        this.getOnlineActiveList();
-      }
-    } else {
-      if (this.offline_page < this.offline_last_page) {
-        this.offline_page++;
-        this.getOfflineActiveList();
-      }
-    }
-  },
+
   methods: {
+    deleteTryImg(index) {},
+    handleTryImage(img) {},
     change(item) {
       this.active = item.value;
     },
-    async getOfflineActiveList() {
-      const res = await this.$api.getMyActivityList({
-        page: this.offline_page,
-        activity_type: 2
-      });
-      this.offline_last_page = res.last_page;
-      this.offlineList = [...this.offlineList, ...res.data];
+    preview(url) {
+      this.popupShow = true;
+      this.previewImg = url;
     },
-    async getOnlineActiveList() {
-      const res = await this.$api.getMyActivityList({
-        page: this.online_page,
-        activity_type: 1
+    popupClose() {
+      this.popupShow = false;
+    },
+    handleImage(value) {
+      this.form.imgList.push(value);
+    },
+    deleteImg(index) {
+      this.form.imgList.splice(index);
+    },
+    async getCustomerDetailById(id) {
+      const res = await this.$api.getCustomerDetailById({
+        id
       });
-      this.online_last_page = res.last_page;
-      this.onlineList = [...this.onlineList, ...res.data];
+      if (!res.code) {
+        this.form = res.data;
+      }
     }
   }
 };
@@ -222,7 +363,17 @@ export default {
 page {
   background-color: #fff;
 }
-
+.image-close {
+  position: absolute;
+  top: 4rpx;
+  right: 4rpx;
+}
+.u-input--square {
+  border-radius: 40rpx;
+}
+.uni-input-wrapper {
+  padding: 0 16rpx;
+}
 .footer {
   width: 100%;
   background: #fff;
@@ -256,7 +407,13 @@ page {
       box-shadow: 2px 2px 5px #33333340;
     }
   }
-
+  .preview {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    right: 10rpx;
+    bottom: 10rpx;
+  }
   .upload-bg {
     flex: 1;
     margin: 12rpx;
@@ -267,17 +424,28 @@ page {
     position: relative;
     width: 140rpx;
     height: 140rpx;
-    margin: 16rpx 0;
+    margin: 10rpx;
   }
-
-  .upload-img {
+  .upload-add {
     position: absolute;
+    left: 44rpx;
+    top: 44rpx;
+  }
+  .upload-img {
+    // position: absolute;
     width: 100%;
     height: 100%;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    // left: 0;
+    // right: 0;
+    // top: 0;
+    // bottom: 0;
+  }
+  .preview {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    right: 10rpx;
+    bottom: 10rpx;
   }
 
   .image-list {
@@ -294,13 +462,13 @@ page {
     background-size: 100% 100%;
   }
 
-  .image-2 {
-    width: 160rpx;
-    height: 160rpx;
-    background: #898787a3;
-    border-radius: 16rpx;
-    margin: 20rpx 0rpx;
-  }
+  // .image-2 {
+  //   width: 160rpx;
+  //   height: 160rpx;
+  //   background: #898787a3;
+  //   border-radius: 16rpx;
+  //   margin: 20rpx 0rpx;
+  // }
 
   .u-page__slide-item {
     flex: 1;
@@ -341,9 +509,10 @@ page {
 }
 .diagnose-text {
   margin: 0 12rpx;
-  width: 480rpx;
+  // width: 520rpx;
+  flex: 1;
   background-color: #fff;
-  height: 320rpx;
+  min-height: 320rpx;
   border-radius: 40rpx;
 }
 </style>

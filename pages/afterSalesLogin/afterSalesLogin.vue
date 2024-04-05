@@ -4,7 +4,7 @@
       <view class="info fc">
         <view class="title"> 售后登录 </view>
 
-        <u-form-item label="昵称" prop="password">
+        <u-form-item label="密码" prop="password">
           <u--input
             placeholder=""
             disabledColor="#fff"
@@ -15,7 +15,7 @@
             suffixIconStyle=" color: #dd524dab !important;"
           ></u--input>
         </u-form-item>
-        <view class="btn" @tap="register"> 登录 </view>
+        <view class="btn" @tap="login"> 登录 </view>
       </view>
     </u--form>
   </view>
@@ -25,72 +25,30 @@
 export default {
   data() {
     return {
-        password:''
+      password: "",
+      confirmPassword: "888",
+      form:{},
+      customer_id:''
     };
   },
-  created() {
-    // this.address = address;
-    // this.getMembertype();
-    // this.form.nickname = uni.getStorageSync("nickname") || "";
-    // this.form.code = uni.getStorageSync("qrcode") || "";
+  onLoad: function (option) {
+    if (option.id) {
+      this.customer_id = option.id;
+    }
   },
   methods: {
-    async getMembertype() {
-      const res = await this.$api.getMembertype();
-      const membertypeList = Object.entries(res.membertype).map((item) => ({
-        label: item[1],
-        value: item[0]
-      }));
-      this.membertypeList = [membertypeList];
-    },
-    selectMembertype(e) {
-      this.form.membertype = e.value[0].label;
-      this.membertypeShow = false;
-    },
-    async register() {
-      this.$refs.uForm
-        .validate()
-        .then((res) => {
-          this.handleRegister();
-        })
-        .catch((errors) => {
-          console.log("validate ~ valid:errors", errors);
-        });
-    },
-    async handleRegister() {
-      const res = await this.$api.register({
-        ...this.form,
-        open_id: uni.getStorageSync("openid"),
-        avatar: uni.getStorageSync("avatar")
-      });
-      if (res.userinfo) {
-        uni.setStorageSync("userInfo", res.userinfo); //设置缓存
+    login() {
+      if (this.password !== this.confirmPassword) {
         uni.showToast({
-          title: "注册成功",
-          success() {
-            setTimeout(() => {
-              uni.switchTab({
-                url: "/pages/index/index"
-              });
-            }, 1500);
-          }
+          icon: "none",
+          title: "密码错误！",
+          duration: 2000
         });
       } else {
-        uni.showToast({
-          title: res.msg,
-          icon: "none"
-        });
+        uni.navigateTo({
+          url:`/pages/afterService/afterService?id=${this.customer_id}`
+        })
       }
-    },
-    onchange(e) {
-      const arr = e.detail.value;
-      this.form.province = arr[0].text;
-      this.form.city = arr[0].text;
-      this.form.distinct = arr[0].text;
-      this.$refs.uForm.validateField("distinct");
-    },
-    inputclick(e) {
-      console.log("inputclick");
     }
   }
 };

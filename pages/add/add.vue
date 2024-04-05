@@ -311,6 +311,8 @@
                 class="preview"
                 mode="aspectFill"
               ></image>
+             <u-icon v-show="disabled" @click="deleteDesignImg(index)" class="image-close" size="16" color="#fff" name="close-circle"></u-icon>
+
             </view>
           </view>
           <Upload
@@ -329,7 +331,7 @@
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
-              <text style="color: #fff; font-size: 12px">点击上传</text>
+              <text  v-show="disabled" style="color: #fff; font-size: 12px">点击上传</text>
             </view>
           </Upload>
         </view>
@@ -550,7 +552,14 @@
 
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
-      <navigator :url="`/pages/afterSalesLogin/afterSalesLogin`">
+      <!-- <navigator :url="`/pages/afterSalesLogin/afterSalesLogin?id=${customer_id}`">
+        <u-icon
+          size="26"
+          name="../../static/images/ECO-UI-04.png"
+          style=""
+        ></u-icon>
+      </navigator> -->
+      <navigator :url="`/pages/afterService/afterService?id=${customer_id}`">
         <u-icon
           size="26"
           name="../../static/images/ECO-UI-04.png"
@@ -792,15 +801,15 @@ export default {
     getDesignListImg(index) {
       return this.form.designList[index];
     },
-    // close(item) {
-    //   this.show = false;
-    // },
 
     handleFormChange(key, value) {
       this.$set(this.form, [key], value);
     },
     handleDesignImage(value) {
       this.form.designList.push(value);
+    },
+    deleteDesignImg(index) {
+      this.form.designList.splice(index,1);
     },
     confirm(timeV) {
       this.show = false;
@@ -819,6 +828,11 @@ export default {
 <style lang="scss" scoped>
 page {
   background-color: #fff;
+}
+.image-close{
+  position: absolute;
+  top:4rpx;
+  right: 4rpx;
 }
 .footer {
   width: 100%;
