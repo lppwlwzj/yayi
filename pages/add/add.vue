@@ -1,22 +1,29 @@
 <template>
   <view class="content" :style="{ paddingTop: statusBarHeight }">
-    <view class="rfa">
-      <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+    <view class="rfb">
+      <navigator
+        url="/pages/index/index"
+        hover-class="navigator-hover"
+        open-type="navigate"
+      >
+        <u-icon size="30" name="../../static/images/ECO-UI-03.png"></u-icon>
+      </navigator>
 
-      <u-icon size="26" name="../../static/images/ECO-UI-02.png"></u-icon>
+      <u-icon size="30" name="../../static/images/ECO-UI-02.png"></u-icon>
     </view>
     <view class="rfaw" style="margin: 18rpx 0">
       <view class="input">
         <u--input
           placeholder="客户姓名"
           disabledColor="#fff"
+          :disabled="disabled"
           placeholderStyle="color:#dd524d63"
           v-model="form.customer"
           border="none"
           :customStyle="{
             padding: '18rpx'
           }"
-          suffixIcon="edit-pen"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
@@ -24,6 +31,7 @@
         <u-button
           @click="show = true"
           class="rfa date-btn"
+          :disabled="disabled"
           :style="{
             color: form.dateTime ? '#000' : '#dd524d63'
           }"
@@ -43,6 +51,7 @@
       </view>
       <view class="input">
         <u--input
+          :disabled="disabled"
           placeholder="面诊医生"
           disabledColor="#fff"
           v-model="form.doctor"
@@ -51,12 +60,13 @@
             padding: '18rpx 20rpx'
           }"
           placeholderStyle="color:#dd524d63"
-          suffixIcon="edit-pen"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
       <view class="input">
         <u--input
+          :disabled="disabled"
           placeholder="代理人"
           disabledColor="#fff"
           v-model="form.proxy"
@@ -65,7 +75,7 @@
             padding: '18rpx'
           }"
           placeholderStyle="color:#dd524d63"
-          suffixIcon="edit-pen"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
@@ -82,6 +92,7 @@
           <Upload
             :img_url="form.frontPhoto"
             name="frontPhoto"
+            :disabled="disabled"
             customClass="upload-img-el"
             @change="
               (value) => {
@@ -119,6 +130,7 @@
           </Upload>
           <view class="diagnose-text">
             <u--textarea
+              :disabled="disabled"
               v-model="form.adviceContent"
               border="none"
               placeholder="请输入内容"
@@ -128,6 +140,7 @@
         <view class="rfa image-list">
           <!-- 左45度 -->
           <Upload
+            :disabled="disabled"
             name="leftFv"
             :img_url="form.leftFv"
             customClass="image"
@@ -148,6 +161,7 @@
           </Upload>
           <!-- 右45度 -->
           <Upload
+            :disabled="disabled"
             name="rightFv"
             :img_url="form.rightFv"
             customClass="image"
@@ -169,6 +183,7 @@
           <!-- 正面扩口 -->
           <Upload
             name="front"
+            :disabled="disabled"
             :img_url="form.front"
             customClass="image"
             @change="
@@ -189,6 +204,7 @@
           <!-- 右45度扩口 -->
           <Upload
             name="leftFvEdge"
+            :disabled="disabled"
             :img_url="form.leftFvEdge"
             customClass="image"
             @change="
@@ -210,6 +226,7 @@
             name="rightFvEdge"
             :img_url="form.rightFvEdge"
             customClass="image"
+            :disabled="disabled"
             @change="
               (value) => {
                 handleFormChange('rightFvEdge', value);
@@ -245,6 +262,7 @@
         <view class="rfc">
           <Upload
             style="flex: 1"
+            :disabled="disabled"
             name="intentImg"
             :img_url="form.intentImg"
             customClass="upload-img-el"
@@ -272,6 +290,7 @@
           </Upload>
           <view class="diagnose-text">
             <u--textarea
+              :disabled="disabled"
               v-model="form.designAdvice"
               border="none"
               placeholder="请输入内容"
@@ -297,6 +316,7 @@
           <Upload
             :name="`design${designList.length + 1}`"
             customClass="image"
+            :disabled="disabled"
             @change="
               (value) => {
                 handleDesignImage(value);
@@ -318,6 +338,7 @@
     <view class="rfaw" style="margin: 18rpx 0">
       <view class="input">
         <u--input
+          :disabled="disabled"
           placeholder="瓷品"
           disabledColor="#fff"
           placeholderStyle="color:#dd524d63"
@@ -326,12 +347,13 @@
           :customStyle="{
             padding: '18rpx'
           }"
-          suffixIcon="edit-pen"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
       <view class="input">
         <u--input
+          :disabled="disabled"
           :customStyle="{
             padding: '18rpx'
           }"
@@ -340,7 +362,7 @@
           disabledColor="#fff"
           v-model="form.tiepianColor"
           border="none"
-          suffixIcon="edit-pen"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
@@ -359,6 +381,7 @@
             "
           >
             <u-checkbox
+              :disabled="disabled"
               shape="circle"
               :name="item.id"
               :customStyle="{ marginBottom: '8px' }"
@@ -372,6 +395,7 @@
               :value="item.value"
               min="0"
               max="100"
+              :disabled="disabled"
               activeColor="#dd524d63"
               @change="
                 (value) => {
@@ -389,6 +413,7 @@
       <text style="color: #ccc; padding-right: 24rpx"> 预计戴牙日期 </text>
       <view class="input">
         <u-button
+          :disabled="disabled"
           @click="daiyaShow = true"
           class="rfa date-btn"
           :style="{
@@ -414,6 +439,7 @@
       <Upload
         name="CADImg"
         :img_url="form.CADImg"
+        :disabled="disabled"
         customClass="image-2"
         @change="
           (value) => {
@@ -432,6 +458,7 @@
       </Upload>
       <Upload
         name="checiImg"
+        :disabled="disabled"
         :img_url="form.checiImg"
         customClass="image-2"
         class="fc"
@@ -455,6 +482,7 @@
     <view class="rfaw" style="margin: 18rpx 0">
       <view class="input">
         <u--input
+          :disabled="disabled"
           placeholder="CAD设计师"
           disabledColor="#fff"
           placeholderStyle="color:#dd524d63"
@@ -463,12 +491,13 @@
           :customStyle="{
             padding: '20rpx 12rpx'
           }"
-          suffixIcon="edit-pen"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
       <view class="input">
         <u--input
+          :disabled="disabled"
           :customStyle="{
             padding: '20rpx 12rpx'
           }"
@@ -477,7 +506,7 @@
           disabledColor="#fff"
           v-model="form.checi"
           border="none"
-          suffixIcon="edit-pen"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
@@ -504,7 +533,21 @@
         ></video>
       </view>
     </u-popup>
-    <view class="btn afc" @tap.stop="submit"> 确认 </view>
+    <view
+      class="btn afc"
+      @tap.stop="handleEdit"
+      v-show="customer_id && operateType === 'view'"
+    >
+      编辑
+    </view>
+    <view
+      class="btn afc"
+      @tap.stop="submit"
+      v-show="['create', 'edit'].includes(operateType)"
+    >
+      确认
+    </view>
+
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
       <navigator :url="`/pages/afterSalesLogin/afterSalesLogin`">
@@ -526,6 +569,8 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      customer_id: "",
+      operateType: " create",
       videoSrc:
         "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4",
       previewImg: "",
@@ -553,28 +598,28 @@ export default {
         intentImg: "",
         designAdvice: "",
         designList: [],
-        bianyuanOpen:false,
-        bianyuanValue:'',
-        roundOpen:false,
-        roundValue:'',
-        luochaOpen:false,
-        luochaValue:'',
-        angleOpen:false,
-        angleValue:'',
-        jiandunOpen:false,
-        jiandunValue:'',
-        qieduanOpen:false,
-        qieduanValue:'',
-        textureOpen:false,
-        textureValue:'',
-        dotOpen:false,
-        dotValue:'',
-        touliangOpen:false,
-        touliangValue:'',
-        linearOpen:false,
-        linearValue:'',
-        thicknessOpen:false,
-        thicknessValue:''
+        bianyuanOpen: false,
+        bianyuanValue: "",
+        roundOpen: false,
+        roundValue: "",
+        luochaOpen: false,
+        luochaValue: "",
+        angleOpen: false,
+        angleValue: "",
+        jiandunOpen: false,
+        jiandunValue: "",
+        qieduanOpen: false,
+        qieduanValue: "",
+        textureOpen: false,
+        textureValue: "",
+        dotOpen: false,
+        dotValue: "",
+        touliangOpen: false,
+        touliangValue: "",
+        linearOpen: false,
+        linearValue: "",
+        thicknessOpen: false,
+        thicknessValue: ""
       },
       show: false,
       daiyaShow: false,
@@ -680,24 +725,54 @@ export default {
   //       this.videoContext = uni.createVideoContext('myVideo')
   //       // #endif
   //   },
+  onLoad: function (option) {
+    if (option.id) {
+      this.customer_id = option.id;
+      this.operateType = option.type;
+      this.getCustomerDetailById(option.id);
+    }
+  },
   computed: {
+    disabled() {
+      return this.operateType === "view";
+    },
     designList() {
       return this.form.designList;
     }
   },
   methods: {
+    handleEdit() {
+      this.operateType = "edit";
+    },
+    async getCustomerDetailById(id) {
+      const res = await this.$api.getCustomerDetailById({
+        id
+      });
+      if (!res.code) {
+        const data = res.data;
+        this.form = data;
+        this.form.designList = JSON.parse(data.designList);
+        this.dentistList = this.dentistList.map((item) => {
+          return {
+            ...item,
+            value: +data[`${item.key}Value`],
+            open: data[`${item.key}Open`] === "true" ? [item.id] : []
+          };
+        });
+      }
+    },
+
     async submit() {
-      // this.dentistList.forEach((item) => {
-      //   this.form[`${item.key}Open`] = !!item.open.length;
-      //   this.form[`${item.key}Value`] = item.value;
-      // });
+      this.dentistList.forEach((item) => {
+        this.form[`${item.key}Open`] = !!item.open.length;
+        this.form[`${item.key}Value`] = item.value;
+      });
       // console.log("this----", this.form);
-      this.form ={"customer":"李希希","dateTime":"2022-01-01","daiyaTime":"2014-01-01","doctor":"刘医生","proxy":"黄医生","tiepianColor":"贴片颜色","CADImg":"http://127.0.0.1:3006/img/images/adminCADImg.e459c4d57b88c124d33445910f1e6e63.jpg","checiImg":"http://127.0.0.1:3006/img/images/admincheciImg.71ca6bc3be751df21605b9c022c31721.jpg","CAD":"cad","checi":"车次","porcelain":"瓷品","frontPhoto":"http://127.0.0.1:3006/img/images/adminfrontPhoto.df16b963a92221b83428b4031786b817.jpg","adviceContent":"面诊建设","leftFv":"http://127.0.0.1:3006/img/images/adminleftFv.363832e41e6524bdddc0da61ae1d888a.jpg","rightFv":"http://127.0.0.1:3006/img/images/adminrightFv.ce4eba42cf8e2e3568786262dc5f4303.jpg","front":"http://127.0.0.1:3006/img/images/adminfront.9358d8fae1223b235b1fa5bd00a662d6.jpg","leftFvEdge":"http://127.0.0.1:3006/img/images/adminleftFvEdge.af48b39f1876df847c12a235dd0e36e5.jpg","rightFvEdge":"http://127.0.0.1:3006/img/images/adminrightFvEdge.83f44f0251b23c18678a4c0596ef8938.jpg","intentImg":"http://127.0.0.1:3006/img/images/adminintentImg.6fe7bbe594c42bdf8ec6c1e4ec86c814.jpg","designAdvice":"设计师建议","designList":["http://127.0.0.1:3006/img/images/admindesign1.4aba3ab9a7362172f088470aa9ee109c.jpg","http://127.0.0.1:3006/img/images/admindesign2.a3e8634ef34f17eefa2a9f41d37a0836.jpg","http://127.0.0.1:3006/img/images/admindesign3.7d7f4c70ba96ec8759776939bc62caba.jpg"],"bianyuanOpen":true,"bianyuanValue":69,"roundOpen":false,"roundValue":0,"luochaOpen":true,"luochaValue":27,"angleOpen":false,"angleValue":0,"jiandunOpen":false,"jiandunValue":0,"qieduanOpen":false,"qieduanValue":0,"textureOpen":false,"textureValue":0,"dotOpen":false,"dotValue":0,"touliangOpen":false,"touliangValue":0,"linearOpen":false,"linearValue":0,"thicknessOpen":false,"thicknessValue":0}
+      // this.form ={"customer":"李希希","dateTime":"2022-01-01","daiyaTime":"2014-01-01","doctor":"刘医生","proxy":"黄医生","tiepianColor":"贴片颜色","CADImg":"http://127.0.0.1:3006/img/images/adminCADImg.e459c4d57b88c124d33445910f1e6e63.jpg","checiImg":"http://127.0.0.1:3006/img/images/admincheciImg.71ca6bc3be751df21605b9c022c31721.jpg","CAD":"cad","checi":"车次","porcelain":"瓷品","frontPhoto":"http://127.0.0.1:3006/img/images/adminfrontPhoto.df16b963a92221b83428b4031786b817.jpg","adviceContent":"面诊建设","leftFv":"http://127.0.0.1:3006/img/images/adminleftFv.363832e41e6524bdddc0da61ae1d888a.jpg","rightFv":"http://127.0.0.1:3006/img/images/adminrightFv.ce4eba42cf8e2e3568786262dc5f4303.jpg","front":"http://127.0.0.1:3006/img/images/adminfront.9358d8fae1223b235b1fa5bd00a662d6.jpg","leftFvEdge":"http://127.0.0.1:3006/img/images/adminleftFvEdge.af48b39f1876df847c12a235dd0e36e5.jpg","rightFvEdge":"http://127.0.0.1:3006/img/images/adminrightFvEdge.83f44f0251b23c18678a4c0596ef8938.jpg","intentImg":"http://127.0.0.1:3006/img/images/adminintentImg.6fe7bbe594c42bdf8ec6c1e4ec86c814.jpg","designAdvice":"设计师建议","designList":["http://127.0.0.1:3006/img/images/admindesign1.4aba3ab9a7362172f088470aa9ee109c.jpg","http://127.0.0.1:3006/img/images/admindesign2.a3e8634ef34f17eefa2a9f41d37a0836.jpg","http://127.0.0.1:3006/img/images/admindesign3.7d7f4c70ba96ec8759776939bc62caba.jpg"],"bianyuanOpen":true,"bianyuanValue":69,"roundOpen":false,"roundValue":0,"luochaOpen":true,"luochaValue":27,"angleOpen":false,"angleValue":0,"jiandunOpen":false,"jiandunValue":0,"qieduanOpen":false,"qieduanValue":0,"textureOpen":false,"textureValue":0,"dotOpen":false,"dotValue":0,"touliangOpen":false,"touliangValue":0,"linearOpen":false,"linearValue":0,"thicknessOpen":false,"thicknessValue":0}
       const res = await this.$api.addCustomer({
         ...this.form
       });
       console.log("this---------", res);
-      
     },
     hanldeListChange(value, index, key) {
       const item = this.dentistList[index];
@@ -761,6 +836,9 @@ page {
     margin: 12rpx 0;
     border-radius: 40rpx;
     background-color: #fff;
+  }
+  .u-input--square {
+    border-radius: 40rpx;
   }
   .diagnose {
     margin: 20rpx 0;

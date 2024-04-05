@@ -46,7 +46,6 @@ module.exports = (vm) => {
   // 响应拦截
   uni.$u.http.interceptors.response.use(
     (response) => {
-      console.log("🚀 ~ response:", response)
       /* 对响应成功做点什么 可使用async await 做异步操作*/
       //没有正确响应时候的操作
       if (response.statusCode !== 200) {
@@ -54,6 +53,11 @@ module.exports = (vm) => {
           //可以去跳转404页面
           uni.$u.toast("服务端请求失败404");
         } else if (response.statusCode === 500) {
+          //可以根据状态码自定义操作
+        }else if (response.statusCode === 401) {
+          uni.redirectTo({
+            url: "/pages/login/login"
+          });
           //可以根据状态码自定义操作
         }
         return Promise.reject(response);

@@ -3,9 +3,9 @@
     <u-upload
       :accept="accept"
       :fileList="data"
+      :disabled="disabled"
       :previewFullImage="true"
       @afterRead="afterRead"
-      @delete="deletePic"
       :name="name"
       :multiple="multiple"
       :maxCount="maxCount"
@@ -66,6 +66,11 @@
 export default {
   name: "my-upload",
   props: {
+    disabled: {
+      //是否多选
+      type: Boolean,
+      default: false
+    },
     width: {
       type: String,
       default: "80rpx"
@@ -132,11 +137,16 @@ export default {
     popupClose() {
       this.popupShow = false;
     },
+    // beforeRead() {
+    //   //  if(disabled)
+    //   return false;
+
+    // },
     // 删除图片
-    deletePic(event) {
-      this.data.splice(event.index, 1);
-      this.$emit("deleteCall", this.data);
-    },
+    // deletePic(event) {
+    //   this.data.splice(event.index, 1);
+    //   this.$emit("deleteCall", this.data);
+    // },
     // 新增图片
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存

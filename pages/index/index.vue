@@ -23,7 +23,7 @@
           suffixIcon="search"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
-        <navigator :url="`/pages/add/add`" class="keynote_con">
+        <navigator :url="`/pages/add/add?id=7&type=view`" class="keynote_con">
           <u-icon
             name="plus-circle"
             color="#dd524d63"

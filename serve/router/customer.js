@@ -16,5 +16,9 @@ const customer_handler = require('../router_handler/customer')
 // // 获取根据id商品信息
 // router.get('/getShopInfo',shop_handler.getShopInfo)
 router.post('/add',customer_handler.addCustomer)
+router.post('/edit',customer_handler.editCustomer)
+router.post('/detail',customer_handler.getCustomerDetailById)
+
+
 
 module.exports = router
