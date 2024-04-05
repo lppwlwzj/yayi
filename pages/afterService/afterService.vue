@@ -52,9 +52,10 @@
             style="margin-right: 8rpx"
             v-for="(item, index) in imgList"
             :key="index"
+            class="image"
           >
             <view class="image fc">
-              <image :src="item" mode="aspectFill"></image>
+              <image :src="item" class="upload-img" mode="scaleToFill"></image>
               <image
                 @tap.stop="preview(item)"
                 src="../../static/images/preview.png"
@@ -62,7 +63,6 @@
                 mode="aspectFill"
               ></image>
               <u-icon
-                v-show="disabled"
                 @click="deleteImg(index)"
                 class="image-close"
                 size="16"
@@ -89,18 +89,6 @@
             </view>
           </Upload>
         </view>
-        <!-- <view class="rfaw image-list">
-          <Upload v-for="(item, index) in imgList" :key="index">
-            <view class="image fc">
-              <image
-                src="../../static//images/add.png"
-                mode="widthFix"
-                style="width: 20px; height: 20px"
-              >
-              </image>
-            </view>
-          </Upload>
-        </view> -->
       </view>
     </view>
 
@@ -119,21 +107,22 @@
     </view>
     <view class="fc" style="margin: 18rpx 0; font-size: 40rpx"> 售后服务 </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
-      <u-collapse style="width: 100%;">
-        <u-collapse-item title="试戴次数" name="Docs guide" :border="false">
-          <view v-for="(item, idx) in tryInfo" :key="idx" style="margin-top: 16rpx;" >
-            <view class="rfc" style="align-items: flex-start;" >
-              <view class="rfsw" style="width: 55%;">
+      <u-collapse style="width: 100%">
+        <u-collapse-item
+          ref="tryCollapse"
+          title="试戴次数"
+          name="Docs guide"
+          :border="false"
+        >
+          <view v-for="(item, idx) in tryInfo" :key="idx" class="img-list">
+            <view class="rfc" style="align-items: flex-start">
+              <view class="rfsw" style="width: 55%">
                 <view
                   v-for="(img_url, index) in item.tryImg"
                   :key="index + idx"
                 >
                   <view class="upload-img-el fc">
-                    <image
-                      src="../../static//images/upload.png"
-                      mode="widthFix"
-                      class="upload-img"
-                    >
+                    <image :src="img_url" mode="aspectFill" class="upload-img">
                     </image>
                     <image
                       @tap.stop="preview(img_url)"
@@ -141,6 +130,13 @@
                       class="preview"
                       mode="aspectFill"
                     ></image>
+                    <u-icon
+                      @click="handleDelTryImg(idx, index)"
+                      class="image-close"
+                      size="16"
+                      color="#fff"
+                      name="close-circle"
+                    ></u-icon>
                   </view>
                 </view>
                 <Upload
@@ -148,48 +144,51 @@
                   customClass="upload-img"
                   @change="
                     (value) => {
-                      handleTryImage(value);
+                      handleTryImage(value, idx);
                     }
                   "
                 >
                   <view class="upload-img-el rfc">
                     <image
-                      src="../../static//images/upload.png"
-                      mode="widthFix"
+                      src="../../static/images/upload.png"
+                      mode="aspectFill"
+                      class="upload-img"
                     >
                     </image>
                     <image
-                      src="../../static//images/add.png"
-                      mode="widthFix"
+                      src="../../static/images/add.png"
+                      mode="aspectFill"
                       class="upload-add"
-                      style="width: 30px; height: 30px;"
+                      style="width: 30px; height: 30px"
                     ></image>
                   </view>
-              
                 </Upload>
               </view>
-              <view class="diagnose-text"> </view>
+              <view class="diagnose-text">
+                <u--textarea
+                  v-model="item.remark"
+                  border="none"
+                  placeholder="请输入内容"
+                ></u--textarea>
+              </view>
             </view>
           </view>
+          <view class="btn afc" @tap.stop="handleAddTry"> 添加一条 </view>
         </u-collapse-item>
       </u-collapse>
     </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
-      <u-collapse  style="width: 100%;">
+      <u-collapse style="width: 100%">
         <u-collapse-item title="修复次数" name="Docs guide">
-          <view v-for="(item, idx) in recoverInfo" :key="idx" style="margin-top: 16rpx;" >
-            <view class="rfc" style="align-items: flex-start;" >
-              <view class="rfsw" style="width: 55%;">
+          <view v-for="(item, idx) in recoverInfo" :key="idx" class="img-list">
+            <view class="rfc" style="align-items: flex-start">
+              <view class="rfsw" style="width: 55%">
                 <view
                   v-for="(img_url, index) in item.recoverImg"
                   :key="index + idx"
                 >
                   <view class="upload-img-el fc">
-                    <image
-                      src="../../static//images/upload.png"
-                      mode="widthFix"
-                      class="upload-img"
-                    >
+                    <image :src="img_url" mode="aspectFill" class="upload-img">
                     </image>
                     <image
                       @tap.stop="preview(img_url)"
@@ -197,6 +196,13 @@
                       class="preview"
                       mode="aspectFill"
                     ></image>
+                    <u-icon
+                      @click="handleDelRecoverImg(idx, index)"
+                      class="image-close"
+                      size="16"
+                      color="#fff"
+                      name="close-circle"
+                    ></u-icon>
                   </view>
                 </view>
                 <Upload
@@ -204,31 +210,39 @@
                   customClass="upload-img"
                   @change="
                     (value) => {
-                      handleTryImage(value);
+                      handleAddRecover(value, idx);
                     }
                   "
                 >
                   <view class="upload-img-el rfc">
                     <image
-                      src="../../static//images/upload.png"
-                      mode="widthFix"
+                      src="../../static/images/upload.png"
+                      mode="aspectFill"
+                      class="upload-img"
                     >
                     </image>
                     <image
-                      src="../../static//images/add.png"
-                      mode="widthFix"
+                      src="../../static/images/add.png"
+                      mode="aspectFill"
                       class="upload-add"
-                      style="width: 30px; height: 30px;"
+                      style="width: 30px; height: 30px"
                     ></image>
                   </view>
-              
                 </Upload>
               </view>
-              <view class="diagnose-text"> </view>
+              <view class="diagnose-text">
+                <u--textarea
+                  v-model="item.remark"
+                  border="none"
+                  placeholder="请输入内容"
+                ></u--textarea>
+              </view>
             </view>
           </view>
+          <view class="btn afc" @tap.stop="handleRecoverTry"> 添加一条 </view>
         </u-collapse-item>
       </u-collapse>
+      <view class="btn afc" @tap.stop="submit"> 确认 </view>
     </view>
     <u-popup
       :show="popupShow"
@@ -243,7 +257,7 @@
         <image
           :src="previewImg"
           v-if="previewImg.indexOf('image') > -1"
-          mode="widthFix"
+          mode="aspectFill"
         ></image>
         <video
           :src="previewImg"
@@ -322,18 +336,37 @@ export default {
       this.getCustomerDetailById(option.id);
     }
   },
-  computed: {
-    // tryImg() {
-    //   thi
-    // }
-  },
+  computed: {},
 
   methods: {
-    deleteTryImg(index) {},
-    handleTryImage(img) {},
-    change(item) {
-      this.active = item.value;
+    submit() {
+         
     },
+    handleTryImage(img_url, idx) {
+      this.tryInfo[idx].tryImg.push(img_url);
+    },
+    handleDelTryImg(idx, index) {
+      this.tryInfo[idx].tryImg.splice(index, 1);
+    },
+    handleAddTry() {
+      this.tryInfo.push({
+        tryImg: [],
+        remark: ""
+      });
+    },
+    handleAddRecover(img_url, idx) {
+      this.recoverInfo[idx].recoverImg.push(img_url);
+    },
+    handleDelTryImg(idx, index) {
+      this.recoverInfo[idx].recoverImg.splice(index, 1);
+    },
+    handleRecoverTry() {
+      this.recoverInfo.push({
+        recoverImg: [],
+        remark: ""
+      });
+    },
+
     preview(url) {
       this.popupShow = true;
       this.previewImg = url;
@@ -342,10 +375,10 @@ export default {
       this.popupShow = false;
     },
     handleImage(value) {
-      this.form.imgList.push(value);
+      this.imgList.push(value);
     },
     deleteImg(index) {
-      this.form.imgList.splice(index);
+      this.imgList.splice(index);
     },
     async getCustomerDetailById(id) {
       const res = await this.$api.getCustomerDetailById({
@@ -453,42 +486,23 @@ page {
   }
 
   .image {
+    position: relative;
     width: 200rpx;
     height: 200rpx;
     background: #898787a3;
     border-radius: 16rpx;
-    margin: 20rpx 0rpx;
+    // margin: 20rpx 0rpx;
     background: url("../../static/images/upload.png") center no-repeat;
     background-size: 100% 100%;
   }
-
-  // .image-2 {
-  //   width: 160rpx;
-  //   height: 160rpx;
+  // image2{
+  //   position: relative;
+  //   width: 200rpx;
+  //   height: 200rpx;
   //   background: #898787a3;
   //   border-radius: 16rpx;
   //   margin: 20rpx 0rpx;
   // }
-
-  .u-page__slide-item {
-    flex: 1;
-    margin-top: 30rpx;
-
-    .text {
-      text-align: center;
-      color: #33333340;
-    }
-  }
-
-  /deep/.uni-slider-handle-wrapper {
-    background-color: #fff !important;
-  }
-
-  /deep/.u-radio-group {
-    width: 80rpx !important;
-    margin-right: 16rpx;
-    flex: 0;
-  }
 
   .btn {
     margin-top: 50rpx;
@@ -507,12 +521,22 @@ page {
     background-color: #fff;
   }
 }
+.img-list {
+  margin: 16rpx 0;
+  border-bottom: 1px solid #cccccc6b;
+  padding-bottom: 16rpx;
+}
 .diagnose-text {
   margin: 0 12rpx;
-  // width: 520rpx;
   flex: 1;
   background-color: #fff;
   min-height: 320rpx;
   border-radius: 40rpx;
+}
+/deep/.u-line {
+  border: none !important;
+}
+/deep/.u-collapse-item__content {
+  height: auto !important;
 }
 </style>
