@@ -28,4 +28,20 @@ exports.submit = (req, res) => {
     });
   });
 };
+exports.detail = (req, res) => {
+  const { service_id } = req.body;
+  // 定义sql语句
+  const sql = `select * from service where id=${service_id}`;
+  // 调用db.query()执行sql语句
+  db.query(sql, (err, results) => {
+    if (err) {
+      return res.cc(err);
+    }
+    res.send({
+      code: 0,
+      message: "操作成功！",
+      re: results[0]
+    });
+  });
+};
 // 获取热门商品数据(查询分页)

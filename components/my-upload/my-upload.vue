@@ -91,7 +91,7 @@ export default {
     },
     accept: {
       type: String,
-      default: "all"
+      default: "image,video"
     },
     maxCount: {
       //最大上传数量
@@ -102,6 +102,11 @@ export default {
       //名称
       type: String,
       default: "1"
+    },
+    id: {
+      //名称
+      type: String,
+      default: ""
     },
     img_url: {
       //名称
@@ -159,7 +164,7 @@ export default {
           Authorization: userInfo.token
         },
         formData: {
-          id: userInfo.usercount,
+          id: this.id,
           name: event.name,
           file: event.file
         },

@@ -3,13 +3,13 @@ create: James
 time: 2022.8.21
 to:商品
  */
-
+const moment = require("moment");
 // 导入数据库操作模块
 const db = require("../db/index");
 
-// 获取根据商品id商品信息
 exports.addCustomer = (req, res) => {
   const {
+    customer_id,
     customer,
     dateTime,
     daiyaTime,
@@ -54,8 +54,11 @@ exports.addCustomer = (req, res) => {
     thicknessOpen,
     thicknessValue
   } = req.body;
+  const createtime = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
   const _designList = JSON.stringify(designList);
   const sql = `insert into customer (
+    createtime,
+    customer_id,
 		customer,
         dateTime,
         daiyaTime,
@@ -99,7 +102,7 @@ exports.addCustomer = (req, res) => {
         linearValue,
         thicknessOpen,
         thicknessValue
-	) values ('${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${linearOpen}','${linearValue}','${thicknessOpen}','${thicknessValue}')`;
+	) values ('${createtime}','${customer_id}','${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${linearOpen}','${linearValue}','${thicknessOpen}','${thicknessValue}')`;
   // 更新参数表
   db.query(sql, req.body, (err, results) => {
     if (err) return res.cc(err);
@@ -114,10 +117,8 @@ exports.addCustomer = (req, res) => {
   });
 };
 
-// 获取根据商品id商品信息
 exports.editCustomer = (req, res) => {
   const {
-    id,
     customer,
     dateTime,
     daiyaTime,
@@ -220,10 +221,9 @@ exports.editCustomer = (req, res) => {
   });
 };
 
-// 获取根据商品id商品信息
 exports.getCustomerDetailById = (req, res) => {
   const { id } = req.body;
-//   const _designList = JSON.stringify(designList);
+  //   const _designList = JSON.stringify(designList);
   const sql = `select * from  customer where id=${id}`;
   // 更新参数表
   db.query(sql, (err, results) => {
@@ -236,4 +236,45 @@ exports.getCustomerDetailById = (req, res) => {
       }
     });
   });
+};
+
+exports.getCustomerList = (req, res) => {
+  const { search } = req.body;
+  let sql = "";
+  if (isNaN(search) && !isNaN(Date.parse(search))) {
+    sql = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.dateTime = '${search}'`;
+    db.query(sql, req.body, (err, results) => {
+      if (err) return res.cc(err);
+      res.send({
+        code: 0,
+        message: "查询成功！",
+        re: results
+      });
+    });
+  } else {
+    const sql1 = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.customer LIKE "%${search}%"`;
+    const sql2 = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.porcelain LIKE "%${search}%"`;
+    const p1 = new Promise((resolve, reject) => {
+      db.query(sql1, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    const p2 = new Promise((resolve, reject) => {
+      db.query(sql2, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    Promise.all([p1, p2])
+      .then((results) => {
+        const list = results[0].concat(results[1]);
+        res.send({
+          code: 200,
+          message: "查询成功！",
+          re: list
+        });
+      })
+      .catch((err) => res.cc(err));
+  }
 };

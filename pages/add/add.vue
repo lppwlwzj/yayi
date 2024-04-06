@@ -92,6 +92,7 @@
           <Upload
             :img_url="form.frontPhoto"
             name="frontPhoto"
+            :id="`${userInfo.usercount}${customer_id}`"
             :disabled="disabled"
             customClass="upload-img-el"
             @change="
@@ -142,6 +143,7 @@
           <Upload
             :disabled="disabled"
             name="leftFv"
+            :id="`${userInfo.usercount}${customer_id}`"
             :img_url="form.leftFv"
             customClass="image"
             @change="
@@ -163,6 +165,7 @@
           <Upload
             :disabled="disabled"
             name="rightFv"
+            :id="`${userInfo.usercount}${customer_id}`"
             :img_url="form.rightFv"
             customClass="image"
             @change="
@@ -185,6 +188,7 @@
             name="front"
             :disabled="disabled"
             :img_url="form.front"
+            :id="`${userInfo.usercount}${customer_id}`"
             customClass="image"
             @change="
               (value) => {
@@ -205,6 +209,7 @@
           <Upload
             name="leftFvEdge"
             :disabled="disabled"
+            :id="`${userInfo.usercount}${customer_id}`"
             :img_url="form.leftFvEdge"
             customClass="image"
             @change="
@@ -226,6 +231,7 @@
             name="rightFvEdge"
             :img_url="form.rightFvEdge"
             customClass="image"
+            :id="`${userInfo.usercount}${customer_id}`"
             :disabled="disabled"
             @change="
               (value) => {
@@ -263,6 +269,7 @@
           <Upload
             style="flex: 1"
             :disabled="disabled"
+            :id="`${userInfo.usercount}${customer_id}`"
             name="intentImg"
             :img_url="form.intentImg"
             customClass="upload-img-el"
@@ -311,13 +318,20 @@
                 class="preview"
                 mode="aspectFill"
               ></image>
-             <u-icon v-show="disabled" @click="deleteDesignImg(index)" class="image-close" size="16" color="#fff" name="close-circle"></u-icon>
-
+              <u-icon
+                v-show="disabled"
+                @click="deleteDesignImg(index)"
+                class="image-close"
+                size="16"
+                color="#fff"
+                name="close-circle"
+              ></u-icon>
             </view>
           </view>
           <Upload
             :name="`design${designList.length + 1}`"
             customClass="image"
+            :id="`${userInfo.usercount}${customer_id}`"
             :disabled="disabled"
             @change="
               (value) => {
@@ -331,7 +345,9 @@
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
-              <text  v-show="disabled" style="color: #fff; font-size: 12px">点击上传</text>
+              <text v-show="disabled" style="color: #fff; font-size: 12px"
+                >点击上传</text
+              >
             </view>
           </Upload>
         </view>
@@ -440,6 +456,7 @@
     <view class="rfa" style="margin: 18rpx 0">
       <Upload
         name="CADImg"
+        :id="`${userInfo.usercount}${customer_id}`"
         :img_url="form.CADImg"
         :disabled="disabled"
         customClass="image-2"
@@ -459,6 +476,7 @@
         </view>
       </Upload>
       <Upload
+        :id="`${userInfo.usercount}${customer_id}`"
         name="checiImg"
         :disabled="disabled"
         :img_url="form.checiImg"
@@ -559,7 +577,8 @@
           style=""
         ></u-icon>
       </navigator> -->
-      <navigator :url="`/pages/afterService/afterService?id=${customer_id}`">
+      <!-- <navigator :url="`/pages/afterService/afterService?id=${customer_id}`"> -->
+      <navigator :url="`/pages/afterService/afterService?id=11`">
         <u-icon
           size="26"
           name="../../static/images/ECO-UI-04.png"
@@ -578,8 +597,9 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      userInfo: {},
       customer_id: "",
-      operateType: " create",
+      operateType: "create",
       videoSrc:
         "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4",
       previewImg: "",
@@ -736,10 +756,13 @@ export default {
   //   },
   onLoad: function (option) {
     if (option.id) {
-      this.customer_id = option.id;
+      // this.customer_id = option.id
       this.operateType = option.type;
       this.getCustomerDetailById(option.id);
     }
+    this.customer_id = option?.id || Math.random().toString(36).substring(2, 6);
+    console.log("🚀 ~  this.customer_id:", this.customer_id);
+    this.userInfo = uni.getStorageSync("userInfo");
   },
   computed: {
     disabled() {
@@ -778,7 +801,68 @@ export default {
       });
       // console.log("this----", this.form);
       // this.form ={"customer":"李希希","dateTime":"2022-01-01","daiyaTime":"2014-01-01","doctor":"刘医生","proxy":"黄医生","tiepianColor":"贴片颜色","CADImg":"http://127.0.0.1:3006/img/images/adminCADImg.e459c4d57b88c124d33445910f1e6e63.jpg","checiImg":"http://127.0.0.1:3006/img/images/admincheciImg.71ca6bc3be751df21605b9c022c31721.jpg","CAD":"cad","checi":"车次","porcelain":"瓷品","frontPhoto":"http://127.0.0.1:3006/img/images/adminfrontPhoto.df16b963a92221b83428b4031786b817.jpg","adviceContent":"面诊建设","leftFv":"http://127.0.0.1:3006/img/images/adminleftFv.363832e41e6524bdddc0da61ae1d888a.jpg","rightFv":"http://127.0.0.1:3006/img/images/adminrightFv.ce4eba42cf8e2e3568786262dc5f4303.jpg","front":"http://127.0.0.1:3006/img/images/adminfront.9358d8fae1223b235b1fa5bd00a662d6.jpg","leftFvEdge":"http://127.0.0.1:3006/img/images/adminleftFvEdge.af48b39f1876df847c12a235dd0e36e5.jpg","rightFvEdge":"http://127.0.0.1:3006/img/images/adminrightFvEdge.83f44f0251b23c18678a4c0596ef8938.jpg","intentImg":"http://127.0.0.1:3006/img/images/adminintentImg.6fe7bbe594c42bdf8ec6c1e4ec86c814.jpg","designAdvice":"设计师建议","designList":["http://127.0.0.1:3006/img/images/admindesign1.4aba3ab9a7362172f088470aa9ee109c.jpg","http://127.0.0.1:3006/img/images/admindesign2.a3e8634ef34f17eefa2a9f41d37a0836.jpg","http://127.0.0.1:3006/img/images/admindesign3.7d7f4c70ba96ec8759776939bc62caba.jpg"],"bianyuanOpen":true,"bianyuanValue":69,"roundOpen":false,"roundValue":0,"luochaOpen":true,"luochaValue":27,"angleOpen":false,"angleValue":0,"jiandunOpen":false,"jiandunValue":0,"qieduanOpen":false,"qieduanValue":0,"textureOpen":false,"textureValue":0,"dotOpen":false,"dotValue":0,"touliangOpen":false,"touliangValue":0,"linearOpen":false,"linearValue":0,"thicknessOpen":false,"thicknessValue":0}
+
+      this.form = {
+        customer_id: "m6eu",
+        customer: "李西",
+        dateTime: "2017-08-10",
+        daiyaTime: "2020-07-11",
+        doctor: "周医生",
+        proxy: "刘代理",
+        tiepianColor: "贴片颜色",
+        CADImg:
+          "http://127.0.0.1:3006/img/images/adminxrhpCADImg.ebd6b687d843ed1a3a2b79a975da8c47.png",
+        checiImg:
+          "http://127.0.0.1:3006/img/images/adminxrhpcheciImg.22659b26639f762a519b93c15527b856.jpg",
+        CAD: "cad",
+        checi: "checi",
+        porcelain: "瓷瓶",
+        frontPhoto:
+          "http://127.0.0.1:3006/img/images/adminxrhpfrontPhoto.9e8afb073f6ad3cbbfc459c400139661.jpg",
+        adviceContent: "13435435",
+        leftFv:
+          "http://127.0.0.1:3006/img/images/adminxrhpleftFv.9b38a27c836e3977ebd689990f5dfc64.png",
+        rightFv:
+          "http://127.0.0.1:3006/img/images/adminxrhprightFv.0412142b3e264168ff81f2b54ee3d7ea.png",
+        front:
+          "http://127.0.0.1:3006/img/images/adminxrhpfront.a7f1fbea4ae317f5b7198d7dc111f433.jpg",
+        leftFvEdge:
+          "http://127.0.0.1:3006/img/images/adminxrhpleftFvEdge.a719fde17b4992cdbc091feb980ca36b.jpg",
+        rightFvEdge: "",
+        intentImg:
+          "http://127.0.0.1:3006/img/images/adminxrhpintentImg.5657898f47b72603fbb2d0714bd7cab8.jpg",
+        designAdvice: "5太56546",
+        designList: [
+          "http://127.0.0.1:3006/img/images/adminxrhpdesign1.21657da4b93fb5b9abf3dc2eb0d5bb80.png",
+          "http://127.0.0.1:3006/img/images/adminxrhpdesign2.1b38d05fc9e362901179184837bf8cf9.png",
+          "http://127.0.0.1:3006/img/images/adminxrhpdesign3.0f18839da8be502d332564538833a4b8.jpg"
+        ],
+        bianyuanOpen: true,
+        bianyuanValue: 35,
+        roundOpen: false,
+        roundValue: 0,
+        luochaOpen: true,
+        luochaValue: 27,
+        angleOpen: false,
+        angleValue: 0,
+        jiandunOpen: true,
+        jiandunValue: 52,
+        qieduanOpen: false,
+        qieduanValue: 0,
+        textureOpen: false,
+        textureValue: 0,
+        dotOpen: false,
+        dotValue: 0,
+        touliangOpen: false,
+        touliangValue: 0,
+        linearOpen: false,
+        linearValue: 0,
+        thicknessOpen: false,
+        thicknessValue: 0
+      };
+
       const res = await this.$api.addCustomer({
+        customer_id: "m6ep",
         ...this.form
       });
       console.log("this---------", res);
@@ -798,9 +882,9 @@ export default {
     popupClose() {
       this.popupShow = false;
     },
-    getDesignListImg(index) {
-      return this.form.designList[index];
-    },
+    // getDesignListImg(index) {
+    //   return this.form.designList[index];
+    // },
 
     handleFormChange(key, value) {
       this.$set(this.form, [key], value);
@@ -809,11 +893,12 @@ export default {
       this.form.designList.push(value);
     },
     deleteDesignImg(index) {
-      this.form.designList.splice(index,1);
+      this.form.designList.splice(index, 1);
     },
     confirm(timeV) {
       this.show = false;
       const time = moment(timeV.value).format("YYYY-MM-DD");
+      // console.log("🚀 ~ confirm ~ time:", moment(time).valueOf())
       this.form.dateTime = time;
     },
     handleDaiYaTime(timeV) {
@@ -829,9 +914,9 @@ export default {
 page {
   background-color: #fff;
 }
-.image-close{
+.image-close {
   position: absolute;
-  top:4rpx;
+  top: 4rpx;
   right: 4rpx;
 }
 .footer {

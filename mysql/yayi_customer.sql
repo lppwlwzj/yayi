@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS `customer`;
 
 CREATE TABLE `customer` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `customer_id` varchar(100) NOT NULL COMMENT '客户id',
   `customer` varchar(100) NOT NULL COMMENT '客户姓名',
   `dateTime` varchar(100) NOT NULL COMMENT '日期',
   `daiyaTime` varchar(100) DEFAULT NULL COMMENT '预计戴牙日期',
@@ -66,7 +67,7 @@ CREATE TABLE `customer` (
   `linearValue` varchar(255) DEFAULT NULL COMMENT '切端渐变层值',
   `thicknessOpen` varchar(255) DEFAULT NULL COMMENT '厚度',
   `thicknessValue` varchar(255) DEFAULT NULL COMMENT '厚度值',
-
+  `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='客户表';
 

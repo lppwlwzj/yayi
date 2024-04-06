@@ -22,8 +22,10 @@
           border="surround"
           suffixIcon="search"
           suffixIconStyle=" color: #dd524dab !important;"
+          @confirm="handleSearch"
         ></u--input>
-        <navigator :url="`/pages/add/add?id=7&type=view`" class="keynote_con">
+        <!-- <navigator :url="`/pages/add/add?id=7&type=view`" class="keynote_con"> -->
+        <navigator :url="`/pages/add/add`" class="keynote_con">
           <u-icon
             name="plus-circle"
             color="#dd524d63"
@@ -37,22 +39,69 @@
       <view class="list-item rfc" v-for="(item, index) in list" :key="index">
         <view class="list-item-left rfc">
           <view class="lef-info">
-            {{ item.name }} / {{ item.time }} /
-            {{ item.info }}dwdfef非常热反而风格
+            {{ item.customer }} / {{ item.dateTime }} / {{ item.porcelain }} /
+            {{ item.doctor }} / {{ item.CAD }} / {{ item.checi }}
           </view>
-          <u-icon size="26" name="../../static/images/ECO-UI-05.png"></u-icon>
+          <navigator
+            :url="`/pages/afterService/afterService?id=${item.id}&service_id=${item.service_id}`"
+            class="keynote_con"
+          >
+            <u-icon
+              size="18"
+              v-if="item.tryVisible"
+              name="../../static/images/i2.png"
+            ></u-icon>
+          </navigator>
+          <navigator
+            :url="`/pages/afterService/afterService?id=${item.id}&service_id=${item.service_id}`"
+            class="keynote_con"
+          >
+            <u-icon
+              size="18"
+              style="margin-left: 12rpx"
+              v-if="item.recoverVisible"
+              name="../../static/images/i1.png"
+            ></u-icon>
+          </navigator>
         </view>
-        <view class="list-item-right"> 李总 </view>
+        <navigator :url="`/pages/add/add?id=${item.id}&type=edit`">
+          <view class="list-item-right"> {{ item.proxy }} </view>
+        </navigator>
       </view>
       <view class="footer rfa">
         <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+        <u-icon
+          size="26"
+          name="../../static/images/ECO-UI-18.png"
+          @click="
+            () => {
+              open = true;
+            }
+          "
+        ></u-icon>
         <u-icon
           size="26"
           name="../../static/images/ECO-UI-09.png"
           @click="logout"
         ></u-icon>
       </view>
-      <u-modal :show="show" @confirm="confirm" ref="uModal" content="确认退出？"></u-modal>
+      <u-calendar
+        color="#f56c6c"
+        :show="open"
+        mode="single"
+        @close="
+          () => {
+            open = false;
+          }
+        "
+        @confirm="handleConfirm"
+      ></u-calendar>
+      <u-modal
+        :show="show"
+        @confirm="confirm"
+        ref="uModal"
+        content="确认退出？"
+      ></u-modal>
     </view>
   </view>
 </template>
@@ -61,51 +110,11 @@
 export default {
   data() {
     return {
-      show:false,
+      show: false,
+      open: false,
       info: "",
       search: "",
-      list: [
-        {
-          name: "林一",
-          time: "2024.3.15",
-          detail: "湖泊吧啊啦啦啦"
-        },
-        {
-          name: "林一",
-          time: "2024.3.15",
-          detail: "湖泊吧啊啦啦啦"
-        },
-        {
-          name: "林一",
-          time: "2024.3.15",
-          detail: "湖泊吧啊啦啦啦"
-        },
-        {
-          name: "林一",
-          time: "2024.3.15",
-          detail: "湖泊吧啊啦啦啦"
-        },
-        {
-          name: "林一",
-          time: "2024.3.15",
-          detail: "湖泊吧啊啦啦啦"
-        },
-        {
-          name: "林一",
-          time: "2024.3.15",
-          detail: "湖泊吧啊啦啦啦"
-        },
-        {
-          name: "林一",
-          time: "2024.3.15",
-          detail: "湖泊吧啊啦啦啦"
-        },
-        {
-          name: "林一",
-          time: "2024.3.15",
-          detail: "湖泊吧啊啦啦啦"
-        }
-      ]
+      list: []
     };
   },
 
@@ -118,7 +127,51 @@ export default {
     },
 
     logout() {
-      this.show = true
+      this.show = true;
+    },
+    handleConfirm(time) {
+      this.search = time[0];
+      this.open = false;
+      this.handleSearch();
+    },
+    async handleSearch() {
+      const res = await this.$api.getCustomerList({
+        search: this.search
+      });
+      if (!res.code)
+        this.list = res.re.map((item) => {
+          const {
+            recoverInfo,
+            tryInfo,
+            id,
+            proxy,
+            customer_id,
+            customer,
+            dateTime,
+            porcelain,
+            doctor,
+            CAD,
+            checi,
+            service_id
+          } = item;
+          const _recoverInfo = JSON.parse(recoverInfo);
+          const _tryInfo = JSON.parse(tryInfo);
+          return {
+            id,
+            customer_id,
+            customer,
+            dateTime,
+            proxy,
+            porcelain,
+            doctor,
+            CAD,
+            checi,
+            service_id,
+            recoverVisible: !!_recoverInfo?.length,
+            tryVisible: !!_tryInfo?.length
+          };
+        });
+      console.log("🚀 ~ this.list=res.re.map ~   this.list :", this.list);
     }
   }
 };

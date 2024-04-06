@@ -1,7 +1,11 @@
 <template>
   <view class="content">
     <view class="rfb">
-      <u-icon size="30" name="../../static/images/ECO-UI-03.png"></u-icon>
+      <u-icon
+        size="30"
+        name="../../static/images/ECO-UI-03.png"
+        @click="back"
+      ></u-icon>
 
       <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
     </view>
@@ -72,6 +76,7 @@
             </view>
           </view>
           <Upload
+            v-show="!disabled"
             :name="`service${imgList.length + 1}`"
             customClass="image"
             @change="
@@ -140,6 +145,7 @@
                   </view>
                 </view>
                 <Upload
+                  v-show="!disabled"
                   :name="`try${item.tryImg.length + 1}`"
                   customClass="upload-img"
                   @change="
@@ -166,6 +172,7 @@
               </view>
               <view class="diagnose-text">
                 <u--textarea
+                  :disabled="disabled"
                   v-model="item.remark"
                   border="none"
                   placeholder="请输入内容"
@@ -173,13 +180,18 @@
               </view>
             </view>
           </view>
-          <view class="btn afc" @tap.stop="handleAddTry"> 添加一条 </view>
+          <view v-show="!disabled" class="btn afc" @tap.stop="handleAddTry">
+            添加一条
+          </view>
         </u-collapse-item>
       </u-collapse>
     </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
       <u-collapse style="width: 100%">
-        <u-collapse-item title="修复次数" name="Docs guide">
+        <u-collapse-item
+          :title="`修复次数${recoverInfo.length}`"
+          name="Docs guide"
+        >
           <view v-for="(item, idx) in recoverInfo" :key="idx" class="img-list">
             <view class="rfc" style="align-items: flex-start">
               <view class="rfsw" style="width: 55%">
@@ -206,6 +218,7 @@
                   </view>
                 </view>
                 <Upload
+                  v-show="!disabled"
                   :name="`try${item.recoverImg.length + 1}`"
                   customClass="upload-img"
                   @change="
@@ -232,6 +245,7 @@
               </view>
               <view class="diagnose-text">
                 <u--textarea
+                  :disabled="disabled"
                   v-model="item.remark"
                   border="none"
                   placeholder="请输入内容"
@@ -239,10 +253,12 @@
               </view>
             </view>
           </view>
-          <view class="btn afc" @tap.stop="handleRecoverTry"> 添加一条 </view>
+          <view v-show="!disabled" class="btn afc" @tap.stop="handleRecoverTry">
+            添加一条
+          </view>
         </u-collapse-item>
       </u-collapse>
-      <view class="btn afc" @tap.stop="submit"> 确认 </view>
+      <view v-show="!disabled" class="btn afc" @tap.stop="submit"> 确认 </view>
     </view>
     <u-popup
       :show="popupShow"
@@ -280,7 +296,8 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
-      customer_id:'',
+      service_id: "",
+      customer_id: "",
       previewImg: "",
       popupShow: false,
       form: {},
@@ -315,24 +332,47 @@ export default {
   onLoad: function (option) {
     if (option.id) {
       this.customer_id = option.id;
-      // this.operateType = option.type;
       this.getCustomerDetailById(option.id);
     }
+    if (option?.service_id) {
+      this.service_id = option.service_id;
+      this.getServiceDetailById(option.service_id);
+    }
   },
-  computed: {},
+  computed: {
+    disabled() {
+      return !!this.service_id;
+    }
+  },
 
   methods: {
+    back() {
+      uni.navigateBack({
+        delta: 1
+      });
+    },
     async submit() {
       const form = {
         tryInfo: JSON.stringify(this.tryInfo),
         recoverInfo: JSON.stringify(this.recoverInfo),
         imgList: JSON.stringify(this.imgList),
-        customer_id:this.customer_id
+        customer_id: this.customer_id
       };
       const res = await this.$api.submitService({
         ...form
-      })
-      console.log("🚀 ~ submit ~ res:", res)
+      });
+      console.log("🚀 ~ submit ~ res:", res);
+    },
+    async getServiceDetailById(service_id) {
+      const res = await this.$api.getServiceDetailById({
+        service_id
+      });
+      if (!res.code) {
+        const { tryInfo, recoverInfo, imgList } = res.re;
+        this.tryInfo = JSON.parse(tryInfo);
+        this.recoverInfo = JSON.parse(recoverInfo);
+        this.imgList = JSON.parse(imgList);
+      }
     },
     handleTryImage(img_url, idx) {
       this.tryInfo[idx].tryImg.push(img_url);
@@ -387,6 +427,7 @@ export default {
 <style lang="scss" scoped>
 page {
   background-color: #fff;
+  height: 100vh;
 }
 .image-close {
   position: absolute;
@@ -399,6 +440,9 @@ page {
 /deep/.uni-input-wrapper {
   padding: 0 16rpx !important;
 }
+/deep/.u-textarea--disabled {
+  background: #fff !important;
+}
 .footer {
   width: 100%;
   background: #fff;
@@ -406,6 +450,7 @@ page {
 
 .content {
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
   background-color: $uni-color-bg;
   padding: 50rpx 30rpx 0;
@@ -524,7 +569,7 @@ page {
   margin: 0 12rpx;
   flex: 1;
   background-color: #fff;
-  min-height: 320rpx;
+  min-height: 144rpx;
   border-radius: 40rpx;
 }
 /deep/.u-line {

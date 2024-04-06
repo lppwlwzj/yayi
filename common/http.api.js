@@ -5,13 +5,15 @@ const install = (Vue, vm) => {
     uploadImg: (formData) => vm.$u.http.upload("/api/upload", formData),
     login: (data) => vm.$u.http.post("/user/login", data),
     addCustomer: (data) => vm.$u.http.post("/customer/add", data),
-    getCustomerDetailById: (data) => vm.$u.http.post("customer/detail", data),
-    editCustomer: (data) => vm.$u.http.post("customer/edit", data),
+    getCustomerDetailById: (data) => vm.$u.http.post("/customer/detail", data),
+    editCustomer: (data) => vm.$u.http.post("/customer/edit", data),
+    getCustomerList: (data) => vm.$u.http.post("/customer/list", data),
+
     //获取主页信息
     submitService: (data) => vm.$u.http.post("/service/edit", data),
     //登录
-    getActiveDetail: (params) =>
-      vm.$u.http.get("/api/activity/info", { params }),
+    getServiceDetailById: (data) =>
+      vm.$u.http.post("/service/detail",data),
     getRegisterCover: () => vm.$u.http.get("/api/index/registerCover"),
     getMembertype: () => vm.$u.http.get("/api/index/membertype"),
     register: (data) => vm.$u.http.post("/api/user/register", data),
