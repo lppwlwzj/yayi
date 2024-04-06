@@ -95,7 +95,8 @@ app.use('/news',newsRouter)
 const customerRouter = require('./router/customer')
 app.use('/customer',customerRouter)
 
-
+const serviceRouter = require('./router_handler/service')
+app.use('/service/edit',serviceRouter.submit)
 
 // 配置服务器
 const port = 3006

@@ -912,7 +912,7 @@ page {
     width: 14px;
     height: 14px;
     position: absolute;
-    right: 10rpx;
+    left: 10rpx;
     bottom: 10rpx;
   }
   .image-2 {

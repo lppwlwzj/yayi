@@ -2,15 +2,13 @@
 const install = (Vue, vm) => {
   Vue.prototype.$api = {
     //图片上传
-    uploadImg: (formData) =>
-      vm.$u.http.upload("/api/upload", formData),
+    uploadImg: (formData) => vm.$u.http.upload("/api/upload", formData),
     login: (data) => vm.$u.http.post("/user/login", data),
-    addCustomer:(data) => vm.$u.http.post("/customer/add", data),
+    addCustomer: (data) => vm.$u.http.post("/customer/add", data),
     getCustomerDetailById: (data) => vm.$u.http.post("customer/detail", data),
     editCustomer: (data) => vm.$u.http.post("customer/edit", data),
     //获取主页信息
-    getIndexData: (params) =>
-      vm.$u.http.get("/api/base/getIndexData", { params }),
+    submitService: (data) => vm.$u.http.post("/service/edit", data),
     //登录
     getActiveDetail: (params) =>
       vm.$u.http.get("/api/activity/info", { params }),
@@ -45,9 +43,9 @@ const install = (Vue, vm) => {
       vm.$u.http.get("/api/index/shareCover", { params }),
     getUserQrCode: (params) => vm.$u.http.get("/api/user/qrcode", { params }),
     join: (data) => vm.$u.http.post("/api/activity/apply", data),
-    recharge: (params) => vm.$u.http.get("/api/member/recharge", {params}),
+    recharge: (params) => vm.$u.http.get("/api/member/recharge", { params }),
     follow: (data) => vm.$u.http.post("/api/member/follow", data),
-    getContract:(params) => vm.$u.http.get("/api/member/contract", {params}),
+    getContract: (params) => vm.$u.http.get("/api/member/contract", { params })
   };
 };
 

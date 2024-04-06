@@ -1,23 +1,32 @@
 <template>
-  <view class="register fc">
-    <u--form labelWidth="auto" labelPosition="left" :model="form" ref="uForm">
-      <view class="info fc">
-        <view class="title"> 售后登录 </view>
+  <view>
+    <view class="rfb">
+      <navigator :url="`/pages/add/add?id=${customer_id}`"> </navigator>
+      <u-icon size="30" name="../../static/images/ECO-UI-03.png"></u-icon>
 
-        <u-form-item label="密码" prop="password">
-          <u--input
-            placeholder=""
-            disabledColor="#fff"
-            v-model="password"
-            border="none"
-            inputAlign="left"
-            suffixIcon="eye"
-            suffixIconStyle=" color: #dd524dab !important;"
-          ></u--input>
-        </u-form-item>
-        <view class="btn" @tap="login"> 登录 </view>
-      </view>
-    </u--form>
+      <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
+    </view>
+
+    <view class="register fc">
+      <u--form labelWidth="auto" labelPosition="left" :model="form" ref="uForm">
+        <view class="info fc">
+          <view class="title"> 售后登录 </view>
+
+          <u-form-item label="密码" prop="password">
+            <u--input
+              placeholder=""
+              disabledColor="#fff"
+              v-model="password"
+              border="none"
+              inputAlign="left"
+              suffixIcon="eye"
+              suffixIconStyle=" color: #dd524dab !important;"
+            ></u--input>
+          </u-form-item>
+          <view class="btn" @tap="login"> 登录 </view>
+        </view>
+      </u--form>
+    </view>
   </view>
 </template>
 
@@ -27,8 +36,8 @@ export default {
     return {
       password: "",
       confirmPassword: "888",
-      form:{},
-      customer_id:''
+      form: {},
+      customer_id: ""
     };
   },
   onLoad: function (option) {
@@ -46,8 +55,8 @@ export default {
         });
       } else {
         uni.navigateTo({
-          url:`/pages/afterService/afterService?id=${this.customer_id}`
-        })
+          url: `/pages/afterService/afterService?id=${this.customer_id}`
+        });
       }
     }
   }

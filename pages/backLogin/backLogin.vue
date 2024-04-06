@@ -38,39 +38,14 @@ export default {
   data() {
     return {
       form: {
-        /**
-         * 详细地址
-         */
-        address: "",
-        /**
-         * 城市
-         */
-        city: "",
-        /**
-         * 公司
-         */
-        company: ""
+      
       },
       membertypeList: [],
       membertypeShow: false,
       show: false,
       rules: {
-        nickname: [
-          {
-            required: true,
-            message: "请填写昵称",
-            trigger: ["change", "blur"]
-          }
-        ],
-        remark: [
-          {
-            required: true,
-            message: "请填写个人简历",
-            trigger: ["change", "blur"]
-          }
-        ]
+     
       },
-      address: []
     };
   },
   created() {

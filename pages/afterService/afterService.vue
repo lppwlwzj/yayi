@@ -110,7 +110,7 @@
       <u-collapse style="width: 100%">
         <u-collapse-item
           ref="tryCollapse"
-          title="试戴次数"
+          :title="`试戴次数${tryInfo.length}`"
           name="Docs guide"
           :border="false"
         >
@@ -267,10 +267,10 @@
       </view>
     </u-popup>
     <!-- <view class="btn afc"> 确认 </view> -->
-    <view class="footer rfa">
+    <!-- <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-22.png"></u-icon>
       <u-icon size="26" name="../../static/images/ECO-UI-05.png"></u-icon>
-    </view>
+    </view> -->
   </view>
 </template>
 
@@ -280,6 +280,7 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      customer_id:'',
       previewImg: "",
       popupShow: false,
       form: {},
@@ -304,26 +305,8 @@ export default {
           key: "checi"
         }
       ],
-      tryInfo: [
-        {
-          tryImg: [],
-          remark: ""
-        },
-        {
-          tryImg: [],
-          remark: ""
-        }
-      ],
-      recoverInfo: [
-        {
-          recoverImg: [],
-          remark: ""
-        },
-        {
-          recoverImg: [],
-          remark: ""
-        }
-      ]
+      tryInfo: [],
+      recoverInfo: []
     };
   },
   components: {
@@ -339,8 +322,17 @@ export default {
   computed: {},
 
   methods: {
-    submit() {
-         
+    async submit() {
+      const form = {
+        tryInfo: JSON.stringify(this.tryInfo),
+        recoverInfo: JSON.stringify(this.recoverInfo),
+        imgList: JSON.stringify(this.imgList),
+        customer_id:this.customer_id
+      };
+      const res = await this.$api.submitService({
+        ...form
+      })
+      console.log("🚀 ~ submit ~ res:", res)
     },
     handleTryImage(img_url, idx) {
       this.tryInfo[idx].tryImg.push(img_url);
@@ -404,8 +396,8 @@ page {
 .u-input--square {
   border-radius: 40rpx;
 }
-.uni-input-wrapper {
-  padding: 0 16rpx;
+/deep/.uni-input-wrapper {
+  padding: 0 16rpx !important;
 }
 .footer {
   width: 100%;
@@ -417,7 +409,9 @@ page {
   box-sizing: border-box;
   background-color: $uni-color-bg;
   padding: 50rpx 30rpx 0;
-  padding-bottom: 160rpx;
+  padding-bottom: 40rpx;
+
+  // padding-bottom: 160rpx;
 
   .input {
     width: 45% !important;
@@ -444,7 +438,7 @@ page {
     width: 14px;
     height: 14px;
     position: absolute;
-    right: 10rpx;
+    left: 10rpx;
     bottom: 10rpx;
   }
   .upload-bg {
