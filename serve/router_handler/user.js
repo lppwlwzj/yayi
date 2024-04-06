@@ -15,7 +15,6 @@ const config = require("../config");
 
 // 登录的处理函数
 exports.login = (req, res) => {
-  console.log("🚀 ~ req:", req.body)
   const userinfo = req.body;
   const sql = `select * from user where usercount=?`;
   // 执行 SQL 语句，查询用户的数据
@@ -25,7 +24,6 @@ exports.login = (req, res) => {
     // 执行 SQL 语句成功，但是查询到数据条数不等于 1
     if (results.length !== 1) return res.cc("用户不存在！");
     const { password, usercount, username } = results[0] || {};
-    console.log("🚀 ~ results:", results[0])
 
     // 如果对比的结果等于 false, 则证明用户输入的密码错误
     if (userinfo.password !== password) {

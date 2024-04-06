@@ -46,8 +46,13 @@
       </view>
       <view class="footer rfa">
         <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
-        <u-icon size="26" name="../../static/images/ECO-UI-09.png"></u-icon>
+        <u-icon
+          size="26"
+          name="../../static/images/ECO-UI-09.png"
+          @click="logout"
+        ></u-icon>
       </view>
+      <u-modal :show="show" @confirm="confirm" ref="uModal" content="确认退出？"></u-modal>
     </view>
   </view>
 </template>
@@ -56,8 +61,9 @@
 export default {
   data() {
     return {
+      show:false,
       info: "",
-      search:'',
+      search: "",
       list: [
         {
           name: "林一",
@@ -102,38 +108,17 @@ export default {
       ]
     };
   },
-  onLoad() {
-    // this.getBanner();
-    // this.getActiveList();
-  },
+
   methods: {
-    async getBanner() {
-      const res = await this.$api.getBanner();
-      this.bannerList = res.banner;
-    },
-    async getActiveList() {
-      const res = await this.$api.getActiveList();
-      this.activeList = res;
-    },
-    async join(item) {
-      if (item.end_status == 1) {
-        return;
-      }
-      const res = await this.$api.join({
-        activity_id: item.id
+    confirm() {
+      uni.clearStorageSync("userInfo");
+      uni.redirectTo({
+        url: "/pages/login/login"
       });
-      if (res?.code == 0) {
-        uni.showToast({
-          icon: "none",
-          title: res.msg
-        });
-      } else {
-        uni.showToast({
-          icon: "none",
-          title: "报名成功"
-        });
-        this.getActiveList();
-      }
+    },
+
+    logout() {
+      this.show = true
     }
   }
 };
