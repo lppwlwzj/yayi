@@ -3,13 +3,17 @@
     <view class="rfb header">
       <!-- <navigator :url="`/pages/add/add?id=${customer_id}`"> </navigator> -->
       <u-icon
-      style="margin:0 20rpx"
+        style="margin: 0 20rpx"
         size="30"
         name="../../static/images/ECO-UI-03.png"
         @click="back"
       ></u-icon>
 
-      <u-icon  style="margin:0 20rpx" size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
+      <u-icon
+        style="margin: 0 20rpx"
+        size="40"
+        name="../../static/images/ECO-UI-02.png"
+      ></u-icon>
     </view>
 
     <view class="register fc">
@@ -42,12 +46,16 @@ export default {
       password: "",
       confirmPassword: "111520",
       form: {},
-      customer_id: ""
+      customer_id: "",
+      service_id: ""
     };
   },
   onLoad: function (option) {
     if (option.id) {
       this.customer_id = option.id;
+    }
+    if (option.service_id) {
+      this.service_id = option.service_id;
     }
   },
   methods: {
@@ -64,8 +72,10 @@ export default {
           duration: 2000
         });
       } else {
+        let redirectQuery = "";
+        if (this.service_id) redirectQuery = `&service_id=${this.service_id}`;
         uni.navigateTo({
-          url: `/pages/afterService/afterService?id=${this.customer_id}`
+          url: `/pages/afterService/afterService?id=${this.customer_id}${redirectQuery}`
         });
       }
     }
@@ -74,7 +84,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.header{
+.header {
   height: 90rpx;
 }
 .register {

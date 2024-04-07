@@ -43,7 +43,7 @@
             {{ item.doctor }} / {{ item.CAD }} / {{ item.checi }}
           </view>
           <navigator
-            :url="`/pages/afterService/afterService?id=${item.id}&service_id=${item.service_id}`"
+            :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}`"
             class="keynote_con"
           >
             <u-icon
@@ -53,7 +53,7 @@
             ></u-icon>
           </navigator>
           <navigator
-            :url="`/pages/afterService/afterService?id=${item.id}&service_id=${item.service_id}`"
+            :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}`"
             class="keynote_con"
           >
             <u-icon
@@ -86,11 +86,11 @@
         ></u-icon>
       </view>
       <!-- //    minDate="1970-01-01" -->
-        <!-- :defaultDate="['2024-04-07']" -->
+      <!-- :defaultDate="['2024-04-07']" -->
       <u-calendar
         color="#f56c6c"
         :show="open"
-        maxDate="2099-01-01"
+        minDate="2024-04-06"
         mode="single"
         @close="
           () => {
@@ -100,8 +100,11 @@
         @confirm="handleConfirm"
       ></u-calendar>
       <u-modal
+        confirmColor="#dd524d63"
         :show="show"
+        :showCancelButton="true"
         @confirm="confirm"
+        @cancel="cancel"
         ref="uModal"
         content="确认退出？"
       ></u-modal>
@@ -110,7 +113,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 export default {
   data() {
     return {
@@ -119,7 +122,7 @@ export default {
       info: "",
       search: "",
       list: [],
-      defaultDate:moment().format('YYYY-MM-DD')
+      defaultDate: moment().format("YYYY-MM-DD")
     };
   },
 
@@ -132,8 +135,10 @@ export default {
     },
 
     logout() {
-      console.log('defaultDate',this.defaultDate)
       this.show = true;
+    },
+    cancel() {
+      this.show = false;
     },
     handleConfirm(time) {
       this.search = time[0];
@@ -177,7 +182,6 @@ export default {
             tryVisible: !!_tryInfo?.length
           };
         });
-      console.log("🚀 ~ this.list=res.re.map ~   this.list :", this.list);
     }
   }
 };

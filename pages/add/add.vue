@@ -769,7 +769,7 @@ export default {
   //   },
   onLoad: function (option) {
     if (option.id) {
-      this.id = id;
+      this.id = option.id;
       this.operateType = option.type;
       this.getCustomerDetailById(option.id);
     }
