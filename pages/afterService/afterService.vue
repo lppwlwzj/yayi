@@ -10,7 +10,7 @@
       <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
     </view>
 
-    <view class="fc" style="margin: 18rpx 0; font-size: 40rpx">
+    <!-- <view class="fc" style="margin: 18rpx 0; font-size: 40rpx">
       客户完工档案
     </view>
     <view class="rfaw" style="margin: 18rpx 0">
@@ -40,13 +40,6 @@
             {{ `${form.dateTime || "日期"}` }}
           </view>
         </u-button>
-        <!-- <u-datetime-picker
-          :show="show"
-          mode="date"
-          closeOnClickOverlay
-          @close="show = false"
-          @confirm="confirm"
-        ></u-datetime-picker> -->
       </view>
     </view>
     <view class="diagnose">
@@ -109,7 +102,7 @@
           }"
         ></u--input>
       </view>
-    </view>
+    </view> -->
     <view class="fc" style="margin: 18rpx 0; font-size: 40rpx"> 售后服务 </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
       <u-collapse style="width: 100%">

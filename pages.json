@@ -11,6 +11,12 @@
       }
     },
     {
+      "path": "pages/customerFiles/customerFiles",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/index/index",
       "style": {
         "navigationBarTitleText": "",
@@ -25,7 +31,7 @@
         "navigationStyle": "custom"
       }
     },
-    
+
     {
       "path": "pages/backLogin/backLogin",
       "style": {
@@ -39,7 +45,7 @@
       "style": {
         "navigationBarTitleText": "",
         "onReachBottomDistance": 100,
-        
+
         "navigationStyle": "custom"
       }
     },
@@ -115,14 +121,14 @@
     // // }
     //   {
     //         "path" : "pages/privacy/privacy",
-    //         "style" :                                                                                    
+    //         "style" :
     //         {
     //             "navigationBarTitleText": "",
     //             "enablePullDownRefresh": false
     //         }
-            
+
     //     }
-    ],
+  ],
 
   "globalStyle": {
     "navigationBarTextStyle": "black",

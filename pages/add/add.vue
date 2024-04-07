@@ -570,15 +570,13 @@
 
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
-      <!-- <navigator :url="`/pages/afterSalesLogin/afterSalesLogin?id=${customer_id}`">
-        <u-icon
-          size="26"
-          name="../../static/images/ECO-UI-04.png"
-          style=""
-        ></u-icon>
-      </navigator> -->
-      <!-- <navigator :url="`/pages/afterService/afterService?id=${customer_id}`"> -->
-      <navigator :url="`/pages/afterService/afterService?id=11`">
+      <navigator
+        :url="
+          operateType === 'create'
+            ? ''
+            : `/pages/afterService/afterService?id=11`
+        "
+      >
         <u-icon
           size="26"
           name="../../static/images/ECO-UI-04.png"
@@ -598,7 +596,8 @@ export default {
   data() {
     return {
       userInfo: {},
-      customer_id: "",
+      id: "", //数据库自动生成的
+      customer_id: "", //自己生成的随机字符串，用来create时确定上传图片的唯一标识
       operateType: "create",
       videoSrc:
         "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4",
@@ -756,11 +755,12 @@ export default {
   //   },
   onLoad: function (option) {
     if (option.id) {
-      // this.customer_id = option.id
+      this.id = id;
       this.operateType = option.type;
       this.getCustomerDetailById(option.id);
     }
-    this.customer_id = option?.id || Math.random().toString(36).substring(2, 6);
+    if (this.operateType === "create")
+      this.customer_id = Math.random().toString(36).substring(2, 6);
     console.log("🚀 ~  this.customer_id:", this.customer_id);
     this.userInfo = uni.getStorageSync("userInfo");
   },
@@ -783,6 +783,7 @@ export default {
       if (!res.code) {
         const data = res.data;
         this.form = data;
+        this.customer_id = data.customer_id;
         this.form.designList = JSON.parse(data.designList);
         this.dentistList = this.dentistList.map((item) => {
           return {
@@ -862,7 +863,7 @@ export default {
       };
 
       const res = await this.$api.addCustomer({
-        customer_id: "m6ep",
+        customer_id: this.customer_id,
         ...this.form
       });
       console.log("this---------", res);

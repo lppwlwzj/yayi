@@ -108,9 +108,9 @@ exports.addCustomer = (req, res) => {
     if (err) return res.cc(err);
     if (results.affectedRows !== 1) return res.cc("新增失败！");
     res.send({
-      code: 200,
+      code: 0,
       message: "新增信息成功！",
-      data: {
+      re: {
         ...results[0]
       }
     });
