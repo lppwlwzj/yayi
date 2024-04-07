@@ -386,47 +386,51 @@
       </view>
     </view>
     <!-- 进度条 -->
-    <view style="margin: 18rpx 0">
-      <view class="item" v-for="(item, index) in dentistList" :key="index">
-        <view class="rfc" style="margin: 18rpx 0">
-          <u-checkbox-group
-            v-model="item.open"
-            placement="column"
-            @change="
-              (value) => {
-                hanldeListChange(value, index, 'open');
-              }
-            "
-          >
-            <u-checkbox
-              :disabled="disabled"
-              shape="circle"
-              :name="item.id"
-              :customStyle="{ marginBottom: '8px' }"
-              activeColor="#dd524d63"
-            >
-            </u-checkbox>
-          </u-checkbox-group>
-          <image class="icon-image" :src="item.url" />
-          <view class="u-page__slide-item">
-            <u-slider
-              :value="item.value"
-              min="0"
-              max="100"
-              :disabled="disabled"
-              activeColor="#dd524d63"
-              @change="
-                (value) => {
-                  hanldeListChange(value, index, 'value');
-                }
-              "
-            ></u-slider>
-            <view class="text">{{ item.text }}</view>
+    <u-collapse>
+      <u-collapse-item title="形态设计" name="guide">
+        <view style="margin: 18rpx 0">
+          <view class="item" v-for="(item, index) in dentistList" :key="index">
+            <view class="rfc" style="margin: 18rpx 0">
+              <u-checkbox-group
+                v-model="item.open"
+                placement="column"
+                @change="
+                  (value) => {
+                    hanldeListChange(value, index, 'open');
+                  }
+                "
+              >
+                <u-checkbox
+                  :disabled="disabled"
+                  shape="circle"
+                  :name="item.id"
+                  :customStyle="{ marginBottom: '8px' }"
+                  activeColor="#dd524d63"
+                >
+                </u-checkbox>
+              </u-checkbox-group>
+              <image class="icon-image" :src="item.url" />
+              <view class="u-page__slide-item">
+                <u-slider
+                  :value="item.value"
+                  min="0"
+                  max="100"
+                  :disabled="disabled"
+                  activeColor="#dd524d63"
+                  @change="
+                    (value) => {
+                      hanldeListChange(value, index, 'value');
+                    }
+                  "
+                ></u-slider>
+                <view class="text">{{ item.text }}</view>
+              </view>
+              <view>{{ item.value }}%</view>
+            </view>
           </view>
-          <view>{{ item.value }}%</view>
         </view>
-      </view>
-    </view>
+      </u-collapse-item>
+    </u-collapse>
     <view class="rfc">
       <text style="color: #ccc; padding-right: 24rpx"> 预计戴牙日期 </text>
       <view class="input">
@@ -562,6 +566,13 @@
     </view>
     <view
       class="btn afc"
+      @tap.stop="handleDelete"
+      v-show="['edit'].includes(operateType)"
+    >
+      删除
+    </view>
+    <view
+      class="btn afc"
       @tap.stop="submit"
       v-show="['create', 'edit'].includes(operateType)"
     >
@@ -570,14 +581,17 @@
 
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
-      <navigator
+      <!-- <navigator
         :url="
           operateType === 'create'
             ? ''
             : `/pages/afterService/afterService?id=11`
         "
-      >
-        <u-icon
+      > -->
+      <!-- <navigator :url="`/pages/afterService/afterService?id=11`"> -->
+      
+        <navigator :url="`/pages/customerFiles/customerFiles?id=11`"> 
+         <u-icon
           size="26"
           name="../../static/images/ECO-UI-04.png"
           style=""
@@ -794,7 +808,22 @@ export default {
         });
       }
     },
-
+    async handleDelete() {
+      const res = await this.$api.deleteCustomer({
+        id: this.id
+      });
+      if (!res.code) {
+        uni.showToast({
+          icon: "none",
+          title: res.message
+        });
+        setTimeout(() => {
+          uni.navigateTo({
+						url: "/pages/index/index"
+					});
+        }, 500);
+      }
+    },
     async submit() {
       this.dentistList.forEach((item) => {
         this.form[`${item.key}Open`] = !!item.open.length;
@@ -962,6 +991,13 @@ page {
   //TODO:没生效
   /deep/.u-textarea {
     border-radius: 36rpx !important;
+  }
+  /deep/.u-cell__body {
+    border-radius: 16px;
+    background-color: #fff;
+  }
+  /deep/.u-cell__title-text {
+    color: #dd524d63;
   }
   .upload-bg {
     flex: 1;

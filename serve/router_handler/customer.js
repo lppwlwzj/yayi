@@ -237,7 +237,19 @@ exports.getCustomerDetailById = (req, res) => {
     });
   });
 };
-
+exports.deleteCustomer = (req, res) => {
+  const { id } = req.body;
+  const sql = `delete  from  customer where id=${id}`;
+  // 更新参数表
+  db.query(sql, (err, results) => {
+    if (err) return res.cc(err);
+    res.send({
+      code: 0,
+      message: "删除成功！",
+      re: {}
+    });
+  });
+}
 exports.getCustomerList = (req, res) => {
   const { search } = req.body;
   let sql = "";

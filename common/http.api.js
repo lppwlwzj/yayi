@@ -8,7 +8,7 @@ const install = (Vue, vm) => {
     getCustomerDetailById: (data) => vm.$u.http.post("/customer/detail", data),
     editCustomer: (data) => vm.$u.http.post("/customer/edit", data),
     getCustomerList: (data) => vm.$u.http.post("/customer/list", data),
-
+    deleteCustomer: (data) => vm.$u.http.post("/customer/delete", data),
     //获取主页信息
     submitService: (data) => vm.$u.http.post("/service/edit", data),
     //登录

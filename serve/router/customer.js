@@ -14,6 +14,8 @@ router.post('/add',customer_handler.addCustomer)
 router.post('/edit',customer_handler.editCustomer)
 router.post('/detail',customer_handler.getCustomerDetailById)
 router.post('/list',customer_handler.getCustomerList)
+router.post('/delete',customer_handler.deleteCustomer)
+
 
 
 

@@ -85,9 +85,12 @@
           @click="logout"
         ></u-icon>
       </view>
+      <!-- //    minDate="1970-01-01" -->
+        <!-- :defaultDate="['2024-04-07']" -->
       <u-calendar
         color="#f56c6c"
         :show="open"
+        maxDate="2099-01-01"
         mode="single"
         @close="
           () => {
@@ -107,6 +110,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 export default {
   data() {
     return {
@@ -114,7 +118,8 @@ export default {
       open: false,
       info: "",
       search: "",
-      list: []
+      list: [],
+      defaultDate:moment().format('YYYY-MM-DD')
     };
   },
 
@@ -127,6 +132,7 @@ export default {
     },
 
     logout() {
+      console.log('defaultDate',this.defaultDate)
       this.show = true;
     },
     handleConfirm(time) {

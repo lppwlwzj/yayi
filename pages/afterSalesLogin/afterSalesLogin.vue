@@ -1,10 +1,15 @@
 <template>
   <view>
-    <view class="rfb">
-      <navigator :url="`/pages/add/add?id=${customer_id}`"> </navigator>
-      <u-icon size="30" name="../../static/images/ECO-UI-03.png"></u-icon>
+    <view class="rfb header">
+      <!-- <navigator :url="`/pages/add/add?id=${customer_id}`"> </navigator> -->
+      <u-icon
+      style="margin:0 20rpx"
+        size="30"
+        name="../../static/images/ECO-UI-03.png"
+        @click="back"
+      ></u-icon>
 
-      <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
+      <u-icon  style="margin:0 20rpx" size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
     </view>
 
     <view class="register fc">
@@ -35,7 +40,7 @@ export default {
   data() {
     return {
       password: "",
-      confirmPassword: "888",
+      confirmPassword: "111520",
       form: {},
       customer_id: ""
     };
@@ -46,6 +51,11 @@ export default {
     }
   },
   methods: {
+    back() {
+      uni.navigateBack({
+        delta: 1 //返回上一页
+      });
+    },
     login() {
       if (this.password !== this.confirmPassword) {
         uni.showToast({
@@ -64,9 +74,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.header{
+  height: 90rpx;
+}
 .register {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 90rpx);
   background: $uni-color-bg !important;
 
   .title {
@@ -107,6 +120,7 @@ export default {
     font-weight: 500;
   }
 }
+
 .u-form-item {
   margin: 30rpx 0;
   width: 100%;

@@ -45,7 +45,6 @@
       "style": {
         "navigationBarTitleText": "",
         "onReachBottomDistance": 100,
-
         "navigationStyle": "custom"
       }
     },

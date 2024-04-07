@@ -10,99 +10,7 @@
       <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
     </view>
 
-    <!-- <view class="fc" style="margin: 18rpx 0; font-size: 40rpx">
-      客户完工档案
-    </view>
-    <view class="rfaw" style="margin: 18rpx 0">
-      <view class="input">
-        <u--input
-          :disabled="true"
-          placeholder="客户姓名"
-          disabledColor="#fff"
-          placeholderStyle="color:#dd524d63"
-          v-model="form.customer"
-          border="none"
-          :customStyle="{
-            padding: '18rpx 12rpx'
-          }"
-        ></u--input>
-      </view>
-      <view class="input">
-        <u-button
-          @click="show = true"
-          class="rfa date-btn"
-          :disabled="true"
-          :style="{
-            color: form.dateTime ? '#000' : '#dd524d63'
-          }"
-        >
-          <view>
-            {{ `${form.dateTime || "日期"}` }}
-          </view>
-        </u-button>
-      </view>
-    </view>
-    <view class="diagnose">
-      <view class="diagnose-el">
-        <view class="rfsw image-list">
-          <view
-            style="margin-right: 8rpx"
-            v-for="(item, index) in imgList"
-            :key="index"
-            class="image"
-          >
-            <view class="image fc">
-              <image :src="item" class="upload-img" mode="scaleToFill"></image>
-              <image
-                @tap.stop="preview(item)"
-                src="../../static/images/preview.png"
-                class="preview"
-                mode="aspectFill"
-              ></image>
-              <u-icon
-                @click="deleteImg(index)"
-                class="image-close"
-                size="16"
-                color="#fff"
-                name="close-circle"
-              ></u-icon>
-            </view>
-          </view>
-          <Upload
-            v-show="!disabled"
-            :name="`service${imgList.length + 1}`"
-            customClass="image"
-            @change="
-              (value) => {
-                handleImage(value);
-              }
-            "
-          >
-            <view class="image fc">
-              <image
-                src="../../static/images/add.png"
-                mode="aspectFill"
-                style="width: 16px; height: 16px; margin-bottom: 4px"
-              ></image>
-            </view>
-          </Upload>
-        </view>
-      </view>
-    </view>
-
-    <view class="rfaw" style="margin: 18rpx 0">
-      <view class="input" v-for="(item, index) in infoList" :key="index">
-        <u--input
-          disabledColor="#fff"
-          :disabled="true"
-          :value="form[item.key]"
-          border="none"
-          :customStyle="{
-            padding: '18rpx 12rpx'
-          }"
-        ></u--input>
-      </view>
-    </view> -->
+ 
     <view class="fc" style="margin: 18rpx 0; font-size: 40rpx"> 售后服务 </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
       <u-collapse style="width: 100%">
@@ -295,26 +203,26 @@ export default {
       popupShow: false,
       form: {},
       imgList: [],
-      infoList: [
-        {
-          key: "porcelain"
-        },
-        {
-          key: "daiyaTime"
-        },
-        {
-          key: "doctor"
-        },
-        {
-          key: "proxy"
-        },
-        {
-          key: "CAD"
-        },
-        {
-          key: "checi"
-        }
-      ],
+      // infoList: [
+      //   {
+      //     key: "porcelain"
+      //   },
+      //   {
+      //     key: "daiyaTime"
+      //   },
+      //   {
+      //     key: "doctor"
+      //   },
+      //   {
+      //     key: "proxy"
+      //   },
+      //   {
+      //     key: "CAD"
+      //   },
+      //   {
+      //     key: "checi"
+      //   }
+      // ],
       tryInfo: [],
       recoverInfo: []
     };
@@ -325,7 +233,7 @@ export default {
   onLoad: function (option) {
     if (option.id) {
       this.customer_id = option.id;
-      this.getCustomerDetailById(option.id);
+      // this.getCustomerDetailById(option.id);
     }
     if (option?.service_id) {
       this.service_id = option.service_id;
@@ -348,7 +256,7 @@ export default {
       const form = {
         tryInfo: JSON.stringify(this.tryInfo),
         recoverInfo: JSON.stringify(this.recoverInfo),
-        imgList: JSON.stringify(this.imgList),
+        // imgList: JSON.stringify(this.imgList),
         customer_id: this.customer_id
       };
       const res = await this.$api.submitService({
@@ -364,7 +272,7 @@ export default {
         const { tryInfo, recoverInfo, imgList } = res.re;
         this.tryInfo = JSON.parse(tryInfo);
         this.recoverInfo = JSON.parse(recoverInfo);
-        this.imgList = JSON.parse(imgList);
+        // this.imgList = JSON.parse(imgList);
       }
     },
     handleTryImage(img_url, idx) {
@@ -399,20 +307,20 @@ export default {
     popupClose() {
       this.popupShow = false;
     },
-    handleImage(value) {
-      this.imgList.push(value);
-    },
-    deleteImg(index) {
-      this.imgList.splice(index);
-    },
-    async getCustomerDetailById(id) {
-      const res = await this.$api.getCustomerDetailById({
-        id
-      });
-      if (!res.code) {
-        this.form = res.data;
-      }
-    }
+    // handleImage(value) {
+    //   this.imgList.push(value);
+    // },
+    // deleteImg(index) {
+    //   this.imgList.splice(index);
+    // },
+    // async getCustomerDetailById(id) {
+    //   const res = await this.$api.getCustomerDetailById({
+    //     id
+    //   });
+    //   if (!res.code) {
+    //     this.form = res.data;
+    //   }
+    // }
   }
 };
 </script>
