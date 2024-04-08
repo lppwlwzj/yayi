@@ -76,6 +76,7 @@
             </view>
           </view>
           <Upload
+            style="margin-top: 10rpx"
             v-show="!disabled"
             :name="`service${imgList.length + 1}`"
             customClass="image"
@@ -133,12 +134,17 @@
         ></video>
       </view>
     </u-popup>
-    <view class="btn afc"> 确认 </view>
+    <view class="btn afc" @click="submit"> 确认 </view>
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-22.png"></u-icon>
-     
-     <!-- pages/afterSalesLogin/afterSalesLogin -->
-      <navigator :url="`/pages/afterSalesLogin/afterSalesLogin?id=11`">
+
+      <navigator
+        :url="
+          !service_id
+            ? ''
+            : `/pages/afterSalesLogin/afterSalesLogin?service_id=${service_id}&customer_id=${customer_id}&type=${operateType}`
+        "
+      >
         <u-icon size="26" name="../../static/images/ECO-UI-04.png"></u-icon>
       </navigator>
     </view>
@@ -151,6 +157,8 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      operateType: "",
+      service_id: "",
       customer_id: "",
       previewImg: "",
       popupShow: false,
@@ -175,9 +183,7 @@ export default {
         {
           key: "checi"
         }
-      ],
-      // tryInfo: [],
-      // recoverInfo: []
+      ]
     };
   },
   components: {
@@ -192,10 +198,13 @@ export default {
       this.service_id = option.service_id;
       this.getServiceDetailById(option.service_id);
     }
+    if (option?.operateType) {
+      this.operateType = option.operateType;
+    }
   },
   computed: {
     disabled() {
-      return !!this.service_id;
+      return !!this.service_id && this.operateType === "view";
     }
   },
 
@@ -207,14 +216,22 @@ export default {
     },
     async submit() {
       const form = {
-        // tryInfo: JSON.stringify(this.tryInfo),
-        // recoverInfo: JSON.stringify(this.recoverInfo),
-        // imgList: JSON.stringify(this.imgList),
-        customer_id: this.customer_id
+        tryInfo: "",
+        recoverInfo: "",
+        imgList: JSON.stringify(this.imgList),
+        customer_id: this.customer_id,
+        service_id: this.service_id
       };
       const res = await this.$api.submitService({
         ...form
       });
+      if (!res.code) {
+        this.service_id = res.re.service_id;
+        uni.showToast({
+          icon: "none",
+          title: res.message
+        });
+      }
       console.log("🚀 ~ submit ~ res:", res);
     },
     async getServiceDetailById(service_id) {
@@ -223,8 +240,8 @@ export default {
       });
       if (!res.code) {
         const { tryInfo, recoverInfo, imgList } = res.re;
-        this.tryInfo = JSON.parse(tryInfo);
-        this.recoverInfo = JSON.parse(recoverInfo);
+        // this.tryInfo = JSON.parse(tryInfo);
+        // this.recoverInfo = JSON.parse(recoverInfo);
         this.imgList = JSON.parse(imgList);
       }
     },
@@ -361,6 +378,7 @@ page {
     // position: absolute;
     width: 100%;
     height: 100%;
+    margin: 10rpx 16rpx;
     // left: 0;
     // right: 0;
     // top: 0;

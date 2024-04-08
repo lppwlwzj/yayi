@@ -775,7 +775,6 @@ export default {
     }
     if (this.operateType === "create")
       this.customer_id = Math.random().toString(36).substring(2, 6);
-    console.log("🚀 ~  this.customer_id:", this.customer_id);
     this.userInfo = uni.getStorageSync("userInfo");
   },
   computed: {

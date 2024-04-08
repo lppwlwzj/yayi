@@ -197,32 +197,14 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      operateType:"",
       service_id: "",
       customer_id: "",
       previewImg: "",
       popupShow: false,
       form: {},
       imgList: [],
-      // infoList: [
-      //   {
-      //     key: "porcelain"
-      //   },
-      //   {
-      //     key: "daiyaTime"
-      //   },
-      //   {
-      //     key: "doctor"
-      //   },
-      //   {
-      //     key: "proxy"
-      //   },
-      //   {
-      //     key: "CAD"
-      //   },
-      //   {
-      //     key: "checi"
-      //   }
-      // ],
+   
       tryInfo: [],
       recoverInfo: []
     };
@@ -231,18 +213,20 @@ export default {
     Upload
   },
   onLoad: function (option) {
-    if (option.id) {
-      this.customer_id = option.id;
-      // this.getCustomerDetailById(option.id);
+    if (option.customer_id) {
+      this.customer_id = option.customer_id;
     }
     if (option?.service_id) {
       this.service_id = option.service_id;
       this.getServiceDetailById(option.service_id);
     }
+    if (option?.operateType) {
+      this.operateType = option.operateType;
+    }
   },
   computed: {
     disabled() {
-      return !!this.service_id;
+      return !!this.service_id && this.operateType === 'view';
     }
   },
 
@@ -256,8 +240,9 @@ export default {
       const form = {
         tryInfo: JSON.stringify(this.tryInfo),
         recoverInfo: JSON.stringify(this.recoverInfo),
-        // imgList: JSON.stringify(this.imgList),
-        customer_id: this.customer_id
+        imgList: "",
+        customer_id: this.customer_id,
+        service_id:this.service_id
       };
       const res = await this.$api.submitService({
         ...form
@@ -313,14 +298,7 @@ export default {
     // deleteImg(index) {
     //   this.imgList.splice(index);
     // },
-    // async getCustomerDetailById(id) {
-    //   const res = await this.$api.getCustomerDetailById({
-    //     id
-    //   });
-    //   if (!res.code) {
-    //     this.form = res.data;
-    //   }
-    // }
+
   }
 };
 </script>
@@ -351,7 +329,7 @@ page {
 
 .content {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   box-sizing: border-box;
   background-color: $uni-color-bg;
   padding: 50rpx 30rpx 0;

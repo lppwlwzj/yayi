@@ -51,8 +51,8 @@ export default {
     };
   },
   onLoad: function (option) {
-    if (option.id) {
-      this.customer_id = option.id;
+    if (option.customer_id) {
+      this.customer_id = option.customer_id;
     }
     if (option.service_id) {
       this.service_id = option.service_id;
@@ -75,7 +75,7 @@ export default {
         let redirectQuery = "";
         if (this.service_id) redirectQuery = `&service_id=${this.service_id}`;
         uni.navigateTo({
-          url: `/pages/afterService/afterService?id=${this.customer_id}${redirectQuery}`
+          url: `/pages/afterService/afterService?customer_id=${this.customer_id}${redirectQuery}`
         });
       }
     }

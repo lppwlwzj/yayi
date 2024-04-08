@@ -70,12 +70,7 @@ export default {
       address: []
     };
   },
-  created() {
 
-    // this.getMembertype();
-    // this.form.nickname = uni.getStorageSync("nickname") || "";
-    // this.form.code = uni.getStorageSync("qrcode") || "";
-  },
   methods: {
     async login() {
       this.$refs.uForm

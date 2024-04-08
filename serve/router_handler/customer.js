@@ -108,16 +108,15 @@ exports.addCustomer = (req, res) => {
     if (err) return res.cc(err);
     if (results.affectedRows !== 1) return res.cc("新增失败！");
     setTimeout(() => {
-      const _sql = `select *  from customer  where customer_id = ${customer_id}`;
-      db.query(_sql, (err, result2) => {
-        console.log("🚀 ~ db.query ~ res:", customer_id, result2);
-        // res.send({
-        //   code: 0,
-        //   message: "新增信息成功！",
-        //   re: {
-        //     result2
-        //   }
-        // });
+      const _sql = `select id  from customer  where customer_id = '${customer_id}'`;
+      db.query(_sql, (err, result) => {
+        res.send({
+          code: 0,
+          message: "新增信息成功！",
+          re: {
+            id:result[0].id
+          }
+        });
       });
     }, 100);
   });
