@@ -261,6 +261,7 @@ exports.getCustomerList = (req, res) => {
   if (isNaN(search) && !isNaN(Date.parse(search))) {
     sql = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.dateTime = '${search}'`;
     db.query(sql, req.body, (err, results) => {
+      console.log("🚀 ~ db.query ~ results:", results)
       if (err) return res.cc(err);
       res.send({
         code: 0,

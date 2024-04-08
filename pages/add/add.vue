@@ -41,13 +41,6 @@
           </view>
           <u-icon size="19" name="edit-pen" color="#dd524d63"></u-icon>
         </u-button>
-        <u-datetime-picker
-          :show="show"
-          mode="date"
-          closeOnClickOverlay
-          @close="show = false"
-          @confirm="confirm"
-        ></u-datetime-picker>
       </view>
       <view class="input">
         <u--input
@@ -433,10 +426,9 @@
     </u-collapse>
     <view class="rfc">
       <text style="color: #ccc; padding-right: 24rpx"> 预计戴牙日期 </text>
-      <view class="input">
+      <view class="input" @click="calendarOpen">
         <u-button
           :disabled="disabled"
-          @click="daiyaShow = true"
           class="rfa date-btn"
           :style="{
             color: form.daiyaTime ? '#000' : '#dd524d63'
@@ -447,13 +439,18 @@
           </view>
           <u-icon size="19" name="edit-pen" color="#dd524d63"></u-icon>
         </u-button>
-        <u-datetime-picker
-          :show="daiyaShow"
-          mode="date"
-          closeOnClickOverlay
-          @close="daiyaShow = false"
+        <uni-calendar
+          ref="calendar"
+          class="uni-calendar--hook"
+          :clear-date="true"
+          :insert="false"
+          :lunar="false"
+          :startDate="startDate"
+          :endDate="endDate"
+          :range="false"
           @confirm="handleDaiYaTime"
-        ></u-datetime-picker>
+          @close="canceltime"
+        />
       </view>
     </view>
     <!-- 设计图 -->
@@ -602,6 +599,29 @@
 </template>
 
 <script>
+function getDate(date, AddDayCount = 0) {
+  if (!date) {
+    date = new Date();
+  }
+  if (typeof date !== "object") {
+    date = date.replace(/-/g, "/");
+  }
+  const dd = new Date(date);
+
+  dd.setDate(dd.getDate() + AddDayCount); // 获取AddDayCount天后的日期
+
+  const y = dd.getFullYear();
+  const m =
+    dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1; // 获取当前月份的日期，不足10补0
+  const d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate(); // 获取当前几号，不足10补0
+  return {
+    fullDate: y + "-" + m + "-" + d,
+    year: y,
+    month: m,
+    date: d,
+    day: dd.getDay()
+  };
+}
 import moment from "moment";
 import TiXing from "../../components/tixing";
 import Upload from "../../components/my-upload/my-upload.vue";
@@ -609,6 +629,9 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      startDate: "",
+      endDate: "",
+      time: Number(new Date()),
       userInfo: {},
       id: "", //数据库自动生成的
       customer_id: "", //自己生成的随机字符串，用来create时确定上传图片的唯一标识
@@ -767,6 +790,10 @@ export default {
   //       this.videoContext = uni.createVideoContext('myVideo')
   //       // #endif
   //   },
+  onReady() {
+    this.startDate = getDate(new Date(), -60).fullDate;
+    this.endDate = getDate(new Date(), 30).fullDate;
+  },
   onLoad: function (option) {
     if (option.id) {
       this.id = option.id;
@@ -786,6 +813,13 @@ export default {
     }
   },
   methods: {
+    calendarOpen() {
+      console.log("i90-i080");
+      this.$refs.calendar.open();
+    },
+    canceltime() {
+      this.daiyaShow = false;
+    },
     handleEdit() {
       this.operateType = "edit";
     },
