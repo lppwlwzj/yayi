@@ -89,5 +89,7 @@
                 }
             }
         }
-    }
+    },
+    "locale" : "zh-Hans",
+    "fallbackLocale" : "zh-Hans"
 }

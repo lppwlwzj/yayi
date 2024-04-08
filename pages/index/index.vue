@@ -36,7 +36,12 @@
       </view>
     </view>
     <view class="list-area">
-      <view class="list-item rfc" v-for="(item, index) in list" :key="index">
+      <block v-if="list.length">
+      <view
+        class="list-item rfc"
+        v-for="(item, index) in list"
+        :key="index"
+      >
         <view class="list-item-left rfc">
           <view class="lef-info">
             {{ item.customer }} / {{ item.dateTime }} / {{ item.porcelain }} /
@@ -68,16 +73,15 @@
           <view class="list-item-right"> {{ item.proxy }} </view>
         </navigator>
       </view>
+      </block>
+    </view>
+      <view class="list-item rfc"> 暂无数据 </view>
       <view class="footer rfa">
         <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
         <u-icon
           size="26"
           name="../../static/images/ECO-UI-18.png"
-          @click="
-            () => {
-              open = true;
-            }
-          "
+          @click="open"
         ></u-icon>
         <u-icon
           size="26"
@@ -87,7 +91,7 @@
       </view>
       <!-- //    minDate="1970-01-01" -->
       <!-- :defaultDate="['2024-04-07']" -->
-      <u-calendar
+      <!-- <u-calendar
         color="#f56c6c"
         :show="open"
         minDate="2024-04-06"
@@ -98,7 +102,19 @@
           }
         "
         @confirm="handleConfirm"
-      ></u-calendar>
+      ></u-calendar> -->
+      <uni-calendar
+        ref="calendar"
+        class="uni-calendar--hook"
+        :clear-date="true"
+        :insert="false"
+        :lunar="false"
+        :startDate="startDate"
+        :endDate="endDate"
+        :range="false"
+        @confirm="handleDateConfirm"
+        @close="handleClose"
+      />
       <u-modal
         confirmColor="#dd524d63"
         :show="show"
@@ -113,20 +129,76 @@
 </template>
 
 <script>
+/**
+ * 获取任意时间
+ */
+function getDate(date, AddDayCount = 0) {
+  if (!date) {
+    date = new Date();
+  }
+  if (typeof date !== "object") {
+    date = date.replace(/-/g, "/");
+  }
+  const dd = new Date(date);
+
+  dd.setDate(dd.getDate() + AddDayCount); // 获取AddDayCount天后的日期
+
+  const y = dd.getFullYear();
+  const m =
+    dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1; // 获取当前月份的日期，不足10补0
+  const d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate(); // 获取当前几号，不足10补0
+  return {
+    fullDate: y + "-" + m + "-" + d,
+    year: y,
+    month: m,
+    date: d,
+    day: dd.getDay()
+  };
+}
 import moment from "moment";
 export default {
   data() {
     return {
       show: false,
-      open: false,
       info: "",
       search: "",
       list: [],
-      defaultDate: moment().format("YYYY-MM-DD")
+      defaultDate: moment().format("YYYY-MM-DD"),
+      startDate: "",
+      endDate: "",
+      selected: []
     };
   },
+  onReady() {
+    this.startDate = getDate(new Date(), -60).fullDate;
+    this.endDate = getDate(new Date(), 30).fullDate;
+    setTimeout(() => {
+      // this.info.date = getDate(new Date(), -30).fullDate;
 
+      // this.selected = [
+      //   {
+      //     date: getDate(new Date(), -3).fullDate,
+      //     info: "打卡"
+      //   },
+      //   {
+      //     date: getDate(new Date(), -2).fullDate,
+      //     info: "签到",
+      //     data: {
+      //       custom: "自定义信息",
+      //       name: "自定义消息头"
+      //     }
+      //   },
+      //   {
+      //     date: getDate(new Date(), -1).fullDate,
+      //     info: "已打卡"
+      //   }
+      // ];
+    }, 2000);
+  },
   methods: {
+    open() {
+      this.$refs.calendar.open();
+    },
     confirm() {
       uni.clearStorageSync("userInfo");
       uni.redirectTo({
@@ -140,10 +212,12 @@ export default {
     cancel() {
       this.show = false;
     },
-    handleConfirm(time) {
-      this.search = time[0];
-      this.open = false;
+    handleDateConfirm(time) {
+      this.search = time.fulldate;
+      // this.$refs.calendar.open();
       this.handleSearch();
+    },
+    handleClose() {
     },
     async handleSearch() {
       const res = await this.$api.getCustomerList({
@@ -263,109 +337,5 @@ export default {
     width: 100%;
     background: #fff;
   }
-
-  // .menu-area {
-  //   margin-top: 50upx;
-
-  //   .keynote_con {
-  //     width: 100%;
-  //     padding: 26upx 24upx 24upx;
-  //     box-sizing: border-box;
-  //     background-color: #fff;
-  //     margin: 30rpx auto;
-
-  //     border-radius: 24rpx;
-
-  //     .keynote_content {
-  //       display: flex;
-  //       align-items: center;
-  //       margin-bottom: 26upx;
-  //       height: 220rpx;
-
-  //       .images {
-  //         min-width: 320rpx;
-  //         width: 320rpx;
-  //         height: 220rpx;
-  //         margin-right: 20upx;
-  //       }
-
-  //       .key_a {
-  //         display: flex;
-  //         flex-direction: column;
-  //         height: 100%;
-  //         justify-content: space-between;
-
-  //         .tip {
-  //           font-size: 24upx;
-  //           font-weight: 400;
-  //           color: #999999;
-  //           margin-bottom: 8upx;
-  //           flex: 1;
-  //         }
-
-  //         image {
-  //           width: 28upx;
-  //           height: 28upx;
-  //         }
-
-  //         .key_b {
-  //           margin-bottom: 20upx;
-  //           color: #0d0d0d;
-  //           font-size: 32rpx;
-  //           font-weight: 600;
-  //           -webkit-box-orient: vertical;
-  //           -moz-box-orient: vertical;
-  //           -ms-box-orient: vertical;
-  //           -o-box-orient: vertical;
-  //           box-orient: vertical;
-  //           -webkit-line-clamp: 2;
-  //           -moz-line-clamp: 2;
-  //           -ms-line-clamp: 2;
-  //           -o-line-clamp: 2;
-  //           line-height: normal;
-  //           white-space: normal;
-  //           overflow: hidden;
-  //         }
-
-  //         .key_c {
-  //           display: flex;
-  //           justify-content: flex-start;
-  //           align-items: baseline;
-  //         }
-
-  //         .dot {
-  //           width: 6px;
-  //           height: 6px;
-  //           border-radius: 50%;
-  //           margin-right: 6upx;
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   .btn {
-  //     width: 166rpx;
-  //     height: 62rpx;
-  //     font-size: 24rpx;
-  //     color: #ffffff;
-  //     line-height: 62rpx;
-  //     border-radius: 30upx;
-  //     text-align: center;
-  //     margin-top: 10upx;
-  //     margin-left: 75%;
-  //   }
-
-  //   .gray {
-  //     background-color: #d9d9d9;
-  //   }
-
-  //   .orange {
-  //     background: #ef615a;
-  //   }
-
-  //   .green {
-  //     background: #02c3a8;
-  //   }
-  // }
 }
 </style>

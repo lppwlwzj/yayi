@@ -589,9 +589,9 @@
         "
       > -->
       <!-- <navigator :url="`/pages/afterService/afterService?id=11`"> -->
-      
-        <navigator :url="`/pages/customerFiles/customerFiles?id=11`"> 
-         <u-icon
+
+      <navigator :url="`/pages/customerFiles/customerFiles?id=${id}`">
+        <u-icon
           size="26"
           name="../../static/images/ECO-UI-04.png"
           style=""
@@ -819,8 +819,8 @@ export default {
         });
         setTimeout(() => {
           uni.navigateTo({
-						url: "/pages/index/index"
-					});
+            url: "/pages/index/index"
+          });
         }, 500);
       }
     },
@@ -829,14 +829,12 @@ export default {
         this.form[`${item.key}Open`] = !!item.open.length;
         this.form[`${item.key}Value`] = item.value;
       });
-      // console.log("this----", this.form);
-      // this.form ={"customer":"李希希","dateTime":"2022-01-01","daiyaTime":"2014-01-01","doctor":"刘医生","proxy":"黄医生","tiepianColor":"贴片颜色","CADImg":"http://127.0.0.1:3006/img/images/adminCADImg.e459c4d57b88c124d33445910f1e6e63.jpg","checiImg":"http://127.0.0.1:3006/img/images/admincheciImg.71ca6bc3be751df21605b9c022c31721.jpg","CAD":"cad","checi":"车次","porcelain":"瓷品","frontPhoto":"http://127.0.0.1:3006/img/images/adminfrontPhoto.df16b963a92221b83428b4031786b817.jpg","adviceContent":"面诊建设","leftFv":"http://127.0.0.1:3006/img/images/adminleftFv.363832e41e6524bdddc0da61ae1d888a.jpg","rightFv":"http://127.0.0.1:3006/img/images/adminrightFv.ce4eba42cf8e2e3568786262dc5f4303.jpg","front":"http://127.0.0.1:3006/img/images/adminfront.9358d8fae1223b235b1fa5bd00a662d6.jpg","leftFvEdge":"http://127.0.0.1:3006/img/images/adminleftFvEdge.af48b39f1876df847c12a235dd0e36e5.jpg","rightFvEdge":"http://127.0.0.1:3006/img/images/adminrightFvEdge.83f44f0251b23c18678a4c0596ef8938.jpg","intentImg":"http://127.0.0.1:3006/img/images/adminintentImg.6fe7bbe594c42bdf8ec6c1e4ec86c814.jpg","designAdvice":"设计师建议","designList":["http://127.0.0.1:3006/img/images/admindesign1.4aba3ab9a7362172f088470aa9ee109c.jpg","http://127.0.0.1:3006/img/images/admindesign2.a3e8634ef34f17eefa2a9f41d37a0836.jpg","http://127.0.0.1:3006/img/images/admindesign3.7d7f4c70ba96ec8759776939bc62caba.jpg"],"bianyuanOpen":true,"bianyuanValue":69,"roundOpen":false,"roundValue":0,"luochaOpen":true,"luochaValue":27,"angleOpen":false,"angleValue":0,"jiandunOpen":false,"jiandunValue":0,"qieduanOpen":false,"qieduanValue":0,"textureOpen":false,"textureValue":0,"dotOpen":false,"dotValue":0,"touliangOpen":false,"touliangValue":0,"linearOpen":false,"linearValue":0,"thicknessOpen":false,"thicknessValue":0}
 
       this.form = {
-        customer_id: "m6eu",
-        customer: "李西",
-        dateTime: "2017-08-10",
-        daiyaTime: "2020-07-11",
+        customer_id: "m7ig",
+        customer: "李李",
+        dateTime: "2024-04-08",
+        daiyaTime: "2024-04-08",
         doctor: "周医生",
         proxy: "刘代理",
         tiepianColor: "贴片颜色",
@@ -895,6 +893,14 @@ export default {
         customer_id: this.customer_id,
         ...this.form
       });
+      if (!res.code) {
+        uni.showToast({
+          icon: "none",
+          title: res.message
+        });
+        this.operateType = "edit";
+        this.id = res.re.id;
+      }
       console.log("this---------", res);
     },
     hanldeListChange(value, index, key) {

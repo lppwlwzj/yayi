@@ -104,16 +104,22 @@ exports.addCustomer = (req, res) => {
         thicknessValue
 	) values ('${createtime}','${customer_id}','${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${linearOpen}','${linearValue}','${thicknessOpen}','${thicknessValue}')`;
   // 更新参数表
-  db.query(sql, req.body, (err, results) => {
+  db.query(sql, (err, results) => {
     if (err) return res.cc(err);
     if (results.affectedRows !== 1) return res.cc("新增失败！");
-    res.send({
-      code: 0,
-      message: "新增信息成功！",
-      re: {
-        ...results[0]
-      }
-    });
+    setTimeout(() => {
+      const _sql = `select *  from customer  where customer_id = ${customer_id}`;
+      db.query(_sql, (err, result2) => {
+        console.log("🚀 ~ db.query ~ res:", customer_id, result2);
+        // res.send({
+        //   code: 0,
+        //   message: "新增信息成功！",
+        //   re: {
+        //     result2
+        //   }
+        // });
+      });
+    }, 100);
   });
 };
 
@@ -249,7 +255,7 @@ exports.deleteCustomer = (req, res) => {
       re: {}
     });
   });
-}
+};
 exports.getCustomerList = (req, res) => {
   const { search } = req.body;
   let sql = "";

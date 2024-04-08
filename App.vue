@@ -33,24 +33,24 @@ export default {
     }
   },
   methods: {
-    queryURLParams(key) {
-      let url = window.location.href;
-      let pattern = /(\w+)=(\w+)/gi; //定义正则表达式
-      let parames = {}; // 定义参数对象
-      url.replace(pattern, ($, $1, $2) => {
-        parames[$1] = $2;
-      });
-      return parames ? parames[key] : null;
-    },
-    async getOpenId(code) {
-      const res = await this.$api.getOpenId({
-        code
-      });
-      uni.setStorageSync("openid", res.open_id);
-      uni.setStorageSync("nickname", res.nickname);
-      uni.setStorageSync("avatar", res.avatar);
-      this.login(res.open_id);
-    },
+    // queryURLParams(key) {
+    //   let url = window.location.href;
+    //   let pattern = /(\w+)=(\w+)/gi; //定义正则表达式
+    //   let parames = {}; // 定义参数对象
+    //   url.replace(pattern, ($, $1, $2) => {
+    //     parames[$1] = $2;
+    //   });
+    //   return parames ? parames[key] : null;
+    // },
+    // async getOpenId(code) {
+    //   const res = await this.$api.getOpenId({
+    //     code
+    //   });
+    //   uni.setStorageSync("openid", res.open_id);
+    //   uni.setStorageSync("nickname", res.nickname);
+    //   uni.setStorageSync("avatar", res.avatar);
+    //   this.login(res.open_id);
+    // },
     async login() {
       const res = await this.$api.login({
         open_id
@@ -76,4 +76,9 @@ export default {
 <style lang="scss">
 /* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
 @import "uview-ui/index.scss";
+	/*每个页面公共css */
+	@import '@/uni_modules/uni-scss/index.scss';
+	/* #ifndef APP-NVUE */
+	// @import '@/static/customicons.css';
+	// 设置整个项目的背景色
 </style>
