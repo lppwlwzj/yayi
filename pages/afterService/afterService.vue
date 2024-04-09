@@ -10,7 +10,6 @@
       <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
     </view>
 
- 
     <view class="fc" style="margin: 18rpx 0; font-size: 40rpx"> 售后服务 </view>
     <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
       <u-collapse style="width: 100%">
@@ -159,8 +158,8 @@
           </view>
         </u-collapse-item>
       </u-collapse>
-      <view v-show="!disabled" class="btn afc" @tap.stop="submit"> 确认 </view>
     </view>
+    <view v-show="!disabled" class="btn afc" @tap.stop="submit"> 确认 </view>
     <u-popup
       :show="popupShow"
       closeable
@@ -197,14 +196,13 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
-      operateType:"",
+      operateType: "",
       service_id: "",
       customer_id: "",
       previewImg: "",
       popupShow: false,
       form: {},
       imgList: [],
-   
       tryInfo: [],
       recoverInfo: []
     };
@@ -226,7 +224,7 @@ export default {
   },
   computed: {
     disabled() {
-      return !!this.service_id && this.operateType === 'view';
+      return this.operateType === "view";
     }
   },
 
@@ -242,11 +240,17 @@ export default {
         recoverInfo: JSON.stringify(this.recoverInfo),
         imgList: "",
         customer_id: this.customer_id,
-        service_id:this.service_id
+        service_id: this.service_id
       };
       const res = await this.$api.submitService({
         ...form
       });
+      if (!res.code) {
+        uni.showToast({
+          icon: "none",
+          title: res.message
+        });
+      }
       console.log("🚀 ~ submit ~ res:", res);
     },
     async getServiceDetailById(service_id) {
@@ -254,10 +258,10 @@ export default {
         service_id
       });
       if (!res.code) {
-        const { tryInfo, recoverInfo, imgList } = res.re;
-        this.tryInfo = JSON.parse(tryInfo);
-        this.recoverInfo = JSON.parse(recoverInfo);
-        // this.imgList = JSON.parse(imgList);
+        const { tryInfo, recoverInfo } = res.re;
+
+        this.tryInfo = tryInfo ? JSON.parse(tryInfo) : [];
+        this.recoverInfo = recoverInfo ? JSON.parse(recoverInfo) : [];
       }
     },
     handleTryImage(img_url, idx) {
@@ -291,14 +295,13 @@ export default {
     },
     popupClose() {
       this.popupShow = false;
-    },
+    }
     // handleImage(value) {
     //   this.imgList.push(value);
     // },
     // deleteImg(index) {
     //   this.imgList.splice(index);
     // },
-
   }
 };
 </script>
@@ -306,7 +309,6 @@ export default {
 <style lang="scss" scoped>
 page {
   background-color: #fff;
-  height: 100vh;
 }
 .image-close {
   position: absolute;
@@ -329,7 +331,7 @@ page {
 
 .content {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   background-color: $uni-color-bg;
   padding: 50rpx 30rpx 0;

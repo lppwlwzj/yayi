@@ -142,7 +142,7 @@
         :url="
           !service_id
             ? ''
-            : `/pages/afterSalesLogin/afterSalesLogin?service_id=${service_id}&customer_id=${customer_id}&type=${operateType}`
+            : `/pages/afterSalesLogin/afterSalesLogin?service_id=${service_id}&customer_id=${customer_id}&operateType=${operateType}`
         "
       >
         <u-icon size="26" name="../../static/images/ECO-UI-04.png"></u-icon>
@@ -204,7 +204,7 @@ export default {
   },
   computed: {
     disabled() {
-      return !!this.service_id && this.operateType === "view";
+      return this.operateType === "view";
     }
   },
 
@@ -232,16 +232,13 @@ export default {
           title: res.message
         });
       }
-      console.log("🚀 ~ submit ~ res:", res);
     },
     async getServiceDetailById(service_id) {
       const res = await this.$api.getServiceDetailById({
         service_id
       });
       if (!res.code) {
-        const { tryInfo, recoverInfo, imgList } = res.re;
-        // this.tryInfo = JSON.parse(tryInfo);
-        // this.recoverInfo = JSON.parse(recoverInfo);
+        const { imgList } = res.re;
         this.imgList = JSON.parse(imgList);
       }
     },

@@ -48,7 +48,7 @@
             {{ item.doctor }} / {{ item.CAD }} / {{ item.checi }}
           </view>
           <navigator
-            :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}`"
+            :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
             class="keynote_con"
           >
             <u-icon
@@ -58,7 +58,7 @@
             ></u-icon>
           </navigator>
           <navigator
-            :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}`"
+            :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
             class="keynote_con"
           >
             <u-icon
@@ -239,8 +239,14 @@ export default {
             checi,
             service_id
           } = item;
-          const _recoverInfo = JSON.parse(recoverInfo);
-          const _tryInfo = JSON.parse(tryInfo);
+          let _recoverInfo= [], _tryInfo = []
+          if(recoverInfo) {
+           _recoverInfo = JSON.parse(recoverInfo);
+          }
+          if(tryInfo) {
+            _tryInfo = JSON.parse(tryInfo);
+          }
+         
           return {
             id,
             customer_id,

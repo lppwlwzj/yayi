@@ -114,7 +114,7 @@ exports.addCustomer = (req, res) => {
           code: 0,
           message: "新增信息成功！",
           re: {
-            id:result[0].id
+            id: result[0].id
           }
         });
       });
@@ -228,18 +228,25 @@ exports.editCustomer = (req, res) => {
 
 exports.getCustomerDetailById = (req, res) => {
   const { id } = req.body;
-  //   const _designList = JSON.stringify(designList);
   const sql = `select * from  customer where id=${id}`;
   // 更新参数表
   db.query(sql, (err, results) => {
     if (err) return res.cc(err);
-    res.send({
-      code: 0,
-      message: "查询成功！",
-      data: {
-        ...results[0]
-      }
-    });
+    if (results.length)
+      db.query(
+        `select s.id as service_id  from  customer i JOIN service s ON i.id = s.customer_id  where i.id=${id}`,
+        (_err, _results) => {
+          if (_err) return res.cc(_err);
+          res.send({
+            code: 0,
+            message: "查询成功！",
+            data: {
+              service_id: _results[0]?.service_id || "",
+              ...results[0]
+            }
+          });
+        }
+      );
   });
 };
 exports.deleteCustomer = (req, res) => {
@@ -260,14 +267,28 @@ exports.getCustomerList = (req, res) => {
   let sql = "";
   if (isNaN(search) && !isNaN(Date.parse(search))) {
     sql = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.dateTime = '${search}'`;
+
     db.query(sql, req.body, (err, results) => {
-      console.log("🚀 ~ db.query ~ results:", results)
       if (err) return res.cc(err);
-      res.send({
-        code: 0,
-        message: "查询成功！",
-        re: results
-      });
+      if (!results.length) {
+        db.query(
+          `select * from customer  where dateTime = '${search}'`,
+          (_err, _results) => {
+            if (_err) return res.cc(_err);
+            res.send({
+              code: 0,
+              message: "查询成功！",
+              re: _results
+            });
+          }
+        );
+      } else {
+        res.send({
+          code: 0,
+          message: "查询成功！",
+          re: results
+        });
+      }
     });
   } else {
     const sql1 = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.customer LIKE "%${search}%"`;
@@ -287,11 +308,25 @@ exports.getCustomerList = (req, res) => {
     Promise.all([p1, p2])
       .then((results) => {
         const list = results[0].concat(results[1]);
-        res.send({
-          code: 200,
-          message: "查询成功！",
-          re: list
-        });
+        if (list.length) {
+          db.query(
+            `select * from customer  where dateTime = '${search}'`,
+            (_err, _results) => {
+              if (_err) return res.cc(_err);
+              res.send({
+                code: 0,
+                message: "查询成功！",
+                re: _results
+              });
+            }
+          );
+        } else {
+          res.send({
+            code: 200,
+            message: "查询成功！",
+            re: list
+          });
+        }
       })
       .catch((err) => res.cc(err));
   }

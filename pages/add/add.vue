@@ -587,7 +587,9 @@
       > -->
       <!-- <navigator :url="`/pages/afterService/afterService?id=11`"> -->
 
-      <navigator :url="`/pages/customerFiles/customerFiles?id=${id}`">
+      <navigator
+        :url="`/pages/customerFiles/customerFiles?id=${id}&operateType=${operateType}&service_id=${service_id}`"
+      >
         <u-icon
           size="26"
           name="../../static/images/ECO-UI-04.png"
@@ -629,6 +631,7 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      service_id:'',
       startDate: "",
       endDate: "",
       time: Number(new Date()),
@@ -785,11 +788,7 @@ export default {
     TiXing,
     Upload
   },
-  // onReady: function(res) {
-  //       // #ifndef MP-ALIPAY
-  //       this.videoContext = uni.createVideoContext('myVideo')
-  //       // #endif
-  //   },
+
   onReady() {
     this.startDate = getDate(new Date(), -60).fullDate;
     this.endDate = getDate(new Date(), 30).fullDate;
@@ -814,7 +813,6 @@ export default {
   },
   methods: {
     calendarOpen() {
-      console.log("i90-i080");
       this.$refs.calendar.open();
     },
     canceltime() {
@@ -831,7 +829,9 @@ export default {
         const data = res.data;
         this.form = data;
         this.customer_id = data.customer_id;
+        this.service_id = data.service_id;
         this.form.designList = JSON.parse(data.designList);
+
         this.dentistList = this.dentistList.map((item) => {
           return {
             ...item,
@@ -934,7 +934,6 @@ export default {
         this.operateType = "edit";
         this.id = res.re.id;
       }
-      console.log("this---------", res);
     },
     hanldeListChange(value, index, key) {
       const item = this.dentistList[index];
@@ -951,9 +950,6 @@ export default {
     popupClose() {
       this.popupShow = false;
     },
-    // getDesignListImg(index) {
-    //   return this.form.designList[index];
-    // },
 
     handleFormChange(key, value) {
       this.$set(this.form, [key], value);

@@ -39,13 +39,11 @@ exports.submit = async (req, res) => {
     
   const sql = service_id ? updateSql : insertSql;
 
-  console.log("🚀 ~ exports.submit= ~ sql:", sql);
   // // 调用db.query()执行sql语句
   db.query(sql, async (err, results) => {
     if (err) {
       return res.cc(err);
     }
-    console.log("🚀 ~ db.query ~ results:", results);
     res.send({
       code: 0,
       message: "操作成功！",

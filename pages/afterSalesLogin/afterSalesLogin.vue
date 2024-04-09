@@ -47,7 +47,8 @@ export default {
       confirmPassword: "111520",
       form: {},
       customer_id: "",
-      service_id: ""
+      service_id: "",
+      operateType: ""
     };
   },
   onLoad: function (option) {
@@ -56,6 +57,9 @@ export default {
     }
     if (option.service_id) {
       this.service_id = option.service_id;
+    }
+    if (option.operateType ) {
+      this.operateType = option.operateType ;
     }
   },
   methods: {
@@ -75,7 +79,7 @@ export default {
         let redirectQuery = "";
         if (this.service_id) redirectQuery = `&service_id=${this.service_id}`;
         uni.navigateTo({
-          url: `/pages/afterService/afterService?customer_id=${this.customer_id}${redirectQuery}`
+          url: `/pages/afterService/afterService?customer_id=${this.customer_id}&operateType=${this.operateType}${redirectQuery}`
         });
       }
     }
