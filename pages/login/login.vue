@@ -23,6 +23,7 @@
 
         <u-form-item label="密码" prop="nickname">
           <u--input
+           :password="true"
             placeholder=""
             disabledColor="#fff"
             v-model="form.password"

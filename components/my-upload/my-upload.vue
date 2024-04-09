@@ -34,6 +34,13 @@
             class="preview"
             mode="aspectFill"
           ></image>
+          <u-icon
+            @click="handleDelTryImg"
+            class="image-close"
+            size="16"
+            color="#fff"
+            name="close-circle"
+          ></u-icon>
         </view>
       </view>
     </u-upload>
@@ -148,10 +155,10 @@ export default {
 
     // },
     // 删除图片
-    // deletePic(event) {
-    //   this.data.splice(event.index, 1);
-    //   this.$emit("deleteCall", this.data);
-    // },
+    handleDelTryImg(event) {
+      this.data.splice(event.index, 1);
+      this.$emit("delete", this.data);
+    },
     // 新增图片
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
@@ -316,8 +323,15 @@ export default {
   width: 14px;
   height: 14px;
   position: absolute;
-  right: 10rpx;
+  left: 10rpx;
   bottom: 10rpx;
+}
+.image-close {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 4rpx;
+  right: 4rpx;
 }
 .upload-img {
   position: absolute;

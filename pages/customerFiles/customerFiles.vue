@@ -40,13 +40,6 @@
             {{ `${form.dateTime || "日期"}` }}
           </view>
         </u-button>
-        <!-- <u-datetime-picker
-            :show="show"
-            mode="date"
-            closeOnClickOverlay
-            @close="show = false"
-            @confirm="confirm"
-          ></u-datetime-picker> -->
       </view>
     </view>
     <view class="diagnose">
@@ -240,6 +233,7 @@ export default {
       if (!res.code) {
         const { imgList } = res.re;
         this.imgList = JSON.parse(imgList);
+
       }
     },
     handleTryImage(img_url, idx) {
@@ -278,7 +272,7 @@ export default {
       this.imgList.push(value);
     },
     deleteImg(index) {
-      this.imgList.splice(index);
+      this.imgList.splice(index,1);
     },
     async getCustomerDetailById(id) {
       const res = await this.$api.getCustomerDetailById({

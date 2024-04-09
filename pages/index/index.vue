@@ -125,7 +125,7 @@
         content="确认退出？"
       ></u-modal>
     </view>
-  </view>
+
 </template>
 
 <script>

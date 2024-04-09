@@ -29,7 +29,7 @@
       </view>
       <view class="input">
         <u-button
-          @click="show = true"
+          @click="calendarOpen('dateTime')"
           class="rfa date-btn"
           :disabled="disabled"
           :style="{
@@ -416,17 +416,20 @@
                     }
                   "
                 ></u-slider>
-                <view class="text">{{ item.text }}</view>
+                <view class="text">{{ item.text }} {{ item.value }}%</view>
               </view>
-              <view>{{ item.value }}%</view>
+              <view>
+                <image class="icon-image" :src="item.url" />
+              </view>
             </view>
           </view>
         </view>
       </u-collapse-item>
     </u-collapse>
+
     <view class="rfc">
       <text style="color: #ccc; padding-right: 24rpx"> 预计戴牙日期 </text>
-      <view class="input" @click="calendarOpen">
+      <view class="input" @click="calendarOpen('daiyaTime')">
         <u-button
           :disabled="disabled"
           class="rfa date-btn"
@@ -439,20 +442,18 @@
           </view>
           <u-icon size="19" name="edit-pen" color="#dd524d63"></u-icon>
         </u-button>
-        <uni-calendar
-          ref="calendar"
-          class="uni-calendar--hook"
-          :clear-date="true"
-          :insert="false"
-          :lunar="false"
-          :startDate="startDate"
-          :endDate="endDate"
-          :range="false"
-          @confirm="handleDaiYaTime"
-          @close="canceltime"
-        />
       </view>
     </view>
+
+    <view class="rfsw" style="margin: 20rpx 0 30rpx 100rpx">
+      <text style="color: #ccc; padding-right: 24rpx"> 是否设置隐私 </text>
+      <u-switch
+        v-model="form.isPrivacy"
+        size="30"
+        activeColor="#f56c6c"
+      ></u-switch>
+    </view>
+
     <!-- 设计图 -->
     <view class="rfa" style="margin: 18rpx 0">
       <Upload
@@ -532,6 +533,18 @@
         ></u--input>
       </view>
     </view>
+    <uni-calendar
+      ref="myCalendar"
+      class="uni-calendar--hook"
+      :clear-date="true"
+      :insert="false"
+      :lunar="false"
+      :startDate="startDate"
+      :endDate="endDate"
+      :range="false"
+      @confirm="handleDaiYaTime"
+      @close="canceltime"
+    />
     <u-popup
       :show="popupShow"
       closeable
@@ -563,17 +576,17 @@
     </view>
     <view
       class="btn afc"
-      @tap.stop="handleDelete"
-      v-show="['edit'].includes(operateType)"
-    >
-      删除
-    </view>
-    <view
-      class="btn afc"
       @tap.stop="submit"
       v-show="['create', 'edit'].includes(operateType)"
     >
       确认
+    </view>
+    <view
+      class="btn afc"
+      @tap.stop="handleDelete"
+      v-show="['edit'].includes(operateType)"
+    >
+      删除
     </view>
 
     <view class="footer rfa">
@@ -631,7 +644,7 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
-      service_id:'',
+      service_id: "",
       startDate: "",
       endDate: "",
       time: Number(new Date()),
@@ -645,6 +658,7 @@ export default {
       popupShow: false,
       statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       form: {
+        isPrivacy: false,
         customer: "",
         dateTime: "",
         daiyaTime: "",
@@ -690,7 +704,6 @@ export default {
         thicknessValue: ""
       },
       show: false,
-      daiyaShow: false,
       dentistList: [
         {
           id: 1,
@@ -781,7 +794,8 @@ export default {
           open: [],
           url: "../../static/images/11.jpg"
         }
-      ]
+      ],
+      timeKey: ""
     };
   },
   components: {
@@ -805,6 +819,7 @@ export default {
   },
   computed: {
     disabled() {
+      console.log("🚀 ~ disabled ~  this.operateType:",  this.operateType)
       return this.operateType === "view";
     },
     designList() {
@@ -812,11 +827,15 @@ export default {
     }
   },
   methods: {
-    calendarOpen() {
-      this.$refs.calendar.open();
+    calendarOpen(key) {
+      this.timeKey = key;
+      this.$refs.myCalendar.open();
+    },
+    handleDaiYaTime(time) {
+      this.form[this.timeKey] = time.fulldate;
     },
     canceltime() {
-      this.daiyaShow = false;
+      // this.daiyaShow = false;
     },
     handleEdit() {
       this.operateType = "edit";
@@ -863,65 +882,65 @@ export default {
         this.form[`${item.key}Value`] = item.value;
       });
 
-      this.form = {
-        customer_id: "m7ig",
-        customer: "李李",
-        dateTime: "2024-04-08",
-        daiyaTime: "2024-04-08",
-        doctor: "周医生",
-        proxy: "刘代理",
-        tiepianColor: "贴片颜色",
-        CADImg:
-          "http://127.0.0.1:3006/img/images/adminxrhpCADImg.ebd6b687d843ed1a3a2b79a975da8c47.png",
-        checiImg:
-          "http://127.0.0.1:3006/img/images/adminxrhpcheciImg.22659b26639f762a519b93c15527b856.jpg",
-        CAD: "cad",
-        checi: "checi",
-        porcelain: "瓷瓶",
-        frontPhoto:
-          "http://127.0.0.1:3006/img/images/adminxrhpfrontPhoto.9e8afb073f6ad3cbbfc459c400139661.jpg",
-        adviceContent: "13435435",
-        leftFv:
-          "http://127.0.0.1:3006/img/images/adminxrhpleftFv.9b38a27c836e3977ebd689990f5dfc64.png",
-        rightFv:
-          "http://127.0.0.1:3006/img/images/adminxrhprightFv.0412142b3e264168ff81f2b54ee3d7ea.png",
-        front:
-          "http://127.0.0.1:3006/img/images/adminxrhpfront.a7f1fbea4ae317f5b7198d7dc111f433.jpg",
-        leftFvEdge:
-          "http://127.0.0.1:3006/img/images/adminxrhpleftFvEdge.a719fde17b4992cdbc091feb980ca36b.jpg",
-        rightFvEdge: "",
-        intentImg:
-          "http://127.0.0.1:3006/img/images/adminxrhpintentImg.5657898f47b72603fbb2d0714bd7cab8.jpg",
-        designAdvice: "5太56546",
-        designList: [
-          "http://127.0.0.1:3006/img/images/adminxrhpdesign1.21657da4b93fb5b9abf3dc2eb0d5bb80.png",
-          "http://127.0.0.1:3006/img/images/adminxrhpdesign2.1b38d05fc9e362901179184837bf8cf9.png",
-          "http://127.0.0.1:3006/img/images/adminxrhpdesign3.0f18839da8be502d332564538833a4b8.jpg"
-        ],
-        bianyuanOpen: true,
-        bianyuanValue: 35,
-        roundOpen: false,
-        roundValue: 0,
-        luochaOpen: true,
-        luochaValue: 27,
-        angleOpen: false,
-        angleValue: 0,
-        jiandunOpen: true,
-        jiandunValue: 52,
-        qieduanOpen: false,
-        qieduanValue: 0,
-        textureOpen: false,
-        textureValue: 0,
-        dotOpen: false,
-        dotValue: 0,
-        touliangOpen: false,
-        touliangValue: 0,
-        linearOpen: false,
-        linearValue: 0,
-        thicknessOpen: false,
-        thicknessValue: 0
-      };
-
+      // this.form = {
+      //   customer_id: "m7ig",
+      //   customer: "李李",
+      //   dateTime: "2024-04-08",
+      //   daiyaTime: "2024-04-08",
+      //   doctor: "周医生",
+      //   proxy: "刘代理",
+      //   tiepianColor: "贴片颜色",
+      //   CADImg:
+      //     "http://127.0.0.1:3006/img/images/adminxrhpCADImg.ebd6b687d843ed1a3a2b79a975da8c47.png",
+      //   checiImg:
+      //     "http://127.0.0.1:3006/img/images/adminxrhpcheciImg.22659b26639f762a519b93c15527b856.jpg",
+      //   CAD: "cad",
+      //   checi: "checi",
+      //   porcelain: "瓷瓶",
+      //   frontPhoto:
+      //     "http://127.0.0.1:3006/img/images/adminxrhpfrontPhoto.9e8afb073f6ad3cbbfc459c400139661.jpg",
+      //   adviceContent: "13435435",
+      //   leftFv:
+      //     "http://127.0.0.1:3006/img/images/adminxrhpleftFv.9b38a27c836e3977ebd689990f5dfc64.png",
+      //   rightFv:
+      //     "http://127.0.0.1:3006/img/images/adminxrhprightFv.0412142b3e264168ff81f2b54ee3d7ea.png",
+      //   front:
+      //     "http://127.0.0.1:3006/img/images/adminxrhpfront.a7f1fbea4ae317f5b7198d7dc111f433.jpg",
+      //   leftFvEdge:
+      //     "http://127.0.0.1:3006/img/images/adminxrhpleftFvEdge.a719fde17b4992cdbc091feb980ca36b.jpg",
+      //   rightFvEdge: "",
+      //   intentImg:
+      //     "http://127.0.0.1:3006/img/images/adminxrhpintentImg.5657898f47b72603fbb2d0714bd7cab8.jpg",
+      //   designAdvice: "5太56546",
+      //   designList: [
+      //     "http://127.0.0.1:3006/img/images/adminxrhpdesign1.21657da4b93fb5b9abf3dc2eb0d5bb80.png",
+      //     "http://127.0.0.1:3006/img/images/adminxrhpdesign2.1b38d05fc9e362901179184837bf8cf9.png",
+      //     "http://127.0.0.1:3006/img/images/adminxrhpdesign3.0f18839da8be502d332564538833a4b8.jpg"
+      //   ],
+      //   bianyuanOpen: true,
+      //   bianyuanValue: 35,
+      //   roundOpen: false,
+      //   roundValue: 0,
+      //   luochaOpen: true,
+      //   luochaValue: 27,
+      //   angleOpen: false,
+      //   angleValue: 0,
+      //   jiandunOpen: true,
+      //   jiandunValue: 52,
+      //   qieduanOpen: false,
+      //   qieduanValue: 0,
+      //   textureOpen: false,
+      //   textureValue: 0,
+      //   dotOpen: false,
+      //   dotValue: 0,
+      //   touliangOpen: false,
+      //   touliangValue: 0,
+      //   linearOpen: false,
+      //   linearValue: 0,
+      //   thicknessOpen: false,
+      //   thicknessValue: 0
+      // };
+      console.log(" this.form", this.form);
       const res = await this.$api.addCustomer({
         customer_id: this.customer_id,
         ...this.form
@@ -959,17 +978,6 @@ export default {
     },
     deleteDesignImg(index) {
       this.form.designList.splice(index, 1);
-    },
-    confirm(timeV) {
-      this.show = false;
-      const time = moment(timeV.value).format("YYYY-MM-DD");
-      // console.log("🚀 ~ confirm ~ time:", moment(time).valueOf())
-      this.form.dateTime = time;
-    },
-    handleDaiYaTime(timeV) {
-      this.daiyaShow = false;
-      const time = moment(timeV.value).format("YYYY-MM-DD");
-      this.form.daiyaTime = time;
     }
   }
 };
