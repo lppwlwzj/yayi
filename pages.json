@@ -11,6 +11,12 @@
       }
     },
     {
+      "path": "pages/preUpload/preUpload",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/customerFiles/customerFiles",
       "style": {
         "navigationStyle": "custom"

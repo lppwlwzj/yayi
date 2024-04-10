@@ -37,61 +37,60 @@
     </view>
     <view class="list-area">
       <block v-if="list.length">
-      <view
-        class="list-item rfc"
-        v-for="(item, index) in list"
-        :key="index"
-      >
-        <view class="list-item-left rfc">
-          <view class="lef-info">
-            {{ item.customer }} / {{ item.dateTime }} / {{ item.porcelain }} /
-            {{ item.doctor }} / {{ item.CAD }} / {{ item.checi }}
+        <view class="list-item rfc" v-for="(item, index) in list" :key="index">
+          <view class="list-item-left rfc">
+            <view class="lef-info">
+              {{ item.customer }} / {{ item.dateTime }} / {{ item.porcelain }} /
+              {{ item.doctor }} / {{ item.CAD }} / {{ item.checi }}
+            </view>
+            <navigator
+              :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
+              class="keynote_con"
+            >
+              <u-icon
+                size="18"
+                v-if="item.tryVisible"
+                name="../../static/images/i2.png"
+              ></u-icon>
+            </navigator>
+            <navigator
+              :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
+              class="keynote_con"
+            >
+              <u-icon
+                size="18"
+                style="margin-left: 12rpx"
+                v-if="item.recoverVisible"
+                name="../../static/images/i1.png"
+              ></u-icon>
+            </navigator>
           </view>
-          <navigator
-            :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
-            class="keynote_con"
-          >
-            <u-icon
-              size="18"
-              v-if="item.tryVisible"
-              name="../../static/images/i2.png"
-            ></u-icon>
-          </navigator>
-          <navigator
-            :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
-            class="keynote_con"
-          >
-            <u-icon
-              size="18"
-              style="margin-left: 12rpx"
-              v-if="item.recoverVisible"
-              name="../../static/images/i1.png"
-            ></u-icon>
+          <navigator :url="`/pages/add/add?id=${item.id}&type=edit`">
+            <view class="list-item-right"> {{ item.proxy }} </view>
           </navigator>
         </view>
-        <navigator :url="`/pages/add/add?id=${item.id}&type=edit`">
-          <view class="list-item-right"> {{ item.proxy }} </view>
-        </navigator>
-      </view>
       </block>
     </view>
-      <view class="list-item rfc"> 暂无数据 </view>
-      <view class="footer rfa">
-        <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+    <view class="list-item rfc"> 暂无数据 </view>
+    <view class="footer rfa">
+      <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+      <u-icon size="26" name="../../static/images/ECO-UI-08.png"></u-icon>
+      <navigator :url="`/pages/preUpload/preUpload`" class="keynote_con">
         <u-icon
           size="26"
           name="../../static/images/ECO-UI-18.png"
           @click="open"
         ></u-icon>
-        <u-icon
-          size="26"
-          name="../../static/images/ECO-UI-09.png"
-          @click="logout"
-        ></u-icon>
-      </view>
-      <!-- //    minDate="1970-01-01" -->
-      <!-- :defaultDate="['2024-04-07']" -->
-      <!-- <u-calendar
+      </navigator>
+      <u-icon
+        size="26"
+        name="../../static/images/ECO-UI-09.png"
+        @click="logout"
+      ></u-icon>
+    </view>
+    <!-- //    minDate="1970-01-01" -->
+    <!-- :defaultDate="['2024-04-07']" -->
+    <!-- <u-calendar
         color="#f56c6c"
         :show="open"
         minDate="2024-04-06"
@@ -103,29 +102,28 @@
         "
         @confirm="handleConfirm"
       ></u-calendar> -->
-      <uni-calendar
-        ref="calendar"
-        class="uni-calendar--hook"
-        :clear-date="true"
-        :insert="false"
-        :lunar="false"
-        :startDate="startDate"
-        :endDate="endDate"
-        :range="false"
-        @confirm="handleDateConfirm"
-        @close="handleClose"
-      />
-      <u-modal
-        confirmColor="#dd524d63"
-        :show="show"
-        :showCancelButton="true"
-        @confirm="confirm"
-        @cancel="cancel"
-        ref="uModal"
-        content="确认退出？"
-      ></u-modal>
-    </view>
-
+    <uni-calendar
+      ref="calendar"
+      class="uni-calendar--hook"
+      :clear-date="true"
+      :insert="false"
+      :lunar="false"
+      :startDate="startDate"
+      :endDate="endDate"
+      :range="false"
+      @confirm="handleDateConfirm"
+      @close="handleClose"
+    />
+    <u-modal
+      confirmColor="#dd524d63"
+      :show="show"
+      :showCancelButton="true"
+      @confirm="confirm"
+      @cancel="cancel"
+      ref="uModal"
+      content="确认退出？"
+    ></u-modal>
+  </view>
 </template>
 
 <script>
@@ -174,7 +172,6 @@ export default {
     this.endDate = getDate(new Date(), 30).fullDate;
     setTimeout(() => {
       // this.info.date = getDate(new Date(), -30).fullDate;
-
       // this.selected = [
       //   {
       //     date: getDate(new Date(), -3).fullDate,
@@ -217,8 +214,7 @@ export default {
       // this.$refs.calendar.open();
       this.handleSearch();
     },
-    handleClose() {
-    },
+    handleClose() {},
     async handleSearch() {
       const res = await this.$api.getCustomerList({
         search: this.search
@@ -239,14 +235,15 @@ export default {
             checi,
             service_id
           } = item;
-          let _recoverInfo= [], _tryInfo = []
-          if(recoverInfo) {
-           _recoverInfo = JSON.parse(recoverInfo);
+          let _recoverInfo = [],
+            _tryInfo = [];
+          if (recoverInfo) {
+            _recoverInfo = JSON.parse(recoverInfo);
           }
-          if(tryInfo) {
+          if (tryInfo) {
             _tryInfo = JSON.parse(tryInfo);
           }
-         
+
           return {
             id,
             customer_id,
