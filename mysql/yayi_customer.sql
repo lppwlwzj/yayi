@@ -44,7 +44,7 @@ CREATE TABLE `customer` (
   `rightFvEdge` varchar(255) DEFAULT NULL COMMENT '右45度扩口',
   `intentImg` varchar(255) DEFAULT NULL COMMENT '客户意向照',
   `designAdvice` varchar(255) DEFAULT NULL COMMENT '设计师建议',
-  `designList` varchar(65535) DEFAULT NULL COMMENT '设计师图片列表',
+  `designList` longtext DEFAULT NULL COMMENT '设计师图片列表',
   `bianyuanOpen` varchar(255) DEFAULT NULL COMMENT '边缘',
   `bianyuanValue` varchar(255) DEFAULT NULL COMMENT '边缘值',
   `roundOpen` varchar(255) DEFAULT NULL COMMENT '角度方圆',
@@ -68,9 +68,9 @@ CREATE TABLE `customer` (
   `thicknessOpen` varchar(255) DEFAULT NULL COMMENT '厚度',
   `thicknessValue` varchar(255) DEFAULT NULL COMMENT '厚度值',
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `isPrivacy` int DEFAULT NULL COMMENT '是否可见',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='客户表';
-
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

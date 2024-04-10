@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `service`;
 CREATE TABLE `service` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `customer_id` bigint(20) NOT NULL  COMMENT '用户表ID',
-  `tryInfo` text(65535) NOT NULL COMMENT '试戴次数',
-  `recoverInfo` text(65535) NOT NULL COMMENT '修改次数',
-  `imgList` text(65535) DEFAULT NULL COMMENT '牙齿列表',
+  `tryInfo`longtext NOT NULL COMMENT '试戴次数',
+  `recoverInfo` longtext NOT NULL COMMENT '修改次数',
+  `imgList` longtext DEFAULT NULL COMMENT '牙齿列表',
  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='售后表';

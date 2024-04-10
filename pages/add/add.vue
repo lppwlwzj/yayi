@@ -419,7 +419,11 @@
                 <view class="text">{{ item.text }} {{ item.value }}%</view>
               </view>
               <view>
-                <image class="icon-image" :src="item.url" />
+                <image
+                  @click="handleChoseImg(index)"
+                  class="icon-image"
+                  :src="item.img || '../../static/images/upload.png'"
+                />
               </view>
             </view>
           </view>
@@ -610,6 +614,23 @@
         ></u-icon>
       </navigator>
     </view>
+    <u-modal
+      confirmColor="#dd524d63"
+      :show="modalShow"
+      :showCancelButton="true"
+      @confirm="confirm"
+      @cancel="modalShow = false"
+      ref="uModal"
+    >
+      <view class="rfaw">
+        <view
+          v-for="(item, index) in dentistList"
+          :key="index"
+        >
+          <image class="icon-image" :src="item.url" />
+        </view>
+      </view>
+    </u-modal>
   </view>
 </template>
 
@@ -644,6 +665,7 @@ import Upload from "../../components/my-upload/my-upload.vue";
 export default {
   data() {
     return {
+      modalShow: false,
       service_id: "",
       startDate: "",
       endDate: "",
@@ -711,6 +733,7 @@ export default {
           text: "边缘",
           value: 0,
           open: [],
+          img: "",
           url: "../../static/images/1.png"
         },
         {
@@ -719,6 +742,7 @@ export default {
           text: "角度方圆",
           value: 0,
           open: [],
+          img: "",
           url: "../../static/images/2.png"
         },
 
@@ -736,6 +760,7 @@ export default {
           value: 0,
           key: "angle",
           open: [],
+          img: "",
           url: "../../static/images/4.png"
         },
         {
@@ -744,6 +769,7 @@ export default {
           value: 0,
           open: [],
           key: "jiandun",
+          img: "",
           url: "../../static/images/5.png"
         },
         {
@@ -752,6 +778,7 @@ export default {
           value: 0,
           open: [],
           key: "qieduan",
+          img: "",
           url: "../../static/images/6.png"
         },
         {
@@ -760,6 +787,7 @@ export default {
           value: 0,
           open: [],
           key: "texture",
+          img: "",
           url: "../../static/images/7.png"
         },
         {
@@ -768,6 +796,7 @@ export default {
           value: 0,
           key: "dot",
           open: [],
+          img: "",
           url: "../../static/images/8.png"
         },
         {
@@ -776,6 +805,7 @@ export default {
           value: 0,
           open: [],
           key: "touliang",
+          img: "",
           url: "../../static/images/9.png"
         },
         {
@@ -784,6 +814,7 @@ export default {
           text: "切端渐变层",
           value: 0,
           open: [],
+          img: "",
           url: "../../static/images/10.jpg"
         },
         {
@@ -792,10 +823,13 @@ export default {
           text: "厚度",
           value: 0,
           open: [],
+          img: "",
           url: "../../static/images/11.jpg"
         }
       ],
-      timeKey: ""
+      timeKey: "",
+      activeIndex: "", //滑动条选择图片的时候的key
+      preUploadInfo: {}
     };
   },
   components: {
@@ -819,7 +853,7 @@ export default {
   },
   computed: {
     disabled() {
-      console.log("🚀 ~ disabled ~  this.operateType:",  this.operateType)
+      console.log("🚀 ~ disabled ~  this.operateType:", this.operateType);
       return this.operateType === "view";
     },
     designList() {
@@ -827,6 +861,7 @@ export default {
     }
   },
   methods: {
+
     calendarOpen(key) {
       this.timeKey = key;
       this.$refs.myCalendar.open();
@@ -837,6 +872,19 @@ export default {
     canceltime() {
       // this.daiyaShow = false;
     },
+    hanldeListChange(value, index, key) {
+      const item = this.dentistList[index];
+      item[key] = value;
+
+      this.$set(this.dentistList, index, {
+        ...item
+      });
+    },
+    handleChoseImg(index) {
+      this.activeIndex = index;
+      this.modalShow = true;
+    },
+
     handleEdit() {
       this.operateType = "edit";
     },
@@ -954,14 +1002,7 @@ export default {
         this.id = res.re.id;
       }
     },
-    hanldeListChange(value, index, key) {
-      const item = this.dentistList[index];
-      item[key] = value;
 
-      this.$set(this.dentistList, index, {
-        ...item
-      });
-    },
     preview(url) {
       this.popupShow = true;
       this.previewImg = url;
