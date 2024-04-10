@@ -74,14 +74,15 @@
     <view class="list-item rfc"> 暂无数据 </view>
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
-      <u-icon size="26" name="../../static/images/ECO-UI-08.png"></u-icon>
-      <navigator :url="`/pages/preUpload/preUpload`" class="keynote_con">
-        <u-icon
-          size="26"
-          name="../../static/images/ECO-UI-18.png"
-          @click="open"
-        ></u-icon>
+      <navigator :url="`/pages/preUpload/preUpload`">
+        <u-icon size="26" name="../../static/images/ECO-UI-08.png"></u-icon>
       </navigator>
+
+      <u-icon
+        size="26"
+        name="../../static/images/ECO-UI-18.png"
+        @click="open"
+      ></u-icon>
       <u-icon
         size="26"
         name="../../static/images/ECO-UI-09.png"

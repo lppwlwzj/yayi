@@ -11,7 +11,7 @@ class UploadController {
         re: uploadRes
       });
     } catch (error) {
-      return res.cc(error.error)
+      return res.cc(error[0]?.Error)
     }
   }
 }
