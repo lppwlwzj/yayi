@@ -259,7 +259,29 @@
       </ti-xing>
       <view class="diagnose-el">
         <view class="rfc">
-          <Upload
+          <view class="upload-img-el fc" @click="handleChoseImg('intentList')">
+            <image
+              :src="
+                !form.intentImg
+                  ? '../../static/images/upload.png'
+                  : form.intentImg
+              "
+              mode="aspectFill"
+              class="upload-img"
+            ></image>
+            <image
+              v-show="!form.intentImg"
+              src="../../static/images/add.png"
+              mode="aspectFill"
+              style="width: 30px; height: 30px; margin-bottom: 8px"
+            ></image>
+            <text
+              v-show="!form.intentImg"
+              style="color: #fff; font-size: 12px; z-index: 9999"
+              >客户意向照</text
+            >
+          </view>
+          <!-- <Upload
             style="flex: 1"
             :disabled="disabled"
             :id="`${userInfo.usercount}${customer_id}`"
@@ -287,7 +309,7 @@
                 >客户意向照</text
               >
             </view>
-          </Upload>
+          </Upload> -->
           <view class="diagnose-text">
             <u--textarea
               :disabled="disabled"
@@ -420,7 +442,7 @@
               </view>
               <view>
                 <image
-                  @click="handleChoseImg(index)"
+                  @click="handleChoseImg(item.key)"
                   class="icon-image"
                   :src="item.img || '../../static/images/upload.png'"
                 />
@@ -595,17 +617,12 @@
 
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
-      <!-- <navigator
+      <navigator
         :url="
           operateType === 'create'
             ? ''
-            : `/pages/afterService/afterService?id=11`
+            : `/pages/customerFiles/customerFiles?id=${id}&operateType=${operateType}&service_id=${service_id}`
         "
-      > -->
-      <!-- <navigator :url="`/pages/afterService/afterService?id=11`"> -->
-
-      <navigator
-        :url="`/pages/customerFiles/customerFiles?id=${id}&operateType=${operateType}&service_id=${service_id}`"
       >
         <u-icon
           size="26"
@@ -617,17 +634,19 @@
     <u-modal
       confirmColor="#dd524d63"
       :show="modalShow"
-      :showCancelButton="true"
-      @confirm="confirm"
-      @cancel="modalShow = false"
+      :showConfirmButton="false"
+      :showCancelButton="false"
+      :closeOnClickOverlay="true"
+      @close="modalShow = false"
       ref="uModal"
     >
       <view class="rfaw">
-        <view
-          v-for="(item, index) in dentistList"
-          :key="index"
-        >
-          <image class="icon-image" :src="item.url" />
+        <view v-for="(item, index) in imgList" :key="index">
+          <image
+            class="icon-image"
+            :src="item"
+            @click="handleChooseConfirm(item)"
+          />
         </view>
       </view>
     </u-modal>
@@ -829,7 +848,21 @@ export default {
       ],
       timeKey: "",
       activeIndex: "", //滑动条选择图片的时候的key
-      preUploadInfo: {}
+      preUploadInfo: {},
+      preinstall: {
+        intentList: [],
+        bianyuan: [],
+        round: [],
+        luocha: [],
+        angle: [],
+        jiandun: [],
+        qieduan: [],
+        texture: [],
+        dot: [],
+        touliang: [],
+        qieduanLinears: [],
+        thickness: []
+      }
     };
   },
   components: {
@@ -842,6 +875,7 @@ export default {
     this.endDate = getDate(new Date(), 30).fullDate;
   },
   onLoad: function (option) {
+    this.getPreinstall();
     if (option.id) {
       this.id = option.id;
       this.operateType = option.type;
@@ -853,15 +887,31 @@ export default {
   },
   computed: {
     disabled() {
-      console.log("🚀 ~ disabled ~  this.operateType:", this.operateType);
       return this.operateType === "view";
     },
     designList() {
       return this.form.designList;
+    },
+    imgList() {
+      return this.preinstall?.[this.activeIndex] || [];
     }
   },
-  methods: {
 
+  methods: {
+    async getPreinstall() {
+      const res = await this.$api.getPreinstall();
+      if (!res.code) {
+        if (!res.re) return;
+        const params = {};
+        this.pre;
+        Object.keys(this.preinstall).map((key) => {
+          params[key] = res.re[key] ? JSON.parse(res.re[key]) : [];
+        });
+        this.preinstall = {
+          ...params
+        };
+      }
+    },
     calendarOpen(key) {
       this.timeKey = key;
       this.$refs.myCalendar.open();
@@ -880,11 +930,27 @@ export default {
         ...item
       });
     },
-    handleChoseImg(index) {
-      this.activeIndex = index;
+    handleChoseImg(key) {
+      this.activeIndex = key;
       this.modalShow = true;
     },
-
+    handleChooseConfirm(img) {
+      if (this.activeIndex === "intentList") {
+        this.form.intentImg = img;
+        console.log(
+          "🚀 ~ handleChooseConfirm ~  this.form.intentImg:",
+          this.form.intentImg
+        );
+      } else {
+        const index = this.dentistList.findIndex(
+          (item) => item.key === this.activeIndex
+        );
+        if (index > -1) {
+          this.hanldeListChange(img, index, "img");
+        }
+      }
+      this.modalShow = false;
+    },
     handleEdit() {
       this.operateType = "edit";
     },

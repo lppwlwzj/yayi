@@ -28,8 +28,20 @@
       suffixIconStyle=" color: #dd524dab !important;"
       @confirm="handleSearch"
     ></u--input> -->
+    <uni-data-select
+      class="user-select"
+      v-model="form.root"
+      placeholder="请选择上帝用户"
+      :localdata="userList"
+    ></uni-data-select>
     <uni-collapse :show-arrow="true">
-      <uni-collapse-item title="边缘" >
+      <uni-collapse-item title="客户意向图">
+        <MultiUpload :list="form.intentList" activeKey="intentList" />
+      </uni-collapse-item>
+    </uni-collapse>
+
+    <uni-collapse :show-arrow="true">
+      <uni-collapse-item title="边缘">
         <MultiUpload :list="form.bianyuan" activeKey="bianyuan" />
       </uni-collapse-item>
     </uni-collapse>
@@ -100,6 +112,7 @@ export default {
   data() {
     return {
       form: {
+        intentList: [],
         bianyuan: [],
         round: [],
         luocha: [],
@@ -110,14 +123,24 @@ export default {
         dot: [],
         touliang: [],
         qieduanLinears: [],
-        thickness: []
-      }
+        thickness: [],
+        root: ""
+      },
+      userList: []
     };
   },
   onLoad: function () {
     this.getInfo();
+    this.getUserList();
   },
   methods: {
+    getUserList() {
+      this.$api.getUserList().then((res) => {
+        if (!res.code) {
+          this.userList = res.re.list;
+        }
+      });
+    },
     async getInfo() {
       const res = await this.$api.getPreinstall();
       if (!res.code) {
@@ -125,49 +148,55 @@ export default {
         const params = {};
         Object.keys(this.form).map((key) => {
           params[key] =
-            res.re[key] && key !== "id" ? JSON.parse(res.re[key]) : [];
+            res.re[key] && key !== "id" && key !== "root"
+              ? JSON.parse(res.re[key])
+              : [];
         });
         this.form = {
           ...params,
-          id: this.form?.id || ""
+          id: res.re?.id || "",
+          root: res.re?.root || ""
         };
       }
     },
     async handleSubmit() {
-      const params = {};
-      Object.keys(this.form).map((key) => {
-        params[key] =
-          this.form[key].length && key !== "id"
-            ? JSON.stringify(this.form[key])
-            : "";
-      });
-      // const params = {
-      //   bianyuan:
-      //     '["http://127.0.0.1:3006/img/images/adminbianyuan1.05f5fa98d626e49722d442ab25d1286d.png"]',
-      //   round:
-      //     '["http://127.0.0.1:3006/img/images/adminround1.7091d39c3e9c27141711a53fbe912c8c.png"]',
-      //   luocha:
-      //     '["http://127.0.0.1:3006/img/images/adminluocha1.0337469a65c4624dddda0cbe3f1e9fed.png"]',
-      //   angle:
-      //     '["http://127.0.0.1:3006/img/images/adminangle1.656bafa918d855754ff8b014785dc5b9.png"]',
-      //   jiandun:
-      //     '["http://127.0.0.1:3006/img/images/adminjiandun1.81b4c68898053755845005190a6239ec.png"]',
-      //   qieduan:
-      //     '["http://127.0.0.1:3006/img/images/adminqieduan1.eb3ccb25bda766a5ebc64f2cd64f0f62.png"]',
-      //   texture:
-      //     '["http://127.0.0.1:3006/img/images/admintexture1.c2cd8e64df7eb07e9eff38977b3d9f79.png"]',
-      //   dot: '["http://127.0.0.1:3006/img/images/admindot1.963ba7ace6e850acf8cc67ce77662824.png"]',
-      //   touliang:
-      //     '["http://127.0.0.1:3006/img/images/admintouliang1.e73d77d03ba5b4aa6e7e73f590994249.png"]',
-      //   qieduanLinears:
-      //     '["http://127.0.0.1:3006/img/images/adminlinear1.149d1ec26ad507dc8b36a3ecc5b666f4.png"]',
-      //   thickness:
-      //     '["http://127.0.0.1:3006/img/images/adminthickness1.a99c818d198a6fa3336fa7c822171d76.png"]'
-      // };
+      // const params = {};
+      // Object.keys(this.form).map((key) => {
+      //   params[key] =
+      //     this.form[key].length && key !== "id" && key !== "root"
+      //       ? JSON.stringify(this.form[key])
+      //       : "";
+      // });
+      const params = {
+        bianyuan:
+          '["http://127.0.0.1:3006/img/images/adminbianyuan1.05f5fa98d626e49722d442ab25d1286d.png"]',
+        round:
+          '["http://127.0.0.1:3006/img/images/adminround1.7091d39c3e9c27141711a53fbe912c8c.png"]',
+        luocha:
+          '["http://127.0.0.1:3006/img/images/adminluocha1.0337469a65c4624dddda0cbe3f1e9fed.png"]',
+        angle:
+          '["http://127.0.0.1:3006/img/images/adminangle1.656bafa918d855754ff8b014785dc5b9.png"]',
+        jiandun:
+          '["http://127.0.0.1:3006/img/images/adminjiandun1.81b4c68898053755845005190a6239ec.png"]',
+        qieduan:
+          '["http://127.0.0.1:3006/img/images/adminqieduan1.eb3ccb25bda766a5ebc64f2cd64f0f62.png"]',
+        texture:
+          '["http://127.0.0.1:3006/img/images/admintexture1.c2cd8e64df7eb07e9eff38977b3d9f79.png"]',
+        dot: '["http://127.0.0.1:3006/img/images/admindot1.963ba7ace6e850acf8cc67ce77662824.png"]',
+        touliang:
+          '["http://127.0.0.1:3006/img/images/admintouliang1.e73d77d03ba5b4aa6e7e73f590994249.png"]',
+        qieduanLinears:
+          '["http://127.0.0.1:3006/img/images/adminlinear1.149d1ec26ad507dc8b36a3ecc5b666f4.png"]',
+        thickness:
+          '["http://127.0.0.1:3006/img/images/adminthickness1.a99c818d198a6fa3336fa7c822171d76.png"]',
+        intentList:
+          '["http://127.0.0.1:3006/img/images/adminthickness1.a99c818d198a6fa3336fa7c822171d76.png"]'
+      };
       console.log(JSON.stringify(params));
       const res = await this.$api.editPreinstall({
         ...params,
-        id: this.form?.id || ""
+        id: this.form?.id || "",
+        root: this.form?.root || ""
       });
       this.form.id == res.re?.id;
       uni.showToast({
@@ -185,7 +214,6 @@ export default {
   min-height: 100vh;
 }
 
-
 .btn {
   margin-top: 50rpx;
   width: 100%;
@@ -201,14 +229,30 @@ export default {
   color: #dd524dab !important;
   font-size: 34rpx;
 }
-/deep/.uni-collapse-item__wrap{
+/deep/.uni-collapse-item__wrap {
   background: $uni-color-bg;
 }
-/deep/.uni-collapse-item__title-arr{
- color: $uni-color-bg;
+/deep/.uni-collapse-item__title-arr {
+  color: $uni-color-bg;
 }
 /deep/.uni-collapse {
   margin: 24rpx 0rpx;
 }
-
+.user-select {
+  width: 100%;
+  background: #fff;
+  height: 90rpx;
+  border: none;
+}
+/deep/.uni-select {
+  border: none;
+}
+/deep/.uni-select__input-placeholder {
+  font-size: 28rpx;
+  color: #dd524dab !important;
+}
+/deep/.uni-select__input-text {
+  font-size: 28rpx;
+  color: #dd524dab !important;
+}
 </style>

@@ -12,5 +12,7 @@ const user_handler = require('../router_handler/user')
 // const { reg_login_schema } = require('../schema/index')
 
 router.post('/login',user_handler.login)
+router.post('/list',user_handler.list)
+
 
 module.exports = router

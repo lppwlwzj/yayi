@@ -43,10 +43,28 @@ exports.login = (req, res) => {
       // 为了方便客户端使用 Token，在服务器端直接拼接上 Bearer 的前缀
       re: {
         token: "Bearer " + tokenStr,
-        userinfo:{
-            usercount,
-            username
+        userinfo: {
+          usercount,
+          username
         }
+      }
+    });
+  });
+};
+exports.list = (req, res) => {
+  const sql = `select * from user `;
+  // 执行 SQL 语句，查询用户的数据
+  db.query(sql, function (err, results) {
+    if (err) return res.cc(err);
+    res.send({
+      code: 0,
+      message: "成功！",
+      // 为了方便客户端使用 Token，在服务器端直接拼接上 Bearer 的前缀
+      re: {
+        list: results.map((item) => ({
+          value: item.usercount,
+          text: item.username
+        }))
       }
     });
   });

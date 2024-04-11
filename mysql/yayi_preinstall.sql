@@ -35,6 +35,8 @@ CREATE TABLE `preinstall` (
   `qieduanLinears` longtext DEFAULT NULL COMMENT '切端渐变层',
   `thickness` longtext DEFAULT NULL COMMENT '厚度',
   `root` varchar(255)  DEFAULT NULL COMMENT '超级管理员',
+  `intentList` longtext  DEFAULT NULL COMMENT '客户意向图',
+
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='用户表';
 

@@ -81,16 +81,16 @@ app.use('/user',userRouter)
 const uploadController = require('./router/upload')
 app.use('/api/upload',uploadController.upload)
 // 导入并使用首页路由模块
-const homeRouter = require('./router/home')
-app.use('/home',homeRouter)
+// const homeRouter = require('./router/home')
+// app.use('/home',homeRouter)
 
-// 导入并使用社区图片路由模块
-const picsRouter = require('./router/pics')
-app.use('/pics',picsRouter)
+// // 导入并使用社区图片路由模块
+// const picsRouter = require('./router/pics')
+// app.use('/pics',picsRouter)
 
-// 导入并使用资讯路由模块
-const newsRouter = require('./router/news')
-app.use('/news',newsRouter)
+// // 导入并使用资讯路由模块
+// const newsRouter = require('./router/news')
+// app.use('/news',newsRouter)
 
 const customerRouter = require('./router/customer')
 app.use('/customer',customerRouter)

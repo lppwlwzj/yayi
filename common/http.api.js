@@ -4,6 +4,7 @@ const install = (Vue, vm) => {
     //图片上传
     uploadImg: (formData) => vm.$u.http.upload("/api/upload", formData),
     login: (data) => vm.$u.http.post("/user/login", data),
+    getUserList : () => vm.$u.http.post("/user/list"),
     addCustomer: (data) => vm.$u.http.post("/customer/add", data),
     getCustomerDetailById: (data) => vm.$u.http.post("/customer/detail", data),
     editCustomer: (data) => vm.$u.http.post("/customer/edit", data),
@@ -19,7 +20,6 @@ const install = (Vue, vm) => {
     getRegisterCover: () => vm.$u.http.get("/api/index/registerCover"),
     getMembertype: () => vm.$u.http.get("/api/index/membertype"),
     register: (data) => vm.$u.http.post("/api/user/register", data),
-    getBanner: () => vm.$u.http.post("/api/index/getBanner"),
   };
 };
 

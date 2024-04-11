@@ -84,9 +84,10 @@ exports.editPreinstall = (req, res) => {
     touliang,
     qieduanLinears,
     thickness,
-    id
+    id,
+    root,
+    intentList
   } = req.body;
-console.log('qieduanLinears',qieduanLinears)
   // // 定义sql语句id
   const insertSql = `insert into preinstall (
     bianyuan,
@@ -99,16 +100,17 @@ console.log('qieduanLinears',qieduanLinears)
     dot,
     touliang,
     qieduanLinears,
-    thickness
-    ) values ('${bianyuan}','${round}','${luocha}','${angle}','${jiandun}','${qieduan}','${texture}','${dot}','${touliang}','${qieduanLinears}','${thickness}') `;
+    thickness,
+    root,
+    intentList
+    ) values ('${bianyuan}','${round}','${luocha}','${angle}','${jiandun}','${qieduan}','${texture}','${dot}','${touliang}','${qieduanLinears}','${thickness}','${root}','${intentList}') `;
 
   // const insertSql = `insert into preinstall set ?`;
   const updateSql = `update preinstall set  bianyuan = '${bianyuan}',  bianyuan = '${bianyuan}', round = '${round}',  luocha = '${luocha}',  angle = '${angle}', jiandun = '${jiandun}',
-  qieduan = '${qieduan}', texture = '${texture}', dot = '${dot}',touliang = '${touliang}',qieduanLinears = '${qieduanLinears}',thickness = '${thickness}',
+  qieduan = '${qieduan}', texture = '${texture}', dot = '${dot}',touliang = '${touliang}',qieduanLinears = '${qieduanLinears}',thickness = '${thickness}',root = '${root}',intentList = '${intentList}'
   where id='${id}'`;
 
   const sql = id ? updateSql : insertSql;
-  console.log("🚀 ~ sql:", sql)
 
   // // 调用db.query()执行sql语句
   db.query(sql, [req.body], async (err, results) => {
@@ -131,7 +133,6 @@ exports.getPreinstall = (req, res) => {
 
   // // 调用db.query()执行sql语句
   db.query(sql, async (err, results) => {
-    console.log("🚀 ~ db.query ~ results:", results);
     if (err) {
       return res.cc(err);
     }
