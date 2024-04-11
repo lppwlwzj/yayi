@@ -49,8 +49,8 @@ exports.addCustomer = (req, res) => {
     dotValue,
     touliangOpen,
     touliangValue,
-    linearOpen,
-    linearValue,
+    qieduanLinearsOpen,
+    qieduanLinearsValue,
     thicknessOpen,
     thicknessValue
   } = req.body;
@@ -98,11 +98,11 @@ exports.addCustomer = (req, res) => {
         dotValue,
         touliangOpen,
         touliangValue,
-        linearOpen,
-        linearValue,
+        qieduanLinearsOpen,
+        qieduanLinearsValue,
         thicknessOpen,
         thicknessValue
-	) values ('${createtime}','${customer_id}','${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${linearOpen}','${linearValue}','${thicknessOpen}','${thicknessValue}')`;
+	) values ('${createtime}','${customer_id}','${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${qieduanLinearsOpen}','${qieduanLinearsValue}','${thicknessOpen}','${thicknessValue}')`;
   // 更新参数表
   db.query(sql, (err, results) => {
     if (err) return res.cc(err);
@@ -163,8 +163,8 @@ exports.editCustomer = (req, res) => {
     dotValue,
     touliangOpen,
     touliangValue,
-    linearOpen,
-    linearValue,
+    qieduanLinearsOpen,
+    qieduanLinearsValue,
     thicknessOpen,
     thicknessValue
   } = req.body;
@@ -209,8 +209,8 @@ exports.editCustomer = (req, res) => {
 			dotValue='${dotValue}',
 			touliangOpen='${touliangOpen}',
 			touliangValue='${touliangValue}',
-			linearOpen='${linearOpen}',
-			linearValue='${linearValue}',
+			qieduanLinearsOpen='${qieduanLinearsOpen}',
+			qieduanLinearsValue='${qieduanLinearsValue}',
 			thicknessOpen='${thicknessOpen}',
 			thicknessValue='${thicknessValue}' where id=${id}`;
   // 更新参数表

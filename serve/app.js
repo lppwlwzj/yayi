@@ -98,7 +98,9 @@ app.use('/customer',customerRouter)
 const serviceRouter = require('./router_handler/service')
 app.use('/service/edit',serviceRouter.submit);
 app.use('/service/detail',serviceRouter.detail);
-// app.use('/service/update',serviceRouter.update);
+app.use('/preinstall/edit',serviceRouter.editPreinstall);
+app.use('/preinstall/detail',serviceRouter.getPreinstall);
+
 
 
 // 配置服务器

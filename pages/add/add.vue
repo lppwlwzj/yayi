@@ -720,8 +720,8 @@ export default {
         dotValue: "",
         touliangOpen: false,
         touliangValue: "",
-        linearOpen: false,
-        linearValue: "",
+        qieduanLinearsOpen: false,
+        qieduanLinearsValue: "",
         thicknessOpen: false,
         thicknessValue: ""
       },
@@ -810,7 +810,7 @@ export default {
         },
         {
           id: 10,
-          key: "linear",
+          key: "qieduanLinears",
           text: "切端渐变层",
           value: 0,
           open: [],
@@ -983,8 +983,8 @@ export default {
       //   dotValue: 0,
       //   touliangOpen: false,
       //   touliangValue: 0,
-      //   linearOpen: false,
-      //   linearValue: 0,
+      //   qieduanLinearsOpen: false,
+      //   qieduanLinearsValue: 0,
       //   thicknessOpen: false,
       //   thicknessValue: 0
       // };

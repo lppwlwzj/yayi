@@ -2236,7 +2236,7 @@
         parseFunctionArgs(tokens).forEach(function (arg, i) {
             var firstToken = arg[0];
             if (i === 0) {
-                if (isIdentToken(firstToken) && firstToken.value === 'linear') {
+                if (isIdentToken(firstToken) && firstToken.value === 'qieduanLinears') {
                     type = 1 /* LINEAR_GRADIENT */;
                     return;
                 }
@@ -2465,11 +2465,11 @@
             (value.type !== 18 /* FUNCTION */ || !!SUPPORTED_IMAGE_FUNCTIONS[value.name]));
     }
     var SUPPORTED_IMAGE_FUNCTIONS = {
-        'linear-gradient': linearGradient,
-        '-moz-linear-gradient': prefixLinearGradient,
-        '-ms-linear-gradient': prefixLinearGradient,
-        '-o-linear-gradient': prefixLinearGradient,
-        '-webkit-linear-gradient': prefixLinearGradient,
+        'qieduanLinears-gradient': linearGradient,
+        '-moz-qieduanLinears-gradient': prefixLinearGradient,
+        '-ms-qieduanLinears-gradient': prefixLinearGradient,
+        '-o-qieduanLinears-gradient': prefixLinearGradient,
+        '-webkit-qieduanLinears-gradient': prefixLinearGradient,
         'radial-gradient': radialGradient,
         '-moz-radial-gradient': prefixRadialGradient,
         '-ms-radial-gradient': prefixRadialGradient,

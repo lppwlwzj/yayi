@@ -129,11 +129,11 @@ export default {
   bottom: 0;
 }
 .image {
-  width: 136rpx;
-  height: 136rpx;
+  width: 130rpx;
+  height: 130rpx;
   background: #898787a3;
   border-radius: 16rpx;
-  margin: 20rpx 10rpx;
+  margin: 20rpx 8rpx;
   position: relative;
 }
 .preview {

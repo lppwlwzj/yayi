@@ -32,7 +32,7 @@ CREATE TABLE `preinstall` (
   `texture` longtext DEFAULT NULL COMMENT '纹理',
   `touliang` longtext DEFAULT NULL COMMENT '透亮',
   `dot` longtext DEFAULT NULL COMMENT '颈部光点',
-  `linear` longtext DEFAULT NULL COMMENT '切端渐变层',
+  `qieduanLinears` longtext DEFAULT NULL COMMENT '切端渐变层',
   `thickness` longtext DEFAULT NULL COMMENT '厚度',
   `root` varchar(255)  DEFAULT NULL COMMENT '超级管理员',
   PRIMARY KEY (`id`)

@@ -84,8 +84,8 @@
     </u-collapse>
 
     <u-collapse>
-      <u-collapse-item title="切端渐变层" name="linear">
-        <MultiUpload :list="form.linear" activeKey="linear" />
+      <u-collapse-item title="切端渐变层" name="qieduanLinears">
+        <MultiUpload :list="form.qieduanLinears" activeKey="qieduanLinears" />
       </u-collapse-item>
     </u-collapse>
 
@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import { onLoad } from "uview-ui/libs/mixin/mixin";
 import MultiUpload from "../../components/multi-upload";
 export default {
   components: {
@@ -117,18 +118,73 @@ export default {
         texture: [],
         dot: [],
         touliang: [],
-        linear: [],
+        qieduanLinears: [],
         thickness: []
       }
     };
   },
+  onLoad: function () {
+    this.getInfo();
+  },
   methods: {
-    handleSubmit() {
+    async getInfo() {
+      const res = await this.$api.getPreinstall();
+      console.log("🚀 ~ getInfo ~ res:", res);
+      if (!res.code) {
+        if (!res.re) return;
+        const params = {};
+        Object.keys(this.form).map((key) => {
+          params[key] =
+            res.re[key] && key !== "id" ? JSON.parse(res.re[key]) : [];
+        });
+        this.form = {
+          ...params,
+          id: this.form?.id || ""
+        };
+        console.log("🚀 ~ getInfo ~ params:", params);
+      }
+    },
+    async handleSubmit() {
       const params = {};
       Object.keys(this.form).map((key) => {
-        params[key] = this.form[key].length ? JSON.stringify(this.form[key]) : '';
+        params[key] =
+          this.form[key].length && key !== "id"
+            ? JSON.stringify(this.form[key])
+            : "";
       });
-      console.log("bianyuan", params);
+      // const params = {
+      //   bianyuan:
+      //     '["http://127.0.0.1:3006/img/images/adminbianyuan1.05f5fa98d626e49722d442ab25d1286d.png"]',
+      //   round:
+      //     '["http://127.0.0.1:3006/img/images/adminround1.7091d39c3e9c27141711a53fbe912c8c.png"]',
+      //   luocha:
+      //     '["http://127.0.0.1:3006/img/images/adminluocha1.0337469a65c4624dddda0cbe3f1e9fed.png"]',
+      //   angle:
+      //     '["http://127.0.0.1:3006/img/images/adminangle1.656bafa918d855754ff8b014785dc5b9.png"]',
+      //   jiandun:
+      //     '["http://127.0.0.1:3006/img/images/adminjiandun1.81b4c68898053755845005190a6239ec.png"]',
+      //   qieduan:
+      //     '["http://127.0.0.1:3006/img/images/adminqieduan1.eb3ccb25bda766a5ebc64f2cd64f0f62.png"]',
+      //   texture:
+      //     '["http://127.0.0.1:3006/img/images/admintexture1.c2cd8e64df7eb07e9eff38977b3d9f79.png"]',
+      //   dot: '["http://127.0.0.1:3006/img/images/admindot1.963ba7ace6e850acf8cc67ce77662824.png"]',
+      //   touliang:
+      //     '["http://127.0.0.1:3006/img/images/admintouliang1.e73d77d03ba5b4aa6e7e73f590994249.png"]',
+      //   qieduanLinears:
+      //     '["http://127.0.0.1:3006/img/images/adminlinear1.149d1ec26ad507dc8b36a3ecc5b666f4.png"]',
+      //   thickness:
+      //     '["http://127.0.0.1:3006/img/images/adminthickness1.a99c818d198a6fa3336fa7c822171d76.png"]'
+      // };
+      console.log(JSON.stringify(params));
+      const res = await this.$api.editPreinstall({
+        ...params,
+        id: this.form?.id || ""
+      });
+      this.form.id == res.re?.id;
+      uni.showToast({
+        title: res.message,
+        icon: "none"
+      });
     }
   }
 };
