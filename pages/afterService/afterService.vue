@@ -22,53 +22,15 @@
           <view v-for="(item, idx) in tryInfo" :key="idx" class="img-list">
             <view class="rfc" style="align-items: flex-start">
               <view class="rfsw" style="width: 55%">
-                <view
-                  v-for="(img_url, index) in item.tryImg"
-                  :key="index + idx"
-                >
-                  <view class="upload-img-el fc">
-                    <image :src="img_url" mode="aspectFill" class="upload-img">
-                    </image>
-                    <image
-                      @tap.stop="preview(img_url)"
-                      src="../../static/images/preview.png"
-                      class="preview"
-                      mode="aspectFill"
-                    ></image>
-                    <u-icon
-                      @click="handleDelTryImg(idx, index)"
-                      class="image-close"
-                      size="16"
-                      color="#fff"
-                      name="close-circle"
-                    ></u-icon>
-                  </view>
-                </view>
-                <Upload
-                  v-show="!disabled"
-                  :name="`try${item.tryImg.length + 1}`"
-                  customClass="upload-img"
-                  @change="
-                    (value) => {
-                      handleTryImage(value, idx);
+                <MultiUpload
+                  :list="item.tryImg"
+                  activeKey="tryImg"
+                  @delete="
+                    (index) => {
+                      handleDelTryImg(idx, index);
                     }
                   "
-                >
-                  <view class="upload-img-el rfc">
-                    <image
-                      src="../../static/images/upload.png"
-                      mode="aspectFill"
-                      class="upload-img"
-                    >
-                    </image>
-                    <image
-                      src="../../static/images/add.png"
-                      mode="aspectFill"
-                      class="upload-add"
-                      style="width: 30px; height: 30px"
-                    ></image>
-                  </view>
-                </Upload>
+                />
               </view>
               <view class="diagnose-text">
                 <u--textarea
@@ -95,53 +57,16 @@
           <view v-for="(item, idx) in recoverInfo" :key="idx" class="img-list">
             <view class="rfc" style="align-items: flex-start">
               <view class="rfsw" style="width: 55%">
-                <view
-                  v-for="(img_url, index) in item.recoverImg"
-                  :key="index + idx"
-                >
-                  <view class="upload-img-el fc">
-                    <image :src="img_url" mode="aspectFill" class="upload-img">
-                    </image>
-                    <image
-                      @tap.stop="preview(img_url)"
-                      src="../../static/images/preview.png"
-                      class="preview"
-                      mode="aspectFill"
-                    ></image>
-                    <u-icon
-                      @click="handleDelRecoverImg(idx, index)"
-                      class="image-close"
-                      size="16"
-                      color="#fff"
-                      name="close-circle"
-                    ></u-icon>
-                  </view>
-                </view>
-                <Upload
-                  v-show="!disabled"
-                  :name="`try${item.recoverImg.length + 1}`"
-                  customClass="upload-img"
-                  @change="
-                    (value) => {
-                      handleAddRecover(value, idx);
+                <MultiUpload
+                  :list="item.recoverImg"
+                  activeKey="recoverImg"
+                  @delete="
+                    (index) => {
+                      handleDelRecoverImg(idx, index);
                     }
                   "
-                >
-                  <view class="upload-img-el rfc">
-                    <image
-                      src="../../static/images/upload.png"
-                      mode="aspectFill"
-                      class="upload-img"
-                    >
-                    </image>
-                    <image
-                      src="../../static/images/add.png"
-                      mode="aspectFill"
-                      class="upload-add"
-                      style="width: 30px; height: 30px"
-                    ></image>
-                  </view>
-                </Upload>
+                />
+  
               </view>
               <view class="diagnose-text">
                 <u--textarea
@@ -160,38 +85,13 @@
       </u-collapse>
     </view>
     <view v-show="!disabled" class="btn afc" @tap.stop="submit"> 确认 </view>
-    <u-popup
-      :show="popupShow"
-      closeable
-      mode="center"
-      @close="popupClose"
-      :overlayStyle="{
-        background: '#000000d6'
-      }"
-    >
-      <view class="fc">
-        <image
-          :src="previewImg"
-          v-if="previewImg.indexOf('image') > -1"
-          mode="aspectFill"
-        ></image>
-        <video
-          :src="previewImg"
-          v-if="previewImg.indexOf('video') > -1"
-          style="width: 100%; height: 200rpx"
-        ></video>
-      </view>
-    </u-popup>
-    <!-- <view class="btn afc"> 确认 </view> -->
-    <!-- <view class="footer rfa">
-      <u-icon size="26" name="../../static/images/ECO-UI-22.png"></u-icon>
-      <u-icon size="26" name="../../static/images/ECO-UI-05.png"></u-icon>
-    </view> -->
+
   </view>
 </template>
 
 <script>
 import Upload from "../../components/my-upload/my-upload.vue";
+import MultiUpload from "../../components/multi-upload";
 
 export default {
   data() {
@@ -208,7 +108,8 @@ export default {
     };
   },
   components: {
-    Upload
+    Upload,
+    MultiUpload
   },
   onLoad: function (option) {
     if (option.customer_id) {
@@ -251,7 +152,6 @@ export default {
           title: res.message
         });
       }
-      console.log("🚀 ~ submit ~ res:", res);
     },
     async getServiceDetailById(service_id) {
       const res = await this.$api.getServiceDetailById({
@@ -264,23 +164,32 @@ export default {
         this.recoverInfo = recoverInfo ? JSON.parse(recoverInfo) : [];
       }
     },
-    handleTryImage(img_url, idx) {
-      this.tryInfo[idx].tryImg.push(img_url);
-    },
+
     handleDelTryImg(idx, index) {
-      this.tryInfo[idx].tryImg.splice(index, 1);
+      const item = this.tryInfo[idx];
+      const tryImg = item.tryImg;
+      this.$set(tryImg, index, '')
+      this.$set(this.tryInfo, idx, {
+        ...this.tryInfo[idx],
+        tryImg
+      });
     },
+
     handleAddTry() {
       this.tryInfo.push({
         tryImg: [],
         remark: ""
       });
     },
-    handleAddRecover(img_url, idx) {
-      this.recoverInfo[idx].recoverImg.push(img_url);
-    },
-    handleDelTryImg(idx, index) {
-      this.recoverInfo[idx].recoverImg.splice(index, 1);
+
+    handleDelRecoverImg(idx, index) {
+      const item = this.recoverInfo[idx];
+      const recoverImg = item.recoverImg;
+      this.$set(recoverImg, index, '')
+      this.$set(this.recoverInfo, idx, {
+        ...this.recoverInfo[idx],
+        recoverImg
+      });
     },
     handleRecoverTry() {
       this.recoverInfo.push({
@@ -289,19 +198,6 @@ export default {
       });
     },
 
-    preview(url) {
-      this.popupShow = true;
-      this.previewImg = url;
-    },
-    popupClose() {
-      this.popupShow = false;
-    }
-    // handleImage(value) {
-    //   this.imgList.push(value);
-    // },
-    // deleteImg(index) {
-    //   this.imgList.splice(index);
-    // },
   }
 };
 </script>
@@ -310,11 +206,7 @@ export default {
 page {
   background-color: #fff;
 }
-.image-close {
-  position: absolute;
-  top: 4rpx;
-  right: 4rpx;
-}
+
 .u-input--square {
   border-radius: 40rpx;
 }
@@ -360,70 +252,7 @@ page {
       box-shadow: 2px 2px 5px #33333340;
     }
   }
-  .preview {
-    width: 14px;
-    height: 14px;
-    position: absolute;
-    left: 10rpx;
-    bottom: 10rpx;
-  }
-  .upload-bg {
-    flex: 1;
-    margin: 12rpx;
-    flex-wrap: nowrap;
-  }
-
-  .upload-img-el {
-    position: relative;
-    width: 140rpx;
-    height: 140rpx;
-    margin: 10rpx;
-  }
-  .upload-add {
-    position: absolute;
-    left: 44rpx;
-    top: 44rpx;
-  }
-  .upload-img {
-    // position: absolute;
-    width: 100%;
-    height: 100%;
-    // left: 0;
-    // right: 0;
-    // top: 0;
-    // bottom: 0;
-  }
-  .preview {
-    width: 14px;
-    height: 14px;
-    position: absolute;
-    right: 10rpx;
-    bottom: 10rpx;
-  }
-
-  .image-list {
-    width: 100%;
-  }
-
-  .image {
-    position: relative;
-    width: 200rpx;
-    height: 200rpx;
-    background: #898787a3;
-    border-radius: 16rpx;
-    // margin: 20rpx 0rpx;
-    background: url("../../static/images/upload.png") center no-repeat;
-    background-size: 100% 100%;
-  }
-  // image2{
-  //   position: relative;
-  //   width: 200rpx;
-  //   height: 200rpx;
-  //   background: #898787a3;
-  //   border-radius: 16rpx;
-  //   margin: 20rpx 0rpx;
-  // }
-
+  
   .btn {
     margin-top: 50rpx;
     width: 100%;
