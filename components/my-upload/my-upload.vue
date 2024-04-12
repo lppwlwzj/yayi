@@ -305,6 +305,15 @@ export default {
   width: 180rpx;
   height: 180rpx;
 }
+// .custom-upload-img {
+//   width: 140rpx;
+//   height: 140rpx;
+//   position: relative;
+//   background: #898787a3;
+//   border-radius: 16rpx;
+//   margin: 20rpx 8rpx;
+//   position: relative;
+// }
 .image-2 {
   width: 160rpx;
   height: 160rpx;
@@ -342,4 +351,5 @@ export default {
   top: 0;
   bottom: 0;
 }
+
 </style>

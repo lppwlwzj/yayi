@@ -12,22 +12,6 @@
       <u-icon size="30" name="../../static/images/ECO-UI-02.png"></u-icon>
     </view>
 
-    <!-- <u--input
-      :customStyle="{
-        width: '660rpx',
-        margin: '24rpx 0',
-        border: 'solid 1px #dd524d63 !important',
-        borderRadius: '40rpx',
-        background:'#FFF'
-      }"
-      placeholderStyle="color:#dd524d63"
-      placeholder=""
-      v-model="search"
-      border="surround"
-      suffixIcon="search"
-      suffixIconStyle=" color: #dd524dab !important;"
-      @confirm="handleSearch"
-    ></u--input> -->
     <uni-data-select
       class="user-select"
       v-model="form.root"
@@ -36,66 +20,114 @@
     ></uni-data-select>
     <uni-collapse :show-arrow="true">
       <uni-collapse-item title="客户意向图">
-        <MultiUpload :list="form.intentList" activeKey="intentList" />
+        <MultiUpload
+          :list="form.intentList"
+          activeKey="intentList"
+          @delete="(index) => deleteImg(index, 'intentList')"
+        />
       </uni-collapse-item>
     </uni-collapse>
 
     <uni-collapse :show-arrow="true">
       <uni-collapse-item title="边缘">
-        <MultiUpload :list="form.bianyuan" activeKey="bianyuan" />
+        <MultiUpload
+          :list="form.bianyuan"
+          activeKey="bianyuan"
+          @delete="(index) => deleteImg(index, 'bianyuan')"
+        />
       </uni-collapse-item>
     </uni-collapse>
 
     <uni-collapse>
       <uni-collapse-item title="角度方圆" :show-arrow="true">
-        <MultiUpload :list="form.round" activeKey="round" />
+        <MultiUpload
+          :list="form.round"
+          activeKey="round"
+          @delete="(index) => deleteImg(index, 'round')"
+        />
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="1号2号落差" :show-arrow="true">
-        <MultiUpload :list="form.luocha" activeKey="luocha" />
+        <MultiUpload
+          :list="form.luocha"
+          activeKey="luocha"
+          @delete="(index) => deleteImg(index, 'luocha')"
+        />
       </uni-collapse-item>
     </uni-collapse>
 
     <uni-collapse>
       <uni-collapse-item title="窄细角度" :show-arrow="true">
-        <MultiUpload :list="form.angle" activeKey="angle" />
+        <MultiUpload
+          :list="form.angle"
+          activeKey="angle"
+          @delete="(index) => deleteImg(index, 'angle')"
+        />
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="尖or钝" :show-arrow="true">
-        <MultiUpload :list="form.jiandun" activeKey="jiandun" />
+        <MultiUpload
+          :list="form.jiandun"
+          activeKey="jiandun"
+          @delete="(index) => deleteImg(index, 'jiandun')"
+        />
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="2号远中切端上扬幅度" :show-arrow="true">
-        <MultiUpload :list="form.qieduan" activeKey="qieduan" />
+        <MultiUpload
+          :list="form.qieduan"
+          activeKey="qieduan"
+          @delete="(index) => deleteImg(index, 'qieduan')"
+        />
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="纹理" :show-arrow="true">
-        <MultiUpload :list="form.texture" activeKey="texture" />
+        <MultiUpload
+          :list="form.texture"
+          activeKey="texture"
+          @delete="(index) => deleteImg(index, 'texture')"
+        />
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="颈部光点" :show-arrow="true">
-        <MultiUpload :list="form.dot" activeKey="dot" />
+        <MultiUpload
+          :list="form.dot"
+          activeKey="dot"
+          @delete="(index) => deleteImg(index, 'dot')"
+        />
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="透亮" :show-arrow="true">
-        <MultiUpload :list="form.touliang" activeKey="touliang" />
+        <MultiUpload
+          :list="form.touliang"
+          activeKey="touliang"
+          @delete="(index) => deleteImg(index, 'touliang')"
+        />
       </uni-collapse-item>
     </uni-collapse>
 
     <uni-collapse>
       <uni-collapse-item title="切端渐变层" :show-arrow="true">
-        <MultiUpload :list="form.qieduanLinears" activeKey="qieduanLinears" />
+        <MultiUpload
+          :list="form.qieduanLinears"
+          activeKey="qieduanLinears"
+          @delete="(index) => deleteImg(index, 'qieduanLinears')"
+        />
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="厚度" :show-arrow="true">
-        <MultiUpload :list="form.thickness" activeKey="thickness" />
+        <MultiUpload
+          :list="form.thickness"
+          activeKey="thickness"
+          @delete="(index) => deleteImg(index, 'thickness')"
+        />
       </uni-collapse-item>
     </uni-collapse>
 
@@ -141,6 +173,12 @@ export default {
         }
       });
     },
+    deleteImg(index, activeKey) {
+      this.form[activeKey][index] = "";
+      const imgList = this.form[activeKey];
+      const newList = imgList.map((item, idx) => (idx === index ? "" : item));
+      this.$set(this.form, activeKey, newList);
+    },
     async getInfo() {
       const res = await this.$api.getPreinstall();
       if (!res.code) {
@@ -160,38 +198,15 @@ export default {
       }
     },
     async handleSubmit() {
-      // const params = {};
-      // Object.keys(this.form).map((key) => {
-      //   params[key] =
-      //     this.form[key].length && key !== "id" && key !== "root"
-      //       ? JSON.stringify(this.form[key])
-      //       : "";
-      // });
-      const params = {
-        bianyuan:
-          '["http://127.0.0.1:3006/img/images/adminbianyuan1.05f5fa98d626e49722d442ab25d1286d.png"]',
-        round:
-          '["http://127.0.0.1:3006/img/images/adminround1.7091d39c3e9c27141711a53fbe912c8c.png"]',
-        luocha:
-          '["http://127.0.0.1:3006/img/images/adminluocha1.0337469a65c4624dddda0cbe3f1e9fed.png"]',
-        angle:
-          '["http://127.0.0.1:3006/img/images/adminangle1.656bafa918d855754ff8b014785dc5b9.png"]',
-        jiandun:
-          '["http://127.0.0.1:3006/img/images/adminjiandun1.81b4c68898053755845005190a6239ec.png"]',
-        qieduan:
-          '["http://127.0.0.1:3006/img/images/adminqieduan1.eb3ccb25bda766a5ebc64f2cd64f0f62.png"]',
-        texture:
-          '["http://127.0.0.1:3006/img/images/admintexture1.c2cd8e64df7eb07e9eff38977b3d9f79.png"]',
-        dot: '["http://127.0.0.1:3006/img/images/admindot1.963ba7ace6e850acf8cc67ce77662824.png"]',
-        touliang:
-          '["http://127.0.0.1:3006/img/images/admintouliang1.e73d77d03ba5b4aa6e7e73f590994249.png"]',
-        qieduanLinears:
-          '["http://127.0.0.1:3006/img/images/adminlinear1.149d1ec26ad507dc8b36a3ecc5b666f4.png"]',
-        thickness:
-          '["http://127.0.0.1:3006/img/images/adminthickness1.a99c818d198a6fa3336fa7c822171d76.png"]',
-        intentList:
-          '["http://127.0.0.1:3006/img/images/adminthickness1.a99c818d198a6fa3336fa7c822171d76.png"]'
-      };
+      const params = {};
+      Object.keys(this.form).map((key) => {
+        params[key] =
+          this.form[key].length && key !== "id" && key !== "root"
+            ? JSON.stringify(this.form[key])
+            : "";
+      });
+      //13666633692
+      // const params =  {"intentList":"[\"http://127.0.0.1:3006/img/images/da66caef41e94149077c29b7e943b830.adminintentList1.png\"]","bianyuan":"[\"http://127.0.0.1:3006/img/images/d8e58f3592088697885daaf36e758271.adminbianyuan1.png\"]","round":"[\"http://127.0.0.1:3006/img/images/930ccdcaef4886330cbff6d786250a31.adminround1.png\",\"http://127.0.0.1:3006/img/images/9ff9a7453efe966ba8fd0ee8611135d2.adminround2.png\"]","luocha":"[\"http://127.0.0.1:3006/img/images/77d9d5cb7dcc7a0011aaef6cd13cbdb8.adminluocha1.png\"]","angle":"[\"http://127.0.0.1:3006/img/images/7330607ce8c121b69b6cbde9062026c5.adminangle1.png\"]","jiandun":"[\"http://127.0.0.1:3006/img/images/28f88070ce62f8320c9b58421b5fab60.adminjiandun1.png\"]","qieduan":"[\"http://127.0.0.1:3006/img/images/6fb9bcf4279fdccfb15b3aebe319e690.adminqieduan1.png\"]","texture":"[\"http://127.0.0.1:3006/img/images/2f594094bb7208b482f3dcd6e7a43d58.admintexture1.png\"]","dot":"[\"http://127.0.0.1:3006/img/images/da9b36ee6677054a7ff9a3ed7074d170.admindot1.png\"]","touliang":"[\"http://127.0.0.1:3006/img/images/76bedff082079077ad8bc917125a6497.admintouliang1.png\"]","qieduanLinears":"[\"http://127.0.0.1:3006/img/images/2dd315d8258ec0dee9425b04932d3212.adminqieduanLinears1.png\"]","thickness":"[\"http://127.0.0.1:3006/img/images/62cf45be9c15cf347a726b7ecf766b0b.adminthickness1.png\"]","root":""}
       console.log(JSON.stringify(params));
       const res = await this.$api.editPreinstall({
         ...params,

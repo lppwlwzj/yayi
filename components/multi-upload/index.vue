@@ -6,7 +6,7 @@
         v-for="(item, index) in list"
         :key="index"
       >
-        <view class="image fc" v-show="item">
+        <view :class="[`image, ${customClass} , fc`]" v-show="item">
           <image :src="item" mode="aspectFill" class="upload-img"></image>
           <image
             @tap.stop="preview(item)"
@@ -33,7 +33,7 @@
           }
         "
       >
-        <view class="image fc">
+        <view :class="[`image, ${customClass} , fc`]">
           <image
             src="../../static/images/add.png"
             mode="aspectFill"
@@ -79,6 +79,10 @@ export default {
     activeKey: {
       type: String,
       default: ""
+    },
+    customClass: {
+      type: String,
+      default: "image"
     }
   },
   components: {
@@ -108,10 +112,10 @@ export default {
       this.list.push(value);
     },
     handleDeleteImg(index) {
-      this.$api.deleteImg({
-        img_url: this.list[index]
-      });
-      this.list[index] = "";
+      // this.$api.deleteImg({
+      //   img_url: this.list[index]
+      // });
+      this.$emit("delete", index);
     }
   }
 };
@@ -137,6 +141,16 @@ export default {
   background: #898787a3;
   border-radius: 16rpx;
   margin: 20rpx 8rpx;
+  position: relative;
+}
+
+.custom-upload-img {
+  width: 150rpx;
+  height: 150rpx;
+  position: relative;
+  background: #898787a3;
+  border-radius: 16rpx;
+  margin: 20rpx 0rpx;
   position: relative;
 }
 .preview {

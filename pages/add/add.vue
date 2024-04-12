@@ -281,35 +281,6 @@
               >客户意向照</text
             >
           </view>
-          <!-- <Upload
-            style="flex: 1"
-            :disabled="disabled"
-            :id="`${userInfo.usercount}${customer_id}`"
-            name="intentImg"
-            :img_url="form.intentImg"
-            customClass="upload-img-el"
-            @change="
-              (value) => {
-                handleFormChange('intentImg', value);
-              }
-            "
-          >
-            <view class="upload-img-el fc">
-              <image
-                src="../../static/images/upload.png"
-                mode="aspectFill"
-                class="upload-img"
-              ></image>
-              <image
-                src="../../static/images/add.png"
-                mode="aspectFill"
-                style="width: 30px; height: 30px; margin-bottom: 8px"
-              ></image>
-              <text style="color: #fff; font-size: 12px; z-index: 9999"
-                >客户意向照</text
-              >
-            </view>
-          </Upload> -->
           <view class="diagnose-text">
             <u--textarea
               :disabled="disabled"
@@ -319,52 +290,12 @@
             ></u--textarea>
           </view>
         </view>
-        <view class="rfsw image-list">
-          <view
-            style="margin-right: 8rpx"
-            v-for="(item, index) in designList"
-            :key="index"
-          >
-            <view class="image fc">
-              <image :src="item" mode="aspectFill" class="upload-img"></image>
-              <image
-                @tap.stop="preview(item)"
-                src="../../static/images/preview.png"
-                class="preview"
-                mode="aspectFill"
-              ></image>
-              <u-icon
-                v-show="disabled"
-                @click="deleteDesignImg(index)"
-                class="image-close"
-                size="16"
-                color="#fff"
-                name="close-circle"
-              ></u-icon>
-            </view>
-          </view>
-          <Upload
-            :name="`design${designList.length + 1}`"
-            customClass="image"
-            :id="`${userInfo.usercount}${customer_id}`"
-            :disabled="disabled"
-            @change="
-              (value) => {
-                handleDesignImage(value);
-              }
-            "
-          >
-            <view class="image fc">
-              <image
-                src="../../static/images/add.png"
-                mode="aspectFill"
-                style="width: 16px; height: 16px; margin-bottom: 4px"
-              ></image>
-              <text v-show="disabled" style="color: #fff; font-size: 12px"
-                >点击上传</text
-              >
-            </view>
-          </Upload>
+        <view class="image-list">
+          <MultiUpload
+            :list="form.designList"
+            activeKey="designList"
+            @delete="deleteDesignImg"
+          />
         </view>
       </view>
     </view>
@@ -680,6 +611,7 @@ function getDate(date, AddDayCount = 0) {
 import moment from "moment";
 import TiXing from "../../components/tixing";
 import Upload from "../../components/my-upload/my-upload.vue";
+import MultiUpload from "../../components/multi-upload";
 
 export default {
   data() {
@@ -867,7 +799,8 @@ export default {
   },
   components: {
     TiXing,
-    Upload
+    Upload,
+    MultiUpload
   },
 
   onReady() {
@@ -937,10 +870,7 @@ export default {
     handleChooseConfirm(img) {
       if (this.activeIndex === "intentList") {
         this.form.intentImg = img;
-        console.log(
-          "🚀 ~ handleChooseConfirm ~  this.form.intentImg:",
-          this.form.intentImg
-        );
+  
       } else {
         const index = this.dentistList.findIndex(
           (item) => item.key === this.activeIndex
@@ -1084,7 +1014,7 @@ export default {
       this.form.designList.push(value);
     },
     deleteDesignImg(index) {
-      this.form.designList.splice(index, 1);
+      this.$set(this.form.designList, index, '');
     }
   }
 };
