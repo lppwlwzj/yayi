@@ -63,76 +63,12 @@
       }
     },
     {
-      "path": "pages/admin/admin",
-      "style": {
-        "navigationBarTitleText": "我的联系人",
-        "navigationStyle": "custom",
-        "onReachBottomDistance": 100
-      }
-    },
-    {
       "path": "pages/afterService/afterService",
       "style": {
         "navigationBarTitleText": "",
         "navigationStyle": "custom"
       }
     }
-    // {
-    //   "path": "pages/bychase/bychase",
-    //   "style": {
-    //     "navigationBarTitleText": "购买会员",
-    //     "navigationStyle": "custom"
-    //   }
-    // },
-    // {
-    //   "path": "pages/active/active",
-    //   "style": {
-    //     "navigationBarTitleText": "活动详情",
-    //     "navigationStyle": "custom"
-    //   }
-    // },
-
-    // {
-    //   "path": "pages/register/register",
-    //   "style": {
-    //     "navigationBarTitleText": "注册",
-    //     "enablePullDownRefresh": false,
-    //     "navigationStyle": "custom"
-    //   }
-    // },
-    // {
-    //   "path": "pages/withdraw/success",
-    //   "style": {
-    //     "navigationBarTitleText": "",
-    //     "enablePullDownRefresh": false,
-    //     "navigationStyle": "custom"
-    //   }
-    // },
-    // {
-    //   "path": "pages/withdraw/withdraw",
-    //   "style": {
-    //     "navigationBarTitleText": "提现",
-    //     "enablePullDownRefresh": false,
-    //     "navigationStyle": "custom"
-    //   }
-    // },
-    // // {
-    // //   "path": "pages/invite/invite",
-    // //   "style": {
-    // //     "navigationBarTitleText": "邀请好友",
-    // //     "enablePullDownRefresh": false,
-    // //     "navigationStyle": "custom"
-    // //   }
-    // // }
-    //   {
-    //         "path" : "pages/privacy/privacy",
-    //         "style" :
-    //         {
-    //             "navigationBarTitleText": "",
-    //             "enablePullDownRefresh": false
-    //         }
-
-    //     }
   ],
 
   "globalStyle": {

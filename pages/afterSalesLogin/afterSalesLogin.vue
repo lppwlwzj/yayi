@@ -23,7 +23,7 @@
 
           <u-form-item label="密码" prop="password">
             <u--input
-              :password="true"
+              :password="!visible"
               placeholder=""
               disabledColor="#fff"
               v-model="password"
@@ -31,7 +31,16 @@
               inputAlign="left"
               suffixIcon="eye"
               suffixIconStyle=" color: #dd524dab !important;"
-            ></u--input>
+            >
+              <template slot="suffix">
+                <u-icon
+                  @click="visible = !visible"
+                  size="18"
+                  color="#dd524dab"
+                  :name="visible ? 'eye' : 'eye-off'"
+                ></u-icon>
+              </template>
+            </u--input>
           </u-form-item>
           <view class="btn" @tap="login"> 登录 </view>
         </view>
@@ -45,6 +54,7 @@ export default {
   data() {
     return {
       password: "",
+      visible: false,
       confirmPassword: "111520",
       form: {},
       customer_id: "",
@@ -59,8 +69,8 @@ export default {
     if (option.service_id) {
       this.service_id = option.service_id;
     }
-    if (option.operateType ) {
-      this.operateType = option.operateType ;
+    if (option.operateType) {
+      this.operateType = option.operateType;
     }
   },
   methods: {

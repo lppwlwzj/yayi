@@ -21,10 +21,18 @@
             disabledColor="#fff"
             v-model="form.nickname"
             border="none"
+            :password="!visible"
             inputAlign="left"
-            suffixIcon="eye"
-            suffixIconStyle=" color: #dd524dab !important;"
-          ></u--input>
+          >
+            <template slot="suffix">
+              <u-icon
+                @click="visible = !visible"
+                size="18"
+                color="#dd524dab"
+                :name="visible ? 'eye' : 'eye-off'"
+              ></u-icon>
+            </template>
+          </u--input>
         </u-form-item>
         <view class="btn" @tap="register"> 登录 </view>
       </view>
@@ -37,15 +45,12 @@ import address from "../../static/picker-region";
 export default {
   data() {
     return {
-      form: {
-      
-      },
+      form: {},
+      visible: false,
       membertypeList: [],
       membertypeShow: false,
       show: false,
-      rules: {
-     
-      },
+      rules: {}
     };
   },
   created() {
@@ -154,7 +159,7 @@ export default {
     color: #ffffff;
     background: #dd524d63;
     font-size: 16px;
-    margin: 60rpx auto  30rpx;
+    margin: 60rpx auto 30rpx;
     font-size: 32rpx;
     font-family: Source Han Sans SC, Source Han Sans SC;
     font-weight: 500;

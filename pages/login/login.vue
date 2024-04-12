@@ -1,6 +1,12 @@
 <template>
   <view class="register fc">
-    <u--form labelWidth="auto" labelPosition="left" :model="form" ref="uForm" :rules="rules">
+    <u--form
+      labelWidth="auto"
+      labelPosition="left"
+      :model="form"
+      ref="uForm"
+      :rules="rules"
+    >
       <view class="info fc">
         <image
           src="../../static/images/ECO-UI-02.png"
@@ -23,15 +29,22 @@
 
         <u-form-item label="密码" prop="nickname">
           <u--input
-           :password="true"
+            :password="!visible"
             placeholder=""
             disabledColor="#fff"
             v-model="form.password"
             border="none"
             inputAlign="left"
-            suffixIcon="eye"
-            suffixIconStyle=" color: #dd524dab !important;"
-          ></u--input>
+          >
+            <template slot="suffix">
+              <u-icon
+                @click="visible = !visible"
+                size="18"
+                color="#dd524dab"
+                :name="visible ? 'eye' : 'eye-off'"
+              ></u-icon>
+            </template>
+          </u--input>
         </u-form-item>
         <view class="btn" @tap="login"> 登录 </view>
       </view>
@@ -44,6 +57,7 @@
 export default {
   data() {
     return {
+      visible: false,
       form: {
         usercount: "",
 
@@ -89,10 +103,10 @@ export default {
       });
       if (res.code === 0) {
         const userInfo = {
-          token:res.re.token,
+          token: res.re.token,
           ...res.re.userinfo
-        }
-        uni.setStorageSync("userInfo",userInfo); //设置缓存
+        };
+        uni.setStorageSync("userInfo", userInfo); //设置缓存
 
         uni.showToast({
           title: "登录成功",
@@ -117,8 +131,7 @@ export default {
       this.form.city = arr[0].text;
       this.form.distinct = arr[0].text;
       this.$refs.uForm.validateField("distinct");
-    },
-   
+    }
   }
 };
 </script>
