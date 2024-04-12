@@ -25,9 +25,9 @@ let storage = multer.diskStorage({
     let fileFormat = file.originalname.split(".");
     cb(
       null,
-      `${req.body.id}${req.body.name}` +
-        "." +
         md5(+new Date()) +
+        "." +
+        `${req.body.id}${req.body.name}` +
         "." +
         fileFormat[fileFormat.length - 1]
     );

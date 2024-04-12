@@ -22,7 +22,7 @@ const hanldeImgDelAndRename = (id, filename, dirPath) => {
         const imgNameArr = currentImgName.split(".");
 
         // // TODO 先查询该id命名的文件是否存在，有则删除
-        if (imgNameArr[0] === id) {
+        if (imgNameArr[1] === id) {
           const currentImgPath = dirPath + "/" + currentImgName;
           fs.unlink(currentImgPath, (err) => {});
         }

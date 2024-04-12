@@ -6,7 +6,7 @@
         v-for="(item, index) in list"
         :key="index"
       >
-        <view class="image fc">
+        <view class="image fc" v-show="item">
           <image :src="item" mode="aspectFill" class="upload-img"></image>
           <image
             @tap.stop="preview(item)"
@@ -79,7 +79,7 @@ export default {
     activeKey: {
       type: String,
       default: ""
-    },
+    }
   },
   components: {
     Upload
@@ -88,7 +88,7 @@ export default {
     return {
       userInfo: {},
       previewImg: "",
-      popupShow:false
+      popupShow: false
     };
   },
   created() {
@@ -108,7 +108,10 @@ export default {
       this.list.push(value);
     },
     handleDeleteImg(index) {
-      this.list.splice(index, 1);
+      this.$api.deleteImg({
+        img_url: this.list[index]
+      });
+      this.list[index] = "";
     }
   }
 };

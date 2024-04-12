@@ -80,6 +80,8 @@ app.use('/user',userRouter)
 
 const uploadController = require('./router/upload')
 app.use('/api/upload',uploadController.upload)
+app.use('/upload/delete',uploadController.deleteImg)
+
 // 导入并使用首页路由模块
 // const homeRouter = require('./router/home')
 // app.use('/home',homeRouter)
