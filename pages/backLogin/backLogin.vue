@@ -1,47 +1,63 @@
 <template>
-  <view class="register fc">
-    <u--form labelWidth="auto" labelPosition="left" :model="form" ref="uForm">
-      <view class="info fc">
-        <view class="title"> 后台登录 </view>
+  <view class="register">
+    <view class="rfb header">
+      <u-icon
+        size="30"
+        name="../../static/images/ECO-UI-03.png"
+        @click="back"
+      ></u-icon>
 
-        <u-form-item label="账号" prop="nickname">
-          <u--input
-            placeholder=""
-            disabledColor="#fff"
-            v-model="form.nickname"
-            border="none"
-            inputAlign="left"
-            suffixIcon="eye"
-            suffixIconStyle=" color: #dd524dab !important;"
-          ></u--input>
-        </u-form-item>
-        <u-form-item label="密码" prop="nickname">
-          <u--input
-            placeholder=""
-            disabledColor="#fff"
-            v-model="form.nickname"
-            border="none"
-            :password="!visible"
-            inputAlign="left"
-          >
-            <template slot="suffix">
-              <u-icon
-                @click="visible = !visible"
-                size="18"
-                color="#dd524dab"
-                :name="visible ? 'eye' : 'eye-off'"
-              ></u-icon>
-            </template>
-          </u--input>
-        </u-form-item>
-        <view class="btn" @tap="register"> 登录 </view>
-      </view>
-    </u--form>
+      <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
+    </view>
+    <view style="margin-top: 200rpx">
+      <u--form
+        labelWidth="auto"
+        labelPosition="left"
+        :model="form"
+        ref="uForm"
+        :rules="rules"
+      >
+        <view class="info fc">
+          <view class="title"> 后台登录 </view>
+
+          <u-form-item label="账号" prop="usercount">
+            <u--input
+              placeholder=""
+              disabledColor="#fff"
+              v-model="form.usercount"
+              border="none"
+              inputAlign="left"
+              suffixIcon="eye"
+              suffixIconStyle=" color: #dd524dab !important;"
+            ></u--input>
+          </u-form-item>
+          <u-form-item label="密码" prop="password">
+            <u--input
+              placeholder=""
+              disabledColor="#fff"
+              v-model="form.password"
+              border="none"
+              :password="!visible"
+              inputAlign="left"
+            >
+              <template slot="suffix">
+                <u-icon
+                  @click="visible = !visible"
+                  size="18"
+                  color="#dd524dab"
+                  :name="visible ? 'eye' : 'eye-off'"
+                ></u-icon>
+              </template>
+            </u--input>
+          </u-form-item>
+          <view class="btn" @tap="login"> 登录 </view>
+        </view>
+      </u--form>
+    </view>
   </view>
 </template>
 
 <script>
-import address from "../../static/picker-region";
 export default {
   data() {
     return {
@@ -50,7 +66,24 @@ export default {
       membertypeList: [],
       membertypeShow: false,
       show: false,
-      rules: {}
+      usercount:'',
+      password:'',
+      rules: {
+        usercount: [
+          {
+            required: true,
+            message: "请填写账号",
+            trigger: ["change", "blur"]
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: "请填写密码",
+            trigger: ["change", "blur"]
+          }
+        ]
+      }
     };
   },
   created() {
@@ -60,19 +93,12 @@ export default {
     // this.form.code = uni.getStorageSync("qrcode") || "";
   },
   methods: {
-    async getMembertype() {
-      const res = await this.$api.getMembertype();
-      const membertypeList = Object.entries(res.membertype).map((item) => ({
-        label: item[1],
-        value: item[0]
-      }));
-      this.membertypeList = [membertypeList];
+    back() {
+      uni.navigateBack({
+        delta: 1
+      });
     },
-    selectMembertype(e) {
-      this.form.membertype = e.value[0].label;
-      this.membertypeShow = false;
-    },
-    async register() {
+    async login() {
       this.$refs.uForm
         .validate()
         .then((res) => {
@@ -106,16 +132,6 @@ export default {
           icon: "none"
         });
       }
-    },
-    onchange(e) {
-      const arr = e.detail.value;
-      this.form.province = arr[0].text;
-      this.form.city = arr[0].text;
-      this.form.distinct = arr[0].text;
-      this.$refs.uForm.validateField("distinct");
-    },
-    inputclick(e) {
-      console.log("inputclick");
     }
   }
 };
@@ -126,7 +142,11 @@ export default {
   width: 100%;
   height: 100vh;
   background: $uni-color-bg !important;
-
+  .header {
+    width: 96%;
+    margin: 0 auto;
+    padding: 26rpx 0;
+  }
   .title {
     color: black;
     font-size: 24px;

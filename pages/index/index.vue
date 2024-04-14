@@ -73,7 +73,9 @@
     </view>
     <view class="list-item rfc" v-show="!list.length"> 暂无数据 </view>
     <view class="footer rfa">
-      <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+      <navigator :url="`/pages/backLogin/backLogin`">
+        <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+      </navigator>
       <navigator :url="`/pages/preUpload/preUpload`">
         <u-icon size="26" name="../../static/images/ECO-UI-08.png"></u-icon>
       </navigator>
@@ -323,5 +325,9 @@ export default {
     width: 100%;
     background: #fff;
   }
+}
+/deep/.uni-calendar-item--isDay,
+/deep/.uni-calendar-item--checked {
+  background: #eb2b24e3;
 }
 </style>

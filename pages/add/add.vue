@@ -1108,4 +1108,7 @@ page {
   border-radius: 40rpx;
   font-size: 30rpx;
 }
+/deep/.uni-calendar-item--isDay,/deep/.uni-calendar-item--checked {
+  background: #eb2b24e3;
+}
 </style>
