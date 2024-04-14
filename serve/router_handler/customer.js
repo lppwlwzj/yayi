@@ -262,14 +262,25 @@ exports.deleteCustomer = (req, res) => {
     });
   });
 };
+const getRoot = () => {
+  return new Promise((resolve, reject) => {
+    db.query("select  root from preinstall", (err, results) => {
+      console.log(results);
+      if (err) return reject(err);
+      resolve(results);
+    });
+  });
+};
 exports.getCustomerList = (req, res) => {
   const { search } = req.body;
   let sql = "";
   if (isNaN(search) && !isNaN(Date.parse(search))) {
-    sql = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.dateTime = '${search}'`;
-
-    db.query(sql, req.body, (err, results) => {
+    sql = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id  where i.dateTime = '${search}'`;
+    
+    db.query(sql, req.body,  (err, results) => {
       if (err) return res.cc(err);
+      // const root = await getRoot();
+      // console.log("🚀 ~ db.query ~ root:", root)
       if (!results.length) {
         db.query(
           `select * from customer  where dateTime = '${search}'`,

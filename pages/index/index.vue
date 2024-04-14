@@ -71,7 +71,7 @@
         </view>
       </block>
     </view>
-    <view class="list-item rfc"> 暂无数据 </view>
+    <view class="list-item rfc" v-show="!list.length"> 暂无数据 </view>
     <view class="footer rfa">
       <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
       <navigator :url="`/pages/preUpload/preUpload`">
@@ -89,20 +89,7 @@
         @click="logout"
       ></u-icon>
     </view>
-    <!-- //    minDate="1970-01-01" -->
-    <!-- :defaultDate="['2024-04-07']" -->
-    <!-- <u-calendar
-        color="#f56c6c"
-        :show="open"
-        minDate="2024-04-06"
-        mode="single"
-        @close="
-          () => {
-            open = false;
-          }
-        "
-        @confirm="handleConfirm"
-      ></u-calendar> -->
+
     <uni-calendar
       ref="calendar"
       class="uni-calendar--hook"
@@ -165,35 +152,26 @@ export default {
       defaultDate: moment().format("YYYY-MM-DD"),
       startDate: "",
       endDate: "",
-      selected: []
+      selected: [],
+      userInfo: uni.getStorageSync("userInfo"),
+      root: ""
     };
   },
   onReady() {
     this.startDate = getDate(new Date(), -60).fullDate;
     this.endDate = getDate(new Date(), 30).fullDate;
-    setTimeout(() => {
-      // this.info.date = getDate(new Date(), -30).fullDate;
-      // this.selected = [
-      //   {
-      //     date: getDate(new Date(), -3).fullDate,
-      //     info: "打卡"
-      //   },
-      //   {
-      //     date: getDate(new Date(), -2).fullDate,
-      //     info: "签到",
-      //     data: {
-      //       custom: "自定义信息",
-      //       name: "自定义消息头"
-      //     }
-      //   },
-      //   {
-      //     date: getDate(new Date(), -1).fullDate,
-      //     info: "已打卡"
-      //   }
-      // ];
-    }, 2000);
+  },
+  onLoad() {
+    this.getInfo();
   },
   methods: {
+    async getInfo() {
+      const res = await this.$api.getPreinstall();
+      if (!res.code) {
+        if (!res.re) return;
+        this.root = res.re?.root || "";
+      }
+    },
     open() {
       this.$refs.calendar.open();
     },
@@ -220,8 +198,11 @@ export default {
       const res = await this.$api.getCustomerList({
         search: this.search
       });
-      if (!res.code)
-        this.list = res.re.map((item) => {
+      if (!res.code) {
+        let _list = res.re;
+        if (this.userInfo?.usercount !== this.root)
+          _list = res.re.filter((item) => !item.isPrivacy);
+        this.list = _list.map((item) => {
           const {
             recoverInfo,
             tryInfo,
@@ -260,6 +241,7 @@ export default {
             tryVisible: !!_tryInfo?.length
           };
         });
+      }
     }
   }
 };

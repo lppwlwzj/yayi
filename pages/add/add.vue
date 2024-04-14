@@ -841,6 +841,7 @@ export default {
           params[key] = res.re[key] ? JSON.parse(res.re[key]) : [];
         });
         this.preinstall = {
+          
           ...params
         };
       }
@@ -893,8 +894,10 @@ export default {
         this.form = data;
         this.customer_id = data.customer_id;
         this.service_id = data.service_id;
-        this.form.designList = JSON.parse(data.designList);
 
+        this.form.isPrivacy =  this.form.isPrivacy ? true : false;
+        this.form.designList = JSON.parse(data.designList);
+        
         this.dentistList = this.dentistList.map((item) => {
           return {
             ...item,
@@ -925,69 +928,9 @@ export default {
         this.form[`${item.key}Open`] = !!item.open.length;
         this.form[`${item.key}Value`] = item.value;
       });
-
-      // this.form = {
-      //   customer_id: "m7ig",
-      //   customer: "李李",
-      //   dateTime: "2024-04-08",
-      //   daiyaTime: "2024-04-08",
-      //   doctor: "周医生",
-      //   proxy: "刘代理",
-      //   tiepianColor: "贴片颜色",
-      //   CADImg:
-      //     "http://127.0.0.1:3006/img/images/adminxrhpCADImg.ebd6b687d843ed1a3a2b79a975da8c47.png",
-      //   checiImg:
-      //     "http://127.0.0.1:3006/img/images/adminxrhpcheciImg.22659b26639f762a519b93c15527b856.jpg",
-      //   CAD: "cad",
-      //   checi: "checi",
-      //   porcelain: "瓷瓶",
-      //   frontPhoto:
-      //     "http://127.0.0.1:3006/img/images/adminxrhpfrontPhoto.9e8afb073f6ad3cbbfc459c400139661.jpg",
-      //   adviceContent: "13435435",
-      //   leftFv:
-      //     "http://127.0.0.1:3006/img/images/adminxrhpleftFv.9b38a27c836e3977ebd689990f5dfc64.png",
-      //   rightFv:
-      //     "http://127.0.0.1:3006/img/images/adminxrhprightFv.0412142b3e264168ff81f2b54ee3d7ea.png",
-      //   front:
-      //     "http://127.0.0.1:3006/img/images/adminxrhpfront.a7f1fbea4ae317f5b7198d7dc111f433.jpg",
-      //   leftFvEdge:
-      //     "http://127.0.0.1:3006/img/images/adminxrhpleftFvEdge.a719fde17b4992cdbc091feb980ca36b.jpg",
-      //   rightFvEdge: "",
-      //   intentImg:
-      //     "http://127.0.0.1:3006/img/images/adminxrhpintentImg.5657898f47b72603fbb2d0714bd7cab8.jpg",
-      //   designAdvice: "5太56546",
-      //   designList: [
-      //     "http://127.0.0.1:3006/img/images/adminxrhpdesign1.21657da4b93fb5b9abf3dc2eb0d5bb80.png",
-      //     "http://127.0.0.1:3006/img/images/adminxrhpdesign2.1b38d05fc9e362901179184837bf8cf9.png",
-      //     "http://127.0.0.1:3006/img/images/adminxrhpdesign3.0f18839da8be502d332564538833a4b8.jpg"
-      //   ],
-      //   bianyuanOpen: true,
-      //   bianyuanValue: 35,
-      //   roundOpen: false,
-      //   roundValue: 0,
-      //   luochaOpen: true,
-      //   luochaValue: 27,
-      //   angleOpen: false,
-      //   angleValue: 0,
-      //   jiandunOpen: true,
-      //   jiandunValue: 52,
-      //   qieduanOpen: false,
-      //   qieduanValue: 0,
-      //   textureOpen: false,
-      //   textureValue: 0,
-      //   dotOpen: false,
-      //   dotValue: 0,
-      //   touliangOpen: false,
-      //   touliangValue: 0,
-      //   qieduanLinearsOpen: false,
-      //   qieduanLinearsValue: 0,
-      //   thicknessOpen: false,
-      //   thicknessValue: 0
-      // };
-      console.log(" this.form", this.form);
       const res = await this.$api.addCustomer({
         customer_id: this.customer_id,
-        ...this.form
+        ...this.form,
       });
       if (!res.code) {
         uni.showToast({

@@ -68,7 +68,7 @@ CREATE TABLE `customer` (
   `thicknessOpen` varchar(255) DEFAULT NULL COMMENT '厚度',
   `thicknessValue` varchar(255) DEFAULT NULL COMMENT '厚度值',
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `isPrivacy` int DEFAULT NULL COMMENT '是否可见',
+  `isPrivacy` int DEFAULT 1 COMMENT '是否可见',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='客户表';
 
