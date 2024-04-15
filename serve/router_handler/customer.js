@@ -272,6 +272,8 @@ const getRoot = () => {
   });
 };
 exports.getCustomerList = (req, res) => {
+  const userinfo =  req.app.get("userinfo")
+  console.log("🚀 ~ userinfo:", userinfo)
   const { search } = req.body;
   let sql = "";
   if (isNaN(search) && !isNaN(Date.parse(search))) {

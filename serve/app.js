@@ -7,6 +7,8 @@ const expressJWT = require('express-jwt')
 const config = require('./config')
 // 导入并配置cors中间件，配置跨域
 const cors = require('cors')
+
+const logger = require('./utils')
 app.use(cors())
 
 // 跨域请求处理
@@ -67,11 +69,13 @@ app.use(express.urlencoded({ extended: false }))
 // 通过 express.json() 这个中间件，解析表单中的 JSON 格式的数据
 app.use(express.json())
 
-// 使用 .unless({ path: [/^\/user\//] }) 指定哪些接口不需要进行 Token 的身份认证 , /^\/img/
-//TODO：访问图片会抱错
 app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/user/ , /^\/img/] }))
 
+app.logger = logger.log;
+
+
 //TODO：路由整合
+
 
 // 导入并使用首页路由模块
 const userRouter = require('./router/user')
@@ -81,6 +85,8 @@ app.use('/user',userRouter)
 const uploadController = require('./router/upload')
 app.use('/api/upload',uploadController.upload)
 app.use('/upload/delete',uploadController.deleteImg)
+
+
 
 // 导入并使用首页路由模块
 // const homeRouter = require('./router/home')

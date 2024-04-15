@@ -36,6 +36,18 @@ exports.login = (req, res) => {
     const tokenStr = jwt.sign(user, config.jwtSecretKey, {
       expiresIn: "10h" // token 有效期为 10 个小时
     });
+
+    // req.app.set("token", {
+    //   tokenStr
+    // });
+    req.app.logger(tokenStr, "登录了");
+
+    // const insertSql = `insert into service (
+    //   customer_id,
+    //   tryInfo,
+    //   recoverInfo,
+    //   imgList
+    // ) values ('${customer_id}','${tryInfo}','${recoverInfo}','${imgList}') `;
     // 将生成的 Token 字符串响应给客户端
     res.send({
       code: 0,

@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v11.3 (64 bit)
-MySQL - 5.7.32-log : Database - ssm9087m
+MySQL - 5.7.32-logger : Database - ssm9087m
 *********************************************************************
 */
 
@@ -17,22 +17,21 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`yayi` /*!40100 DEFAULT CHARACTER SET ut
 
 USE `yayi`;
 
-/*Table structure for table `log` */
+/*Table structure for table `logger` */
 
-DROP TABLE IF EXISTS `log`;
+DROP TABLE IF EXISTS `logger`;
 
-CREATE TABLE `log` (
+CREATE TABLE `logger` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `logname` varchar(100) NOT NULL COMMENT '用户名',
-  `logcount` varchar(100) NOT NULL COMMENT '用户账号',
-  `password` varchar(100) DEFAULT NULL COMMENT '密码',
+  `logcount` varchar(100) NOT NULL COMMENT '用户账户',
+  `logcontent` varchar(100) NOT NULL COMMENT '用户账号',
+  `logtime`  timestamp  DEFAULT CURRENT_TIMESTAMP COMMENT '日志时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='日志表';
 
-/*Data for the table `log` */
+/*Data for the table `logger` */
 
-insert  into `log`(`id`,`logname`,`logcount`,`password`) values (1,'郭总','13666633692','123456');
-insert  into `log`(`id`,`logname`,`logcount`,`password`) values (2,'admin','admin','123456');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
