@@ -24,7 +24,7 @@
             <u--input
               placeholder=""
               disabledColor="#fff"
-              v-model="form.usercount"
+              v-model="usercount"
               border="none"
               inputAlign="left"
               suffixIcon="eye"
@@ -35,7 +35,7 @@
             <u--input
               placeholder=""
               disabledColor="#fff"
-              v-model="form.password"
+              v-model="password"
               border="none"
               :password="!visible"
               inputAlign="left"
@@ -63,11 +63,11 @@ export default {
     return {
       form: {},
       visible: false,
-      membertypeList: [],
-      membertypeShow: false,
       show: false,
-      usercount:'',
-      password:'',
+      usercount: "admin",
+      password: "111520",
+      confirmCount: "admin",
+      confirmPassword: "111520",
       rules: {
         usercount: [
           {
@@ -86,50 +86,26 @@ export default {
       }
     };
   },
-  created() {
-    // this.address = address;
-    // this.getMembertype();
-    // this.form.nickname = uni.getStorageSync("nickname") || "";
-    // this.form.code = uni.getStorageSync("qrcode") || "";
-  },
+
   methods: {
     back() {
       uni.navigateBack({
         delta: 1
       });
     },
-    async login() {
-      this.$refs.uForm
-        .validate()
-        .then((res) => {
-          this.handleRegister();
-        })
-        .catch((errors) => {
-          console.log("validate ~ valid:errors", errors);
-        });
-    },
-    async handleRegister() {
-      const res = await this.$api.register({
-        ...this.form,
-        open_id: uni.getStorageSync("openid"),
-        avatar: uni.getStorageSync("avatar")
-      });
-      if (res.userinfo) {
-        uni.setStorageSync("userInfo", res.userinfo); //设置缓存
-        uni.showToast({
-          title: "注册成功",
-          success() {
-            setTimeout(() => {
-              uni.switchTab({
-                url: "/pages/index/index"
-              });
-            }, 1500);
-          }
+    login() {
+      if (
+        this.confirmCount === this.usercount &&
+        this.password === this.confirmPassword
+      ) {
+        uni.navigateTo({
+          url: `/pages/admin/admin`
         });
       } else {
         uni.showToast({
-          title: res.msg,
-          icon: "none"
+          icon: "none",
+          title: "账号密码错误！",
+          duration: 2000
         });
       }
     }

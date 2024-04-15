@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 // 导入配置文件
 const config = require("../config");
 exports.log = (token, logcontent) => {
-  console.log("🚀 ~ logContent:", logcontent);
 
   jwt.verify(token, config.jwtSecretKey, function (err, decoded) {
     if (err) {
@@ -19,7 +18,6 @@ exports.log = (token, logcontent) => {
         logcontent
       ) values ('${username}','${usercount}','${logcontent}') `;
     db.query(sql, (err, results) => {
-      console.log("🚀 ~ db.query ~ err:", err);
     });
   });
 };

@@ -183,7 +183,6 @@ export default {
 
     deleteImg(index) {
       this.$set(this.imgList, index, "");
-      // this.imgList.splice(index, 1);
     },
     async getCustomerDetailById(id) {
       const res = await this.$api.getCustomerDetailById({

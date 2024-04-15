@@ -30,6 +30,13 @@
       }
     },
     {
+      "path": "pages/admin/admin",
+      "style": {
+        "navigationBarTitleText": "",
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/afterService/afterService",
       "style": {
         "navigationBarTitleText": "",

@@ -928,7 +928,8 @@ export default {
         this.form[`${item.key}Open`] = !!item.open.length;
         this.form[`${item.key}Value`] = item.value;
       });
-      const res = await this.$api.addCustomer({
+      const requestFn = this.id  ?  this.$api.editCustomer :  this.$api.addCustomer;
+      const res = await requestFn({
         customer_id: this.customer_id,
         ...this.form,
       });

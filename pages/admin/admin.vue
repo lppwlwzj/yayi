@@ -1,129 +1,100 @@
 <template>
   <view class="content">
     <view class="top fc">
+      <navigator :url="`/pages/index/index`">
+        <image
+          src="../../static/images/ECO-UI-03.png"
+          mode="widthFix"
+          class="back"
+        ></image>
+      </navigator>
       <image
-        src="../../static/images/ECO-UI-03.png"
-        mode="widthFix"
-        class="back"
-      ></image>
-      <image
+        @click="logout"
         src="../../static/images/ECO-UI-02.png"
         mode="widthFix"
         class="logo"
       ></image>
-      <view class="search">
-        <u--input
-          :customStyle="{
-            width: '540rpx',
-            marginTop: '12rpx',
-            border: 'solid 1px #dd524d63 !important',
-            borderRadius: '40rpx',
-            marginRight: '12rpx'
-          }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="姓名/日期"
-          disabledColor="#fff"
-          v-model="nickname"
-          border="surround"
-          suffixIcon="search"
-          suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
-        <navigator :url="`/pages/add/add`" class="keynote_con">
-          <u-icon
-            name="plus-circle"
-            color="#dd524d63"
-            size="28"
-            top="10rpx"
-          ></u-icon>
-        </navigator>
-      </view>
     </view>
     <view class="list-area">
       <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
-        <u-collapse @change="change" @close="close" @open="open">
-          <u-collapse-item title="用户人数" name="Docs guide" border="false">
+        <uni-collapse :show-arrow="true">
+          <uni-collapse-item title="用户人数">
             <view class="rfsw">
               <view class="user" v-for="(item, idx) in userList" :key="idx">
-                理
+                {{ item.text }}
               </view>
             </view>
-          </u-collapse-item>
-        </u-collapse>
+          </uni-collapse-item>
+        </uni-collapse>
       </view>
       <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
-        <u-collapse @change="change" @close="close" @open="open">
-          <u-collapse-item title="访问操作记录" name="Docs guide">
-            <view v-for="(item, idx) in recoverInfo" :key="idx"> </view>
-          </u-collapse-item>
-        </u-collapse>
+        <uni-collapse :show-arrow="true">
+          <uni-collapse-item title="访问操作记录">
+            <view class="log rfc" v-for="(item, idx) in logList" :key="idx">
+              <text style="color: #000">{{ item.logtime }}</text>
+              <text style="color: #000; padding: 0 12rpx 0 20rpx">{{
+                item.logname
+              }}</text>
+              <text style="color: #ccc">{{ item.logcontent }}</text>
+            </view>
+          </uni-collapse-item>
+        </uni-collapse>
       </view>
 
       <view class="footer rfa">
-        <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
-        <u-icon size="26" name="../../static/images/ECO-UI-09.png"></u-icon>
+        <uni-data-select
+          placement="top"
+          class="user-select"
+          placeholder="用户"
+          :localdata="userList"
+          :clear="false"
+          @change="handleChange"
+        ></uni-data-select>
+        <!-- <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon> -->
+        <u-icon
+          @click="logout"
+          size="26"
+          name="../../static/images/ECO-UI-09.png"
+        ></u-icon>
       </view>
     </view>
   </view>
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
-      userList: [
-        {
-          name: "林一"
-        },
-        {
-          name: "林一"
-        },
-        {
-          name: "林一"
-        },
-        {
-          name: "林一"
-        },
-        {
-          name: "林一"
-        },
-        {
-          name: "林一"
-        }
-      ]
+      userList: [],
+      logList: []
     };
   },
   onLoad() {
-    // this.getBanner();
-    // this.getActiveList();
+    this.getUserList();
+    this.getLogList();
   },
   methods: {
-    async getBanner() {
-      const res = await this.$api.getBanner();
-      this.bannerList = res.banner;
+    handleChange(e) {
+      console.log("e:", e);
+      this.getLogList(e);
     },
-    async getActiveList() {
-      const res = await this.$api.getActiveList();
-      this.activeList = res;
+    async getUserList() {
+      const res = await this.$api.getUserList();
+      this.userList = res.re.list || [];
     },
-    async join(item) {
-      if (item.end_status == 1) {
-        return;
-      }
-      const res = await this.$api.join({
-        activity_id: item.id
+    async getLogList(usercount) {
+      const res = await this.$api.getLogList({ usercount });
+      this.logList = res.re.list?.map((item) => ({
+        ...item,
+        logtime: moment(item.logtime).format("YYYY-MM-DD HH:mm:ss")
+      }));
+    },
+    logout() {
+      uni.clearStorageSync("userInfo");
+      uni.redirectTo({
+        url: "/pages/login/login"
       });
-      if (res?.code == 0) {
-        uni.showToast({
-          icon: "none",
-          title: res.msg
-        });
-      } else {
-        uni.showToast({
-          icon: "none",
-          title: "报名成功"
-        });
-        this.getActiveList();
-      }
     }
   }
 };
@@ -140,7 +111,7 @@ export default {
   .top {
     position: relative;
     background-color: #ffff;
-    height: 400rpx;
+    height: 240rpx;
     border-bottom-left-radius: 60rpx;
     border-bottom-right-radius: 60rpx;
 
@@ -172,8 +143,14 @@ export default {
 
   .footer {
     width: 100%;
+    padding: 30rpx;
+    box-sizing: border-box;
     background: #fff;
   }
+}
+.log {
+  margin: 20rpx 0;
+  font-size: 28rpx;
 }
 /deep/uni-view.u-cell__body {
   border-radius: 30rpx;
@@ -186,7 +163,39 @@ export default {
   text-align: center;
   color: #fff;
   background: $uni-color-theme;
-  margin: 12rpx 10rpx;
+  margin: 20rpx 10rpx;
   font-size: 26rpx;
+}
+
+/deep/.uni-collapse-item__title-text {
+  color: #dd524dab !important;
+  font-size: 34rpx;
+}
+/deep/.uni-collapse-item__wrap {
+  background: $uni-color-bg;
+}
+/deep/.uni-collapse-item__title-arr {
+  color: $uni-color-bg;
+}
+/deep/.uni-collapse {
+  margin: 24rpx 0rpx;
+}
+/deep/.uni-select {
+  border: none;
+}
+/deep/.uni-select__input-placeholder {
+  font-size: 28rpx;
+  color: #dd524dab !important;
+}
+/deep/.uni-select__input-text {
+  font-size: 32rpx;
+  color: #dd524dab !important;
+}
+/deep/.uniui-top:before {
+  content: "";
+}
+
+/deep/.uniui-bottom:before {
+  content: "";
 }
 </style>

@@ -24,8 +24,7 @@ const db = require("../db/index");
 exports.submit = async (req, res) => {
   //customer_id 是customer表的主键id
   const { customer_id, service_id, tryInfo, recoverInfo, imgList } = req.body;
-  // const _res = await findService(customer_id);
-  // console.log("🚀 ~ exports.submit= ~ _res:", _res);
+
   // // 定义sql语句id
   const insertSql = `insert into service (
       customer_id,
@@ -44,6 +43,8 @@ exports.submit = async (req, res) => {
     if (err) {
       return res.cc(err);
     }
+    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `编辑客户完工档案`);
+
     res.send({
       code: 0,
       message: "操作成功！",
@@ -63,6 +64,7 @@ exports.detail = (req, res) => {
     if (err) {
       return res.cc(err);
     }
+    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `查看客户档案、售后服务`);
     res.send({
       code: 0,
       message: "操作成功！",
@@ -117,6 +119,7 @@ exports.editPreinstall = (req, res) => {
     if (err) {
       return res.cc(err);
     }
+    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `编辑预设信息`);
     res.send({
       code: 0,
       message: "操作成功！",

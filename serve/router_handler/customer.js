@@ -110,6 +110,8 @@ exports.addCustomer = (req, res) => {
     setTimeout(() => {
       const _sql = `select id  from customer  where customer_id = '${customer_id}'`;
       db.query(_sql, (err, result) => {
+        console.log('req.app.get("token")',req.app.get("token"))
+        req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''),`添加${customer}客户`);
         res.send({
           code: 0,
           message: "新增信息成功！",
@@ -124,6 +126,7 @@ exports.addCustomer = (req, res) => {
 
 exports.editCustomer = (req, res) => {
   const {
+    id,
     customer,
     dateTime,
     daiyaTime,
@@ -216,6 +219,8 @@ exports.editCustomer = (req, res) => {
   // 更新参数表
   db.query(sql, (err, results) => {
     if (err) return res.cc(err);
+    // const
+    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `修改${customer}客户`);
     res.send({
       code: 200,
       message: "修改成功！",
@@ -255,6 +260,8 @@ exports.deleteCustomer = (req, res) => {
   // 更新参数表
   db.query(sql, (err, results) => {
     if (err) return res.cc(err);
+    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `删除客户`);
+
     res.send({
       code: 0,
       message: "删除成功！",
@@ -262,27 +269,18 @@ exports.deleteCustomer = (req, res) => {
     });
   });
 };
-const getRoot = () => {
-  return new Promise((resolve, reject) => {
-    db.query("select  root from preinstall", (err, results) => {
-      console.log(results);
-      if (err) return reject(err);
-      resolve(results);
-    });
-  });
-};
+
 exports.getCustomerList = (req, res) => {
-  const userinfo =  req.app.get("userinfo")
-  console.log("🚀 ~ userinfo:", userinfo)
+
+  console.log(req.headers.authorization.replace(/Bearer\s/g,''))
   const { search } = req.body;
   let sql = "";
   if (isNaN(search) && !isNaN(Date.parse(search))) {
     sql = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id  where i.dateTime = '${search}'`;
-    
-    db.query(sql, req.body,  (err, results) => {
+
+    db.query(sql, req.body, (err, results) => {
       if (err) return res.cc(err);
-      // const root = await getRoot();
-      // console.log("🚀 ~ db.query ~ root:", root)
+
       if (!results.length) {
         db.query(
           `select * from customer  where dateTime = '${search}'`,

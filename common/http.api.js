@@ -18,8 +18,10 @@ const install = (Vue, vm) => {
     getServiceDetailById: (data) => vm.$u.http.post("/service/detail", data),
     editPreinstall: (data) => vm.$u.http.post("/preinstall/edit", data),
     getPreinstall: (data) => vm.$u.http.post("/preinstall/detail", data),
+    getLogList: (data) => vm.$u.http.post("/user/log", data),
+
+
     getRegisterCover: () => vm.$u.http.get("/api/index/registerCover"),
-    getMembertype: () => vm.$u.http.get("/api/index/membertype"),
     register: (data) => vm.$u.http.post("/api/user/register", data)
   };
 };
