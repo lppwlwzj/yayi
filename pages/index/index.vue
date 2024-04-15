@@ -35,6 +35,17 @@
         </navigator>
       </view>
     </view>
+    <video src="https://qcloudbbs-10019892.cos.ap-shanghai.myqcloud.com/Donald%20Duck.mp4"></video>
+
+    <!-- <video
+      object-fit="cover"
+      id="myVideo"
+      src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4"
+      @error="videoErrorCallback"
+      enable-danmu
+      danmu-btn
+      controls
+    ></video> -->
     <view class="list-area">
       <block v-if="list.length">
         <view class="list-item rfc" v-for="(item, index) in list" :key="index">
@@ -74,20 +85,26 @@
     <view class="list-item rfc" v-show="!list.length"> 暂无数据 </view>
     <view class="footer rfa">
       <navigator :url="`/pages/backLogin/backLogin`">
-        <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+        <u-icon
+          size="26"
+          :name="require('../../static/images/ECO-UI-07.png')"
+        ></u-icon>
       </navigator>
       <navigator :url="`/pages/preUpload/preUpload`">
-        <u-icon size="26" name="../../static/images/ECO-UI-08.png"></u-icon>
+        <u-icon
+          size="26"
+          :name="require('../../static/images/ECO-UI-08.png')"
+        ></u-icon>
       </navigator>
 
       <u-icon
         size="26"
-        name="../../static/images/ECO-UI-18.png"
+        :name="require('../../static/images/ECO-UI-18.png')"
         @click="open"
       ></u-icon>
       <u-icon
         size="26"
-        name="../../static/images/ECO-UI-09.png"
+        :name="require('../../static/images/ECO-UI-09.png')"
         @click="logout"
       ></u-icon>
     </view>

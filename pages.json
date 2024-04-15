@@ -68,14 +68,8 @@
         "onReachBottomDistance": 100,
         "navigationStyle": "custom"
       }
-    },
-    {
-      "path": "pages/afterService/afterService",
-      "style": {
-        "navigationBarTitleText": "",
-        "navigationStyle": "custom"
-      }
     }
+   
   ],
 
   "globalStyle": {

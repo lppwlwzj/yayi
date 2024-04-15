@@ -22,7 +22,7 @@
           <view class="title"> 售后登录 </view>
 
           <u-form-item label="密码" prop="password">
-            <u--input
+            <!-- <u--input
               :password="!visible"
               placeholder=""
               disabledColor="#fff"
@@ -40,7 +40,40 @@
                   :name="visible ? 'eye' : 'eye-off'"
                 ></u-icon>
               </template>
-            </u--input>
+            </u--input> -->
+                    <view class="u-demo-block__content">
+        <!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
+        <!-- #ifndef APP-NVUE -->
+        <u-input placeholder=" "   
+           :password="!visible"
+            disabledColor="#fff"
+            v-model="form.password"
+            border="none"
+            inputAlign="left">
+      <!-- #endif -->
+      <!-- #ifdef APP-NVUE -->
+          <u--input  
+            placeholder=" "   
+           :password="!visible"
+            disabledColor="#fff"
+            v-model="form.password"
+            border="none"
+            inputAlign="left">
+          <!-- #endif -->
+             <u-icon
+                slot="suffix"
+                @click="visible = !visible"
+                size="18"
+                color="#dd524dab"
+                :name="visible ? 'eye' : 'eye-off'"
+              ></u-icon>
+      <!-- #ifndef APP-NVUE -->
+      </u-input>
+      <!-- #endif -->
+      <!-- #ifdef APP-NVUE -->
+      </u--input>
+      <!-- #endif -->
+    </view>
           </u-form-item>
           <view class="btn" @tap="login"> 登录 </view>
         </view>

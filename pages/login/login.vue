@@ -17,7 +17,7 @@
         <!-- 昵称 -->
         <u-form-item label="账号" prop="nickname">
           <u--input
-            placeholder=""
+            placeholder=" "
             disabledColor="#fff"
             v-model="form.usercount"
             border="none"
@@ -26,26 +26,64 @@
             suffixIconStyle=" color: #dd524dab !important;"
           ></u--input>
         </u-form-item>
-
-        <u-form-item label="密码" prop="nickname">
-          <u--input
+    
+        <u-form-item label="密码" prop="password">
+          <!-- <u--input
             :password="!visible"
-            placeholder=""
+            placeholder=" "
             disabledColor="#fff"
             v-model="form.password"
             border="none"
             inputAlign="left"
           >
+            
             <template slot="suffix">
               <u-icon
+                slot="suffix"
                 @click="visible = !visible"
                 size="18"
                 color="#dd524dab"
                 :name="visible ? 'eye' : 'eye-off'"
               ></u-icon>
             </template>
-          </u--input>
+          </u--input> -->
+
+          		          <view class="u-demo-block__content">
+        <!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
+        <!-- #ifndef APP-NVUE -->
+        <u-input placeholder=" "   
+           :password="!visible"
+            disabledColor="#fff"
+            v-model="form.password"
+            border="none"
+            inputAlign="left">
+      <!-- #endif -->
+      <!-- #ifdef APP-NVUE -->
+          <u--input  
+            placeholder=" "   
+           :password="!visible"
+            disabledColor="#fff"
+            v-model="form.password"
+            border="none"
+            inputAlign="left">
+          <!-- #endif -->
+             <u-icon
+                slot="suffix"
+                @click="visible = !visible"
+                size="18"
+                color="#dd524dab"
+                :name="visible ? 'eye' : 'eye-off'"
+              ></u-icon>
+      <!-- #ifndef APP-NVUE -->
+      </u-input>
+      <!-- #endif -->
+      <!-- #ifdef APP-NVUE -->
+      </u--input>
+      <!-- #endif -->
+    </view>
+
         </u-form-item>
+
         <view class="btn" @tap="login"> 登录 </view>
       </view>
     </u--form>
@@ -53,7 +91,6 @@
 </template>
 
 <script>
-// import address from "../../static/picker-region";
 export default {
   data() {
     return {
@@ -98,6 +135,21 @@ export default {
         });
     },
     async handleRegister() {
+      // // #ifdef MP-WEIXIN
+      // <view>仅在5+app平台上显示代码</view>;
+      // // #endif
+
+      // <!-- #ifndefMP-WEIXIN -->
+      //       <view>
+      //         <slot name="suffix">
+      //           <u-icon
+      //             @click="visible = !visible"
+      //             size="18"
+      //             color="#dd524dab"
+      //             :name="visible ? 'eye' : 'eye-off'"
+      //           ></u-icon>
+      //         </slot>
+      //       </view>
       const res = await this.$api.login({
         ...this.form
       });
