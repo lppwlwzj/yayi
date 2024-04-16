@@ -1,6 +1,6 @@
 <template>
-  <view class="content">
-    <view class="top fc">
+  <view class="content" >
+    <view class="top fc" :style="{ paddingTop: statusBarHeight }">
       <image
         src="../../static/images/ECO-UI-02.png"
         mode="widthFix"
@@ -35,7 +35,6 @@
         </navigator>
       </view>
     </view>
-    <video  src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4"></video>
 
     <!-- <video
       object-fit="cover"
@@ -164,6 +163,7 @@ import moment from "moment";
 export default {
   data() {
     return {
+      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       show: false,
       info: "",
       search: "",

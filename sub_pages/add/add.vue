@@ -6,10 +6,16 @@
         hover-class="navigator-hover"
         open-type="navigate"
       >
-        <u-icon size="30" name="../../static/images/ECO-UI-03.png"></u-icon>
+        <u-icon
+          size="30"
+          :name="require('../../static/images/ECO-UI-03.png')"
+        ></u-icon>
       </navigator>
 
-      <u-icon size="30" name="../../static/images/ECO-UI-02.png"></u-icon>
+      <u-icon
+        size="30"
+        :name="require('../../static/images/ECO-UI-02.png')"
+      ></u-icon>
     </view>
     <view class="rfaw" style="margin: 18rpx 0">
       <view class="input">
@@ -76,7 +82,10 @@
     <view class="diagnose">
       <ti-xing>
         <view class="rfc" style="padding-top: 18rpx">
-          <u-icon size="16" name="../../static/images/ECO-UI-07.png"></u-icon>
+          <u-icon
+            size="16"
+            :name="require('../../static/images/ECO-UI-07.png')"
+          ></u-icon>
           <text style="padding-left: 10rpx">面诊</text>
         </view>
       </ti-xing>
@@ -96,24 +105,12 @@
           >
             <view class="upload-img-el fc">
               <image
-                src="../../static/images/upload.png"
+                :src="require('../../static/images/upload.png')"
                 mode="aspectFill"
                 class="upload-img"
               ></image>
-              <!-- TODO：待解决 -->
-              <!-- <video object-fit="cover"id="myVideo" src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4"
-              @error="videoErrorCallback" enable-danmu danmu-btn controls></video> -->
-              <!-- <video
-                id="myVideo"
-                :src="videoSrc"
-                poster="视频封面图的URL"
-                direction="90"
-                object-fit="contain"
-                binderror="videoErrorCallback"
-              ></video> -->
-              <!-- http://127.0.0.1:3006/img/images/adminfrontPhoto.9826ecf281e12929f07949f957ef40dc.mp4 -->
               <image
-                src="../../static/images/add.png"
+                :src="require('../../static/images/add.png')"
                 mode="aspectFill"
                 style="width: 30px; height: 30px; margin-bottom: 8px"
               ></image>
@@ -147,7 +144,7 @@
           >
             <view class="image fc" v-if="!form.leftFv">
               <image
-                src="../../static/images/add.png"
+                :src="require('../../static/images/add.png')"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
@@ -169,7 +166,7 @@
           >
             <view class="image fc">
               <image
-                src="../../static/images/add.png"
+                :src="require('../../static/images/add.png')"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
@@ -191,7 +188,7 @@
           >
             <view class="image fc">
               <image
-                src="../../static/images/add.png"
+                :src="require('../../static/images/add.png')"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
@@ -213,7 +210,7 @@
           >
             <view class="image fc">
               <image
-                src="../../static/images/add.png"
+                :src="require('../../static/images/add.png')"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
@@ -234,7 +231,7 @@
           >
             <view class="image fc">
               <image
-                src="../../static/images/add.png"
+                :src="require('../../static/images/add.png')"
                 mode="aspectFill"
                 style="width: 16px; height: 16px; margin-bottom: 4px"
               ></image>
@@ -253,7 +250,10 @@
         }"
       >
         <view class="rfc" style="padding-top: 18rpx">
-          <u-icon size="16" name="../../static/images/ECO-UI-08.png"></u-icon>
+          <u-icon
+            size="16"
+            :name="require('../../static/images/ECO-UI-08.png')"
+          ></u-icon>
           <text style="padding-left: 10rpx">设计师建议</text>
         </view>
       </ti-xing>
@@ -271,7 +271,7 @@
             ></image>
             <image
               v-show="!form.intentImg"
-              src="../../static/images/add.png"
+              :src="require('../../static/images/add.png')"
               mode="aspectFill"
               style="width: 30px; height: 30px; margin-bottom: 8px"
             ></image>
@@ -375,7 +375,7 @@
                 <image
                   @click="handleChoseImg(item.key)"
                   class="icon-image"
-                  :src="item.img || '../../static/images/upload.png'"
+                  :src="item.img || require('../../static/images/upload.png')"
                 />
               </view>
             </view>
@@ -427,7 +427,7 @@
       >
         <view class="image-2 fc">
           <image
-            src="../../static/images/add.png"
+            :src="require('../../static/images/add.png')"
             mode="aspectFill"
             style="width: 20px; height: 20px; margin-bottom: 4px"
           ></image>
@@ -449,7 +449,7 @@
       >
         <view class="image-2 fc">
           <image
-            src="../../static/images/add.png"
+            :src="require('../../static/images/add.png')"
             mode="aspectFill"
             style="width: 20px; height: 20px; margin-bottom: 4px"
           ></image>
@@ -502,7 +502,7 @@
       @confirm="handleDaiYaTime"
       @close="canceltime"
     />
-    <u-popup
+    <!-- <u-popup
       :show="popupShow"
       closeable
       mode="center"
@@ -523,7 +523,7 @@
           style="width: 100%; height: 200rpx"
         ></video>
       </view>
-    </u-popup>
+    </u-popup> -->
     <view
       class="btn afc"
       @tap.stop="handleEdit"
@@ -547,7 +547,10 @@
     </view>
 
     <view class="footer rfa">
-      <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon>
+      <u-icon
+        size="26"
+        :name="require('../../static/images/ECO-UI-07.png')"
+      ></u-icon>
       <navigator
         :url="
           operateType === 'create'
@@ -557,7 +560,7 @@
       >
         <u-icon
           size="26"
-          name="../../static/images/ECO-UI-04.png"
+          :name="require('../../static/images/ECO-UI-04.png')"
           style=""
         ></u-icon>
       </navigator>
@@ -608,7 +611,6 @@ function getDate(date, AddDayCount = 0) {
     day: dd.getDay()
   };
 }
-import moment from "moment";
 import TiXing from "../../components/tixing";
 import Upload from "../../components/my-upload/my-upload.vue";
 import MultiUpload from "../../components/multi-upload";
@@ -685,7 +687,7 @@ export default {
           value: 0,
           open: [],
           img: "",
-          url: "./static/images/1.png"
+          url: require("./static/images/1.png")
         },
         {
           id: 2,
@@ -694,7 +696,7 @@ export default {
           value: 0,
           open: [],
           img: "",
-          url: "./static/images/2.png"
+          url: require("./static/images/2.png")
         },
 
         {
@@ -703,7 +705,7 @@ export default {
           text: "1号2号落差",
           value: 0,
           open: [],
-          url: "./static/images/3.png"
+          url: require("./static/images/3.png")
         },
         {
           id: 4,
@@ -712,7 +714,7 @@ export default {
           key: "angle",
           open: [],
           img: "",
-          url: "./static/images/4.png"
+          url: require("./static/images/4.png")
         },
         {
           id: 5,
@@ -721,7 +723,7 @@ export default {
           open: [],
           key: "jiandun",
           img: "",
-          url: "./static/images/5.png"
+          url: require("./static/images/5.png")
         },
         {
           id: 6,
@@ -730,7 +732,7 @@ export default {
           open: [],
           key: "qieduan",
           img: "",
-          url: "./static/images/6.png"
+          url: require("./static/images/6.png")
         },
         {
           id: 7,
@@ -739,7 +741,7 @@ export default {
           open: [],
           key: "texture",
           img: "",
-          url: "./static/images/7.png"
+          url: require("./static/images/7.png")
         },
         {
           id: 8,
@@ -748,7 +750,7 @@ export default {
           key: "dot",
           open: [],
           img: "",
-          url: "./static/images/8.png"
+          url: require("./static/images/8.png")
         },
         {
           id: 9,
@@ -757,7 +759,7 @@ export default {
           open: [],
           key: "touliang",
           img: "",
-          url: "./static/images/9.png"
+          url: require("./static/images/9.png")
         },
         {
           id: 10,
@@ -766,7 +768,7 @@ export default {
           value: 0,
           open: [],
           img: "",
-          url: "./static/images/10.jpg"
+          url: require("./static/images/10.jpg")
         },
         {
           id: 11,
@@ -775,7 +777,7 @@ export default {
           value: 0,
           open: [],
           img: "",
-          url: "./static/images/11.jpg"
+          url: require("./static/images/11.jpg")
         }
       ],
       timeKey: "",
@@ -841,7 +843,6 @@ export default {
           params[key] = res.re[key] ? JSON.parse(res.re[key]) : [];
         });
         this.preinstall = {
-          
           ...params
         };
       }
@@ -871,7 +872,6 @@ export default {
     handleChooseConfirm(img) {
       if (this.activeIndex === "intentList") {
         this.form.intentImg = img;
-  
       } else {
         const index = this.dentistList.findIndex(
           (item) => item.key === this.activeIndex
@@ -895,9 +895,9 @@ export default {
         this.customer_id = data.customer_id;
         this.service_id = data.service_id;
 
-        this.form.isPrivacy =  this.form.isPrivacy ? true : false;
+        this.form.isPrivacy = this.form.isPrivacy ? true : false;
         this.form.designList = JSON.parse(data.designList);
-        
+
         this.dentistList = this.dentistList.map((item) => {
           return {
             ...item,
@@ -928,10 +928,12 @@ export default {
         this.form[`${item.key}Open`] = !!item.open.length;
         this.form[`${item.key}Value`] = item.value;
       });
-      const requestFn = this.id  ?  this.$api.editCustomer :  this.$api.addCustomer;
+      const requestFn = this.id
+        ? this.$api.editCustomer
+        : this.$api.addCustomer;
       const res = await requestFn({
         customer_id: this.customer_id,
-        ...this.form,
+        ...this.form
       });
       if (!res.code) {
         uni.showToast({
@@ -943,22 +945,23 @@ export default {
       }
     },
 
-    preview(url) {
-      this.popupShow = true;
-      this.previewImg = url;
-    },
-    popupClose() {
-      this.popupShow = false;
-    },
+    // preview(url) {
+    //   this.popupShow = true;
+    //   this.previewImg = url;
+    // },
+    // popupClose() {
+    //   this.popupShow = false;
+    // },
 
     handleFormChange(key, value) {
+      console.log("🚀 ~ handleFormChange ~ value:", value);
       this.$set(this.form, [key], value);
     },
     handleDesignImage(value) {
       this.form.designList.push(value);
     },
     deleteDesignImg(index) {
-      this.$set(this.form.designList, index, '');
+      this.$set(this.form.designList, index, "");
     }
   }
 };
@@ -1109,7 +1112,8 @@ page {
   border-radius: 40rpx;
   font-size: 30rpx;
 }
-/deep/.uni-calendar-item--isDay,/deep/.uni-calendar-item--checked {
+/deep/.uni-calendar-item--isDay,
+/deep/.uni-calendar-item--checked {
   background: #eb2b24e3;
 }
 </style>

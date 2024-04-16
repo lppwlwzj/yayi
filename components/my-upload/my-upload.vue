@@ -16,31 +16,27 @@
       <view :class="['upload-bg']">
         <slot v-if="!img_url" />
         <view :class="[customClass, 'fc']" v-else>
-          <image
-            :src="img_url"
-            mode="aspectFill"
-            v-if="img_url.indexOf('image') > -1"
-            class="upload-img"
-          ></image>
-          <video
-            :src="img_url"
-            v-if="img_url.indexOf('mp4') > -1"
-            class="upload-img"
-          ></video>
-
+          <image :src="previewUrl" mode="aspectFill" class="upload-img"></image>
           <image
             @tap.stop="preview(img_url)"
             src="../../static//images/preview.png"
             class="preview"
             mode="aspectFill"
           ></image>
-          <u-icon
+          <image
             @click="handleDelTryImg"
+            src="../../static//images/close.png"
+            mode="aspectFill"
             class="image-close"
+          ></image>
+          <!-- <u-icon
+            @click="handleDelTryImg"
+          
+          
             size="16"
             color="#fff"
             name="close-circle"
-          ></u-icon>
+          ></u-icon> -->
         </view>
       </view>
     </u-upload>
@@ -61,7 +57,7 @@
         ></image>
         <video
           :src="img_url"
-          v-if="img_url.indexOf('video') > -1"
+          v-if="img_url.indexOf('mp4') > -1"
           style="width: 100%; height: 200rpx"
         ></video>
       </view>
@@ -98,7 +94,7 @@ export default {
     },
     accept: {
       type: String,
-      default: "image,video"
+      default: "all"
     },
     maxCount: {
       //最大上传数量
@@ -139,9 +135,21 @@ export default {
       handler(newVal, oldVal) {
         this.data = newVal;
       }
+    },
+    img_url: {
+      deep: true,
+      handler(newVal, oldVal) {
+        console.log("🚀 ~ handler ~ newVal:", newVal);
+      }
     }
   },
-
+  computed: {
+    previewUrl() {
+      return this.img_url.indexOf("mp4") > -1
+        ? require("../../static/images/video.png")
+        : this.img_url;
+    }
+  },
   methods: {
     preview() {
       this.popupShow = true;
@@ -317,8 +325,7 @@ export default {
 .image-2 {
   width: 160rpx;
   height: 160rpx;
-  // width: 100%;
-  // height: 100%;
+
   background: #898787a3;
   border-radius: 16rpx;
   margin: 20rpx 0rpx;
@@ -339,9 +346,10 @@ export default {
   width: 14px;
   height: 14px;
   position: absolute;
-  top: 4rpx;
-  right: 4rpx;
+  top: 8rpx;
+  right: 8rpx;
 }
+
 .upload-img {
   position: absolute;
   width: 100%;
@@ -351,5 +359,4 @@ export default {
   top: 0;
   bottom: 0;
 }
-
 </style>
