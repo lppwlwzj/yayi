@@ -10,6 +10,7 @@ Vue.mixin(vuexStore);
 	// // 提交前需要注释  本地调试使用
 	// const vconsole = require('vconsole')
 	// Vue.prototype.$vconsole = new vconsole() // 使用vconsole
+	// "vconsole": "^3.15.1"
 	// // #endif
 
 
@@ -56,8 +57,8 @@ const app = new Vue({
 import httpApi from "@/common/http.api.js";
 Vue.use(httpApi, app);
 
-import tools from "@/common/tools.js";
-Vue.use(tools, app);
+// import tools from "@/common/tools.js";
+// Vue.use(tools, app);
 
 require('@/common/request.js')(app)
 app.$mount()

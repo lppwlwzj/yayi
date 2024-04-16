@@ -24,8 +24,8 @@
           suffixIconStyle=" color: #dd524dab !important;"
           @confirm="handleSearch"
         ></u--input>
-        <!-- <navigator :url="`/pages/add/add?id=7&type=view`" class="keynote_con"> -->
-        <navigator :url="`/pages/add/add`" class="keynote_con">
+        <!-- <navigator :url="`/sub_pages/add/add?id=7&type=view`" class="keynote_con"> -->
+        <navigator :url="`/sub_pages/add/add`" class="keynote_con">
           <u-icon
             name="plus-circle"
             color="#dd524d63"
@@ -35,7 +35,7 @@
         </navigator>
       </view>
     </view>
-    <video src="https://qcloudbbs-10019892.cos.ap-shanghai.myqcloud.com/Donald%20Duck.mp4"></video>
+    <video  src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4"></video>
 
     <!-- <video
       object-fit="cover"
@@ -55,7 +55,7 @@
               {{ item.doctor }} / {{ item.CAD }} / {{ item.checi }}
             </view>
             <navigator
-              :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
+              :url="`/sub_pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
               class="keynote_con"
             >
               <u-icon
@@ -65,7 +65,7 @@
               ></u-icon>
             </navigator>
             <navigator
-              :url="`/pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
+              :url="`/sub_pages/afterSalesLogin/afterSalesLogin?id=${item.id}&service_id=${item.service_id}&operateType=view`"
               class="keynote_con"
             >
               <u-icon
@@ -76,7 +76,7 @@
               ></u-icon>
             </navigator>
           </view>
-          <navigator :url="`/pages/add/add?id=${item.id}&type=edit`">
+          <navigator :url="`/sub_pages/add/add?id=${item.id}&type=edit`">
             <view class="list-item-right"> {{ item.proxy }} </view>
           </navigator>
         </view>
@@ -84,13 +84,13 @@
     </view>
     <view class="list-item rfc" v-show="!list.length"> 暂无数据 </view>
     <view class="footer rfa">
-      <navigator :url="`/pages/backLogin/backLogin`">
+      <navigator :url="`/sub_pages/backLogin/backLogin`">
         <u-icon
           size="26"
           :name="require('../../static/images/ECO-UI-07.png')"
         ></u-icon>
       </navigator>
-      <navigator :url="`/pages/preUpload/preUpload`">
+      <navigator :url="`/sub_pages/preUpload/preUpload`">
         <u-icon
           size="26"
           :name="require('../../static/images/ECO-UI-08.png')"

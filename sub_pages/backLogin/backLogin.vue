@@ -1,36 +1,44 @@
 <template>
-  <view>
+  <view class="register">
     <view class="rfb header">
-      <!-- <navigator :url="`/pages/add/add?id=${customer_id}`"> </navigator> -->
       <u-icon
-        style="margin: 0 20rpx"
         size="30"
         name="../../static/images/ECO-UI-03.png"
         @click="back"
       ></u-icon>
 
-      <u-icon
-        style="margin: 0 20rpx"
-        size="40"
-        name="../../static/images/ECO-UI-02.png"
-      ></u-icon>
+      <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
     </view>
-
-    <view class="register fc">
-      <u--form labelWidth="auto" labelPosition="left" :model="form" ref="uForm">
+    <view style="margin-top: 200rpx">
+      <u--form
+        labelWidth="auto"
+        labelPosition="left"
+        :model="form"
+        ref="uForm"
+        :rules="rules"
+      >
         <view class="info fc">
-          <view class="title"> 售后登录 </view>
+          <view class="title"> 后台登录 </view>
 
-          <u-form-item label="密码" prop="password">
-            <!-- <u--input
-              :password="!visible"
+          <u-form-item label="账号" prop="usercount">
+            <u--input
               placeholder=""
               disabledColor="#fff"
-              v-model="password"
+              v-model="usercount"
               border="none"
               inputAlign="left"
               suffixIcon="eye"
               suffixIconStyle=" color: #dd524dab !important;"
+            ></u--input>
+          </u-form-item>
+          <u-form-item label="密码" prop="password">
+            <!-- <u--input
+              placeholder=""
+              disabledColor="#fff"
+              v-model="password"
+              border="none"
+              :password="!visible"
+              inputAlign="left"
             >
               <template slot="suffix">
                 <u-icon
@@ -45,7 +53,7 @@
         <!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
         <!-- #ifndef APP-NVUE -->
         <u-input placeholder=" "   
-           :password="!visible"
+           :password="!visible"
             disabledColor="#fff"
             v-model="form.password"
             border="none"
@@ -53,9 +61,9 @@
       <!-- #endif -->
       <!-- #ifdef APP-NVUE -->
           <u--input  
-            placeholder=" "   
-           :password="!visible"
-            disabledColor="#fff"
+       placeholder=" "   
+         :password="!visible"
+          disabledColor="#fff"
             v-model="form.password"
             border="none"
             inputAlign="left">
@@ -86,44 +94,51 @@
 export default {
   data() {
     return {
-      password: "",
-      visible: false,
-      confirmPassword: "111520",
       form: {},
-      customer_id: "",
-      service_id: "",
-      operateType: ""
+      visible: false,
+      show: false,
+      usercount: "admin",
+      password: "111520",
+      confirmCount: "admin",
+      confirmPassword: "111520",
+      rules: {
+        usercount: [
+          {
+            required: true,
+            message: "请填写账号",
+            trigger: ["change", "blur"]
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: "请填写密码",
+            trigger: ["change", "blur"]
+          }
+        ]
+      }
     };
   },
-  onLoad: function (option) {
-    if (option.customer_id) {
-      this.customer_id = option.customer_id;
-    }
-    if (option.service_id) {
-      this.service_id = option.service_id;
-    }
-    if (option.operateType) {
-      this.operateType = option.operateType;
-    }
-  },
+
   methods: {
     back() {
       uni.navigateBack({
-        delta: 1 //返回上一页
+        delta: 1
       });
     },
     login() {
-      if (this.password !== this.confirmPassword) {
-        uni.showToast({
-          icon: "none",
-          title: "密码错误！",
-          duration: 2000
+      if (
+        this.confirmCount === this.usercount &&
+        this.password === this.confirmPassword
+      ) {
+        uni.navigateTo({
+          url: `/sub_pages/admin/admin`
         });
       } else {
-        let redirectQuery = "";
-        if (this.service_id) redirectQuery = `&service_id=${this.service_id}`;
-        uni.navigateTo({
-          url: `/pages/afterService/afterService?customer_id=${this.customer_id}&operateType=${this.operateType}${redirectQuery}`
+        uni.showToast({
+          icon: "none",
+          title: "账号密码错误！",
+          duration: 2000
         });
       }
     }
@@ -132,14 +147,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.header {
-  height: 90rpx;
-}
 .register {
   width: 100%;
-  height: calc(100vh - 90rpx);
+  height: 100vh;
   background: $uni-color-bg !important;
-
+  .header {
+    width: 96%;
+    margin: 0 auto;
+    padding: 26rpx 0;
+  }
   .title {
     color: black;
     font-size: 24px;
@@ -172,13 +188,12 @@ export default {
     color: #ffffff;
     background: #dd524d63;
     font-size: 16px;
-    margin: 80rpx auto 30rpx;
+    margin: 60rpx auto 30rpx;
     font-size: 32rpx;
     font-family: Source Han Sans SC, Source Han Sans SC;
     font-weight: 500;
   }
 }
-
 .u-form-item {
   margin: 30rpx 0;
   width: 100%;

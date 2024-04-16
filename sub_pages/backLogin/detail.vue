@@ -126,7 +126,7 @@ export default {
         }
         if (!this.detail.has_auth) {
           uni.navigateTo({
-            url: "/pages/register/register"
+            url: "/sub_pages/register/register"
           });
         }
       }

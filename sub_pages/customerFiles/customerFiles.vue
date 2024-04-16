@@ -77,7 +77,7 @@
         :url="
           !service_id
             ? ''
-            : `/pages/afterSalesLogin/afterSalesLogin?service_id=${service_id}&customer_id=${customer_id}&operateType=${operateType}`
+            : `/sub_pages/afterSalesLogin/afterSalesLogin?service_id=${service_id}&customer_id=${customer_id}&operateType=${operateType}`
         "
       >
         <u-icon size="26" name="../../static/images/ECO-UI-04.png"></u-icon>

@@ -61,8 +61,7 @@ export default {
         // })
       } else {
         // if (res.userinfo) {
-        // 	console.log(res.userinfo);
-        // 	uni.setStorageSync('userInfo', res.userinfo);
+        // 	console.log(res.userinfo); 
         // 	uni.switchTab({
         // 		url: '/pages/index/index'
         // 	});
@@ -78,7 +77,5 @@ export default {
 @import "uview-ui/index.scss";
 	/*每个页面公共css */
 	@import '@/uni_modules/uni-scss/index.scss';
-	/* #ifndef APP-NVUE */
-	// @import '@/static/customicons.css';
-	// 设置整个项目的背景色
+
 </style>

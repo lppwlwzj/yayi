@@ -552,7 +552,7 @@
         :url="
           operateType === 'create'
             ? ''
-            : `/pages/customerFiles/customerFiles?id=${id}&operateType=${operateType}&service_id=${service_id}`
+            : `/sub_pages/customerFiles/customerFiles?id=${id}&operateType=${operateType}&service_id=${service_id}`
         "
       >
         <u-icon
@@ -685,7 +685,7 @@ export default {
           value: 0,
           open: [],
           img: "",
-          url: "../../static/images/1.png"
+          url: "./static/images/1.png"
         },
         {
           id: 2,
@@ -694,7 +694,7 @@ export default {
           value: 0,
           open: [],
           img: "",
-          url: "../../static/images/2.png"
+          url: "./static/images/2.png"
         },
 
         {
@@ -703,7 +703,7 @@ export default {
           text: "1号2号落差",
           value: 0,
           open: [],
-          url: "../../static/images/3.png"
+          url: "./static/images/3.png"
         },
         {
           id: 4,
@@ -712,7 +712,7 @@ export default {
           key: "angle",
           open: [],
           img: "",
-          url: "../../static/images/4.png"
+          url: "./static/images/4.png"
         },
         {
           id: 5,
@@ -721,7 +721,7 @@ export default {
           open: [],
           key: "jiandun",
           img: "",
-          url: "../../static/images/5.png"
+          url: "./static/images/5.png"
         },
         {
           id: 6,
@@ -730,7 +730,7 @@ export default {
           open: [],
           key: "qieduan",
           img: "",
-          url: "../../static/images/6.png"
+          url: "./static/images/6.png"
         },
         {
           id: 7,
@@ -739,7 +739,7 @@ export default {
           open: [],
           key: "texture",
           img: "",
-          url: "../../static/images/7.png"
+          url: "./static/images/7.png"
         },
         {
           id: 8,
@@ -748,7 +748,7 @@ export default {
           key: "dot",
           open: [],
           img: "",
-          url: "../../static/images/8.png"
+          url: "./static/images/8.png"
         },
         {
           id: 9,
@@ -757,7 +757,7 @@ export default {
           open: [],
           key: "touliang",
           img: "",
-          url: "../../static/images/9.png"
+          url: "./static/images/9.png"
         },
         {
           id: 10,
@@ -766,7 +766,7 @@ export default {
           value: 0,
           open: [],
           img: "",
-          url: "../../static/images/10.jpg"
+          url: "./static/images/10.jpg"
         },
         {
           id: 11,
@@ -775,7 +775,7 @@ export default {
           value: 0,
           open: [],
           img: "",
-          url: "../../static/images/11.jpg"
+          url: "./static/images/11.jpg"
         }
       ],
       timeKey: "",
