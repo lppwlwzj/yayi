@@ -112,7 +112,7 @@
               <image
                 :src="require('../../static/images/add.png')"
                 mode="aspectFill"
-                style="width: 30px; height: 30px; margin-bottom: 8px"
+                style="width: 30px; height: 30px; margin-bottom: 8px;z-index: 9999"
               ></image>
               <text style="color: #fff; font-size: 12px; z-index: 9999"
                 >客户正面微笑照</text
@@ -269,11 +269,12 @@
               mode="aspectFill"
               class="upload-img"
             ></image>
+            <!-- :src="require('../../static/images/add.png')" -->
             <image
               v-show="!form.intentImg"
               :src="require('../../static/images/add.png')"
               mode="aspectFill"
-              style="width: 30px; height: 30px; margin-bottom: 8px"
+              style="width: 30px; height: 30px; margin-bottom: 8px;z-index: 9999"
             ></image>
             <text
               v-show="!form.intentImg"

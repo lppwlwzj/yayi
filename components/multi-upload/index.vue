@@ -10,17 +10,24 @@
           <image :src="item" mode="aspectFill" class="upload-img"></image>
           <image
             @tap.stop="preview(item)"
-            src="../../static/images/preview.png"
+            :src="require('../../static//images/preview.png')"
             class="preview"
             mode="aspectFill"
           ></image>
-          <u-icon
+          <!-- <u-icon
             @click="handleDeleteImg(index)"
             class="image-close"
             size="16"
             color="#fff"
             name="close-circle"
-          ></u-icon>
+          ></u-icon> -->
+           <image
+            @click="handleDeleteImg(index)"
+            :src="require('../../static//images/close.png')"
+            mode="aspectFill"
+            class="image-close"
+          ></image>
+
         </view>
       </view>
       <Upload
@@ -35,9 +42,9 @@
       >
         <view :class="[`image, ${customClass} , fc`]">
           <image
-            src="../../static/images/add.png"
+          :src="require('../../static//images/preview.png')"
             mode="aspectFill"
-            style="width: 16px; height: 16px; margin-bottom: 4px"
+            style="width: 16px; height: 16px; margin-bottom: 4px;z-index: 9999"
           ></image>
           <text style="color: #fff; font-size: 12px">点击上传</text>
         </view>
@@ -143,6 +150,15 @@ export default {
   margin: 20rpx 8rpx;
   position: relative;
 }
+
+.image-close {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+}
+
 
 .custom-upload-img {
   width: 150rpx;

@@ -1,5 +1,7 @@
 <template>
   <view>
+      <!-- :source-type="['camera', 'album']"
+      :capture="['album', 'camera']" -->
     <u-upload
       :accept="accept"
       :fileList="data"
@@ -19,24 +21,16 @@
           <image :src="previewUrl" mode="aspectFill" class="upload-img"></image>
           <image
             @tap.stop="preview(img_url)"
-            src="../../static//images/preview.png"
+            :src="require('../../static//images/preview.png')"
             class="preview"
             mode="aspectFill"
           ></image>
-          <image
+          <!-- <image
             @click="handleDelTryImg"
-            src="../../static//images/close.png"
+            :src="require('../../static//images/close.png')"
             mode="aspectFill"
             class="image-close"
-          ></image>
-          <!-- <u-icon
-            @click="handleDelTryImg"
-          
-          
-            size="16"
-            color="#fff"
-            name="close-circle"
-          ></u-icon> -->
+          ></image> -->
         </view>
       </view>
     </u-upload>
@@ -50,16 +44,8 @@
       }"
     >
       <view class="fc">
-        <image
-          :src="img_url"
-          v-if="img_url.indexOf('image') > -1"
-          mode="widthFix"
-        ></image>
-        <video
-          :src="img_url"
-          v-if="img_url.indexOf('mp4') > -1"
-          style="width: 100%; height: 200rpx"
-        ></video>
+        <video :src="img_url" v-if="img_url.indexOf('mp4') > -1"></video>
+        <image :src="img_url" v-else mode="widthFix"></image>
       </view>
     </u-popup>
   </view>
@@ -99,7 +85,7 @@ export default {
     maxCount: {
       //最大上传数量
       type: Number,
-      default: 10
+      default: 1
     },
     name: {
       //名称
@@ -135,12 +121,6 @@ export default {
       handler(newVal, oldVal) {
         this.data = newVal;
       }
-    },
-    img_url: {
-      deep: true,
-      handler(newVal, oldVal) {
-        console.log("🚀 ~ handler ~ newVal:", newVal);
-      }
     }
   },
   computed: {
@@ -170,9 +150,9 @@ export default {
     // 新增图片
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
-
+      // url: "http://127.0.0.1:3006/api/upload", //文件服务器地址
       uni.uploadFile({
-        url: "http://127.0.0.1:3006/api/upload", //文件服务器地址
+        url: "http://10.172.42.116:3006/api/upload", //文件服务器地址
         filePath: event.file.url, //文件路径
         name: "file",
         header: {

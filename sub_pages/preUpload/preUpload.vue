@@ -1,6 +1,6 @@
 <template>
   <view class="content">
-    <view class="rfb" style="margin-bottom: 24rpx">
+    <view class="rfb"  :style="{ paddingTop: statusBarHeight,marginBottom: '24rpx '}">
       <navigator
         url="/pages/index/index"
         hover-class="navigator-hover"
@@ -158,6 +158,7 @@ export default {
         thickness: [],
         root: ""
       },
+      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       userList: []
     };
   },

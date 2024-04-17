@@ -9,7 +9,9 @@ const handlePath = (dir) => {
 
 // 2. 定义静态变量
 const fileName = "file"; // 上传的 fileName 名称
-const updateBaseUrl = "http://127.0.0.1:3006"; // 上传到服务器地址
+// const updateBaseUrl = "http://127.0.0.1:3006"; // 上传到服务器地址
+const updateBaseUrl = "http://10.172.42.116:3006"; // 上传到服务器地址
+
 const imgPath = "/img/images/"; // 上传到服务器的虚拟目录
 const hanldeImgDelAndRename = (id, filename, dirPath) => {
   // TODO 查找该路径下的所有图片文件

@@ -19,12 +19,12 @@ const mysql = require('mysql')
 const db = mysql.createPool({
 	host:'localhost',
 	user:'root',
-	// password:'password',
-	password:'9699lppwl',
+	password:'password',
+	// password:'9699lppwl',
 	port:'3306',
 	database:'yayi'
 })
 // 向外共享db数据库对象
-module.exports = db
+module.exports = db                                                                                                                                                                         
 
 //ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345678'
