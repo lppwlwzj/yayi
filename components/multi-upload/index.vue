@@ -6,8 +6,12 @@
         v-for="(item, index) in list"
         :key="index"
       >
-        <view :class="[`image, ${customClass} , fc`]" v-show="item">
-          <image :src="item" mode="aspectFill" class="upload-img"></image>
+        <view :class="[`image, ${customClass} , fc`]" v-if="item">
+          <image
+            :src="getImg(item)"
+            mode="aspectFill"
+            class="upload-img"
+          ></image>
           <image
             @tap.stop="preview(item)"
             :src="require('../../static//images/preview.png')"
@@ -21,13 +25,12 @@
             color="#fff"
             name="close-circle"
           ></u-icon> -->
-           <image
+          <image
             @click="handleDeleteImg(index)"
             :src="require('../../static//images/close.png')"
             mode="aspectFill"
             class="image-close"
           ></image>
-
         </view>
       </view>
       <Upload
@@ -42,9 +45,9 @@
       >
         <view :class="[`image, ${customClass} , fc`]">
           <image
-          :src="require('../../static//images/preview.png')"
+            :src="require('../../static//images/preview.png')"
             mode="aspectFill"
-            style="width: 16px; height: 16px; margin-bottom: 4px;z-index: 9999"
+            style="width: 16px; height: 16px; margin-bottom: 4px; z-index: 9999"
           ></image>
           <text style="color: #fff; font-size: 12px">点击上传</text>
         </view>
@@ -60,16 +63,8 @@
       }"
     >
       <view class="fc">
-        <image
-          :src="previewImg"
-          v-if="previewImg.indexOf('image') > -1"
-          mode="widthFix"
-        ></image>
-        <video
-          :src="previewImg"
-          v-if="previewImg.indexOf('video') > -1"
-          style="width: 100%; height: 200rpx"
-        ></video>
+        <video :src="previewImg" v-if="previewImg.indexOf('mp4') > -1"></video>
+        <image :src="previewImg" v-else mode="widthFix"></image>
       </view>
     </u-popup>
   </view>
@@ -105,8 +100,27 @@ export default {
   created() {
     this.userInfo = uni.getStorageSync("userInfo");
   },
-
+  watch: {
+    list: {
+      deep: true,
+      handler(newVal, oldVal) {
+        console.log("🚀 ~ handler ~ newVal:", newVal)
+      }
+    }
+  },
+  // computed: {
+  //   previewUrl() {
+  //     return this.previewImg.indexOf("mp4") > -1
+  //       ? require("../../static/images/video.png")
+  //       : this.previewImg;
+  //   }
+  // },
   methods: {
+    getImg(url) {
+      return url?.indexOf("mp4") > -1
+        ? require("../../static/images/video.png")
+        : url;
+    },
     preview(url) {
       this.popupShow = true;
       this.previewImg = url;
@@ -116,9 +130,12 @@ export default {
     },
 
     handleChangeImage(value) {
-      this.list.push(value);
+      // console.log("🚀 ~ handleChangeImage ~ value:", value)
+      // this.list.push(value);
+      this.$emit('add',value)
     },
     handleDeleteImg(index) {
+      console.log("🚀 ~ handleDeleteImg ~ index:", index)
       // this.$api.deleteImg({
       //   img_url: this.list[index]
       // });
@@ -158,7 +175,6 @@ export default {
   top: 8rpx;
   right: 8rpx;
 }
-
 
 .custom-upload-img {
   width: 150rpx;

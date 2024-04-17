@@ -1,5 +1,5 @@
 <template>
-  <view class="content" >
+  <view class="content">
     <view class="top fc" :style="{ paddingTop: statusBarHeight }">
       <image
         src="../../static/images/ECO-UI-02.png"
@@ -81,7 +81,14 @@
         </view>
       </block>
     </view>
-    <view class="list-item rfc" v-show="!list.length"> 暂无数据 </view>
+    <view class="list-item fc" v-show="!list.length">
+      <image
+        :src="require('../../static//images/empty.png')"
+        mode="aspectFill"
+        style="width: 96px; height: 96px; margin-bottom: 4px; z-index: 9999"
+      ></image>
+      ,<text>暂无数据</text>
+    </view>
     <view class="footer rfa">
       <navigator :url="`/sub_pages/backLogin/backLogin`">
         <u-icon

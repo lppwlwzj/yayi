@@ -206,9 +206,6 @@ export default {
             ? JSON.stringify(this.form[key])
             : "";
       });
-      //13666633692
-    //  const params =  {"intentList":"[\"http://127.0.0.1:3006/img/images/da66caef41e94149077c29b7e943b830.adminintentList1.png\"]","bianyuan":"[\"http://127.0.0.1:3006/img/images/d8e58f3592088697885daaf36e758271.adminbianyuan1.png\"]","round":"[\"http://127.0.0.1:3006/img/images/930ccdcaef4886330cbff6d786250a31.adminround1.png\",\"http://127.0.0.1:3006/img/images/9ff9a7453efe966ba8fd0ee8611135d2.adminround2.png\"]","luocha":"[\"http://127.0.0.1:3006/img/images/77d9d5cb7dcc7a0011aaef6cd13cbdb8.adminluocha1.png\"]","angle":"[\"http://127.0.0.1:3006/img/images/7330607ce8c121b69b6cbde9062026c5.adminangle1.png\"]","jiandun":"[\"http://127.0.0.1:3006/img/images/28f88070ce62f8320c9b58421b5fab60.adminjiandun1.png\"]","qieduan":"[\"http://127.0.0.1:3006/img/images/6fb9bcf4279fdccfb15b3aebe319e690.adminqieduan1.png\"]","texture":"[\"http://127.0.0.1:3006/img/images/2f594094bb7208b482f3dcd6e7a43d58.admintexture1.png\"]","dot":"[\"http://127.0.0.1:3006/img/images/da9b36ee6677054a7ff9a3ed7074d170.admindot1.png\"]","touliang":"[\"http://127.0.0.1:3006/img/images/76bedff082079077ad8bc917125a6497.admintouliang1.png\"]","qieduanLinears":"[\"http://127.0.0.1:3006/img/images/2dd315d8258ec0dee9425b04932d3212.adminqieduanLinears1.png\"]","thickness":"[\"http://127.0.0.1:3006/img/images/62cf45be9c15cf347a726b7ecf766b0b.adminthickness1.png\"]","root":""}
-      console.log(JSON.stringify(params));
       const res = await this.$api.editPreinstall({
         ...params,
         id: this.form?.id || "",

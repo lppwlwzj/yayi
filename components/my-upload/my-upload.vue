@@ -151,8 +151,11 @@ export default {
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
       // url: "http://127.0.0.1:3006/api/upload", //文件服务器地址
+      // url: "http://192.168.4.117:3006/api/upload", //文件服务器地址
+      // url: "http://10.172.42.116:3006/api/upload", //文件服务器地址
+
       uni.uploadFile({
-        url: "http://10.172.42.116:3006/api/upload", //文件服务器地址
+        url: "http://192.168.4.117:3006/api/upload", 
         filePath: event.file.url, //文件路径
         name: "file",
         header: {

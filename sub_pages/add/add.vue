@@ -244,10 +244,7 @@
     <view class="diagnose">
       <ti-xing
         width="100px"
-        :style="{
-          width: '180rpx',
-          marginLeft: '410rpx'
-        }"
+        customeStyle="margin-left: 200px;"
       >
         <view class="rfc" style="padding-top: 18rpx">
           <u-icon
@@ -296,6 +293,7 @@
             :list="form.designList"
             activeKey="designList"
             @delete="deleteDesignImg"
+            @add="handleAddDesignImg"
           />
         </view>
       </view>
@@ -834,6 +832,9 @@ export default {
   },
 
   methods: {
+    handleAddDesignImg(img_url) {
+      this.form.designList.push(img_url)
+    },
     async getPreinstall() {
       const res = await this.$api.getPreinstall();
       if (!res.code) {
@@ -925,25 +926,26 @@ export default {
       }
     },
     async submit() {
-      this.dentistList.forEach((item) => {
-        this.form[`${item.key}Open`] = !!item.open.length;
-        this.form[`${item.key}Value`] = item.value;
-      });
-      const requestFn = this.id
-        ? this.$api.editCustomer
-        : this.$api.addCustomer;
-      const res = await requestFn({
-        customer_id: this.customer_id,
-        ...this.form
-      });
-      if (!res.code) {
-        uni.showToast({
-          icon: "none",
-          title: res.message
-        });
-        this.operateType = "edit";
-        this.id = res.re.id;
-      }
+      console.log('this/form,',this.form.designList)
+      // this.dentistList.forEach((item) => {
+      //   this.form[`${item.key}Open`] = !!item.open.length;
+      //   this.form[`${item.key}Value`] = item.value;
+      // });
+      // const requestFn = this.id
+      //   ? this.$api.editCustomer
+      //   : this.$api.addCustomer;
+      // const res = await requestFn({
+      //   customer_id: this.customer_id,
+      //   ...this.form
+      // });
+      // if (!res.code) {
+      //   uni.showToast({
+      //     icon: "none",
+      //     title: res.message
+      //   });
+      //   this.operateType = "edit";
+      //   this.id = res.re.id;
+      // }
     },
 
     // preview(url) {
@@ -960,8 +962,10 @@ export default {
     },
     handleDesignImage(value) {
       this.form.designList.push(value);
+      
     },
     deleteDesignImg(index) {
+      console.log("🚀 ~ deleteDesignImg ~ index:", index)
       this.$set(this.form.designList, index, "");
     }
   }
