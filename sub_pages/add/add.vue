@@ -23,7 +23,8 @@
           placeholder="客户姓名"
           disabledColor="#fff"
           :disabled="disabled"
-          placeholderStyle="color:#dd524d63"
+          placeholder-style="color:#dd524d63"
+          placeholder-class="placeholder-color"
           v-model="form.customer"
           border="none"
           :customStyle="{
@@ -34,19 +35,19 @@
         ></u--input>
       </view>
       <view class="input">
-        <u-button
+        <view
           @click="calendarOpen('dateTime')"
           class="rfa date-btn"
           :disabled="disabled"
-          :style="{
-            color: form.dateTime ? '#000' : '#dd524d63'
-          }"
         >
+          <!-- :style="{
+            color: form.dateTime ? '#000' : '#dd524d63'
+          }" -->
           <view>
             {{ `${form.dateTime || "日期"}` }}
           </view>
           <u-icon size="19" name="edit-pen" color="#dd524d63"></u-icon>
-        </u-button>
+        </view>
       </view>
       <view class="input">
         <u--input
@@ -73,7 +74,9 @@
           :customStyle="{
             padding: '18rpx'
           }"
-          placeholderStyle="color:#dd524d63"
+          :placeholderStyle="{
+            color: '#dd524d63 !important'
+          }"
           :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
@@ -112,7 +115,12 @@
               <image
                 :src="require('../../static/images/add.png')"
                 mode="aspectFill"
-                style="width: 30px; height: 30px; margin-bottom: 8px;z-index: 9999"
+                style="
+                  width: 30px;
+                  height: 30px;
+                  margin-bottom: 8px;
+                  z-index: 9999;
+                "
               ></image>
               <text style="color: #fff; font-size: 12px; z-index: 9999"
                 >客户正面微笑照</text
@@ -242,10 +250,7 @@
       </view>
     </view>
     <view class="diagnose">
-      <ti-xing
-        width="100px"
-        customeStyle="margin-left: 200px;"
-      >
+      <ti-xing width="100px" customeStyle="margin-left: 200px;">
         <view class="rfc" style="padding-top: 18rpx">
           <u-icon
             size="16"
@@ -271,7 +276,12 @@
               v-show="!form.intentImg"
               :src="require('../../static/images/add.png')"
               mode="aspectFill"
-              style="width: 30px; height: 30px; margin-bottom: 8px;z-index: 9999"
+              style="
+                width: 30px;
+                height: 30px;
+                margin-bottom: 8px;
+                z-index: 9999;
+              "
             ></image>
             <text
               v-show="!form.intentImg"
@@ -386,18 +396,15 @@
     <view class="rfc">
       <text style="color: #ccc; padding-right: 24rpx"> 预计戴牙日期 </text>
       <view class="input" @click="calendarOpen('daiyaTime')">
-        <u-button
+        <view
           :disabled="disabled"
           class="rfa date-btn"
-          :style="{
-            color: form.daiyaTime ? '#000' : '#dd524d63'
-          }"
         >
           <view>
             {{ `${form.daiyaTime || "日期"}` }}
           </view>
           <u-icon size="19" name="edit-pen" color="#dd524d63"></u-icon>
-        </u-button>
+        </view>
       </view>
     </view>
 
@@ -626,8 +633,7 @@ export default {
       id: "", //数据库自动生成的
       customer_id: "", //自己生成的随机字符串，用来create时确定上传图片的唯一标识
       operateType: "create",
-      videoSrc:
-        "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4",
+    
       previewImg: "",
       popupShow: false,
       statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
@@ -833,7 +839,7 @@ export default {
 
   methods: {
     handleAddDesignImg(img_url) {
-      this.form.designList.push(img_url)
+      this.form.designList.push(img_url);
     },
     async getPreinstall() {
       const res = await this.$api.getPreinstall();
@@ -926,7 +932,7 @@ export default {
       }
     },
     async submit() {
-      console.log('this/form,',this.form.designList)
+      console.log("this/form,", this.form.designList);
       // this.dentistList.forEach((item) => {
       //   this.form[`${item.key}Open`] = !!item.open.length;
       //   this.form[`${item.key}Value`] = item.value;
@@ -957,15 +963,12 @@ export default {
     // },
 
     handleFormChange(key, value) {
-      console.log("🚀 ~ handleFormChange ~ value:", value);
-      this.$set(this.form, [key], value);
+      this.$set(this.form, key, value);
     },
     handleDesignImage(value) {
       this.form.designList.push(value);
-      
     },
     deleteDesignImg(index) {
-      console.log("🚀 ~ deleteDesignImg ~ index:", index)
       this.$set(this.form.designList, index, "");
     }
   }
@@ -1112,7 +1115,7 @@ page {
 }
 .date-btn {
   padding: 18rpx;
-  color: #dd524d63;
+  color: #30313363;
   justify-content: space-between;
   border-radius: 40rpx;
   font-size: 30rpx;
@@ -1121,4 +1124,6 @@ page {
 /deep/.uni-calendar-item--checked {
   background: #eb2b24e3;
 }
+
 </style>
+

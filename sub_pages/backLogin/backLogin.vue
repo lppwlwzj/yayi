@@ -1,13 +1,13 @@
 <template>
   <view class="register">
-    <view class="rfb header">
+    <view class="rfb header"  :style="{ paddingTop: statusBarHeight }">
+   
       <u-icon
         size="30"
-        name="../../static/images/ECO-UI-03.png"
+        :name="require('../../static/images/ECO-UI-03.png')"
         @click="back"
       ></u-icon>
-
-      <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
+      <!-- <u-icon size="40" :name="require('../../static/images/ECO-UI-02.png')"></u-icon> -->
     </view>
     <view style="margin-top: 200rpx">
       <u--form
@@ -94,6 +94,7 @@
 export default {
   data() {
     return {
+      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       form: {},
       visible: false,
       show: false,

@@ -100,21 +100,6 @@ export default {
   created() {
     this.userInfo = uni.getStorageSync("userInfo");
   },
-  watch: {
-    list: {
-      deep: true,
-      handler(newVal, oldVal) {
-        console.log("🚀 ~ handler ~ newVal:", newVal)
-      }
-    }
-  },
-  // computed: {
-  //   previewUrl() {
-  //     return this.previewImg.indexOf("mp4") > -1
-  //       ? require("../../static/images/video.png")
-  //       : this.previewImg;
-  //   }
-  // },
   methods: {
     getImg(url) {
       return url?.indexOf("mp4") > -1
@@ -130,15 +115,9 @@ export default {
     },
 
     handleChangeImage(value) {
-      // console.log("🚀 ~ handleChangeImage ~ value:", value)
-      // this.list.push(value);
       this.$emit('add',value)
     },
     handleDeleteImg(index) {
-      console.log("🚀 ~ handleDeleteImg ~ index:", index)
-      // this.$api.deleteImg({
-      //   img_url: this.list[index]
-      // });
       this.$emit("delete", index);
     }
   }
