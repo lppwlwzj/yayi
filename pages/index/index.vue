@@ -85,7 +85,7 @@
       <image
         :src="require('../../static//images/empty.png')"
         mode="aspectFill"
-        style="width: 96px; height: 96px; margin-bottom: 4px; z-index: 9999"
+        style="width: 96px; height: 96px; margin-bottom: 4px"
       ></image>
       ,<text>暂无数据</text>
     </view>
@@ -350,6 +350,8 @@ export default {
     background: #fff;
   }
 }
+</style>
+<style lang="scss">
 /deep/.uni-calendar-item--isDay,
 /deep/.uni-calendar-item--checked {
   background: #eb2b24e3;
