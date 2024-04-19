@@ -1,6 +1,6 @@
 <template>
   <view>
-      <!-- :source-type="['camera', 'album']"
+    <!-- :source-type="['camera', 'album']"
       :capture="['album', 'camera']" -->
     <u-upload
       :accept="accept"
@@ -15,7 +15,7 @@
       :height="height"
       :previewImage="true"
     >
-      <view :class="[customClass , 'upload-bg']">
+      <view :class="[customClass, 'upload-bg']">
         <slot v-if="!img_url" />
         <view :class="[customClass, 'fc']" v-else>
           <image :src="previewUrl" mode="aspectFill" class="upload-img"></image>
@@ -125,7 +125,6 @@ export default {
   },
   computed: {
     previewUrl() {
-      console.log("🚀 ~ previewUrl ~ this.img_url:", this.img_url)
       return this.img_url.indexOf("mp4") > -1
         ? require("../../static/images/video.png")
         : this.img_url;
@@ -156,7 +155,7 @@ export default {
       // url: "http://10.172.42.116:3006/api/upload", //文件服务器地址
 
       uni.uploadFile({
-        url: "http://10.172.42.116:3006/api/upload", 
+        url: "http://127.0.0.1:3006/api/upload",
         filePath: event.file.url, //文件路径
         name: "file",
         header: {
@@ -297,6 +296,14 @@ export default {
   width: 180rpx;
   height: 180rpx;
 }
+.image {
+  width: 120rpx;
+  height: 120rpx;
+  background: #898787a3;
+  border-radius: 16rpx;
+  margin: 20rpx 0rpx;
+  position: relative;
+}
 // .custom-upload-img {
 //   width: 140rpx;
 //   height: 140rpx;
@@ -343,4 +350,5 @@ export default {
   top: 0;
   bottom: 0;
 }
+
 </style>

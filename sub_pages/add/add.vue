@@ -396,10 +396,7 @@
     <view class="rfc">
       <text style="color: #ccc; padding-right: 24rpx"> 预计戴牙日期 </text>
       <view class="input" @click="calendarOpen('daiyaTime')">
-        <view
-          :disabled="disabled"
-          class="rfa date-btn"
-        >
+        <view :disabled="disabled" class="rfa date-btn">
           <view>
             {{ `${form.daiyaTime || "日期"}` }}
           </view>
@@ -508,28 +505,7 @@
       @confirm="handleDaiYaTime"
       @close="canceltime"
     />
-    <!-- <u-popup
-      :show="popupShow"
-      closeable
-      mode="center"
-      @close="popupClose"
-      :overlayStyle="{
-        background: '#000000d6'
-      }"
-    >
-      <view class="fc">
-        <image
-          :src="previewImg"
-          v-if="previewImg.indexOf('image') > -1"
-          mode="widthFix"
-        ></image>
-        <video
-          :src="previewImg"
-          v-if="previewImg.indexOf('video') > -1"
-          style="width: 100%; height: 200rpx"
-        ></video>
-      </view>
-    </u-popup> -->
+
     <view
       class="btn afc"
       @tap.stop="handleEdit"
@@ -580,16 +556,47 @@
       @close="modalShow = false"
       ref="uModal"
     >
-      <view class="rfaw">
-        <view v-for="(item, index) in imgList" :key="index">
-          <image
-            class="icon-image"
-            :src="item"
-            @click="handleChooseConfirm(item)"
-          />
+      <view class="fc">
+        <view class="rfaw">
+          <view
+            v-for="(item, index) in imgList"
+            :key="index"
+            :class="[{ active: selectIndex === index }, 'img-item']"
+          >
+            <image
+              class="icon-image"
+              :src="getImg(item)"
+              @click="selectIndex = index"
+               mode="aspectFill"
+            />
+            <image
+              @tap.stop="preview(item)"
+              :src="require('../../static//images/preview.png')"
+              class="preview"
+              mode="aspectFill"
+            ></image>
+          </view>
         </view>
+        <u-button style="margin-top: 20rpx;" color="#dd524d63" @click="handleChooseConfirm(imgList[selectIndex])"
+          >选择</u-button
+        >
       </view>
     </u-modal>
+
+    <u-popup
+      :show="popupShow"
+      closeable
+      mode="center"
+      @close="popupClose"
+      :overlayStyle="{
+        background: '#000000d6'
+      }"
+    >
+      <view class="fc">
+        <video :src="previewImg" v-if="previewImg.indexOf('mp4') > -1"></video>
+        <image :src="previewImg" v-else mode="aspectFill"></image>
+      </view>
+    </u-popup>
   </view>
 </template>
 
@@ -624,6 +631,7 @@ import MultiUpload from "../../components/multi-upload";
 export default {
   data() {
     return {
+      selectIndex: -1,
       modalShow: false,
       service_id: "",
       startDate: "",
@@ -633,7 +641,7 @@ export default {
       id: "", //数据库自动生成的
       customer_id: "", //自己生成的随机字符串，用来create时确定上传图片的唯一标识
       operateType: "create",
-    
+
       previewImg: "",
       popupShow: false,
       statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
@@ -838,6 +846,19 @@ export default {
   },
 
   methods: {
+    getImg(url) {
+      return url?.indexOf("mp4") > -1
+        ? require("../../static/images/video.png")
+        : url;
+    },
+    preview(url) {
+      this.popupShow = true;
+      this.previewImg = url;
+    },
+    popupClose() {
+      this.previewImg = "";
+      this.popupShow = false;
+    },
     handleAddDesignImg(img_url) {
       this.form.designList.push(img_url);
     },
@@ -932,35 +953,27 @@ export default {
       }
     },
     async submit() {
-      console.log("this/form,", this.form.designList);
-      // this.dentistList.forEach((item) => {
-      //   this.form[`${item.key}Open`] = !!item.open.length;
-      //   this.form[`${item.key}Value`] = item.value;
-      // });
-      // const requestFn = this.id
-      //   ? this.$api.editCustomer
-      //   : this.$api.addCustomer;
-      // const res = await requestFn({
-      //   customer_id: this.customer_id,
-      //   ...this.form
-      // });
-      // if (!res.code) {
-      //   uni.showToast({
-      //     icon: "none",
-      //     title: res.message
-      //   });
-      //   this.operateType = "edit";
-      //   this.id = res.re.id;
-      // }
+      this.dentistList.forEach((item) => {
+        this.form[`${item.key}Open`] = !!item.open.length;
+        this.form[`${item.key}Value`] = item.value;
+      });
+      console.log(JSON.stringify(this.form));
+      const requestFn = this.id
+        ? this.$api.editCustomer
+        : this.$api.addCustomer;
+      const res = await requestFn({
+        customer_id: this.customer_id,
+        ...this.form
+      });
+      if (!res.code) {
+        uni.showToast({
+          icon: "none",
+          title: res.message
+        });
+        this.operateType = "edit";
+        this.id = res.re.id;
+      }
     },
-
-    // preview(url) {
-    //   this.popupShow = true;
-    //   this.previewImg = url;
-    // },
-    // popupClose() {
-    //   this.popupShow = false;
-    // },
 
     handleFormChange(key, value) {
       this.$set(this.form, key, value);
@@ -1066,8 +1079,8 @@ page {
     position: relative;
   }
   .preview {
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
     position: absolute;
     left: 10rpx;
     bottom: 10rpx;
@@ -1120,10 +1133,14 @@ page {
   border-radius: 40rpx;
   font-size: 30rpx;
 }
+.active {
+  border: 2rpx solid red;
+}
+.img-item {
+  position: relative;
+}
 /deep/.uni-calendar-item--isDay,
 /deep/.uni-calendar-item--checked {
   background: #eb2b24e3;
 }
-
 </style>
-

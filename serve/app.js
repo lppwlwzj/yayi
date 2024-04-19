@@ -3,6 +3,7 @@ const express = require("express");
 // 创建express服务器
 const app = express();
 const bodyParser = require("body-parser");
+////导入用于将客户端发送过来的JWT字符串解析还原成JSON对象的包
 const expressJWT = require("express-jwt");
 const config = require("./config");
 // 导入并配置cors中间件，配置跨域
@@ -123,8 +124,7 @@ app.use("/preinstall/detail", serviceRouter.getPreinstall);
 // 配置服务器
 const port = 3006;
 // const host = '127.0.0.1'
-// const host = "10.172.42.116";
-const host = '192.168.4.117'
+const host = "127.0.0.1";
 app.listen(3006, () => {
   console.log(`api serve running at http://${host}:${port}`);
 });
