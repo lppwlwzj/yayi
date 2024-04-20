@@ -2,7 +2,7 @@
   <view>
     <view class="rfsw">
       <view
-        style="margin-right: 8rpx"
+        style="margin-right: 8rpx; margin-top: 10rpx;"
         v-for="(item, index) in list"
         :key="index"
       >
