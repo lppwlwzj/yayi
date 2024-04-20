@@ -2,7 +2,7 @@
   <view>
     <view class="rfsw">
       <view
-        style="margin-right: 8rpx; margin-top: 10rpx;"
+        style="margin-right: 12rpx; margin-top: 10rpx;"
         v-for="(item, index) in list"
         :key="index"
       >
@@ -40,7 +40,7 @@
           <image
             :src="require('../../../static//images/preview.png')"
             mode="aspectFill"
-            style="width: 16px; height: 16px; margin-bottom: 4px; z-index: 9999"
+            style="width: 16px; height: 16px; margin-top: 8px; z-index: 9999"
           ></image>
           <text style="color: #fff; font-size: 12px">点击上传</text>
         </view>

@@ -1,18 +1,18 @@
 <template>
   <view>
-    <view class="rfb header">
+    <view class="rfb header" :style="{ paddingTop: statusBarHeight }">
       <!-- <navigator :url="`/sub_pages/add/add?id=${customer_id}`"> </navigator> -->
       <u-icon
         style="margin: 0 20rpx"
         size="30"
-        name="../../static/images/ECO-UI-03.png"
+        :name="require('../../static/images/ECO-UI-03.png')"
         @click="back"
       ></u-icon>
 
       <u-icon
         style="margin: 0 20rpx"
         size="40"
-        name="../../static/images/ECO-UI-02.png"
+        :name="require('../../static/images/ECO-UI-02.png')"
       ></u-icon>
     </view>
 
@@ -86,6 +86,7 @@
 export default {
   data() {
     return {
+      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       password: "",
       visible: false,
       confirmPassword: "111520",

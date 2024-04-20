@@ -36,15 +36,7 @@
       </view>
     </view>
 
-    <!-- <video
-      object-fit="cover"
-      id="myVideo"
-      src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4"
-      @error="videoErrorCallback"
-      enable-danmu
-      danmu-btn
-      controls
-    ></video> -->
+
     <view class="list-area">
       <block v-if="list.length">
         <view class="list-item rfc" v-for="(item, index) in list" :key="index">
@@ -60,7 +52,7 @@
               <u-icon
                 size="18"
                 v-if="item.tryVisible"
-                name="../../static/images/i2.png"
+                :name="require('../../static/images/i2.png')"
               ></u-icon>
             </navigator>
             <navigator
@@ -71,7 +63,7 @@
                 size="18"
                 style="margin-left: 12rpx"
                 v-if="item.recoverVisible"
-                name="../../static/images/i1.png"
+                :name="require('../../static/images/i1.png')"
               ></u-icon>
             </navigator>
           </view>
@@ -342,6 +334,10 @@ export default {
         border-bottom-right-radius: 50rpx;
         text-align: center;
         background: $uni-color-theme;
+
+        overflow: hidden; //超出的文本隐藏
+        text-overflow: ellipsis; //溢出用省略号显示
+        white-space: nowrap; //溢出不换行
       }
     }
   }

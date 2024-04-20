@@ -28,7 +28,7 @@
           border="none"
           :customStyle="{
             padding: '18rpx',
-            color:'#dd524d63'
+            color: '#dd524d63'
           }"
           :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
@@ -266,7 +266,7 @@
               :src="
                 !form.intentImg
                   ? '../../static/images/upload.png'
-                  :  getImg(form.intentImg)
+                  : getImg(form.intentImg)
               "
               mode="aspectFill"
               class="upload-img"
@@ -568,7 +568,7 @@
               class="icon-image"
               :src="getImg(item)"
               @click="selectIndex = index"
-               mode="aspectFill"
+              mode="aspectFill"
             />
             <image
               @tap.stop="preview(item)"
@@ -578,7 +578,10 @@
             ></image>
           </view>
         </view>
-        <u-button style="margin-top: 20rpx;" color="#dd524d63" @click="handleChooseConfirm(imgList[selectIndex])"
+        <u-button
+          style="margin-top: 20rpx"
+          color="#dd524d63"
+          @click="handleChooseConfirm(imgList[selectIndex])"
           >选择</u-button
         >
       </view>
@@ -849,7 +852,6 @@ export default {
 
   methods: {
     getImg(url) {
-      console.log("🚀 ~ getImg ~ url:", url)
       return url?.indexOf("mp4") > -1
         ? require("../../static/images/video.png")
         : url;
@@ -956,17 +958,18 @@ export default {
       }
     },
     async submit() {
+      console.log('isPrivacy',this.form.isPrivacy)
       this.dentistList.forEach((item) => {
         this.form[`${item.key}Open`] = !!item.open.length;
         this.form[`${item.key}Value`] = item.value;
       });
-      console.log(JSON.stringify(this.form));
       const requestFn = this.id
         ? this.$api.editCustomer
         : this.$api.addCustomer;
       const res = await requestFn({
         customer_id: this.customer_id,
-        ...this.form
+        ...this.form,
+        isPrivacy:this.form ? 1 : 0
       });
       if (!res.code) {
         uni.showToast({
@@ -974,7 +977,12 @@ export default {
           title: res.message
         });
         this.operateType = "edit";
-        this.id = res.re.id;
+
+        this.id = res.re.id ||  this.id;
+        uni.showToast({
+          icon: "none",
+          title: '操作成功！'
+        });
       }
     },
 
@@ -1072,14 +1080,14 @@ page {
   }
   .image-list {
     width: 100%;
-     margin: 20rpx 0rpx;
+    margin: 20rpx 0rpx;
   }
   .image {
     width: 120rpx;
     height: 120rpx;
     background: #898787a3;
     border-radius: 16rpx;
-   
+
     position: relative;
   }
   .preview {
@@ -1148,4 +1156,3 @@ page {
   background-color: #eb2b24e3 !important;
 }
 </style>
-

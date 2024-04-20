@@ -3,11 +3,11 @@
     <view class="rfb">
       <u-icon
         size="30"
-        name="../../static/images/ECO-UI-03.png"
+        :name="require('../../static/images/ECO-UI-03.png')"
         @click="back"
       ></u-icon>
 
-      <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
+      <u-icon size="40" :name="require('../../static/images/ECO-UI-02.png')"></u-icon>
     </view>
 
     <view class="fc" style="margin: 18rpx 0; font-size: 40rpx"> 售后服务 </view>

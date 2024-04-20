@@ -9,6 +9,7 @@ const db = require("../db/index");
 
 exports.addCustomer = (req, res) => {
   const {
+    isPrivacy,
     customer_id,
     customer,
     dateTime,
@@ -57,6 +58,7 @@ exports.addCustomer = (req, res) => {
   const createtime = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
   const _designList = JSON.stringify(designList);
   const sql = `insert into customer (
+    isPrivacy,
     createtime,
     customer_id,
 		customer,
@@ -102,7 +104,7 @@ exports.addCustomer = (req, res) => {
         qieduanLinearsValue,
         thicknessOpen,
         thicknessValue
-	) values ('${createtime}','${customer_id}','${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${qieduanLinearsOpen}','${qieduanLinearsValue}','${thicknessOpen}','${thicknessValue}')`;
+	) values ('${isPrivacy}','${createtime}','${customer_id}','${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${qieduanLinearsOpen}','${qieduanLinearsValue}','${thicknessOpen}','${thicknessValue}')`;
   // 更新参数表
   db.query(sql, (err, results) => {
     if (err) return res.cc(err);
@@ -110,8 +112,11 @@ exports.addCustomer = (req, res) => {
     setTimeout(() => {
       const _sql = `select id  from customer  where customer_id = '${customer_id}'`;
       db.query(_sql, (err, result) => {
-        console.log('req.app.get("token")',req.app.get("token"))
-        req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''),`添加${customer}客户`);
+        console.log('req.app.get("token")', req.app.get("token"));
+        req.app.logger(
+          req.headers.authorization.replace(/Bearer\s/g, ""),
+          `添加${customer}客户`
+        );
         res.send({
           code: 0,
           message: "新增信息成功！",
@@ -127,6 +132,7 @@ exports.addCustomer = (req, res) => {
 exports.editCustomer = (req, res) => {
   const {
     id,
+    isPrivacy,
     customer,
     dateTime,
     daiyaTime,
@@ -173,6 +179,7 @@ exports.editCustomer = (req, res) => {
   } = req.body;
   const _designList = JSON.stringify(designList);
   const sql = `update  customer set
+  isPrivacy='${isPrivacy}',
 			customer='${customer}',
 			dateTime='${dateTime}',
 			daiyaTime='${daiyaTime}',
@@ -220,12 +227,15 @@ exports.editCustomer = (req, res) => {
   db.query(sql, (err, results) => {
     if (err) return res.cc(err);
     // const
-    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `修改${customer}客户`);
+    req.app.logger(
+      req.headers.authorization.replace(/Bearer\s/g, ""),
+      `修改${customer}客户`
+    );
     res.send({
-      code: 200,
+      code: 0,
       message: "修改成功！",
-      data: {
-        ...results[0]
+      re: {
+        id: result[0].id
       }
     });
   });
@@ -260,7 +270,10 @@ exports.deleteCustomer = (req, res) => {
   // 更新参数表
   db.query(sql, (err, results) => {
     if (err) return res.cc(err);
-    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `删除客户`);
+    req.app.logger(
+      req.headers.authorization.replace(/Bearer\s/g, ""),
+      `删除客户`
+    );
 
     res.send({
       code: 0,
@@ -269,41 +282,69 @@ exports.deleteCustomer = (req, res) => {
     });
   });
 };
+const asyncForEach = async (array, callback) => {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+};
+
+/**
+ * 根据数组对象的某个字段去重
+ * item.name  是[{name:1}] 根据每条数据的name值来去重
+ * */
+const unique = (arr, val) => {
+  const res = new Map();
+  return arr.filter((item) => !res.has(item[val]) && res.set(item[val], 1));
+};
+
+const getServiceInfo = (customer_id) => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      `select  tryInfo,recoverInfo ,id as service_id  from  service  where customer_id = ${customer_id}`,
+      (err, results) => {
+        if (err) return reject(err);
+        if (!results.length) {
+          resolve(null);
+        } else {
+          resolve(results[0]);
+        }
+      }
+    );
+  });
+};
 
 exports.getCustomerList = (req, res) => {
-
-  console.log(req.headers.authorization.replace(/Bearer\s/g,''))
   const { search } = req.body;
   let sql = "";
   if (isNaN(search) && !isNaN(Date.parse(search))) {
-    sql = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id  where i.dateTime = '${search}'`;
+    // sql = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id  where i.dateTime = '${search}'`;
+    sql = ` select i.*  from customer i where i.dateTime = '${search}'`;
 
-    db.query(sql, req.body, (err, results) => {
+    db.query(sql, req.body, async (err, results) => {
       if (err) return res.cc(err);
-
-      if (!results.length) {
-        db.query(
-          `select * from customer  where dateTime = '${search}'`,
-          (_err, _results) => {
-            if (_err) return res.cc(_err);
-            res.send({
-              code: 0,
-              message: "查询成功！",
-              re: _results
-            });
-          }
-        );
-      } else {
-        res.send({
-          code: 0,
-          message: "查询成功！",
-          re: results
+      if (results.length) {
+        await asyncForEach(results, async (item, index) => {
+          var serviceInfo = await getServiceInfo(results[index].id);
+          results[index] = serviceInfo
+            ? {
+                ...results[index],
+                ...serviceInfo
+              }
+            : results[index];
         });
       }
+      res.send({
+        code: 0,
+        message: "查询成功！",
+        re: results
+      });
     });
   } else {
-    const sql1 = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.customer LIKE "%${search}%"`;
-    const sql2 = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.porcelain LIKE "%${search}%"`;
+    // const sql1 = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.customer LIKE "%${search}%"`;
+    // const sql2 = ` select i.* , s.tryInfo,s.recoverInfo ,s.id as service_id  from customer i JOIN service s ON i.id = s.customer_id where i.porcelain LIKE "%${search}%"`;
+
+    const sql1 = ` select i.*   from customer i  where i.customer LIKE "%${search}%"`;
+    const sql2 = ` select i.*   from customer i where i.porcelain LIKE "%${search}%"`;
     const p1 = new Promise((resolve, reject) => {
       db.query(sql1, (err, results) => {
         if (err) return reject(err);
@@ -317,27 +358,44 @@ exports.getCustomerList = (req, res) => {
       });
     });
     Promise.all([p1, p2])
-      .then((results) => {
-        const list = results[0].concat(results[1]);
+      .then(async (results) => {
+        const _list = results[0].concat(results[1]);
+        const list = unique(_list, "id");
         if (list.length) {
-          db.query(
-            `select * from customer  where dateTime = '${search}'`,
-            (_err, _results) => {
-              if (_err) return res.cc(_err);
-              res.send({
-                code: 0,
-                message: "查询成功！",
-                re: _results
-              });
-            }
-          );
-        } else {
-          res.send({
-            code: 200,
-            message: "查询成功！",
-            re: list
+          await asyncForEach(list, async (item, index) => {
+            var serviceInfo = await getServiceInfo(list[index].id);
+            list[index] = serviceInfo
+              ? {
+                  ...list[index],
+                  ...serviceInfo
+                }
+              : list[index];
           });
         }
+        res.send({
+          code: 0,
+          message: "查询成功！",
+          re: list
+        });
+        // if (!list.length) {
+        //   db.query(
+        //     `select * from customer  where dateTime = '${search}'`,
+        //     (_err, _results) => {
+        //       if (_err) return res.cc(_err);
+        //       res.send({
+        //         code: 0,
+        //         message: "查询成功！",
+        //         re: _results
+        //       });
+        //     }
+        //   );
+        // } else {
+        //   res.send({
+        //     code: 0,
+        //     message: "查询成功！",
+        //     re: list
+        //   });
+        // }
       })
       .catch((err) => res.cc(err));
   }
