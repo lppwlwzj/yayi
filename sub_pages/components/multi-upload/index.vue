@@ -14,20 +14,13 @@
           ></image>
           <image
             @tap.stop="preview(item)"
-            :src="require('../../static//images/preview.png')"
+            :src="require('../../../static//images/preview.png')"
             class="preview"
             mode="aspectFill"
           ></image>
-          <!-- <u-icon
-            @click="handleDeleteImg(index)"
-            class="image-close"
-            size="16"
-            color="#fff"
-            name="close-circle"
-          ></u-icon> -->
           <image
             @click="handleDeleteImg(index)"
-            :src="require('../../static//images/close.png')"
+            :src="require('../../../static//images/close.png')"
             mode="aspectFill"
             class="image-close"
           ></image>
@@ -45,7 +38,7 @@
       >
         <view :class="[`image, ${customClass} , fc`]">
           <image
-            :src="require('../../static//images/preview.png')"
+            :src="require('../../../static//images/preview.png')"
             mode="aspectFill"
             style="width: 16px; height: 16px; margin-bottom: 4px; z-index: 9999"
           ></image>
@@ -103,7 +96,7 @@ export default {
   methods: {
     getImg(url) {
       return url?.indexOf("mp4") > -1
-        ? require("../../static/images/video.png")
+        ? require("../../../static/images/video.png")
         : url;
     },
     preview(url) {
@@ -143,7 +136,6 @@ export default {
   height: 130rpx;
   background: #898787a3;
   border-radius: 16rpx;
-  margin: 20rpx 8rpx;
   position: relative;
 }
 

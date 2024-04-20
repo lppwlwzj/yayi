@@ -190,6 +190,7 @@ export default {
   onLoad() {
     this.getInfo();
   },
+  options: { styleIsolation: "shared" }, //这样deep的样式在微信小程序上才可以显示
   methods: {
     async getInfo() {
       const res = await this.$api.getPreinstall();
@@ -351,9 +352,10 @@ export default {
   }
 }
 </style>
+
 <style lang="scss">
-/deep/.uni-calendar-item--isDay,
-/deep/.uni-calendar-item--checked {
-  background: #eb2b24e3;
+/deep/ .uni-calendar-item--isDay,
+/deep/ .uni-calendar-item--checked {
+  background-color: #eb2b24e3 !important;
 }
 </style>

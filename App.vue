@@ -26,7 +26,7 @@ export default {
       uni.redirectTo({
         url: "/pages/index/index"
       });
-    }else {
+    } else {
       uni.redirectTo({
         url: "/pages/login/login"
       });
@@ -61,7 +61,7 @@ export default {
         // })
       } else {
         // if (res.userinfo) {
-        // 	console.log(res.userinfo); 
+        // 	console.log(res.userinfo);
         // 	uni.switchTab({
         // 		url: '/pages/index/index'
         // 	});
@@ -75,7 +75,7 @@ export default {
 <style lang="scss">
 /* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
 @import "uview-ui/index.scss";
-	/*每个页面公共css */
-	@import '@/uni_modules/uni-scss/index.scss';
+/*每个页面公共css */
+@import "@/uni_modules/uni-scss/index.scss";
 
 </style>

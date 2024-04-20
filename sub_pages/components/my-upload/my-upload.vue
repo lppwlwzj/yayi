@@ -21,16 +21,10 @@
           <image :src="previewUrl" mode="aspectFill" class="upload-img"></image>
           <image
             @tap.stop="preview(img_url)"
-            :src="require('../../static//images/preview.png')"
+            :src="require('../../../static//images/preview.png')"
             class="preview"
             mode="aspectFill"
           ></image>
-          <!-- <image
-            @click="handleDelTryImg"
-            :src="require('../../static//images/close.png')"
-            mode="aspectFill"
-            class="image-close"
-          ></image> -->
         </view>
       </view>
     </u-upload>
@@ -126,7 +120,7 @@ export default {
   computed: {
     previewUrl() {
       return this.img_url.indexOf("mp4") > -1
-        ? require("../../static/images/video.png")
+        ? require("../../../static/images/video.png")
         : this.img_url;
     }
   },
@@ -301,7 +295,7 @@ export default {
   height: 120rpx;
   background: #898787a3;
   border-radius: 16rpx;
-  margin: 20rpx 0rpx;
+  // margin: 20rpx 0rpx;
   position: relative;
 }
 // .custom-upload-img {

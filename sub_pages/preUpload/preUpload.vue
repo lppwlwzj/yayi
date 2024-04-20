@@ -161,7 +161,7 @@ h<template>
 </template>
 
 <script>
-import MultiUpload from "../../components/multi-upload";
+import MultiUpload from "../components/multi-upload";
 export default {
   components: {
     MultiUpload

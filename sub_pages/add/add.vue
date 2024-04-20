@@ -23,12 +23,12 @@
           placeholder="客户姓名"
           disabledColor="#fff"
           :disabled="disabled"
-          placeholder-style="color:#dd524d63"
-          placeholder-class="placeholder-color"
+          placeholderStyle="color:#dd524d63"
           v-model="form.customer"
           border="none"
           :customStyle="{
-            padding: '18rpx'
+            padding: '18rpx',
+            color:'#dd524d63'
           }"
           :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
@@ -266,7 +266,7 @@
               :src="
                 !form.intentImg
                   ? '../../static/images/upload.png'
-                  : form.intentImg
+                  :  getImg(form.intentImg)
               "
               mode="aspectFill"
               class="upload-img"
@@ -561,6 +561,7 @@
           <view
             v-for="(item, index) in imgList"
             :key="index"
+            v-show="item"
             :class="[{ active: selectIndex === index }, 'img-item']"
           >
             <image
@@ -624,9 +625,9 @@ function getDate(date, AddDayCount = 0) {
     day: dd.getDay()
   };
 }
-import TiXing from "../../components/tixing";
-import Upload from "../../components/my-upload/my-upload.vue";
-import MultiUpload from "../../components/multi-upload";
+import TiXing from "../components/tixing";
+import Upload from "../components/my-upload/my-upload.vue";
+import MultiUpload from "../components/multi-upload";
 
 export default {
   data() {
@@ -833,6 +834,7 @@ export default {
       this.customer_id = Math.random().toString(36).substring(2, 6);
     this.userInfo = uni.getStorageSync("userInfo");
   },
+  options: { styleIsolation: "shared" },
   computed: {
     disabled() {
       return this.operateType === "view";
@@ -847,6 +849,7 @@ export default {
 
   methods: {
     getImg(url) {
+      console.log("🚀 ~ getImg ~ url:", url)
       return url?.indexOf("mp4") > -1
         ? require("../../static/images/video.png")
         : url;
@@ -1069,13 +1072,14 @@ page {
   }
   .image-list {
     width: 100%;
+     margin: 20rpx 0rpx;
   }
   .image {
     width: 120rpx;
     height: 120rpx;
     background: #898787a3;
     border-radius: 16rpx;
-    margin: 20rpx 0rpx;
+   
     position: relative;
   }
   .preview {
@@ -1092,7 +1096,7 @@ page {
     // height: 100%;
     background: #898787a3;
     border-radius: 16rpx;
-    margin: 20rpx 0rpx;
+    // margin: 20rpx 0rpx;
   }
   .u-page__slide-item {
     flex: 1;
@@ -1139,8 +1143,9 @@ page {
 .img-item {
   position: relative;
 }
-/deep/.uni-calendar-item--isDay,
-/deep/.uni-calendar-item--checked {
-  background: #eb2b24e3;
+/deep/ .uni-calendar-item--isDay,
+/deep/ .uni-calendar-item--checked {
+  background-color: #eb2b24e3 !important;
 }
 </style>
+

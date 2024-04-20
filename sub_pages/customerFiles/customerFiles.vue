@@ -87,8 +87,8 @@
 </template>
 
 <script>
-import Upload from "../../components/my-upload/my-upload.vue";
-import MultiUpload from "../../components/multi-upload";
+import Upload from "../components/my-upload/my-upload.vue";
+import MultiUpload from "../components/multi-upload";
 
 export default {
   data() {
