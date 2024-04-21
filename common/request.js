@@ -55,7 +55,6 @@ module.exports = (vm) => {
         } else if (response.statusCode === 500) {
           //可以根据状态码自定义操作
         }else if (response.statusCode === 401) {
-          console.log('iiiii')
           uni.redirectTo({
             url: "/pages/login/login"
           });

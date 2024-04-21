@@ -153,7 +153,7 @@ export default {
   position: relative;
   background: #898787a3;
   border-radius: 16rpx;
-  margin: 20rpx 0rpx;
+  // margin: 20rpx 0rpx;
   position: relative;
 }
 .preview {

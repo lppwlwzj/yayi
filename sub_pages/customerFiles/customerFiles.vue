@@ -3,11 +3,11 @@
     <view class="rfb">
       <u-icon
         size="30"
-        name="../../static/images/ECO-UI-03.png"
+        :name="require('../../static/images/ECO-UI-03.png')"
         @click="back"
       ></u-icon>
 
-      <u-icon size="40" name="../../static/images/ECO-UI-02.png"></u-icon>
+      <u-icon size="40" :name="require('../../static/images/ECO-UI-02.png')"></u-icon>
     </view>
 
     <view class="fc" style="margin: 18rpx 0; font-size: 40rpx">
@@ -23,12 +23,13 @@
           v-model="form.customer"
           border="none"
           :customStyle="{
-            padding: '18rpx 12rpx'
+            padding: '18rpx',
+            'border-radius': '52rpx'
           }"
         ></u--input>
       </view>
       <view class="input">
-        <u-button
+        <view
           @click="show = true"
           class="rfa date-btn"
           :disabled="true"
@@ -39,7 +40,7 @@
           <view>
             {{ `${form.dateTime || "日期"}` }}
           </view>
-        </u-button>
+        </view>
       </view>
     </view>
     <view class="diagnose">
@@ -48,9 +49,9 @@
           :list="imgList"
           activeKey="service"
           @delete="deleteImg"
+          @add="handleImg"
           customClass="custom-upload-img"
         />
-     
       </view>
     </view>
 
@@ -62,16 +63,16 @@
           :value="form[item.key]"
           border="none"
           :customStyle="{
-            padding: '18rpx 12rpx'
+            padding: '18rpx',
+            'border-radius': '52rpx'
           }"
         ></u--input>
       </view>
     </view>
 
-    
     <view class="btn afc" @click="submit"> 确认 </view>
     <view class="footer rfa">
-      <u-icon size="26" name="../../static/images/ECO-UI-22.png"></u-icon>
+      <u-icon size="26" :name="require('../../static/images/ECO-UI-22.png')"></u-icon>
 
       <navigator
         :url="
@@ -80,7 +81,7 @@
             : `/sub_pages/afterSalesLogin/afterSalesLogin?service_id=${service_id}&customer_id=${customer_id}&operateType=${operateType}`
         "
       >
-        <u-icon size="26" name="../../static/images/ECO-UI-04.png"></u-icon>
+        <u-icon size="26" :name="require('../../static/images/ECO-UI-04.png')"></u-icon>
       </navigator>
     </view>
   </view>
@@ -146,6 +147,9 @@ export default {
   },
 
   methods: {
+    handleImg(url) {
+      this.imgList.push(url)
+    },
     back() {
       uni.navigateBack({
         delta: 1
@@ -179,7 +183,6 @@ export default {
         this.imgList = JSON.parse(imgList);
       }
     },
-
 
     deleteImg(index) {
       this.$set(this.imgList, index, "");
@@ -247,7 +250,13 @@ page {
       box-shadow: 2px 2px 5px #33333340;
     }
   }
-
+  .date-btn {
+    padding: 20rpx 18rpx;
+    color: #30313363;
+    justify-content: space-between;
+    border-radius: 40rpx;
+    font-size: 30rpx;
+  }
 
   .btn {
     margin-top: 50rpx;

@@ -72,7 +72,7 @@ app.use(express.json());
 
 app.use(
   expressJWT({ secret: config.jwtSecretKey }).unless({
-    path: [/^\/user/, /^\/img/]
+    path: [/^\/api\/user/, /^\/img/]
   })
 );
 
@@ -90,15 +90,14 @@ app.use(function (err, req, res, next) {
 
 app.logger = logger.log;
 
-//TODO：路由整合
 
 // 导入并使用首页路由模块
 const userRouter = require("./router/user");
-app.use("/user", userRouter);
+app.use("/api/user", userRouter);
 
 const uploadController = require("./router/upload");
 app.use("/api/upload", uploadController.upload);
-app.use("/upload/delete", uploadController.deleteImg);
+app.use("/api/upload/delete", uploadController.deleteImg);
 
 // 导入并使用首页路由模块
 // const homeRouter = require('./router/home')
@@ -113,13 +112,13 @@ app.use("/upload/delete", uploadController.deleteImg);
 // app.use('/news',newsRouter)
 
 const customerRouter = require("./router/customer");
-app.use("/customer", customerRouter);
+app.use("/api/customer", customerRouter);
 
 const serviceRouter = require("./router_handler/service");
-app.use("/service/edit", serviceRouter.submit);
-app.use("/service/detail", serviceRouter.detail);
-app.use("/preinstall/edit", serviceRouter.editPreinstall);
-app.use("/preinstall/detail", serviceRouter.getPreinstall);
+app.use("/api/service/edit", serviceRouter.submit);
+app.use("/api/service/detail", serviceRouter.detail);
+app.use("/api/preinstall/edit", serviceRouter.editPreinstall);
+app.use("/api/preinstall/detail", serviceRouter.getPreinstall);
 
 // 配置服务器
 const port = 3006;

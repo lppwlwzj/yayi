@@ -41,13 +41,16 @@
                 ></u-icon>
               </template>
             </u--input> -->
-                    <view class="u-demo-block__content">
+
+
+
+        <view class="u-demo-block__content">
         <!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
         <!-- #ifndef APP-NVUE -->
         <u-input placeholder=" "   
            :password="!visible"
             disabledColor="#fff"
-            v-model="form.password"
+            v-model="password"
             border="none"
             inputAlign="left">
       <!-- #endif -->
@@ -56,7 +59,7 @@
             placeholder=" "   
            :password="!visible"
             disabledColor="#fff"
-            v-model="form.password"
+            v-model="password"
             border="none"
             inputAlign="left">
           <!-- #endif -->

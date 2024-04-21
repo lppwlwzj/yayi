@@ -1,4 +1,5 @@
-h<template>
+h
+<template>
   <view class="content">
     <view
       class="rfb"
@@ -9,10 +10,16 @@ h<template>
         hover-class="navigator-hover"
         open-type="navigate"
       >
-        <u-icon size="30" :name="require('../../static/images/ECO-UI-03.png')"></u-icon>
+        <u-icon
+          size="30"
+          :name="require('../../static/images/ECO-UI-03.png')"
+        ></u-icon>
       </navigator>
 
-      <u-icon size="30" :name="require('../../static/images/ECO-UI-02.png')"></u-icon>
+      <u-icon
+        size="30"
+        :name="require('../../static/images/ECO-UI-02.png')"
+      ></u-icon>
     </view>
 
     <view class="user-select">
@@ -28,7 +35,7 @@ h<template>
           :list="form.intentList"
           activeKey="intentList"
           @delete="(index) => deleteImg(index, 'intentList')"
-          @add="(value) => handleAddImg(value,'intentList')"
+          @add="(value) => handleAddImg(value, 'intentList')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -39,7 +46,7 @@ h<template>
           :list="form.bianyuan"
           activeKey="bianyuan"
           @delete="(index) => deleteImg(index, 'bianyuan')"
-          @add="(value) => handleAddImg(value,'bianyuan')"
+          @add="(value) => handleAddImg(value, 'bianyuan')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -50,8 +57,7 @@ h<template>
           :list="form.round"
           activeKey="round"
           @delete="(index) => deleteImg(index, 'round')"
-          @add="(value) => handleAddImg(value,'round')"
-
+          @add="(value) => handleAddImg(value, 'round')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -61,8 +67,7 @@ h<template>
           :list="form.luocha"
           activeKey="luocha"
           @delete="(index) => deleteImg(index, 'luocha')"
-          @add="(value) => handleAddImg(value,'luocha')"
-
+          @add="(value) => handleAddImg(value, 'luocha')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -73,8 +78,7 @@ h<template>
           :list="form.angle"
           activeKey="angle"
           @delete="(index) => deleteImg(index, 'angle')"
-          @add="(value) => handleAddImg(value,'angle')"
-
+          @add="(value) => handleAddImg(value, 'angle')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -84,8 +88,7 @@ h<template>
           :list="form.jiandun"
           activeKey="jiandun"
           @delete="(index) => deleteImg(index, 'jiandun')"
-          @add="(value) => handleAddImg(value,'jiandun')"
-
+          @add="(value) => handleAddImg(value, 'jiandun')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -95,8 +98,7 @@ h<template>
           :list="form.qieduan"
           activeKey="qieduan"
           @delete="(index) => deleteImg(index, 'qieduan')"
-          @add="(value) => handleAddImg(value,'qieduan')"
-
+          @add="(value) => handleAddImg(value, 'qieduan')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -106,8 +108,7 @@ h<template>
           :list="form.texture"
           activeKey="texture"
           @delete="(index) => deleteImg(index, 'texture')"
-          @add="(value) => handleAddImg(value,'texture')"
-
+          @add="(value) => handleAddImg(value, 'texture')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -117,8 +118,7 @@ h<template>
           :list="form.dot"
           activeKey="dot"
           @delete="(index) => deleteImg(index, 'dot')"
-          @add="(value) => handleAddImg(value,'dot')"
-
+          @add="(value) => handleAddImg(value, 'dot')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -128,8 +128,7 @@ h<template>
           :list="form.touliang"
           activeKey="touliang"
           @delete="(index) => deleteImg(index, 'touliang')"
-          @add="(value) => handleAddImg(value,'touliang')"
-
+          @add="(value) => handleAddImg(value, 'touliang')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -140,8 +139,7 @@ h<template>
           :list="form.qieduanLinears"
           activeKey="qieduanLinears"
           @delete="(index) => deleteImg(index, 'qieduanLinears')"
-          @add="(value) => handleAddImg(value,'qieduanLinears')"
-
+          @add="(value) => handleAddImg(value, 'qieduanLinears')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -151,7 +149,7 @@ h<template>
           :list="form.thickness"
           activeKey="thickness"
           @delete="(index) => deleteImg(index, 'thickness')"
-          @add="(value) => handleAddImg(value,'thickness')"
+          @add="(value) => handleAddImg(value, 'thickness')"
         />
       </uni-collapse-item>
     </uni-collapse>
@@ -205,7 +203,7 @@ export default {
       const newList = imgList.map((item, idx) => (idx === index ? "" : item));
       this.$set(this.form, activeKey, newList);
     },
-    handleAddImg(img_url,activeKey) {
+    handleAddImg(img_url, activeKey) {
       this.form[activeKey].push(img_url);
       const imgList = this.form[activeKey];
       this.$set(this.form, activeKey, imgList);
@@ -246,6 +244,11 @@ export default {
         title: res.message,
         icon: "none"
       });
+      setTimeout(() => {
+        uni.navigateTo({
+          url: "/pages/index/index"
+        });
+      }, 100);
     }
   }
 };

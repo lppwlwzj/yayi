@@ -1011,6 +1011,7 @@ page {
 .footer {
   width: 100%;
   background: #fff;
+  z-index: 999999;
 }
 .content {
   width: 100%;

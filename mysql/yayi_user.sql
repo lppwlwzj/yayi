@@ -31,8 +31,9 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`id`,`username`,`usercount`,`password`) values (1,'郭总','13666633692','123456');
+insert  into `user`(`id`,`username`,`usercount`,`password`) values (1,'郭鑫','13666633692','guoxin1989');
 insert  into `user`(`id`,`username`,`usercount`,`password`) values (2,'admin','admin','123456');
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

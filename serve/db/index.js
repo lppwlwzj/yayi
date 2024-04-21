@@ -18,9 +18,11 @@ const mysql = require('mysql')
 // 创建数据库连接对象
 const db = mysql.createPool({
 	host:'localhost',
-	user:'root',
+	// user:'root',
 	// password:'password',
-	password:'9699lppwl',
+	// password:'9699lppwl',
+	user:'yayi_root',
+	password:'123456',
 	port:'3306',
 	database:'yayi'
 })
