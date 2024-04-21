@@ -55,7 +55,7 @@
         <u-input placeholder=" "   
            :password="!visible"
             disabledColor="#fff"
-            v-model="form.password"
+            v-model="password"
             border="none"
             inputAlign="left">
       <!-- #endif -->
@@ -64,7 +64,7 @@
        placeholder=" "   
          :password="!visible"
           disabledColor="#fff"
-            v-model="form.password"
+            v-model="password"
             border="none"
             inputAlign="left">
           <!-- #endif -->

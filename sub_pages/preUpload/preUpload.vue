@@ -1,4 +1,4 @@
-h
+
 <template>
   <view class="content">
     <view
@@ -300,5 +300,10 @@ export default {
 /deep/.uni-select__input-text {
   font-size: 28rpx;
   color: #dd524dab !important;
+}
+</style>
+<style lang="scss">
+/deep/.uni-collapse-item__wrap {
+  height: auto !important;
 }
 </style>

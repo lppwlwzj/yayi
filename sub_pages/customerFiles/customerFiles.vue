@@ -1,5 +1,5 @@
 <template>
-  <view class="content">
+  <view class="content" :style="{ paddingTop: statusBarHeight }">
     <view class="rfb">
       <u-icon
         size="30"
@@ -94,6 +94,7 @@ import MultiUpload from "../components/multi-upload";
 export default {
   data() {
     return {
+      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       operateType: "",
       service_id: "",
       customer_id: "",

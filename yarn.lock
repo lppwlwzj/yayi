@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-moment@^2.30.1:
-  version "2.30.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.30.1.tgz#f8c91c07b7a786e30c59926df530b4eac96974ae"
-  integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
+"moment@^2.30.1":
+  "integrity" "sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz"
+  "version" "2.30.1"
 
-uview-ui@^2.0.34:
-  version "2.0.37"
-  resolved "https://registry.npmjs.org/uview-ui/-/uview-ui-2.0.37.tgz#b47263ebe41e7edbecd9574eba806a7f45d2bf22"
-  integrity sha512-iBcWNmQa01Wr+z004G6XIVPDctOrJIAx7LObQceUAPxZh6kJYjIOAMp5JE1K4VpoMV5bKYDpCd0gmX+M4nTEQQ==
+"uview-ui@^2.0.34":
+  "integrity" "sha512-ASSZT6M8w3GTO1eFPbsgEFV0U5UujK+8pTNr+MSUbRNcRMC1u63DDTLJVeArV91kWM0bfAexK3SK9pnTqF9TtA=="
+  "resolved" "https://registry.npmmirror.com/uview-ui/-/uview-ui-2.0.36.tgz"
+  "version" "2.0.36"

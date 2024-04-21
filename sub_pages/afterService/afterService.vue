@@ -1,5 +1,5 @@
 <template>
-  <view class="content">
+  <view class="content" :style="{ paddingTop: statusBarHeight }">
     <view class="rfb">
       <u-icon
         size="30"
@@ -24,7 +24,7 @@
         >
           <view v-for="(item, idx) in tryInfo" :key="idx" class="img-list">
             <view class="rfc" style="align-items: flex-start">
-              <view class="rfsw" style="width: 55%">
+              <view class="rfsw" style="width: 50%">
                 <MultiUpload
                   :list="item.tryImg"
                   activeKey="tryImg"
@@ -64,7 +64,7 @@
         >
           <view v-for="(item, idx) in recoverInfo" :key="idx" class="img-list">
             <view class="rfc" style="align-items: flex-start">
-              <view class="rfsw" style="width: 55%">
+              <view class="rfsw" style="width: 50%">
                 <MultiUpload
                   :list="item.recoverImg"
                   activeKey="recoverImg"
@@ -107,6 +107,7 @@ import MultiUpload from "../components/multi-upload";
 export default {
   data() {
     return {
+      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       operateType: "",
       service_id: "",
       customer_id: "",
@@ -323,7 +324,7 @@ page {
 /deep/.u-collapse-item__content {
   height: auto !important;
 }
-/deep/uni-view.u-cell__body {
+/deep/.u-cell__body {
     border-radius: 30rpx;
     background-color: #fff;
 }

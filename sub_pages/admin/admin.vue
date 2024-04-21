@@ -1,23 +1,22 @@
 <template>
-  <view class="content">
-    <view class="top fc">
+  <view class="content" >
+    <view class="top fc" :style="{ paddingTop: statusBarHeight }">
       <navigator :url="`/pages/index/index`">
         <image
-          src="../../static/images/ECO-UI-03.png"
+          :src="require('../../static/images/ECO-UI-03.png')"
           mode="widthFix"
           class="back"
         ></image>
       </navigator>
       <image
-        @click="logout"
-        src="../../static/images/ECO-UI-02.png"
+        :src="require('../../static/images/ECO-UI-02.png')"
         mode="widthFix"
         class="logo"
       ></image>
     </view>
     <view class="list-area">
       <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
-        <uni-collapse :show-arrow="true">
+        <uni-collapse :show-arrow="true" style="width: 100%;">
           <uni-collapse-item title="用户人数">
             <view class="rfsw">
               <view class="user" v-for="(item, idx) in userList" :key="idx">
@@ -28,14 +27,14 @@
         </uni-collapse>
       </view>
       <view class="fc" style="margin: 18rpx 0; padding: 16rpx">
-        <uni-collapse :show-arrow="true">
+        <uni-collapse :show-arrow="true" style="width: 100%;">
           <uni-collapse-item title="访问操作记录">
             <view class="log rfc" v-for="(item, idx) in logList" :key="idx">
-              <text style="color: #000">{{ item.logtime }}</text>
-              <text style="color: #000; padding: 0 12rpx 0 20rpx">{{
+              <text style="color: #000;width: 200rpx;">{{ item.logtime }}</text>
+              <text style="color: #000; flex: 1;padding: 0 10rpx;">{{
                 item.logname
               }}</text>
-              <text style="color: #ccc">{{ item.logcontent }}</text>
+              <text style="color: #ccc;width: 280rpx;">{{ item.logcontent }}</text>
             </view>
           </uni-collapse-item>
         </uni-collapse>
@@ -43,6 +42,7 @@
 
       <view class="footer rfa">
         <uni-data-select
+        style="width: 200rpx; border: none !important;"
           placement="top"
           class="user-select"
           placeholder="用户"
@@ -54,7 +54,7 @@
         <u-icon
           @click="logout"
           size="26"
-          name="../../static/images/ECO-UI-09.png"
+          :name="require('../../static/images/ECO-UI-09.png')"
         ></u-icon>
       </view>
     </view>
@@ -66,17 +66,19 @@ import moment from "moment";
 export default {
   data() {
     return {
+      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 20) + "px",
       userList: [],
       logList: []
     };
   },
+
   onLoad() {
     this.getUserList();
     this.getLogList();
   },
+  options: { styleIsolation: "shared" },
   methods: {
     handleChange(e) {
-      console.log("e:", e);
       this.getLogList(e);
     },
     async getUserList() {
@@ -151,6 +153,7 @@ export default {
 .log {
   margin: 20rpx 0;
   font-size: 28rpx;
+  padding: 0 20rpx;
 }
 /deep/uni-view.u-cell__body {
   border-radius: 30rpx;
@@ -166,7 +169,9 @@ export default {
   margin: 20rpx 10rpx;
   font-size: 26rpx;
 }
+</style>
 
+<style lang="scss">
 /deep/.uni-collapse-item__title-text {
   color: #dd524dab !important;
   font-size: 34rpx;
@@ -180,22 +185,28 @@ export default {
 /deep/.uni-collapse {
   margin: 24rpx 0rpx;
 }
-/deep/.uni-select {
-  border: none;
-}
-/deep/.uni-select__input-placeholder {
+
+/deep/ .uni-select__input-placeholder {
   font-size: 28rpx;
   color: #dd524dab !important;
 }
-/deep/.uni-select__input-text {
+/deep/ .uni-select__input-text {
   font-size: 32rpx;
   color: #dd524dab !important;
 }
-/deep/.uniui-top:before {
-  content: "";
+
+</style>
+<style lang="scss">
+/deep/ .uni-select {
+  border: none !important;
+  width: 200rpx !important;
+  font-size: 28rpx !important;
+}
+/deep/ .uniui-top:before {
+  content: "" !important;
 }
 
-/deep/.uniui-bottom:before {
-  content: "";
+/deep/ .uniui-bottom:before {
+  content: "" !important; 
 }
 </style>
