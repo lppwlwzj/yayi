@@ -7,7 +7,10 @@
         @click="back"
       ></u-icon>
 
-      <u-icon size="40" :name="require('../../static/images/ECO-UI-02.png')"></u-icon>
+      <u-icon
+        size="40"
+        :name="require('../../static/images/ECO-UI-02.png')"
+      ></u-icon>
     </view>
 
     <view class="fc" style="margin: 18rpx 0; font-size: 40rpx"> 售后服务 </view>
@@ -28,6 +31,11 @@
                   @delete="
                     (index) => {
                       handleDelTryImg(idx, index);
+                    }
+                  "
+                  @add="
+                    (img_url) => {
+                      handleAddTryImg(idx, img_url);
                     }
                   "
                 />
@@ -65,8 +73,12 @@
                       handleDelRecoverImg(idx, index);
                     }
                   "
+                  @add="
+                    (img_url) => {
+                      handleAddRecoverImg(idx, img_url);
+                    }
+                  "
                 />
-  
               </view>
               <view class="diagnose-text">
                 <u--textarea
@@ -85,7 +97,6 @@
       </u-collapse>
     </view>
     <view v-show="!disabled" class="btn afc" @tap.stop="submit"> 确认 </view>
-
   </view>
 </template>
 
@@ -107,6 +118,7 @@ export default {
       recoverInfo: []
     };
   },
+  options: { styleIsolation: "shared" },
   components: {
     Upload,
     MultiUpload
@@ -168,13 +180,21 @@ export default {
     handleDelTryImg(idx, index) {
       const item = this.tryInfo[idx];
       const tryImg = item.tryImg;
-      this.$set(tryImg, index, '')
+      this.$set(tryImg, index, "");
       this.$set(this.tryInfo, idx, {
         ...this.tryInfo[idx],
         tryImg
       });
     },
-
+    handleAddTryImg (idx, img_url) {
+      const item = this.tryInfo[idx];
+      const tryImg = item.tryImg;
+      tryImg.push(img_url);
+      this.$set(this.tryInfo, idx, {
+        ...this.tryInfo[idx],
+        tryImg
+      });
+    },
     handleAddTry() {
       this.tryInfo.push({
         tryImg: [],
@@ -185,7 +205,17 @@ export default {
     handleDelRecoverImg(idx, index) {
       const item = this.recoverInfo[idx];
       const recoverImg = item.recoverImg;
-      this.$set(recoverImg, index, '')
+      this.$set(recoverImg, index, "");
+      this.$set(this.recoverInfo, idx, {
+        ...this.recoverInfo[idx],
+        recoverImg
+      });
+    },
+    
+    handleAddRecoverImg(idx,img_url) {
+      const item = this.recoverInfo[idx];
+      const recoverImg = item.recoverImg;
+      recoverImg.push(img_url)
       this.$set(this.recoverInfo, idx, {
         ...this.recoverInfo[idx],
         recoverImg
@@ -196,8 +226,7 @@ export default {
         recoverImg: [],
         remark: ""
       });
-    },
-
+    }
   }
 };
 </script>
@@ -210,12 +239,7 @@ page {
 .u-input--square {
   border-radius: 40rpx;
 }
-/deep/.uni-input-wrapper {
-  padding: 0 16rpx !important;
-}
-/deep/.u-textarea--disabled {
-  background: #fff !important;
-}
+
 .footer {
   width: 100%;
   background: #fff;
@@ -252,7 +276,7 @@ page {
       box-shadow: 2px 2px 5px #33333340;
     }
   }
-  
+
   .btn {
     margin-top: 50rpx;
     width: 100%;
@@ -265,10 +289,7 @@ page {
     font-size: 16px;
   }
 
-  /deep/uni-view.u-cell__body {
-    border-radius: 30rpx;
-    background-color: #fff;
-  }
+
 }
 .img-list {
   margin: 16rpx 0;
@@ -282,10 +303,28 @@ page {
   min-height: 144rpx;
   border-radius: 40rpx;
 }
+
+</style>
+
+
+<style lang="scss">
+/deep/.u-collapse{
+  width: 100%;
+}
+/deep/.uni-input-wrapper {
+  padding: 0 16rpx !important;
+}
+/deep/.u-textarea--disabled {
+  background: #fff !important;
+}
 /deep/.u-line {
   border: none !important;
 }
 /deep/.u-collapse-item__content {
   height: auto !important;
+}
+/deep/uni-view.u-cell__body {
+    border-radius: 30rpx;
+    background-color: #fff;
 }
 </style>
