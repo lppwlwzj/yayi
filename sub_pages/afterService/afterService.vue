@@ -140,7 +140,6 @@ export default {
   },
   computed: {
     disabled() {
-      console.log("🚀 ~ disabled ~  this.operateType ===",  this.operateType === "view")
       return this.operateType === "view";
     }
   },
