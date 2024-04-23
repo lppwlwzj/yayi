@@ -26,6 +26,7 @@
             <view class="rfc" style="align-items: flex-start">
               <view class="rfsw" style="width: 50%">
                 <MultiUpload
+                  :disabled="disabled"
                   :list="item.tryImg"
                   activeKey="tryImg"
                   @delete="
@@ -66,6 +67,7 @@
             <view class="rfc" style="align-items: flex-start">
               <view class="rfsw" style="width: 50%">
                 <MultiUpload
+                  :disabled="disabled"
                   :list="item.recoverImg"
                   activeKey="recoverImg"
                   @delete="
@@ -138,6 +140,7 @@ export default {
   },
   computed: {
     disabled() {
+      console.log("🚀 ~ disabled ~  this.operateType ===",  this.operateType === "view")
       return this.operateType === "view";
     }
   },

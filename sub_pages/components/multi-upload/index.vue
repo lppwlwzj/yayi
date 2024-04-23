@@ -1,12 +1,12 @@
 <template>
   <view>
     <view class="rfsw">
-      <view
-       
-        v-for="(item, index) in list"
-        :key="index"
-      >
-        <view :class="[`image, ${customClass} , fc`]" v-if="item"  style="margin-right: 12rpx; margin-top: 8rpx;margin-bottom: 8rpx;">
+      <view v-for="(item, index) in list" :key="index">
+        <view
+          :class="[`image, ${customClass} , fc`]"
+          v-if="item"
+          style="margin-right: 12rpx; margin-top: 8rpx; margin-bottom: 8rpx"
+        >
           <image
             :src="getImg(item)"
             mode="aspectFill"
@@ -19,6 +19,7 @@
             mode="aspectFill"
           ></image>
           <image
+            v-if="!disabled"
             @click="handleDeleteImg(index)"
             :src="require('../../../static//images/close.png')"
             mode="aspectFill"
@@ -27,6 +28,7 @@
         </view>
       </view>
       <Upload
+        v-if="!disabled"
         :name="`${activeKey}${list.length + 1}`"
         customClass="image"
         :id="`${userInfo.usercount}`"
@@ -42,7 +44,7 @@
             mode="aspectFill"
             style="width: 16px; height: 16px; margin-top: 8px; z-index: 9999"
           ></image>
-          <text style="color: #fff; font-size: 12px; ">点击上传</text>
+          <text style="color: #fff; font-size: 12px">点击上传</text>
         </view>
       </Upload>
     </view>
@@ -67,6 +69,10 @@
 import Upload from "../my-upload/my-upload.vue";
 export default {
   props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     list: {
       type: Array,
       default: () => []
@@ -108,7 +114,7 @@ export default {
     },
 
     handleChangeImage(value) {
-      this.$emit('add',value)
+      this.$emit("add", value);
     },
     handleDeleteImg(index) {
       this.$emit("delete", index);
