@@ -1,6 +1,5 @@
 <template>
   <view class="register fc">
-    <!-- <video  src="http://192.168.4.117:3006/img/images/ec56282813735dbb58a72c7cb665c21b.frontPhoto.mp4"></video> -->
 
     <u--form
       labelWidth="auto"

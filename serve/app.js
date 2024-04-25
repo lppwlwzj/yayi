@@ -125,8 +125,8 @@ const port = 3006;
 // const host = '127.0.0.1'
 //const host = '127.0.0.1'
 //const host = '10.172.42.116'
-const host = "192.168.4.117";
-
+// const host = "192.168.4.117";
+const host ="150.158.39.155"
 app.listen(3006, () => {
   console.log(`api serve running at http://${host}:${port}`);
 });

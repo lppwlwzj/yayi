@@ -11,7 +11,9 @@ const handlePath = (dir) => {
 const fileName = "file"; // 上传的 fileName 名称
 // const updateBaseUrl = "http://127.0.0.1:3006"; // 上传到服务器地址
 // const updateBaseUrl = "http://10.172.42.116:3006"; // 上传到服务器地址
-const updateBaseUrl = "http://192.168.4.117:3006"; // 上传到服务器地址
+// const updateBaseUrl = "http://192.168.4.117:3006"; // 上传到服务器地址
+const updateBaseUrl = "http://150.158.39.155:3006"; // 上传到服务器地址
+
 
 const imgPath = "/img/images/"; // 上传到服务器的虚拟目录
 const hanldeImgDelAndRename = (id, filename, dirPath) => {
@@ -42,7 +44,7 @@ const hanldeImgDelAndRename = (id, filename, dirPath) => {
     }
   });
 };
-// 上传接口的 请求参数req  响应参数res
+// 上传接口的 请求参数req  响应参数resapi/upload
 function upload(req, res) {
   return new Promise((resolve, reject) => {
     multerConfig.single(fileName)(req, res, function (err) {

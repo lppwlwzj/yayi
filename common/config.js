@@ -1,6 +1,7 @@
 //const host = '127.0.0.1'
 //const host = '10.172.42.116'
-const host = "192.168.4.117";
+// const host = "192.168.4.117";
+const host ="150.158.39.155"
 
 const CONFIG = {
   // 开发环境配置
@@ -11,7 +12,7 @@ const CONFIG = {
   },
   // 生产环境配置
   production: {
-    BASE_URL: "http://127.0.0.1:3006",
+    BASE_URL: "http://150.158.39.155:3006",
     UPLOAD_URL: "https://receiving.shandongweipai.com/api/college/upload"
   }
 };
