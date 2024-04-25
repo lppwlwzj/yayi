@@ -1,7 +1,6 @@
 <template>
   <view>
     <view class="rfb header" :style="{ paddingTop: statusBarHeight }">
-      <!-- <navigator :url="`/sub_pages/add/add?id=${customer_id}`"> </navigator> -->
       <u-icon
         style="margin: 0 20rpx"
         size="30"
@@ -22,28 +21,6 @@
           <view class="title"> 售后登录 </view>
 
           <u-form-item label="密码" prop="password">
-            <!-- <u--input
-              :password="!visible"
-              placeholder=""
-              disabledColor="#fff"
-              v-model="password"
-              border="none"
-              inputAlign="left"
-              suffixIcon="eye"
-              suffixIconStyle=" color: #dd524dab !important;"
-            >
-              <template slot="suffix">
-                <u-icon
-                  @click="visible = !visible"
-                  size="18"
-                  color="#dd524dab"
-                  :name="visible ? 'eye' : 'eye-off'"
-                ></u-icon>
-              </template>
-            </u--input> -->
-
-
-
         <view class="u-demo-block__content">
         <!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
         <!-- #ifndef APP-NVUE -->

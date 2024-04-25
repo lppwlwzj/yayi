@@ -50,7 +50,6 @@
           :clear="false"
           @change="handleChange"
         ></uni-data-select>
-        <!-- <u-icon size="26" name="../../static/images/ECO-UI-07.png"></u-icon> -->
         <u-icon
           @click="logout"
           size="26"

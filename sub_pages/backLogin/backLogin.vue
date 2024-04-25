@@ -7,7 +7,6 @@
         :name="require('../../static/images/ECO-UI-03.png')"
         @click="back"
       ></u-icon>
-      <!-- <u-icon size="40" :name="require('../../static/images/ECO-UI-02.png')"></u-icon> -->
     </view>
     <view style="margin-top: 200rpx">
       <u--form
@@ -32,23 +31,7 @@
             ></u--input>
           </u-form-item>
           <u-form-item label="密码" prop="password">
-            <!-- <u--input
-              placeholder=""
-              disabledColor="#fff"
-              v-model="password"
-              border="none"
-              :password="!visible"
-              inputAlign="left"
-            >
-              <template slot="suffix">
-                <u-icon
-                  @click="visible = !visible"
-                  size="18"
-                  color="#dd524dab"
-                  :name="visible ? 'eye' : 'eye-off'"
-                ></u-icon>
-              </template>
-            </u--input> -->
+         
                     <view class="u-demo-block__content">
         <!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
         <!-- #ifndef APP-NVUE -->

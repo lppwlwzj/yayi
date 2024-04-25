@@ -1,7 +1,5 @@
 <template>
   <view>
-    <!-- :source-type="['camera', 'album']"
-      :capture="['album', 'camera']" -->
     <u-upload
       :accept="accept"
       :fileList="data"
@@ -144,12 +142,6 @@ export default {
     // 新增图片
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
-      // url: "http://127.0.0.1:3006/api/upload", //文件服务器地址
-      // url: "http://192.168.4.117:3006/api/upload", //文件服务器地址
-      // url: "http://10.172.42.116:3006/api/upload", //文件服务器地址
-      // url: "http://10.172.42.116:3006/api/upload", //文件服务器地址
-
-
       uni.uploadFile({
         url: "http://150.158.39.155:3006/api/upload", 
         filePath: event.file.url, //文件路径
@@ -184,99 +176,8 @@ export default {
           console.log("🚀 ~ afterRead ~ err:", err);
         }
       });
-
-      //uniapp使用uni.request传递formData格式时报错：“errMsg: "request:fail parameter data. Expected Object, String, Array, ArrayBuffer, got FormData
-      //是因为uni.request 不支持formData类型的数据
-      // let formData = new FormData();
-      // formData.append("file", event.file);
-      // formData.append("id", userInfo.usercount);
-      // formData.append("name", event.name);
-      //  this.$api
-      //   .uploadImg(formData)
-      //   .then((res) => {
-      //     if(res.code) {
-      //       uni.showToast({
-      //         title: res.message,
-      //         icon: 'none'
-      //       });
-      //       return;
-      //     }
-      //     // result = res.data;
-      //   })
-      //   .catch((res) => {
-      //     console.log(res);
-      //   });
-
-      // 当设置 multiple 为 true 时, file 为数组格式，否则为对象格式
-      // let lists = [].concat(event.file);
-      // let fileListLen = this.data.length;
-      // lists.map((item) => {
-      //   this.data.push({
-      //     ...item,
-      //     status: "uploading",
-      //     message: "上传中"
-      //   });
-      // });
-      // for (let i = 0; i < lists.length; i++) {
-      //   let result = "";
-      //   await this.$api
-      //     .uploadImg(lists[i].url)
-      //     .then((res) => {
-      //       result = res.data;
-      //     })
-      //     .catch((res) => {
-      //       console.log(res);
-      //     });
-      //   this.$emit("successCall", result);
-      //   let item = this.data[fileListLen];
-      //   this.data.splice(
-      //     fileListLen,
-      //     1,
-      //     Object.assign(item, {
-      //       status: "success",
-      //       message: "",
-      //       url: result
-      //     })
-      //   );
-      //   fileListLen++;
-      // }
     }
-    // // 新增图片
-    // async afterRead(event) {
-    //   // 当设置 multiple 为 true 时, file 为数组格式，否则为对象格式
-    //   let lists = [].concat(event.file);
-    //   let fileListLen = this.data.length;
-    //   lists.map((item) => {
-    //     this.data.push({
-    //       ...item,
-    //       status: "uploading",
-    //       message: "上传中"
-    //     });
-    //   });
-    //   for (let i = 0; i < lists.length; i++) {
-    //     let result = "";
-    //     await this.$api
-    //       .uploadImg(lists[i].url)
-    //       .then((res) => {
-    //         result = res.data;
-    //       })
-    //       .catch((res) => {
-    //         console.log(res);
-    //       });
-    //     this.$emit("successCall", result);
-    //     let item = this.data[fileListLen];
-    //     this.data.splice(
-    //       fileListLen,
-    //       1,
-    //       Object.assign(item, {
-    //         status: "success",
-    //         message: "",
-    //         url: result
-    //       })
-    //     );
-    //     fileListLen++;
-    //   }
-    // }
+
   }
 };
 </script>
@@ -300,15 +201,6 @@ export default {
   // margin: 20rpx 0rpx;
   position: relative;
 }
-// .custom-upload-img {
-//   width: 140rpx;
-//   height: 140rpx;
-//   position: relative;
-//   background: #898787a3;
-//   border-radius: 16rpx;
-//   margin: 20rpx 8rpx;
-//   position: relative;
-// }
 .image-2 {
   width: 160rpx;
   height: 160rpx;

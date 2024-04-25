@@ -52,10 +52,6 @@
         {{ detail.has_auth ? "添加联系人" : "成为会员，立即查看" }}</view
       >
     </view>
-    <!-- TODO：新增 -->
-    <!-- <view class="footer" v-if="visible && options.type === 'person'">
-      <view :class="['btn', 'green']"> 修改我的名片</view>
-    </view> -->
   </view>
 </template>
 
