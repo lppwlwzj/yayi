@@ -143,7 +143,7 @@ export default {
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
       uni.uploadFile({
-        url: "http://150.158.39.155:3006/api/upload", 
+        url: "http://150.158.39.155:3010/api/upload", 
         filePath: event.file.url, //文件路径
         name: "file",
         header: {

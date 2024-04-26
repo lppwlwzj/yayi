@@ -121,12 +121,12 @@ app.use("/api/preinstall/edit", serviceRouter.editPreinstall);
 app.use("/api/preinstall/detail", serviceRouter.getPreinstall);
 
 // 配置服务器
-const port = 3006;
+const port = 3010;
 // const host = '127.0.0.1'
 //const host = '127.0.0.1'
 //const host = '10.172.42.116'
 // const host = "192.168.4.117";
 const host ="150.158.39.155"
-app.listen(3006, () => {
+app.listen(port, () => {
   console.log(`api serve running at http://${host}:${port}`);
-});
+});                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

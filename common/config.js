@@ -7,12 +7,12 @@ const CONFIG = {
   // 开发环境配置
 
   development: {
-    BASE_URL: `http://${host}:3006`,
+    BASE_URL: `http://${host}:3010`,
     UPLOAD_URL: "https://receiving.shandongweipai.com/api/college/upload"
   },
   // 生产环境配置
   production: {
-    BASE_URL: "http://150.158.39.155:3006",
+    BASE_URL: "http://150.158.39.155:3010",
     UPLOAD_URL: "https://receiving.shandongweipai.com/api/college/upload"
   }
 };
