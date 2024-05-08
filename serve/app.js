@@ -1,5 +1,8 @@
 // 导入express模块
 const express = require("express");
+
+const https = require('https');
+const fs =require("fs")
 // 创建express服务器
 const app = express();
 const bodyParser = require("body-parser");
@@ -119,14 +122,21 @@ app.use("/api/service/edit", serviceRouter.submit);
 app.use("/api/service/detail", serviceRouter.detail);
 app.use("/api/preinstall/edit", serviceRouter.editPreinstall);
 app.use("/api/preinstall/detail", serviceRouter.getPreinstall);
+const privateKey = fs.readFileSync('./gdcasa.cn.key', 'utf8');
+const certificate = fs.readFileSync('./gdcasa.cn_bundle.pem', 'utf8');
 
+const credentials = {
+    key: privateKey,
+    cert: certificate
+};
+const httpsServer = https.createServer(credentials, app);
 // 配置服务器
 const port = 3010;
 // const host = '127.0.0.1'
 //const host = '127.0.0.1'
 //const host = '10.172.42.116'
 // const host = "192.168.4.117";
-const host ="150.158.39.155"
-app.listen(port, () => {
+const host ="gdcasa.cn"
+httpsServer.listen(port, () => {
   console.log(`api serve running at http://${host}:${port}`);
 });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

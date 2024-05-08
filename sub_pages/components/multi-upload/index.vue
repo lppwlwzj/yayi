@@ -163,8 +163,8 @@ export default {
   position: relative;
 }
 .preview {
-  width: 14px;
-  height: 14px;
+  width:  28px;
+  height: 28px;
   position: absolute;
   left: 10rpx;
   bottom: 10rpx;

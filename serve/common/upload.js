@@ -12,7 +12,7 @@ const fileName = "file"; // 上传的 fileName 名称
 // const updateBaseUrl = "http://127.0.0.1:3006"; // 上传到服务器地址
 // const updateBaseUrl = "http://10.172.42.116:3006"; // 上传到服务器地址
 // const updateBaseUrl = "http://192.168.4.117:3006"; // 上传到服务器地址
-const updateBaseUrl = "http://150.158.39.155:3010"; // 上传到服务器地址
+const updateBaseUrl = "https://gdcasa.cn:3010"; // 上传到服务器地址
 
 
 const imgPath = "/img/images/"; // 上传到服务器的虚拟目录

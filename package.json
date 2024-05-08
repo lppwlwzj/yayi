@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "https": "^1.0.0",
     "moment": "^2.30.1",
     "uview-ui": "^2.0.34"
   }

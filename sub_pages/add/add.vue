@@ -271,7 +271,13 @@
               mode="aspectFill"
               class="upload-img"
             ></image>
-            <!-- :src="require('../../static/images/add.png')" -->
+            <image
+              v-show="form.intentImg"
+              @tap.stop="preview(getImg(form.intentImg))"
+              :src="require('../../static//images/preview.png')"
+              class="preview"
+              mode="aspectFill"
+            ></image>
             <image
               v-show="!form.intentImg"
               :src="require('../../static/images/add.png')"
@@ -958,7 +964,7 @@ export default {
       }
     },
     async submit() {
-      console.log('isPrivacy',this.form.isPrivacy)
+      console.log("isPrivacy", this.form.isPrivacy);
       this.dentistList.forEach((item) => {
         this.form[`${item.key}Open`] = !!item.open.length;
         this.form[`${item.key}Value`] = item.value;
@@ -969,7 +975,7 @@ export default {
       const res = await requestFn({
         customer_id: this.customer_id,
         ...this.form,
-        isPrivacy:this.form ? 1 : 0
+        isPrivacy: this.form ? 1 : 0
       });
       if (!res.code) {
         uni.showToast({
@@ -978,10 +984,10 @@ export default {
         });
         this.operateType = "edit";
 
-        this.id = res.re.id ||  this.id;
+        this.id = res.re.id || this.id;
         uni.showToast({
           icon: "none",
-          title: '操作成功！'
+          title: "操作成功！"
         });
       }
     },
@@ -1092,8 +1098,8 @@ page {
     position: relative;
   }
   .preview {
-    width: 18px;
-    height: 18px;
+    width: 26px;
+    height: 26px;
     position: absolute;
     left: 10rpx;
     bottom: 10rpx;
