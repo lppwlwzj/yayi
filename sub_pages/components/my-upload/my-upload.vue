@@ -218,7 +218,7 @@ export default {
   width: 24px;
   height: 24px;
   position: absolute;
-  left: 50rpx;
+  left: 10rpx;
   bottom: 10rpx;
 }
 .image-close {

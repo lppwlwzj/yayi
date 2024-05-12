@@ -237,7 +237,7 @@ export default {
       const res = await this.$api.editPreinstall({
         ...params,
         id: this.form?.id || "",
-        root: this.form?.root || "13666633692"
+        root: this.form?.root
       });
       this.form.id == res.re?.id;
       uni.showToast({

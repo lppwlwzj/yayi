@@ -964,7 +964,6 @@ export default {
       }
     },
     async submit() {
-      console.log("isPrivacy", this.form.isPrivacy);
       this.dentistList.forEach((item) => {
         this.form[`${item.key}Open`] = !!item.open.length;
         this.form[`${item.key}Value`] = item.value;
@@ -975,7 +974,7 @@ export default {
       const res = await requestFn({
         customer_id: this.customer_id,
         ...this.form,
-        isPrivacy: this.form ? 1 : 0
+        isPrivacy: this.form.isPrivacy ? 1 : 0
       });
       if (!res.code) {
         uni.showToast({

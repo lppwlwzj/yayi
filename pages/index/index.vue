@@ -219,6 +219,7 @@ export default {
       });
       if (!res.code) {
         let _list = res.re;
+        //上帝视角不等于当前用户 只可见没设置隐私的
         if (this.userInfo?.usercount !== this.root)
           _list = res.re.filter((item) => !item.isPrivacy);
         this.list = _list.map((item) => {
