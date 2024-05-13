@@ -21,8 +21,8 @@ const db = mysql.createPool({
 	host:'127.0.0.1',
 
 	user:'root',
-	password:'password',
-	// password:'9699lppwl',
+	// password:'password',
+	password:'9699lppwl',
 	// user:'yayi_root',
 	// password:'123456',
 	port:'3306',

@@ -16,8 +16,16 @@
       <view :class="[customClass, 'upload-bg']">
         <slot v-if="!img_url" />
         <view :class="[customClass, 'fc']" v-else>
-          <!-- <image :src="previewUrl" mode="aspectFill" class="upload-img"></image> -->
-          <u--image :src="previewUrl" mode="aspectFill" class="upload-img" 		:showMenuByLongpress="true"></u--image>
+          <image :src="previewUrl" mode="aspectFill" class="upload-img" :show-menu-by-longpress="true"></image>
+          <!-- <div class="upload-img">
+            <u--image
+            :src="previewUrl"
+              mode="scaleToFill"
+              width="100%"
+              heig
+              :showMenuByLongpress="true"
+            ></u--image>
+          </div> -->
           <image
             @tap.stop="preview(img_url)"
             :src="require('../../../static//images/preview.png')"
@@ -144,8 +152,10 @@ export default {
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
       uni.uploadFile({
-        // url: "https://gdcasa.cn:3010/api/upload", 
-        url: "http://127.0.0.1:3010/api/upload", 
+        // url: "https://gdcasa.cn:3010/api/upload",
+        // url: "http://127.0.0.1:3010/api/upload",
+        url: "http://192.168.4.117:3010/api/upload",
+        
 
         filePath: event.file.url, //文件路径
         name: "file",
@@ -180,7 +190,6 @@ export default {
         }
       });
     }
-
   }
 };
 </script>
@@ -241,5 +250,4 @@ export default {
   top: 0;
   bottom: 0;
 }
-
 </style>

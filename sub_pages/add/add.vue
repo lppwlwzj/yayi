@@ -270,6 +270,7 @@
               "
               mode="aspectFill"
               class="upload-img"
+              :show-menu-by-longpress="true"
             ></image>
             <image
               v-show="form.intentImg"
@@ -411,7 +412,11 @@
       </view>
     </view>
 
-    <view class="rfsw" style="margin: 20rpx 0 30rpx 100rpx">
+    <view
+      class="rfsw"
+      style="margin: 20rpx 0 30rpx 100rpx"
+      v-if="privacyVisible"
+    >
       <text style="color: #ccc; padding-right: 24rpx"> 是否设置隐私 </text>
       <u-switch
         v-model="form.isPrivacy"
@@ -853,6 +858,11 @@ export default {
     },
     imgList() {
       return this.preinstall?.[this.activeIndex] || [];
+    },
+    privacyVisible() {
+      return ["13588805863", "18516187777", "13666633692"].includes(
+        this.userInfo.usercount
+      );
     }
   },
 

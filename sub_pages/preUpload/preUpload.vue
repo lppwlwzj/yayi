@@ -1,4 +1,3 @@
-
 <template>
   <view class="content">
     <view
@@ -21,136 +20,160 @@
         :name="require('../../static/images/ECO-UI-02.png')"
       ></u-icon>
     </view>
-
+    <!-- 
     <view class="user-select">
       <uni-data-select
         v-model="form.root"
         placeholder="请选择上帝用户"
         :localdata="userList"
       ></uni-data-select>
-    </view>
+    </view> -->
     <uni-collapse :show-arrow="true">
       <uni-collapse-item title="客户意向图">
-        <MultiUpload
-          :list="form.intentList"
-          activeKey="intentList"
-          @delete="(index) => deleteImg(index, 'intentList')"
-          @add="(value) => handleAddImg(value, 'intentList')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.intentList"
+            activeKey="intentList"
+            @delete="(index) => deleteImg(index, 'intentList')"
+            @add="(value) => handleAddImg(value, 'intentList')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
 
     <uni-collapse :show-arrow="true">
       <uni-collapse-item title="边缘">
-        <MultiUpload
-          :list="form.bianyuan"
-          activeKey="bianyuan"
-          @delete="(index) => deleteImg(index, 'bianyuan')"
-          @add="(value) => handleAddImg(value, 'bianyuan')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.bianyuan"
+            activeKey="bianyuan"
+            @delete="(index) => deleteImg(index, 'bianyuan')"
+            @add="(value) => handleAddImg(value, 'bianyuan')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
 
     <uni-collapse>
       <uni-collapse-item title="角度方圆" :show-arrow="true">
-        <MultiUpload
-          :list="form.round"
-          activeKey="round"
-          @delete="(index) => deleteImg(index, 'round')"
-          @add="(value) => handleAddImg(value, 'round')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.round"
+            activeKey="round"
+            @delete="(index) => deleteImg(index, 'round')"
+            @add="(value) => handleAddImg(value, 'round')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="1号2号落差" :show-arrow="true">
-        <MultiUpload
-          :list="form.luocha"
-          activeKey="luocha"
-          @delete="(index) => deleteImg(index, 'luocha')"
-          @add="(value) => handleAddImg(value, 'luocha')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.luocha"
+            activeKey="luocha"
+            @delete="(index) => deleteImg(index, 'luocha')"
+            @add="(value) => handleAddImg(value, 'luocha')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
 
     <uni-collapse>
       <uni-collapse-item title="窄细角度" :show-arrow="true">
-        <MultiUpload
-          :list="form.angle"
-          activeKey="angle"
-          @delete="(index) => deleteImg(index, 'angle')"
-          @add="(value) => handleAddImg(value, 'angle')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.angle"
+            activeKey="angle"
+            @delete="(index) => deleteImg(index, 'angle')"
+            @add="(value) => handleAddImg(value, 'angle')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="尖or钝" :show-arrow="true">
-        <MultiUpload
-          :list="form.jiandun"
-          activeKey="jiandun"
-          @delete="(index) => deleteImg(index, 'jiandun')"
-          @add="(value) => handleAddImg(value, 'jiandun')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.jiandun"
+            activeKey="jiandun"
+            @delete="(index) => deleteImg(index, 'jiandun')"
+            @add="(value) => handleAddImg(value, 'jiandun')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="2号远中切端上扬幅度" :show-arrow="true">
-        <MultiUpload
-          :list="form.qieduan"
-          activeKey="qieduan"
-          @delete="(index) => deleteImg(index, 'qieduan')"
-          @add="(value) => handleAddImg(value, 'qieduan')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.qieduan"
+            activeKey="qieduan"
+            @delete="(index) => deleteImg(index, 'qieduan')"
+            @add="(value) => handleAddImg(value, 'qieduan')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="纹理" :show-arrow="true">
-        <MultiUpload
-          :list="form.texture"
-          activeKey="texture"
-          @delete="(index) => deleteImg(index, 'texture')"
-          @add="(value) => handleAddImg(value, 'texture')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.texture"
+            activeKey="texture"
+            @delete="(index) => deleteImg(index, 'texture')"
+            @add="(value) => handleAddImg(value, 'texture')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="颈部光点" :show-arrow="true">
-        <MultiUpload
-          :list="form.dot"
-          activeKey="dot"
-          @delete="(index) => deleteImg(index, 'dot')"
-          @add="(value) => handleAddImg(value, 'dot')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.dot"
+            activeKey="dot"
+            @delete="(index) => deleteImg(index, 'dot')"
+            @add="(value) => handleAddImg(value, 'dot')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="透亮" :show-arrow="true">
-        <MultiUpload
-          :list="form.touliang"
-          activeKey="touliang"
-          @delete="(index) => deleteImg(index, 'touliang')"
-          @add="(value) => handleAddImg(value, 'touliang')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.touliang"
+            activeKey="touliang"
+            @delete="(index) => deleteImg(index, 'touliang')"
+            @add="(value) => handleAddImg(value, 'touliang')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
 
     <uni-collapse>
       <uni-collapse-item title="切端渐变层" :show-arrow="true">
-        <MultiUpload
-          :list="form.qieduanLinears"
-          activeKey="qieduanLinears"
-          @delete="(index) => deleteImg(index, 'qieduanLinears')"
-          @add="(value) => handleAddImg(value, 'qieduanLinears')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.qieduanLinears"
+            activeKey="qieduanLinears"
+            @delete="(index) => deleteImg(index, 'qieduanLinears')"
+            @add="(value) => handleAddImg(value, 'qieduanLinears')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
     <uni-collapse>
       <uni-collapse-item title="厚度" :show-arrow="true">
-        <MultiUpload
-          :list="form.thickness"
-          activeKey="thickness"
-          @delete="(index) => deleteImg(index, 'thickness')"
-          @add="(value) => handleAddImg(value, 'thickness')"
-        />
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.thickness"
+            activeKey="thickness"
+            @delete="(index) => deleteImg(index, 'thickness')"
+            @add="(value) => handleAddImg(value, 'thickness')"
+          />
+        </div>
       </uni-collapse-item>
     </uni-collapse>
 
@@ -185,6 +208,8 @@ export default {
       userList: []
     };
   },
+  options: { styleIsolation: "shared" },
+
   onLoad: function () {
     this.getInfo();
     this.getUserList();
@@ -282,7 +307,7 @@ export default {
   color: $uni-color-bg;
 }
 /deep/.uni-collapse {
-  margin: 24rpx 0rpx;
+  margin: 14rpx 0rpx;
 }
 .user-select {
   width: 100%;

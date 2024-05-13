@@ -11,6 +11,7 @@
             :src="getImg(item)"
             mode="aspectFill"
             class="upload-img"
+            :show-menu-by-longpress="true"
           ></image>
           <image
             @tap.stop="preview(item)"

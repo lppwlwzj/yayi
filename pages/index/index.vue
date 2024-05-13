@@ -35,7 +35,7 @@
         </navigator>
       </view>
     </view>
-
+    
 
     <view class="list-area">
       <block v-if="list.length">
@@ -220,7 +220,11 @@ export default {
       if (!res.code) {
         let _list = res.re;
         //上帝视角不等于当前用户 只可见没设置隐私的
-        if (this.userInfo?.usercount !== this.root)
+        if (
+          !["13588805863", "18516187777", "13666633692"].includes(
+            this.userInfo?.usercount
+          )
+        )
           _list = res.re.filter((item) => !item.isPrivacy);
         this.list = _list.map((item) => {
           const {
