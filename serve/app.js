@@ -1,6 +1,7 @@
 // 导入express模块
 const express = require("express");
 
+
 const https = require('https');
 const fs =require("fs")
 // 创建express服务器
@@ -130,13 +131,29 @@ const credentials = {
     cert: certificate
 };
 const httpsServer = https.createServer(credentials, app);
+// httpsServer.listen(port, () => {
+//   console.log(`api serve running at http://${host}:${port}`);
+// });
 // 配置服务器
 const port = 3010;
-// const host = '127.0.0.1'
+const host = '127.0.0.1'
 //const host = '127.0.0.1'
 //const host = '10.172.42.116'
 // const host = "192.168.4.117";
-const host ="gdcasa.cn"
-httpsServer.listen(port, () => {
+// const host ="gdcasa.cn"
+// httpsServer.listen(port, () => {
+//   console.log(`api serve running at http://${host}:${port}`);
+// });
+app.listen(port, () => {
   console.log(`api serve running at http://${host}:${port}`);
-});                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+});         
+
+// const server = httpsServer.listen(port, () => {
+//   console.log(`api serve running at http://${host}:${port}`);
+// }); 
+
+// server.keepAliveTimeout = 3 * 1000;
+ 
+// server.on('connection', function(socket) {
+//   console.log("A new connection remote port:" + socket.remotePort);
+// });

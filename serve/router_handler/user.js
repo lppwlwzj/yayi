@@ -55,7 +55,8 @@ exports.login = (req, res) => {
         token: "Bearer " + tokenStr,
         userinfo: {
           usercount,
-          username
+          username,
+          password
         }
       }
     });

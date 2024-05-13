@@ -16,7 +16,8 @@
       <view :class="[customClass, 'upload-bg']">
         <slot v-if="!img_url" />
         <view :class="[customClass, 'fc']" v-else>
-          <image :src="previewUrl" mode="aspectFill" class="upload-img"></image>
+          <!-- <image :src="previewUrl" mode="aspectFill" class="upload-img"></image> -->
+          <u--image :src="previewUrl" mode="aspectFill" class="upload-img" 		:showMenuByLongpress="true"></u--image>
           <image
             @tap.stop="preview(img_url)"
             :src="require('../../../static//images/preview.png')"
@@ -143,7 +144,9 @@ export default {
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
       uni.uploadFile({
-        url: "https://gdcasa.cn:3010/api/upload", 
+        // url: "https://gdcasa.cn:3010/api/upload", 
+        url: "http://127.0.0.1:3010/api/upload", 
+
         filePath: event.file.url, //文件路径
         name: "file",
         header: {
@@ -156,7 +159,7 @@ export default {
         },
         success: (res) => {
           if (res?.statusCode == 401) {
-            uni.clearStorageSync("userInfo");
+            uni.removeStorageSync("userInfo");
             uni.redirectTo({
               url: "/pages/login/login"
             });

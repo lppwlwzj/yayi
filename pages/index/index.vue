@@ -195,7 +195,7 @@ export default {
       this.$refs.calendar.open();
     },
     confirm() {
-      uni.clearStorageSync("userInfo");
+      uni.removeStorageSync("userInfo");
       uni.redirectTo({
         url: "/pages/login/login"
       });

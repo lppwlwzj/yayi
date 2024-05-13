@@ -92,6 +92,8 @@
 </template>
 
 <script>
+import { onLoad } from 'uview-ui/libs/mixin/mixin';
+
 export default {
   data() {
     return {
@@ -123,7 +125,12 @@ export default {
       address: []
     };
   },
-
+  onLoad:function() {
+     const user =  uni.getStorageSync('user');
+     if(user) {
+      this.form = {...user}
+     }
+  },
   methods: {
     async login() {
       this.$refs.uForm
@@ -160,7 +167,8 @@ export default {
           ...res.re.userinfo
         };
         uni.setStorageSync("userInfo", userInfo); //设置缓存
-
+        //记住账号密码
+        uni.setStorageSync("user", res.re.userinfo); //设置缓存
         uni.showToast({
           title: "登录成功",
           success() {

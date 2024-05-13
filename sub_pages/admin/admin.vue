@@ -92,7 +92,7 @@ export default {
       }));
     },
     logout() {
-      uni.clearStorageSync("userInfo");
+      uni.removeStorageSync("userInfo");
       uni.redirectTo({
         url: "/pages/login/login"
       });

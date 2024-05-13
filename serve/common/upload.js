@@ -9,10 +9,10 @@ const handlePath = (dir) => {
 
 // 2. 定义静态变量
 const fileName = "file"; // 上传的 fileName 名称
-// const updateBaseUrl = "http://127.0.0.1:3006"; // 上传到服务器地址
+const updateBaseUrl = "http://127.0.0.1:3010"; // 上传到服务器地址
 // const updateBaseUrl = "http://10.172.42.116:3006"; // 上传到服务器地址
 // const updateBaseUrl = "http://192.168.4.117:3006"; // 上传到服务器地址
-const updateBaseUrl = "https://gdcasa.cn:3010"; // 上传到服务器地址
+// const updateBaseUrl = "https://gdcasa.cn:3010"; // 上传到服务器地址
 
 
 const imgPath = "/img/images/"; // 上传到服务器的虚拟目录
@@ -51,12 +51,12 @@ function upload(req, res) {
       if (err) {
         reject(err);
       } else {
-        hanldeImgDelAndRename(
-          `${req.body.id}${req.body.name}`,
-          req.file.filename,
-          handlePath("../public/images")
-        );
-
+        // hanldeImgDelAndRename(
+        //   `${req.body.id}${req.body.name}`,
+        //   req.file.filename,
+        //   handlePath("../public/images")
+        // );
+       console.log('上传图片的地址',`${updateBaseUrl}${imgPath}${req.file.filename}`)
         // `req.file.filename`  请求文件名称后缀
         // `updateBaseUrl + imgPath + req.file.filename` 完整的服务器虚拟目录
         resolve({
