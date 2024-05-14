@@ -235,7 +235,7 @@ exports.editCustomer = (req, res) => {
       code: 0,
       message: "修改成功！",
       re: {
-        id: result[0].id
+        id
       }
     });
   });
@@ -375,7 +375,7 @@ exports.getCustomerList = (req, res) => {
     });
     Promise.all([p1, p2,p3,p4])
       .then(async (results) => {
-        const _list = results[0].concat(results[1]);
+        const _list = results[0].concat(results[1]).concat(results[2]).concat(results[3]);
         const list = unique(_list, "id");
         if (list.length) {
           await asyncForEach(list, async (item, index) => {

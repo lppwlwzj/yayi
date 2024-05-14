@@ -14,7 +14,6 @@ exports.getSlideShow = (req, res) => {
   // 调用db.query()执行sql语句
   db.query(sql, (err, results) => {
     if (err) {
-      console.log("🚀 ~ db.query ~ err:", err);
       return res.lose(err);
     }
     res.send({

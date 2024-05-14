@@ -983,6 +983,7 @@ export default {
         : this.$api.addCustomer;
       const res = await requestFn({
         customer_id: this.customer_id,
+        id:this.id || '',
         ...this.form,
         isPrivacy: this.form.isPrivacy ? 1 : 0
       });
@@ -997,6 +998,11 @@ export default {
         uni.showToast({
           icon: "none",
           title: "操作成功！"
+        });
+      } else {
+        uni.showToast({
+          icon: "none",
+          title: res.message
         });
       }
     },
