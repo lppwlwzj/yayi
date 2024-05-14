@@ -16,7 +16,7 @@
             marginRight: '12rpx'
           }"
           placeholderStyle="color:#dd524d63"
-          placeholder="姓名/日期/瓷品"
+          placeholder="姓名/日期/医生/代理人/瓷品"
           disabledColor="#fff"
           v-model="search"
           border="surround"

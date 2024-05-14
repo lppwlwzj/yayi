@@ -345,6 +345,10 @@ exports.getCustomerList = (req, res) => {
 
     const sql1 = ` select i.*   from customer i  where i.customer LIKE "%${search}%"`;
     const sql2 = ` select i.*   from customer i where i.porcelain LIKE "%${search}%"`;
+    const sql3 = ` select i.*   from customer i where i.doctor LIKE "%${search}%"`;
+
+    const sql4 = ` select i.*   from customer i where i.proxy LIKE "%${search}%"`;
+
     const p1 = new Promise((resolve, reject) => {
       db.query(sql1, (err, results) => {
         if (err) return reject(err);
@@ -357,7 +361,19 @@ exports.getCustomerList = (req, res) => {
         resolve(results);
       });
     });
-    Promise.all([p1, p2])
+    const p3 = new Promise((resolve, reject) => {
+      db.query(sql3, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    const p4 = new Promise((resolve, reject) => {
+      db.query(sql4, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    Promise.all([p1, p2,p3,p4])
       .then(async (results) => {
         const _list = results[0].concat(results[1]);
         const list = unique(_list, "id");
