@@ -139,14 +139,16 @@ const port = 3010;
 // const host = '127.0.0.1'
 //const host = '127.0.0.1'
 //const host = '10.172.42.116'
-const host = "192.168.4.117";
-// const host ="gdcasa.cn"
-// httpsServer.listen(port, () => {
-//   console.log(`api serve running at http://${host}:${port}`);
-// });
-app.listen(port, () => {
+// const host = "192.168.4.117";
+
+const host ="gdcasa.cn"
+httpsServer.listen(port, () => {
   console.log(`api serve running at http://${host}:${port}`);
-});         
+});
+
+// app.listen(port, () => {
+//   console.log(`api serve running at http://${host}:${port}`);
+// });         
 
 // const server = httpsServer.listen(port, () => {
 //   console.log(`api serve running at http://${host}:${port}`);

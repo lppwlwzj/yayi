@@ -152,9 +152,9 @@ export default {
     async afterRead(event) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
       uni.uploadFile({
-        // url: "https://gdcasa.cn:3010/api/upload",
+        url: "https://gdcasa.cn:3010/api/upload",
         // url: "http://127.0.0.1:3010/api/upload",
-        url: "http://192.168.4.117:3010/api/upload",
+        // url: "http://192.168.4.117:3010/api/upload",
         
 
         filePath: event.file.url, //文件路径
