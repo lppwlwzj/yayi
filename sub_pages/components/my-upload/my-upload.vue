@@ -16,7 +16,12 @@
       <view :class="[customClass, 'upload-bg']">
         <slot v-if="!img_url" />
         <view :class="[customClass, 'fc']" v-else>
-          <image :src="previewUrl" mode="aspectFill" class="upload-img" :show-menu-by-longpress="true"></image>
+          <image
+            :src="previewUrl"
+            mode="aspectFill"
+            class="upload-img"
+            :show-menu-by-longpress="true"
+          ></image>
           <!-- <div class="upload-img">
             <u--image
             :src="previewUrl"
@@ -43,16 +48,32 @@
       :overlayStyle="{
         background: '#000000d6'
       }"
+      closeIconPos="top-left"
+      bgColor="#000000"
     >
-      <view class="fc">
+      <view class="fc img_wrapper">
         <video :src="img_url" v-if="img_url.indexOf('mp4') > -1"></video>
-        <image :src="img_url" v-else mode="widthFix"></image>
+        <TouchScaleImg :img_url="img_url" v-else/>
+        <!-- <image
+          :src="img_url"
+          v-else
+          mode="scaleToFill"
+          :style="{
+            transform: `translate(${translateX}px, ${translateY}px) scale(${scale}) rotate(${rotate}deg)`
+          }"
+          :show-menu-by-longpress="true"
+          class="img-block"
+          @touchstart="touchStart"
+          @touchmove="touchMove"
+          @touchend="touchEnd"
+        ></image> -->
       </view>
     </u-popup>
   </view>
 </template>
 
 <script>
+import TouchScaleImg from "../touchScaleImg/index.vue";
 export default {
   name: "my-upload",
   props: {
@@ -112,9 +133,24 @@ export default {
   data() {
     return {
       data: [],
-
-      popupShow: false
+      timer: null,
+      popupShow: false,
+      translateX: 0, // 位移x坐标 单位px
+      translateY: 0, // 位移y坐标 单位px
+      distance: 0, // 双指接触点距离
+      scale: 1, // 缩放倍数
+      rotate: 0, // 旋转角度
+      oldRotate: 0, // 上一次旋转停止后的角度
+      startMove: {
+        // 起始位移距离
+        x: 0,
+        y: 0
+      },
+      startTouches: [] // 起始点touch数组
     };
+  },
+  components: {
+    TouchScaleImg
   },
   watch: {
     fileList: {
@@ -131,7 +167,10 @@ export default {
         : this.img_url;
     }
   },
+
   methods: {
+
+
     preview() {
       this.popupShow = true;
     },
@@ -154,8 +193,7 @@ export default {
       uni.uploadFile({
         url: "https://gdcasa.cn:3010/api/upload",
         // url: "http://127.0.0.1:3010/api/upload",
-        // url: "http://192.168.4.117:3010/api/upload",
-        
+        // url: "http://fa:3010/api/upload",
 
         filePath: event.file.url, //文件路径
         name: "file",
@@ -249,5 +287,21 @@ export default {
   right: 0;
   top: 0;
   bottom: 0;
+}
+.img_wrapper {
+  // width: 100vw;
+  // margin-top: 6vh;
+
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+.img-block {
+  width: 100vw;
+  height: 320px;
+}
+/deep/ .u-popup__content__close--top-left {
+  top: 65px  !important;
+  left: 20px  !important;
 }
 </style>

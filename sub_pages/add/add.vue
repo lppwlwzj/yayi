@@ -606,16 +606,28 @@
       :overlayStyle="{
         background: '#000000d6'
       }"
+      closeIconPos="top-left"
+      bgColor="#000000"
     >
-      <view class="fc">
+      <view class="fc img_wrapper" :style="{ paddingTop: statusBarHeight }">
         <video :src="previewImg" v-if="previewImg.indexOf('mp4') > -1"></video>
-        <image :src="previewImg" v-else mode="aspectFill"></image>
+         <TouchScaleImg :img_url="previewImg" v-else/>
+        <!-- <image
+          :src="previewImg"
+          v-else
+          mode="aspectFill"
+          class="img-block"
+          @touchstart="touchStart"
+          @touchmove="touchMove"
+          @touchend="touchEnd"
+        ></image> -->
       </view>
     </u-popup>
   </view>
 </template>
 
 <script>
+
 function getDate(date, AddDayCount = 0) {
   if (!date) {
     date = new Date();
@@ -642,6 +654,7 @@ function getDate(date, AddDayCount = 0) {
 import TiXing from "../components/tixing";
 import Upload from "../components/my-upload/my-upload.vue";
 import MultiUpload from "../components/multi-upload";
+import TouchScaleImg from "../components/touchScaleImg/index.vue";
 
 export default {
   data() {
@@ -830,7 +843,8 @@ export default {
   components: {
     TiXing,
     Upload,
-    MultiUpload
+    MultiUpload,
+    TouchScaleImg
   },
 
   onReady() {
@@ -983,7 +997,7 @@ export default {
         : this.$api.addCustomer;
       const res = await requestFn({
         customer_id: this.customer_id,
-        id:this.id || '',
+        id: this.id || "",
         ...this.form,
         isPrivacy: this.form.isPrivacy ? 1 : 0
       });
@@ -1176,5 +1190,14 @@ page {
 /deep/ .uni-calendar-item--isDay,
 /deep/ .uni-calendar-item--checked {
   background-color: #eb2b24e3 !important;
+}
+.img_wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+/deep/ .u-popup__content__close--top-left {
+  top: 65px  !important;
+  left: 20px  !important;
 }
 </style>
