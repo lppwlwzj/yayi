@@ -504,6 +504,61 @@
         ></u--input>
       </view>
     </view>
+
+    <view class="rfa" style="margin: 18rpx 0">
+      <Upload
+        name="shangyouImg"
+        :id="`${userInfo.usercount}${customer_id}`"
+        :img_url="form.shangyouImg"
+        :disabled="disabled"
+        customClass="image-2"
+        @change="
+          (value) => {
+            handleFormChange('shangyouImg', value);
+          }
+        "
+      >
+        <view class="image-2 fc">
+          <image
+            :src="require('../../static/images/add.png')"
+            mode="aspectFill"
+            style="width: 20px; height: 20px; margin-bottom: 4px"
+          ></image>
+          <text style="color: #fff; font-size: 14px">上釉</text>
+        </view>
+      </Upload>
+      <Upload
+        :id="`${userInfo.usercount}${customer_id}`"
+        name="shangciImg"
+        :disabled="disabled"
+        :img_url="form.shangciImg"
+        customClass="image-2"
+        class="fc"
+        @change="
+          (value) => {
+            handleFormChange('shangciImg', value);
+          }
+        "
+      >
+        <view class="image-2 fc">
+          <image
+            :src="require('../../static/images/add.png')"
+            mode="aspectFill"
+            style="width: 20px; height: 20px; margin-bottom: 4px"
+          ></image>
+          <text style="color: #fff; font-size: 14px">上瓷</text>
+        </view>
+      </Upload>
+    </view>
+    <!-- <view class="rfa" style="margin: 18rpx 0; font-size: 18px;font-weight: 600;"> 生产问题 </view> -->
+    <view class="rfa" style="margin: 18rpx 0">
+      <u--textarea
+        :disabled="disabled"
+        v-model="form.problem"
+        border="none"
+        placeholder="请输入内容"
+      ></u--textarea>
+    </view>
     <uni-calendar
       ref="myCalendar"
       class="uni-calendar--hook"
@@ -609,9 +664,9 @@
       closeIconPos="top-left"
       bgColor="#000000"
     >
-      <view class="fc img_wrapper" :style="{ paddingTop: statusBarHeight }">
+      <view class="fc img_wrapper">
         <video :src="previewImg" v-if="previewImg.indexOf('mp4') > -1"></video>
-         <TouchScaleImg :img_url="previewImg" v-else/>
+        <TouchScaleImg :img_url="previewImg" v-else />
         <!-- <image
           :src="previewImg"
           v-else
@@ -627,7 +682,6 @@
 </template>
 
 <script>
-
 function getDate(date, AddDayCount = 0) {
   if (!date) {
     date = new Date();
@@ -682,6 +736,9 @@ export default {
         proxy: "",
         tiepianColor: "",
         CADImg: "",
+        problem:"",
+        shangyouImg: "",
+        shangciImg: "",
         checiImg: "",
         CAD: "",
         checi: "",
@@ -1197,7 +1254,7 @@ page {
   overflow: hidden;
 }
 /deep/ .u-popup__content__close--top-left {
-  top: 65px  !important;
-  left: 20px  !important;
+  top: 65px !important;
+  left: 20px !important;
 }
 </style>

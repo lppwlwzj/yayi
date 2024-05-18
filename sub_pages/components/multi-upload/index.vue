@@ -57,10 +57,13 @@
       :overlayStyle="{
         background: '#000000d6'
       }"
+      closeIconPos="top-left"
+      bgColor="#000000"
     >
-      <view class="fc">
+      <view class="fc  img_wrapper">
         <video :src="previewImg" v-if="previewImg.indexOf('mp4') > -1"></video>
-        <image :src="previewImg" v-else mode="widthFix"></image>
+        <!-- <image :src="previewImg" v-else mode="widthFix"></image> -->
+        <TouchScaleImg :img_url="previewImg" v-else/>
       </view>
     </u-popup>
   </view>
@@ -68,6 +71,7 @@
 
 <script>
 import Upload from "../my-upload/my-upload.vue";
+import TouchScaleImg from "../touchScaleImg/index.vue";
 export default {
   props: {
     disabled: {
@@ -88,7 +92,8 @@ export default {
     }
   },
   components: {
-    Upload
+    Upload,
+    TouchScaleImg
   },
   data() {
     return {
@@ -169,5 +174,21 @@ export default {
   position: absolute;
   left: 10rpx;
   bottom: 10rpx;
+}
+.img_wrapper {
+  // width: 100vw;
+  // margin-top: 6vh;
+
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+.img-block {
+  width: 100vw;
+  height: 320px;
+}
+/deep/ .u-popup__content__close--top-left {
+  top: 65px  !important;
+  left: 20px  !important;
 }
 </style>

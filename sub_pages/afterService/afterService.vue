@@ -46,6 +46,7 @@
                   :disabled="disabled"
                   v-model="item.remark"
                   border="none"
+                  autoHeight
                   placeholder="请输入内容"
                 ></u--textarea>
               </view>
@@ -87,6 +88,7 @@
                   :disabled="disabled"
                   v-model="item.remark"
                   border="none"
+                  autoHeight
                   placeholder="请输入内容"
                 ></u--textarea>
               </view>
@@ -300,6 +302,14 @@ page {
   padding-bottom: 16rpx;
 }
 .diagnose-text {
+  // margin: 0 12rpx;
+  // height: 200px; 
+  // flex: 1;
+  // max-height: 250px;
+  // background-color: #fff;
+  // // min-height: 144rpx;
+  // border-radius: 40rpx;
+
   margin: 0 12rpx;
   flex: 1;
   background-color: #fff;

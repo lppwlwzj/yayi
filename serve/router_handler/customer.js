@@ -9,6 +9,9 @@ const db = require("../db/index");
 
 exports.addCustomer = (req, res) => {
   const {
+    problem,
+    shangyouImg,
+    shangciImg,
     isPrivacy,
     customer_id,
     customer,
@@ -58,6 +61,9 @@ exports.addCustomer = (req, res) => {
   const createtime = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
   const _designList = JSON.stringify(designList);
   const sql = `insert into customer (
+    problem,
+    shangyouImg,
+    shangciImg,
     isPrivacy,
     createtime,
     customer_id,
@@ -104,7 +110,7 @@ exports.addCustomer = (req, res) => {
         qieduanLinearsValue,
         thicknessOpen,
         thicknessValue
-	) values ('${isPrivacy}','${createtime}','${customer_id}','${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${qieduanLinearsOpen}','${qieduanLinearsValue}','${thicknessOpen}','${thicknessValue}')`;
+	) values ('${problem}','${shangyouImg}','${shangciImg}','${isPrivacy}','${createtime}','${customer_id}','${customer}','${dateTime}','${daiyaTime}','${doctor}','${proxy}','${tiepianColor}','${CADImg}','${checiImg}','${CAD}','${checi}','${porcelain}','${frontPhoto}','${adviceContent}','${leftFv}','${rightFv}','${front}','${leftFvEdge}','${rightFvEdge}','${intentImg}','${designAdvice}','${_designList}','${bianyuanOpen}','${bianyuanValue}','${roundOpen}','${roundValue}','${luochaOpen}','${luochaValue}','${angleOpen}','${angleValue}','${jiandunOpen}','${jiandunValue}','${qieduanOpen}','${qieduanValue}','${textureOpen}','${textureValue}','${dotOpen}','${dotValue}','${touliangOpen}','${touliangValue}','${qieduanLinearsOpen}','${qieduanLinearsValue}','${thicknessOpen}','${thicknessValue}')`;
   // 更新参数表
   db.query(sql, (err, results) => {
     if (err) return res.cc(err);
@@ -131,6 +137,9 @@ exports.addCustomer = (req, res) => {
 
 exports.editCustomer = (req, res) => {
   const {
+    problem,
+    shangyouImg,
+    shangciImg,
     id,
     isPrivacy,
     customer,
@@ -179,6 +188,9 @@ exports.editCustomer = (req, res) => {
   } = req.body;
   const _designList = JSON.stringify(designList);
   const sql = `update  customer set
+  problem='${problem}',
+  shangyouImg='${shangyouImg}',
+  shangciImg='${shangciImg}',
   isPrivacy='${isPrivacy}',
 			customer='${customer}',
 			dateTime='${dateTime}',
