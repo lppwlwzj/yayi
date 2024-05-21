@@ -3,14 +3,18 @@
     :src="img_url"
     mode="scaleToFill"
     :style="{
-      transform: `translate(${translateX}px, ${translateY}px) scale(${scale}) rotate(${rotate}deg)`
+      transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`,
+      width: `100vw`,
+      height: `${imageHeight}px`
     }"
     :show-menu-by-longpress="true"
     class="img-block"
+    @load="imageLoad"
     @touchstart="touchStart"
     @touchmove="touchMove"
     @touchend="touchEnd"
   ></image>
+  <!-- transform: `translate(${translateX}px, ${translateY}px) scale(${scale}) rotate(${rotate}deg)`, -->
 </template>
 
 <script>
@@ -20,12 +24,17 @@ export default {
     img_url: {
       //名称
       type: String,
-      default: ""
+      default: "",
+      systemInfo: null
     }
-
+  },
+  mounted() {
+    const res = uni.getSystemInfoSync();
+    this.systemInfo = res;
   },
   data() {
     return {
+      imageHeight: 0,
       data: [],
       timer: null,
       popupShow: false,
@@ -44,6 +53,11 @@ export default {
     };
   },
   methods: {
+    imageLoad: function (e) {
+      let $width = e.detail.width; //获取图片真实宽高
+      let $height = e.detail.height;
+      this.imageHeight = (this.systemInfo.screenWidth * $height) / $width;
+    },
     //实现单指拖拽比较简单，只需要记录移动的点坐标，然后减去起始点坐标，就可以求出相对页面的移动距离
     touchStart(e) {
       const touches = e.touches;

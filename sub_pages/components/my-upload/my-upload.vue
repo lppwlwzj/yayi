@@ -22,15 +22,6 @@
             class="upload-img"
             :show-menu-by-longpress="true"
           ></image>
-          <!-- <div class="upload-img">
-            <u--image
-            :src="previewUrl"
-              mode="scaleToFill"
-              width="100%"
-              heig
-              :showMenuByLongpress="true"
-            ></u--image>
-          </div> -->
           <image
             @tap.stop="preview(img_url)"
             :src="require('../../../static//images/preview.png')"
@@ -54,19 +45,6 @@
       <view class="fc img_wrapper">
         <video :src="img_url" v-if="img_url.indexOf('mp4') > -1"></video>
         <TouchScaleImg :img_url="img_url" v-else/>
-        <!-- <image
-          :src="img_url"
-          v-else
-          mode="scaleToFill"
-          :style="{
-            transform: `translate(${translateX}px, ${translateY}px) scale(${scale}) rotate(${rotate}deg)`
-          }"
-          :show-menu-by-longpress="true"
-          class="img-block"
-          @touchstart="touchStart"
-          @touchmove="touchMove"
-          @touchend="touchEnd"
-        ></image> -->
       </view>
     </u-popup>
   </view>

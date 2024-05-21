@@ -129,6 +129,7 @@
           </Upload>
           <view class="diagnose-text">
             <u--textarea
+               autoHeight
               :disabled="disabled"
               v-model="form.adviceContent"
               border="none"
@@ -298,6 +299,7 @@
           </view>
           <view class="diagnose-text">
             <u--textarea
+              autoHeight
               :disabled="disabled"
               v-model="form.designAdvice"
               border="none"
@@ -550,9 +552,43 @@
         </view>
       </Upload>
     </view>
+    <view class="rfaw" style="margin: 18rpx 0">
+      <view class="input">
+        <u--input
+          :disabled="disabled"
+          placeholder="上釉"
+          disabledColor="#fff"
+          placeholderStyle="color:#dd524d63"
+          v-model="form.shangyou"
+          border="none"
+          :customStyle="{
+            padding: '20rpx 12rpx'
+          }"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+      <view class="input">
+        <u--input
+          :disabled="disabled"
+          :customStyle="{
+            padding: '20rpx 12rpx'
+          }"
+          placeholderStyle="color:#dd524d63"
+          placeholder="上瓷"
+          disabledColor="#fff"
+          v-model="form.shangci"
+          border="none"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+    </view>
     <!-- <view class="rfa" style="margin: 18rpx 0; font-size: 18px;font-weight: 600;"> 生产问题 </view> -->
-    <view class="rfa" style="margin: 18rpx 0">
+    <view class="rfa" style="margin: 18rpx 0;height: 160rpx;">
       <u--textarea
+      class="problem-text"
+        autoHeight
         :disabled="disabled"
         v-model="form.problem"
         border="none"
@@ -737,6 +773,8 @@ export default {
         tiepianColor: "",
         CADImg: "",
         problem:"",
+        shangyou:"",
+        shangci: "",
         shangyouImg: "",
         shangciImg: "",
         checiImg: "",
@@ -1137,6 +1175,8 @@ page {
     margin: 0 12rpx;
     width: 70%;
     background-color: #fff;
+    min-height: 160rpx;
+    align-self: flex-start;
     // height: 200rpx;
     // border-radius: 36rpx;
   }
@@ -1256,5 +1296,8 @@ page {
 /deep/ .u-popup__content__close--top-left {
   top: 65px !important;
   left: 20px !important;
+}
+.problem-text{
+  height: 100%
 }
 </style>
