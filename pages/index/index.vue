@@ -6,6 +6,8 @@
         mode="widthFix"
         class="logo"
       ></image>
+      <!-- <button type="default" open-type="getUserInfo" @getuserinfo="appLoginWx">微信登录</button> -->
+      <!-- <button open-type="getPhoneNumber" @getphonenumber="getUserPhone">微信手机号登录</button> -->
       <view class="search">
         <u--input
           :customStyle="{
@@ -184,6 +186,45 @@ export default {
   },
   options: { styleIsolation: "shared" }, //这样deep的样式在微信小程序上才可以显示
   methods: {
+//     getUserPhone(e) {
+//     // 获取code 小程序专有，用户登录凭证。
+//     uni.login({
+//             provider: 'weixin',
+//             success(login) {
+//                 console.log(login);
+//             }
+//     })    
+//     //手机号加密数据
+//     if (e.detail.errMsg == 'getPhoneNumber:ok') {
+//         // 获取 encryptedData 与 iv 传给后台进行解析
+//         console.log(e)
+//         //传给后端的参数
+//     } else {
+//         this.$operate.toast({
+//             title: '授权失败无法登录！'
+//         })
+//     }
+// },
+
+//     appLoginWx(){
+//     // 获取用户信息
+//     uni.getUserInfo({
+//         provider: 'weixin',
+//         lang:'zh_CN',
+//         success: userInfo=> {
+//             console.log(userInfo,'userInfo');
+//             uni.login({
+//                 provider: 'weixin',
+//                 success: loginInfo=> {
+//                     console.log(loginInfo,'loginInfo');     
+//                 }
+//             });
+//          },
+//         fail:err=>{
+//             console.log(err,'err')
+//         }
+//     });
+// },
     async getInfo() {
       const res = await this.$api.getPreinstall();
       if (!res.code) {
