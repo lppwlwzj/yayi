@@ -20,5 +20,8 @@ export default {
 @import "uview-ui/index.scss";
 /*每个页面公共css */
 @import "@/uni_modules/uni-scss/index.scss";
-
+.u-popup__content__close--top-left {
+  top: 75px !important;
+  left: 28px !important;
+}
 </style>

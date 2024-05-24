@@ -188,7 +188,7 @@ export default {
   height: 320px;
 }
 /deep/ .u-popup__content__close--top-left {
-  top: 65px  !important;
-  left: 20px  !important;
+  top: 75px !important;
+  left: 28px !important;
 }
 </style>
