@@ -129,7 +129,7 @@
           </Upload>
           <view class="diagnose-text">
             <u--textarea
-               autoHeight
+              autoHeight
               :disabled="disabled"
               v-model="form.adviceContent"
               border="none"
@@ -374,6 +374,7 @@
                 </u-checkbox>
               </u-checkbox-group>
               <image class="icon-image" :src="item.url" />
+     
               <view class="u-page__slide-item">
                 <u-slider
                   :value="item.value"
@@ -389,12 +390,20 @@
                 ></u-slider>
                 <view class="text">{{ item.text }} {{ item.value }}%</view>
               </view>
-              <view>
+              <view class="slide-img">
                 <image
+                  mode="aspectFill"
                   @click="handleChoseImg(item.key)"
                   class="icon-image"
                   :src="item.img || require('../../static/images/upload.png')"
                 />
+                <image
+                v-show="item.img"
+                @tap.stop="preview(item.img)"
+                :src="require('../../static/images/preview.png')"
+                class="preview"
+                mode="aspectFill"
+              ></image>
               </view>
             </view>
           </view>
@@ -585,9 +594,9 @@
       </view>
     </view>
     <!-- <view class="rfa" style="margin: 18rpx 0; font-size: 18px;font-weight: 600;"> 生产问题 </view> -->
-    <view class="rfa" style="margin: 18rpx 0;height: 160rpx;">
+    <view class="rfa" style="margin: 18rpx 0; height: 160rpx">
       <u--textarea
-      class="problem-text"
+        class="problem-text"
         autoHeight
         :disabled="disabled"
         v-model="form.problem"
@@ -772,8 +781,8 @@ export default {
         proxy: "",
         tiepianColor: "",
         CADImg: "",
-        problem:"",
-        shangyou:"",
+        problem: "",
+        shangyou: "",
         shangci: "",
         shangyouImg: "",
         shangciImg: "",
@@ -1297,7 +1306,10 @@ page {
   top: 75px !important;
   left: 28px !important;
 }
-.problem-text{
-  height: 100%
+.problem-text {
+  height: 100%;
+}
+.slide-img{
+  position: relative;
 }
 </style>

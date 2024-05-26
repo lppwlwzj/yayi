@@ -18,6 +18,7 @@
         <!-- 昵称 -->
         <u-form-item label="账号" prop="nickname">
           <u--input
+            :disabled="true"
             placeholder=" "
             disabledColor="#fff"
             v-model="form.usercount"
@@ -85,6 +86,9 @@
 
         </u-form-item>
 
+        <!-- <view class="btn" @tap="login"> 登录 </view> -->
+        
+        <button class="btn" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" v-show="show">授权手机号</button>
         <view class="btn" @tap="login"> 登录 </view>
       </view>
     </u--form>
@@ -92,8 +96,7 @@
 </template>
 
 <script>
-import { onLoad } from 'uview-ui/libs/mixin/mixin';
-
+import WXBizDataCrypt from "../../common/WXBizDataCrypt.js" // 需要引入
 export default {
   data() {
     return {
@@ -122,16 +125,66 @@ export default {
           }
         ]
       },
-      address: []
+      address: [],
+      appid:"wxde671469f6dd9711",
+      phone_code:"",
+      phone_encryptedData:"",
+      phone_iv:"",
+      login_code:"",
+      openid:"",
+      login_code:"",
+      session_key:"",
+      show:true
+      
     };
   },
   onLoad:function() {
      const user =  uni.getStorageSync('user');
      if(user) {
+      this.show = false;
       this.form = {...user}
+     }else {
+      uni.login({
+				    provider: 'weixin',
+				    success: res => {
+						this.login_code = res.code // 获得的code
+            this.get_miyao()
+					}
+				    
+				});
      }
   },
   methods: {
+    jiemi(){ // 解密需要appid 会话密钥；然后需要手机号的加密字段
+				let pc = new WXBizDataCrypt(this.appid,  this.session_key);
+				let data = pc.decryptData(this.phone_encryptedData , this.phone_iv);  
+				this.form.usercount = data.phoneNumber // 手机号
+			},
+    getPhoneNumber(res){ // 获取手机号
+				this.phone_code = res.detail.code // 获得的手机code
+				this.phone_encryptedData = res.detail.encryptedData //用于解密
+				this.phone_iv = res.detail.iv // 用于解密
+        this.jiemi();
+        this.show = false
+			},
+
+    get_miyao(){ // 获取密钥 === 需要登录才可以获取密钥
+				uni.request({
+				    url: 'https://api.weixin.qq.com/sns/jscode2session',// 请求微信服务器
+				    method:'GET',
+				    data: {
+						appid: this.appid,        //你的小程序的APPID
+						secret: '8163e585493cb7ac881574e1cec415a2',    //你的小程序秘钥secret,  
+						js_code: 	this.login_code,    //wx.login 登录成功后的code
+						grant_type:'authorization_code'
+				    },
+				    success: (res) => {
+				        this.openid=res.data.openid    //openid 用户唯一标识
+				        this.session_key=res.data.session_key    //session_key  会话密钥
+				    }
+				});
+			},
+
     async login() {
       this.$refs.uForm
         .validate()
@@ -256,5 +309,8 @@ export default {
 
 /deep/.u-form-item__body__left__content__label {
   color: $uni-color-theme;
+}
+.slide-img{
+  position: relative;
 }
 </style>

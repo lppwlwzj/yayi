@@ -81,7 +81,7 @@
         mode="aspectFill"
         style="width: 96px; height: 96px; margin-bottom: 4px"
       ></image>
-      ,<text>暂无数据</text>
+      <text>暂无数据</text>
     </view>
     <view class="footer rfa">
       <navigator :url="`/sub_pages/backLogin/backLogin`">
