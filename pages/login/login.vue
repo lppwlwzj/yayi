@@ -181,7 +181,10 @@ export default {
 				    success: (res) => {
 				        this.openid=res.data.openid    //openid 用户唯一标识
 				        this.session_key=res.data.session_key    //session_key  会话密钥
-				    }
+				    },
+            fail:res=>{
+              uni.showToast({title:`${res.errMsg},login code:${this.login_code}`,duration: 3000})
+            }
 				});
 			},
 
