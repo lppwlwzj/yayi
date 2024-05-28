@@ -1,6 +1,7 @@
 /**
  * 在这里定义和用户相关的路由处理函数，供 /router/user.js 模块进行调用
  */
+const axios = require("axios");
 
 //  导入数据库操作模块
 const db = require("../db/index");
@@ -79,6 +80,26 @@ exports.list = (req, res) => {
       }
     });
   });
+};
+
+exports.getMiyao = (req, res) => {
+  const { login_code } = req.body;
+  axios
+    .get("https://api.weixin.qq.com/sns/jscode2session", {
+      params: {
+        appid: this.appid, //你的小程序的APPID
+        secret: "8163e585493cb7ac881574e1cec415a2", //你的小程序秘钥secret,
+        js_code: login_code, //wx.login 登录成功后的code
+        grant_type: "authorization_code"
+      }
+    })
+    .then((res) => {
+      console.log(res.data.id);
+      console.log(res.data.title);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.log = (req, res) => {
