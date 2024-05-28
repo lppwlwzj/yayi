@@ -28,29 +28,8 @@
             suffixIconStyle=" color: #dd524dab !important;"
           ></u--input>
         </u-form-item>
-    
         <u-form-item label="密码" prop="password">
-          <!-- <u--input
-            :password="!visible"
-            placeholder=" "
-            disabledColor="#fff"
-            v-model="form.password"
-            border="none"
-            inputAlign="left"
-          >
-            
-            <template slot="suffix">
-              <u-icon
-                slot="suffix"
-                @click="visible = !visible"
-                size="18"
-                color="#dd524dab"
-                :name="visible ? 'eye' : 'eye-off'"
-              ></u-icon>
-            </template>
-          </u--input> -->
-
-          		          <view class="u-demo-block__content">
+       <view class="u-demo-block__content">
         <!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
         <!-- #ifndef APP-NVUE -->
         <u-input placeholder=" "   
@@ -85,9 +64,6 @@
     </view>
 
         </u-form-item>
-
-        <!-- <view class="btn" @tap="login"> 登录 </view> -->
-        
         <button class="btn" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" v-show="show">授权手机号</button>
         <view class="btn" @tap="login"> 登录 </view>
       </view>
@@ -159,13 +135,13 @@ export default {
 				let pc = new WXBizDataCrypt(this.appid,  this.session_key);
 				let data = pc.decryptData(this.phone_encryptedData , this.phone_iv);  
 				this.form.usercount = data.phoneNumber // 手机号
+        this.show = false
 			},
     getPhoneNumber(res){ // 获取手机号
 				this.phone_code = res.detail.code // 获得的手机code
 				this.phone_encryptedData = res.detail.encryptedData //用于解密
 				this.phone_iv = res.detail.iv // 用于解密
         this.jiemi();
-        this.show = false
 			},
 
    async get_miyao(){ 
@@ -175,26 +151,8 @@ export default {
       });
       if(res.code === 0 ) {
         this.openid=res.re.openid    //openid 用户唯一标识
-				        this.session_key=res.re.session_key    //session_key  会话密钥
+				this.session_key=res.re.session_key    //session_key  会话密钥
       }
-			 
-			// uni.request({
-				//     url: 'https://api.weixin.qq.com/sns/jscode2session',// 请求微信服务器
-				//     method:'GET',
-				//     data: {
-				// 		appid: this.appid,        //你的小程序的APPID
-				// 		secret: '8163e585493cb7ac881574e1cec415a2',    //你的小程序秘钥secret,  
-				// 		js_code: 	this.login_code,    //wx.login 登录成功后的code
-				// 		grant_type:'authorization_code'
-				//     },
-				//     success: (res) => {
-				//         this.openid=res.data.openid    //openid 用户唯一标识
-				//         this.session_key=res.data.session_key    //session_key  会话密钥
-				//     },
-        //     fail:res=>{
-        //       uni.showToast({title:`${res.errMsg},login code:${this.login_code}`,duration: 3000})
-        //     }
-				// });
 			},
 
     async login() {
@@ -214,21 +172,6 @@ export default {
         });
     },
     async handleRegister() {
-      // // #ifdef MP-WEIXIN
-      // <view>仅在5+app平台上显示代码</view>;
-      // // #endif
-
-      // <!-- #ifndefMP-WEIXIN -->
-      //       <view>
-      //         <slot name="suffix">
-      //           <u-icon
-      //             @click="visible = !visible"
-      //             size="18"
-      //             color="#dd524dab"
-      //             :name="visible ? 'eye' : 'eye-off'"
-      //           ></u-icon>
-      //         </slot>
-      //       </view>
       const res = await this.$api.login({
         ...this.form
       });
@@ -328,7 +271,5 @@ export default {
 /deep/.u-form-item__body__left__content__label {
   color: $uni-color-theme;
 }
-.slide-img{
-  position: relative;
-}
+
 </style>
