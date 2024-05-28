@@ -173,7 +173,11 @@ export default {
       const res = await this.$api.getmiyao({
         login_code: 	this.login_code
       });
-
+      if(res.code === 0 ) {
+        this.openid=res.re.openid    //openid 用户唯一标识
+				        this.session_key=res.re.session_key    //session_key  会话密钥
+      }
+			 
 			// uni.request({
 				//     url: 'https://api.weixin.qq.com/sns/jscode2session',// 请求微信服务器
 				//     method:'GET',
@@ -194,6 +198,12 @@ export default {
 			},
 
     async login() {
+      if(!this.usercount || !this.password) {
+        uni.showToast({
+          title: "请输入账号密码",
+        });
+        return;
+      }
       this.$refs.uForm
         .validate()
         .then(() => {
