@@ -22,7 +22,10 @@ const install = (Vue, vm) => {
 
 
     getRegisterCover: () => vm.$u.http.get("/api/index/registerCover"),
-    register: (data) => vm.$u.http.post("/api/user/register", data)
+    register: (data) => vm.$u.http.post("/api/user/register", data),
+    getmiyao: (data) => {
+      return vm.$u.http.post("/api/user/getmiyao", data)
+    }
   };
 };
 

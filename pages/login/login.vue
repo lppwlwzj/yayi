@@ -168,24 +168,29 @@ export default {
         this.show = false
 			},
 
-    get_miyao(){ // 获取密钥 === 需要登录才可以获取密钥
-				uni.request({
-				    url: 'https://api.weixin.qq.com/sns/jscode2session',// 请求微信服务器
-				    method:'GET',
-				    data: {
-						appid: this.appid,        //你的小程序的APPID
-						secret: '8163e585493cb7ac881574e1cec415a2',    //你的小程序秘钥secret,  
-						js_code: 	this.login_code,    //wx.login 登录成功后的code
-						grant_type:'authorization_code'
-				    },
-				    success: (res) => {
-				        this.openid=res.data.openid    //openid 用户唯一标识
-				        this.session_key=res.data.session_key    //session_key  会话密钥
-				    },
-            fail:res=>{
-              uni.showToast({title:`${res.errMsg},login code:${this.login_code}`,duration: 3000})
-            }
-				});
+   async get_miyao(){ 
+    // 获取密钥 === 
+      const res = await this.$api.getmiyao({
+        login_code: 	this.login_code
+      });
+
+			// uni.request({
+				//     url: 'https://api.weixin.qq.com/sns/jscode2session',// 请求微信服务器
+				//     method:'GET',
+				//     data: {
+				// 		appid: this.appid,        //你的小程序的APPID
+				// 		secret: '8163e585493cb7ac881574e1cec415a2',    //你的小程序秘钥secret,  
+				// 		js_code: 	this.login_code,    //wx.login 登录成功后的code
+				// 		grant_type:'authorization_code'
+				//     },
+				//     success: (res) => {
+				//         this.openid=res.data.openid    //openid 用户唯一标识
+				//         this.session_key=res.data.session_key    //session_key  会话密钥
+				//     },
+        //     fail:res=>{
+        //       uni.showToast({title:`${res.errMsg},login code:${this.login_code}`,duration: 3000})
+        //     }
+				// });
 			},
 
     async login() {

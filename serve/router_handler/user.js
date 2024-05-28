@@ -87,18 +87,21 @@ exports.getMiyao = (req, res) => {
   axios
     .get("https://api.weixin.qq.com/sns/jscode2session", {
       params: {
-        appid: this.appid, //你的小程序的APPID
+        appid:'wxde671469f6dd9711', //你的小程序的APPID
         secret: "8163e585493cb7ac881574e1cec415a2", //你的小程序秘钥secret,
         js_code: login_code, //wx.login 登录成功后的code
         grant_type: "authorization_code"
       }
     })
-    .then((res) => {
-      console.log(res.data.id);
-      console.log(res.data.title);
+    .then((_res) => {
+      res.send({
+        code: 0,
+        message: "成功！",
+        re: _res.data
+      });
     })
     .catch((err) => {
-      console.log(err);
+      return res.cc(err);
     });
 };
 
