@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { duration } from "moment";
 import WXBizDataCrypt from "../../common/WXBizDataCrypt.js" // 需要引入
 export default {
   data() {
@@ -123,9 +124,20 @@ export default {
       uni.login({
 				    provider: 'weixin',
 				    success: res => {
+              uni.showToast({
+            title: '登录获取到code,' + res.code ,
+            icon: "none"
+            });
 						this.login_code = res.code // 获得的code
             this.get_miyao()
-					}
+					},
+          fail:(res)=> {
+            uni.showToast({
+            title: '登录失败了 ' + res.errMsg ,
+            icon: "none",
+            duration:3000
+            });
+          }
 				    
 				});
      }
@@ -159,6 +171,7 @@ export default {
       if(!this.usercount || !this.password) {
         uni.showToast({
           title: "请输入账号密码",
+          icon: "none"
         });
         return;
       }
@@ -267,7 +280,6 @@ export default {
     color: #dd524dab !important;
   }
 }
-
 /deep/.u-form-item__body__left__content__label {
   color: $uni-color-theme;
 }
