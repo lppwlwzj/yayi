@@ -123,10 +123,20 @@ export default {
       uni.login({
 				    provider: 'weixin',
 				    success: res => {
+              uni.showToast({
+          title: '授权登录成功',
+          icon: "none"
+        });
 						this.login_code = res.code // 获得的code
             this.get_miyao()
-					}
-				    
+			   	},
+           fail: res => {
+            uni.showToast({
+          title: res.errMsg,
+          icon: "none"
+        });
+			   	},
+
 				});
      }
   },
