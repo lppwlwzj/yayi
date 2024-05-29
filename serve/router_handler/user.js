@@ -14,6 +14,8 @@ const jwt = require("jsonwebtoken");
 // 导入配置文件
 const config = require("../config");
 
+const WXBizDataCrypt = require("../common/WXBizDataCrypt");
+
 // 登录的处理函数
 exports.login = (req, res) => {
   const userinfo = req.body;
@@ -38,15 +40,8 @@ exports.login = (req, res) => {
       expiresIn: "10h" // token 有效期为 10 个小时
     });
 
-    // req.app.set("token", tokenStr);
     req.app.logger(tokenStr, "登录了");
 
-    // const insertSql = `insert into service (
-    //   customer_id,
-    //   tryInfo,
-    //   recoverInfo,
-    //   imgList
-    // ) values ('${customer_id}','${tryInfo}','${recoverInfo}','${imgList}') `;
     // 将生成的 Token 字符串响应给客户端
     res.send({
       code: 0,
@@ -87,7 +82,7 @@ exports.getMiyao = (req, res) => {
   axios
     .get("https://api.weixin.qq.com/sns/jscode2session", {
       params: {
-        appid:'wxde671469f6dd9711', //你的小程序的APPID
+        appid: "wxde671469f6dd9711", //你的小程序的APPID
         secret: "8163e585493cb7ac881574e1cec415a2", //你的小程序秘钥secret,
         js_code: login_code, //wx.login 登录成功后的code
         grant_type: "authorization_code"
@@ -103,6 +98,33 @@ exports.getMiyao = (req, res) => {
     .catch((err) => {
       return res.cc(err);
     });
+};
+
+exports.jiemi = (req, res) => {
+  const {
+    appid,
+    openid,
+    session_key,
+    phone_code,
+    phone_encryptedData,
+    phone_iv
+  } = req.body;
+  console.log("🚀 ~ req.body:", req.body);
+  try {
+    // 解密需要appid 会话密钥；然后需要手机号的加密字段
+    let pc = new WXBizDataCrypt(appid, session_key);
+    let data = pc.decryptData(phone_encryptedData, phone_iv);
+    console.log("🚀 ~ req.data-----:", data);
+
+    res.send({
+      code: 0,
+      message: "成功！",
+      re: data
+    });
+  } catch (error) {
+    console.log("🚀 ~ error:", error)
+    return res.cc(error);
+  }
 };
 
 exports.log = (req, res) => {

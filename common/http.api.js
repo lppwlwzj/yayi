@@ -25,7 +25,9 @@ const install = (Vue, vm) => {
     register: (data) => vm.$u.http.post("/api/user/register", data),
     getmiyao: (data) => {
       return vm.$u.http.post("/api/user/getmiyao", data)
-    }
+    },
+    jiemi: (data) => vm.$u.http.post("/api/user/jiemi", data),
+
   };
 };
 

@@ -1,6 +1,5 @@
 <template>
   <view class="register fc">
-
     <u--form
       labelWidth="auto"
       labelPosition="left"
@@ -29,42 +28,49 @@
           ></u--input>
         </u-form-item>
         <u-form-item label="密码" prop="password">
-       <view class="u-demo-block__content">
-        <!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
-        <!-- #ifndef APP-NVUE -->
-        <u-input placeholder=" "   
-           :password="!visible"
-            disabledColor="#fff"
-            v-model="form.password"
-            border="none"
-            inputAlign="left">
-      <!-- #endif -->
-      <!-- #ifdef APP-NVUE -->
-          <u--input  
-            placeholder=" "   
-           :password="!visible"
-            disabledColor="#fff"
-            v-model="form.password"
-            border="none"
-            inputAlign="left">
-          <!-- #endif -->
-             <u-icon
-                slot="suffix"
-                @click="visible = !visible"
-                size="18"
-                color="#dd524dab"
-                :name="visible ? 'eye' : 'eye-off'"
-              ></u-icon>
-      <!-- #ifndef APP-NVUE -->
-      </u-input>
-      <!-- #endif -->
-      <!-- #ifdef APP-NVUE -->
-      </u--input>
-      <!-- #endif -->
-    </view>
-
+          <view class="u-demo-block__content">
+                   
+            <!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
+                <!-- #ifndef APP-NVUE -->
+        <u-input placeholder=" "   
+           :password="!visible"
+            disabledColor="#fff"
+            v-model="form.password"
+            border="none"
+            inputAlign="left">
+      <!-- #endif -->
+      <!-- #ifdef APP-NVUE -->
+          <u--input  
+            placeholder=" "   
+           :password="!visible"
+            disabledColor="#fff"
+            v-model="form.password"
+            border="none"
+            inputAlign="left">
+          <!-- #endif -->
+             <u-icon
+                slot="suffix"
+                @click="visible = !visible"
+                size="18"
+                color="#dd524dab"
+                :name="visible ? 'eye' : 'eye-off'"
+              ></u-icon>
+      <!-- #ifndef APP-NVUE -->
+      </u-input>
+      <!-- #endif -->
+      <!-- #ifdef APP-NVUE -->
+      </u--input>
+      <!-- #endif -->   
+          </view>
         </u-form-item>
-        <button class="btn" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" v-show="show">授权手机号</button>
+        <button
+          class="btn"
+          open-type="getPhoneNumber"
+          @getphonenumber="getPhoneNumber"
+          v-show="show"
+        >
+          授权手机号
+        </button>
         <view class="btn" @tap="login"> 登录 </view>
       </view>
     </u--form>
@@ -72,7 +78,6 @@
 </template>
 
 <script>
-import WXBizDataCrypt from "../../common/WXBizDataCrypt.js" // 需要引入
 export default {
   data() {
     return {
@@ -102,73 +107,108 @@ export default {
         ]
       },
       address: [],
-      appid:"wxde671469f6dd9711",
-      phone_code:"",
-      phone_encryptedData:"",
-      phone_iv:"",
-      login_code:"",
-      openid:"",
-      login_code:"",
-      session_key:"",
-      show:true
-      
+      appid: "wxde671469f6dd9711",
+      phone_code: "",
+      phone_encryptedData: "",
+      phone_iv: "",
+      login_code: "",
+      openid: "",
+      login_code: "",
+      session_key: "",
+      show: true
     };
   },
-  onLoad:function() {
-     const user =  uni.getStorageSync('user');
-     if(user) {
+  onLoad: function () {
+    const user = uni.getStorageSync("user");
+    if (user) {
       this.show = false;
-      this.form = {...user}
-     }else {
-      uni.login({
-				    provider: 'weixin',
-				    success: res => {
-              uni.showToast({
-          title: '授权登录成功',
-          icon: "none"
-        });
-						this.login_code = res.code // 获得的code
-            this.get_miyao()
-			   	},
-           fail: res => {
-            uni.showToast({
-          title: res.errMsg,
-          icon: "none"
-        });
-			   	},
-
-				});
-     }
+      this.form = { ...user };
+    } else {
+      this.getWxUserCode();
+    }
   },
   methods: {
-    jiemi(){ // 解密需要appid 会话密钥；然后需要手机号的加密字段
-				let pc = new WXBizDataCrypt(this.appid,  this.session_key);
-				let data = pc.decryptData(this.phone_encryptedData , this.phone_iv);  
-				this.form.usercount = data.phoneNumber // 手机号
-        this.show = false
-			},
-    getPhoneNumber(res){ // 获取手机号
-				this.phone_code = res.detail.code // 获得的手机code
-				this.phone_encryptedData = res.detail.encryptedData //用于解密
-				this.phone_iv = res.detail.iv // 用于解密
-        this.jiemi();
-			},
-
-   async get_miyao(){ 
-    // 获取密钥 === 
-      const res = await this.$api.getmiyao({
-        login_code: 	this.login_code
+    getWxUserCode() {
+      uni.login({
+        provider: "weixin",
+        success: (res) => {
+          uni.showToast({
+            title: "授权登录成功",
+            icon: "none"
+          });
+          this.login_code = res.code; // 获得的code
+        },
+        fail: (res) => {
+          uni.showToast({
+            title: res.errMsg,
+            icon: "none"
+          });
+        }
       });
-      if(res.code === 0 ) {
-        this.openid=res.re.openid    //openid 用户唯一标识
-				this.session_key=res.re.session_key    //session_key  会话密钥
+    },
+    async jiemi(params) {
+      const res = await this.$api.jiemi(params);
+      if (res.code === 0) {
+        uni.showToast({
+          title: "解密成功！",
+          icon: "none"
+        });
+        this.form.usercount = res.re.phoneNumber; // 手机号
+        uni.hideLoading();
+        this.show = false;
+      } else {
+        uni.hideLoading({
+          title: "授权失败，请重新操作"
+        });
       }
-			},
+    },
+    async get_miyao() {
+      // 获取密钥 ===
+      const res = await this.$api.getmiyao({
+        login_code: this.login_code
+      });
+      if (res.code === 0) {
+        uni.showToast({
+          title: "获取密钥成功！",
+          icon: "none"
+        });
+        return res.re;
+      }
+    },
+    getPhoneNumber(res) {
+      uni.showLoading({
+        title: "加载中"
+      });
+
+      const that = this;
+      if (!that.login_code) {
+        that.getWxUserCode();
+        uni.hideLoading();
+        return false;
+      }
+      that.get_miyao().then((data) => {
+        // this.openid =data.openid; //openid 用户唯一标识
+        // this.session_key = data.session_key; //session_key  会话密钥
+        // 获取手机号
+        // that.phone_code = res.detail.code; // 获得的手机code
+        // that.phone_encryptedData = res.detail.encryptedData; //用于解密
+        // that.phone_iv = res.detail.iv; // 用于解密
+        const params = {
+          openid: data.openid,
+          appid: that.appid,
+          session_key: data.session_key,
+          phone_code: res.detail.code,
+          phone_encryptedData: res.detail.encryptedData,
+          phone_iv: res.detail.iv
+        };
+        that.jiemi(params);
+      });
+    },
 
     async login() {
-      if(!this.usercount || !this.password) {
+      if (!this.usercount || !this.password) {
         uni.showToast({
-          title: "请输入账号密码",
+          title: "请输入账号密码"
         });
         return;
       }
@@ -281,5 +321,4 @@ export default {
 /deep/.u-form-item__body__left__content__label {
   color: $uni-color-theme;
 }
-
 </style>
