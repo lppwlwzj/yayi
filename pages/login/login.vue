@@ -150,10 +150,10 @@ export default {
       const res = await this.$api.jiemi(params);
       console.log("🚀 ~ jiemi ~ res:", res)
       if (res.code === 0) {
-        uni.showToast({
-          title: "解密成功！",
-          icon: "none"
-        });
+        // uni.showToast({
+        //   title: "解密成功！",
+        //   icon: "none"
+        // });
         this.form.usercount = res.re.phoneNumber; // 手机号
         uni.hideLoading();
         this.show = false;
@@ -169,10 +169,10 @@ export default {
         login_code: this.login_code
       });
       if (res.code === 0) {
-        uni.showToast({
-          title: "获取密钥成功！",
-          icon: "none"
-        });
+        // uni.showToast({
+        //   title: "获取密钥成功！",
+        //   icon: "none"
+        // });
         return res.re;
       }
     },
