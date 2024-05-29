@@ -15,7 +15,7 @@
         ></image>
 
         <!-- 昵称 -->
-        <u-form-item label="账号" prop="nickname">
+        <u-form-item label="账号" prop="usercount">
           <u--input
             :disabled="true"
             placeholder=" "
@@ -148,6 +148,7 @@ export default {
     },
     async jiemi(params) {
       const res = await this.$api.jiemi(params);
+      console.log("🚀 ~ jiemi ~ res:", res)
       if (res.code === 0) {
         uni.showToast({
           title: "解密成功！",
@@ -206,7 +207,7 @@ export default {
     },
 
     async login() {
-      if (!this.usercount || !this.password) {
+      if (!this.form.usercount || !this.form.password) {
         uni.showToast({
           title: "请输入账号密码"
         });
