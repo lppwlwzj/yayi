@@ -107,6 +107,13 @@
         :name="require('../../static/images/ECO-UI-09.png')"
         @click="logout"
       ></u-icon>
+
+      <navigator :url="`/sub_pages/myQuery/myQuery`">
+        <u-icon
+          size="26"
+          :name="require('../../static/images/ECO-UI-08.png')"
+        ></u-icon>
+      </navigator>
     </view>
 
     <uni-calendar

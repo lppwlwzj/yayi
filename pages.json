@@ -23,6 +23,7 @@
     {
       "root": "sub_pages",
       "pages": [
+
         {
           "path": "preUpload/preUpload",
           "style": {
@@ -73,12 +74,28 @@
             "onReachBottomDistance": 100,
             "navigationStyle": "custom"
           }
+        },
+        {
+          "path": "myQuery/myQuery",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "myQueryAdd/myQueryAdd",
+          "style": {
+            "navigationStyle": "custom"
+          }
         }
       ]
     }
   ],
   "preloadRule": {
     "sub_pages/add/add": {
+      "network": "all",
+      "packages": ["__APP__"]
+    },
+    "sub_pages/myQuery/myQuery": {
       "network": "all",
       "packages": ["__APP__"]
     },
