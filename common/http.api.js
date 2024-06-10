@@ -27,7 +27,10 @@ const install = (Vue, vm) => {
       return vm.$u.http.post("/api/user/getmiyao", data)
     },
     jiemi: (data) => vm.$u.http.post("/api/user/jiemi", data),
-
+    addZhibao: (data) => vm.$u.http.post("/api/zhibao/add", data),
+    editZhibao: (data) => vm.$u.http.post("/api/zhibao/edit", data),
+    getZhibaoList: (data) => vm.$u.http.post("/api/zhibao/list", data),
+    getZhibaoDetailById: (data) => vm.$u.http.post("/api/zhibao/detail", data),
   };
 };
 

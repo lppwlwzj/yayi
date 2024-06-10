@@ -83,9 +83,9 @@ export default {
     return {
       visible: false,
       form: {
-        usercount: "",
+        usercount: "admin",
 
-        password: ""
+        password: "123456"
       },
       membertypeList: [],
       membertypeShow: false,

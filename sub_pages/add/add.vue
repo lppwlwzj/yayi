@@ -133,7 +133,7 @@
               :disabled="disabled"
               v-model="form.adviceContent"
               border="none"
-              placeholder="请输入内容"
+              placeholder="主诉:全口/半口客户有什么问题希望得到什么改善"
             ></u--textarea>
           </view>
         </view>
@@ -303,7 +303,7 @@
               :disabled="disabled"
               v-model="form.designAdvice"
               border="none"
-              placeholder="请输入内容"
+              placeholder="方案:具体怎么去修改形态,注意事项"
             ></u--textarea>
           </view>
         </view>

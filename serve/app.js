@@ -118,6 +118,10 @@ app.use("/api/upload/delete", uploadController.deleteImg);
 const customerRouter = require("./router/customer");
 app.use("/api/customer", customerRouter);
 
+const zhibaoRouter = require("./router/zhibao");
+app.use("/api/zhibao", zhibaoRouter);
+
+
 const serviceRouter = require("./router_handler/service");
 app.use("/api/service/edit", serviceRouter.submit);
 app.use("/api/service/detail", serviceRouter.detail);
@@ -130,25 +134,25 @@ const credentials = {
     key: privateKey,
     cert: certificate
 };
-const httpsServer = https.createServer(credentials, app);
+// const httpsServer = https.createServer(credentials, app);
 // httpsServer.listen(port, () => {
 //   console.log(`api serve running at http://${host}:${port}`);
 // });
 // 配置服务器
 const port = 3010;
-// const host = '127.0.0.1'
+const host = '127.0.0.1'
 //const host = '127.0.0.1'
 //const host = '10.172.42.116'
 // const host = "192.168.4.117";
 
-const host ="gdcasa.cn"
-httpsServer.listen(port, () => {
-  console.log(`api serve running at http://${host}:${port}`);
-});
-
-// app.listen(port, () => {
+// const host ="gdcasa.cn"
+// httpsServer.listen(port, () => {
 //   console.log(`api serve running at http://${host}:${port}`);
-// });         
+// });
+
+app.listen(port, () => {
+  console.log(`api serve running at http://${host}:${port}`);
+});         
 
 // const server = httpsServer.listen(port, () => {
 //   console.log(`api serve running at http://${host}:${port}`);

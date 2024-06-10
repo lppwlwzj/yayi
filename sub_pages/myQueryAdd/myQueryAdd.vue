@@ -63,7 +63,7 @@
       </view>
       <view class="input">
         <view
-          @click="calendarOpen('dateTime')"
+          @click="calendarOpen('zhibaoDate')"
           class="rfa date-btn"
           :disabled="disabled"
         >
@@ -161,7 +161,7 @@
         placeholderStyle="color:#4c789b69"
         placeholder="下牙位"
         disabledColor="#fff"
-        v-model="form.checi"
+        v-model="form.bottom"
         border="none"
         :suffixIcon="disabled ? '' : 'edit-pen'"
         suffixIconStyle=" color: #4c789b69 !important;"
@@ -301,39 +301,33 @@ export default {
       service_id: "",
       startDate: "",
       endDate: "",
-      time: Number(new Date()),
       userInfo: {},
       id: "", //数据库自动生成的
-      customer_id: "", //自己生成的随机字符串，用来create时确定上传图片的唯一标识
       operateType: "create",
 
-      previewImg: "",
+      // previewImg: "",
       popupShow: false,
       statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       form: {
-        patient:'',
-        dateTime:'',
-        orderNo:'',
-        zhibaoDate:'',
-        hospital:'',
-        origin:'',
-        product:'',
-        colorNo:'',
-        top:'',
-        bottom:'',
-        liscens:'',
-        certificate:'',
-        business:'',
-        imgQr:''
+        patient: "",
+        dateTime: "",
+        orderNo: "",
+        zhibaoDate: "",
+        hospital: "",
+        origin: "",
+        product: "",
+        colorNo: "",
+        top: "",
+        bottom: "",
+        liscens: "",
+        certificate: "",
+        business: "",
+        imgQr: ""
       },
       show: false,
-
       timeKey: "",
-      activeIndex: "" //滑动条选择图片的时候的key
     };
   },
-  components: {},
-
   onReady() {
     this.startDate = getDate(new Date(), -60).fullDate;
     this.endDate = getDate(new Date(), 30).fullDate;
@@ -341,47 +335,17 @@ export default {
   onLoad: function (option) {
     if (option.id) {
       this.id = option.id;
-      this.operateType = option.type;
-      this.getCustomerDetailById(option.id);
+      this.getZhibaoDetailById(option.id);
     }
-    if (this.operateType === "create")
-      this.customer_id = Math.random().toString(36).substring(2, 6);
-    this.userInfo = uni.getStorageSync("userInfo");
   },
   options: { styleIsolation: "shared" },
   computed: {
     disabled() {
       return this.operateType === "view";
-    },
-    designList() {
-      return this.form.designList;
-    },
-
-    privacyVisible() {
-      return ["13588805863", "18516187777", "13666633692"].includes(
-        this.userInfo.usercount
-      );
     }
   },
 
   methods: {
-    getImg(url) {
-      return url?.indexOf("mp4") > -1
-        ? require("../../static/images/video.png")
-        : url;
-    },
-    preview(url) {
-      this.popupShow = true;
-      this.previewImg = url;
-    },
-    popupClose() {
-      this.previewImg = "";
-      this.popupShow = false;
-    },
-    handleAddDesignImg(img_url) {
-      this.form.designList.push(img_url);
-    },
-
     calendarOpen(key) {
       this.timeKey = key;
       this.$refs.myCalendar.open();
@@ -389,79 +353,44 @@ export default {
     handleDaiYaTime(time) {
       this.form[this.timeKey] = time.fulldate;
     },
-
+    canceltime() {
+    },
     handleChoseImg(key) {
       this.activeIndex = key;
       this.modalShow = true;
     },
-    handleChooseConfirm(img) {
-      if (this.activeIndex === "intentList") {
-        this.form.intentImg = img;
-      } else {
-        // const index = this.dentistList.findIndex(
-        //   (item) => item.key === this.activeIndex
-        // );
-        // if (index > -1) {
-        //   this.hanldeListChange(img, index, "img");
-        // }
-      }
-      this.modalShow = false;
-    },
-    // handleEdit() {
-    //   this.operateType = "edit";
-    // },
-    async getCustomerDetailById(id) {
-      const res = await this.$api.getCustomerDetailById({
+
+    async getZhibaoDetailById(id) {
+      const res = await this.$api.getZhibaoDetailById({
         id
       });
       if (!res.code) {
         const data = res.data;
         this.form = data;
-        this.customer_id = data.customer_id;
-        this.service_id = data.service_id;
-
-        this.form.isPrivacy = this.form.isPrivacy ? true : false;
-        // this.form.designList = JSON.parse(data.designList);
-      }
-    },
-    async handleDelete() {
-      const res = await this.$api.deleteCustomer({
-        id: this.id
-      });
-      if (!res.code) {
-        uni.showToast({
-          icon: "none",
-          title: res.message
-        });
-        setTimeout(() => {
-          uni.navigateTo({
-            url: "/pages/index/index"
-          });
-        }, 500);
       }
     },
     async submit() {
-      const requestFn = this.id
-        ? this.$api.editCustomer
-        : this.$api.addCustomer;
+      const requestFn = this.id ? this.$api.editZhibao : this.$api.addZhibao;
       const res = await requestFn({
-        customer_id: this.customer_id,
         id: this.id || "",
-        ...this.form,
-        isPrivacy: this.form.isPrivacy ? 1 : 0
+        ...this.form
       });
       if (!res.code) {
         uni.showToast({
           icon: "none",
           title: res.message
         });
-        this.operateType = "edit";
-
+        // this.operateType = "edit";
         this.id = res.re.id || this.id;
         uni.showToast({
           icon: "none",
           title: "操作成功！"
         });
+        setTimeout(() => {
+          uni.redirectTo({
+            url: "/sub_pages/myQuery/myQuery"
+          });
+        }, 100);
       } else {
         uni.showToast({
           icon: "none",
@@ -472,12 +401,6 @@ export default {
 
     handleFormChange(key, value) {
       this.$set(this.form, key, value);
-    },
-    handleDesignImage(value) {
-      this.form.designList.push(value);
-    },
-    deleteDesignImg(index) {
-      this.$set(this.form.designList, index, "");
     }
   }
 };
@@ -504,7 +427,6 @@ export default {
   .input,
   .my-input {
     width: 45% !important;
-    // box-shadow: 2px 2px 5px #33333340;
     border: 1px solid #4c789b69;
     margin: 16rpx 0;
     background-color: #fff;

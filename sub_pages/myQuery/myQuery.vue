@@ -21,7 +21,7 @@
           width: '680rpx !important',
           border: 'solid 1px #396990b3 !important',
           margin: '12rpx auto !important',
-          padding: '16rpx 0 !important'
+          padding: '16rpx 20rpx !important'
         }"
         placeholderStyle="color:#396990b3"
         placeholder="请输入姓名/订单编号查询"
@@ -32,15 +32,6 @@
         suffixIconStyle=" color: #396990b3 !important;"
         @confirm="handleSearch"
       ></u--input>
-
-      <!-- <navigator :url="`/sub_pages/add/add`" class="keynote_con">
-        <u-icon
-          name="plus-circle"
-          color="#dd524d63"
-          size="28"
-          top="10rpx"
-        ></u-icon>
-      </navigator> -->
     </view>
 
     <view class="list-area">
@@ -48,11 +39,11 @@
         <view class="list-item rfc" v-for="(item, index) in list" :key="index">
           <view class="list-item-left rfc">
             <view class="lef-info">
-              {{ item.customer }} / {{ item.dateTime }} / {{ item.porcelain }}
+              {{ item.patient }} / {{ item.dateTime }} / {{ item.colorNo }}
             </view>
           </view>
           <navigator
-            :url="`/sub_pages/myQueryAdd/myQueryAdd?id=${item.id}&type=edit`"
+            :url="`/sub_pages/myQueryAdd/myQueryAdd?id=${item.id}`"
           >
             <view class="list-item-right"> 点击查看 </view>
           </navigator>
@@ -67,7 +58,6 @@
       ></image>
       <!-- <text>暂无数据</text> -->
     </view>
-
     <view class="footer rfa">
       <navigator :url="`/sub_pages/myQueryAdd/myQueryAdd`">
         <u-icon size="30" :name="require('./static/add.png')"></u-icon>
@@ -81,21 +71,14 @@ export default {
   data() {
     return {
       statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
-      show: false,
-      info: "",
       search: "",
       list: [],
-      userInfo: uni.getStorageSync("userInfo"),
     };
-  },
-
-  onLoad() {
-    // this.getInfo();
   },
   options: { styleIsolation: "shared" }, //这样deep的样式在微信小程序上才可以显示
   methods: {
     async handleSearch() {
-      const res = await this.$api.getCustomerList({
+      const res = await this.$api.getZhibaoList({
         search: this.search
       });
       if (!res.code) {
