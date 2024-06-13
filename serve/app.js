@@ -76,7 +76,7 @@ app.use(express.json());
 
 app.use(
   expressJWT({ secret: config.jwtSecretKey }).unless({
-    path: [/^\/api\/user/, /^\/img/]
+    path: [/^\/api\/user/, /^\/img/,/^\/api\/zhibao\/query/,]
   })
 );
 

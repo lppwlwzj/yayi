@@ -15,6 +15,8 @@ router.post('/add',zhibao_handler.addZhibao)
 router.post('/edit',zhibao_handler.editZhibao)
 router.post('/detail',zhibao_handler.getZhibaoDetailById)
 router.post('/list',zhibao_handler.getZhibaoList)
+router.post('/query',zhibao_handler.getZhibaoInfo)
+
 // router.post('/delete',zhibao_handler.deleteCustomer)
 
 
