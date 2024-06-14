@@ -147,7 +147,7 @@ const unique = (arr, val) => {
 exports.getZhibaoInfo = (req, res) => {
   const { search } = req.body;
 
-  const sql = ` select i.*   from zhibao i  where i.orderNo = ${search}`;
+  const sql = ` select i.*   from zhibao i  where i.orderNo = '${search}'`;
   db.query(sql, (err, results) => {
     if (err) return res.cc(err);
     res.send({
