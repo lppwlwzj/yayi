@@ -304,8 +304,6 @@ export default {
       userInfo: {},
       id: "", //数据库自动生成的
       operateType: "create",
-
-      // previewImg: "",
       popupShow: false,
       statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       form: {

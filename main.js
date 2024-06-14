@@ -2,10 +2,6 @@ import App from './App'
 import uView from "uview-ui";
 Vue.use(uView);
 import '@/static/css/uflex.css'
-import store from '@/store';
-let vuexStore = require("@/store/$u.mixin.js");
-Vue.mixin(vuexStore);
-
 	// // #ifdef H5
 	// // 提交前需要注释  本地调试使用
 	// const vconsole = require('vconsole')
@@ -48,7 +44,6 @@ try {
 } catch (error) {}
 
 const app = new Vue({
-	store,
 	...App
 })
 
