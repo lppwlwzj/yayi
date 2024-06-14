@@ -169,7 +169,7 @@
     </view>
     <!-- 放图片 -->
     <image
-      :src="require('./static/yawei.png')"
+      src="https://gdcasa.cn:3010/img/images/yawei.png"
       mode="scaleToFill"
       class="yawei"
     ></image>

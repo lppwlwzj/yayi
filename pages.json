@@ -95,6 +95,10 @@
       "network": "all",
       "packages": ["__APP__"]
     },
+    "sub_pages/myQueryAdd/myQueryAdd": {
+      "network": "all",
+      "packages": ["__APP__"]
+    },
     "sub_pages/myQuery/myQuery": {
       "network": "all",
       "packages": ["__APP__"]

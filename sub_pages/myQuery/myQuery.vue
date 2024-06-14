@@ -2,7 +2,7 @@
   <view class="content" :style="{ paddingTop: statusBarHeight }">
     <view class="top">
       <image
-        :src="require('./static/logo.png')"
+        src="https://gdcasa.cn:3010/img/images/logo.png"
         mode="scaleToFill"
         class="logo"
       ></image>
