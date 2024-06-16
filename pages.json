@@ -17,6 +17,14 @@
         "navigationBarTitleText": "",
         "navigationStyle": "custom"
       }
+    },
+    {
+    	"path" : "pages/zhibao/zhibao",
+    	"style" : 
+    	{
+    		"navigationBarTitleText" : "",
+    		"enablePullDownRefresh" : false
+    	}
     }
   ],
   "subPackages": [

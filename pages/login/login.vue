@@ -147,12 +147,10 @@ export default {
     },
     async jiemi(params) {
       const res = await this.$api.jiemi(params);
-      console.log("🚀 ~ jiemi ~ res:", res)
-      if (res.code === 0) {
-        // uni.showToast({
-        //   title: "解密成功！",
-        //   icon: "none"
-        // });
+      uni.showToast({
+        title: "解密结果..."+that.login_code
+      });
+      if (+res.code === 0) {
         this.form.usercount = res.re.phoneNumber; // 手机号
         uni.hideLoading();
         this.show = false;
@@ -167,32 +165,37 @@ export default {
       const res = await this.$api.getmiyao({
         login_code: this.login_code
       });
+      uni.showToast({
+        title: "获取密钥..."+JSON.stringify(res)
+      });
       if (res.code === 0) {
-        // uni.showToast({
-        //   title: "获取密钥成功！",
-        //   icon: "none"
-        // });
+        uni.showToast({
+        title: "返回密钥..."+JSON.stringify(res.re)
+      });
         return res.re;
       }
     },
     getPhoneNumber(res) {
-      uni.showLoading({
-        title: "加载中"
+      uni.showToast({
+        title: "加载中..."+that.login_code
       });
 
       const that = this;
       if (!that.login_code) {
+        uni.showToast({
+        title: "login_code 丢失了吗..."
+      });
         that.getWxUserCode();
         uni.hideLoading();
         return false;
       }
+      uni.showToast({
+        title: "请求密钥了..."
+      });
       that.get_miyao().then((data) => {
-        // this.openid =data.openid; //openid 用户唯一标识
-        // this.session_key = data.session_key; //session_key  会话密钥
-        // 获取手机号
-        // that.phone_code = res.detail.code; // 获得的手机code
-        // that.phone_encryptedData = res.detail.encryptedData; //用于解密
-        // that.phone_iv = res.detail.iv; // 用于解密
+        uni.showToast({
+        title: "准备解密了..."
+      });
         const params = {
           openid: data.openid,
           appid: that.appid,
@@ -202,6 +205,8 @@ export default {
           phone_iv: res.detail.iv
         };
         that.jiemi(params);
+      }).catch(err=> {
+        uni.hideLoading();
       });
     },
 

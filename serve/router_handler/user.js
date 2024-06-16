@@ -2,6 +2,8 @@
  * 在这里定义和用户相关的路由处理函数，供 /router/user.js 模块进行调用
  */
 const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
 
 //  导入数据库操作模块
 const db = require("../db/index");
@@ -109,12 +111,10 @@ exports.jiemi = (req, res) => {
     phone_encryptedData,
     phone_iv
   } = req.body;
-  console.log("🚀 ~ req.body:", req.body);
   try {
     // 解密需要appid 会话密钥；然后需要手机号的加密字段
     let pc = new WXBizDataCrypt(appid, session_key);
     let data = pc.decryptData(phone_encryptedData, phone_iv);
-    console.log("🚀 ~ req.data-----:", data);
 
     res.send({
       code: 0,
@@ -122,9 +122,70 @@ exports.jiemi = (req, res) => {
       re: data
     });
   } catch (error) {
-    console.log("🚀 ~ error:", error)
+    console.log("🚀 ~ error:", error);
     return res.cc(error);
   }
+};
+
+const getQrCode = (token, params) => {
+  const { page, id } = params;
+  console.log("🚀 ~ getQrCode ~ page:", page)
+  axios
+    .post(
+      `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${token}`,
+      {
+        page:page, // 需要打开的页面路径
+        scene: `${id}`, // 这个是需要传递的参数
+        width: 280,
+        check_path:false
+      },
+      {
+        responseType: "arraybuffer"
+      }
+    )
+    .then((res) => {
+      console.log("🚀 ~ .then ~ res:", res.data);
+      let src =
+        path.dirname(__dirname).replace(/\\/g, "/") +
+        `/public/images/zhibao/${id}.png`;
+      fs.writeFile(src, res.data, function (err) {
+        if (err) {
+          console.log(err);
+        }
+        return `https://gdcasa.cn:3010/img/images/zhibao/${id}.png`;
+      });
+    })
+    .catch((err) => {
+      console.log("🚀 ~ getQrCode ~ err:", err);
+      // return res.cc(err);
+    });
+};
+
+exports.getAccessToken = (req, res) => {
+  axios
+    .get("https://api.weixin.qq.com/cgi-bin/token", {
+      params: {
+        appid: "wxde671469f6dd9711", //你的小程序的APPID
+        secret: "8163e585493cb7ac881574e1cec415a2", //你的小程序秘钥secret,
+        grant_type: "client_credential"
+      }
+    })
+    .then(async (_res) => {
+      const access_token = _res.data.access_token;
+      if (access_token) {
+        const img = await getQrCode(_res.data.access_token, req.body);
+        res.send({
+          code: 0,
+          message: "成功！",
+          re: {
+            img
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      return res.cc(err);
+    });
 };
 
 exports.log = (req, res) => {

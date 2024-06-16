@@ -247,13 +247,9 @@
     >
       确认
     </view>
-    <!-- <view
-      class="btn afc"
-      @tap.stop="handleDelete"
-      v-show="['edit'].includes(operateType)"
-    >
-      删除
-    </view> -->
+    <view class="btn afc" @tap.stop="handleCreateQr" v-show="id">
+      生成二维码
+    </view>
     <u-modal
       confirmColor="#4c789b69"
       :show="modalShow"
@@ -323,7 +319,7 @@ export default {
         imgQr: ""
       },
       show: false,
-      timeKey: "",
+      timeKey: ""
     };
   },
   onReady() {
@@ -351,8 +347,7 @@ export default {
     handleDaiYaTime(time) {
       this.form[this.timeKey] = time.fulldate;
     },
-    canceltime() {
-    },
+    canceltime() {},
     handleChoseImg(key) {
       this.activeIndex = key;
       this.modalShow = true;
@@ -384,11 +379,11 @@ export default {
           icon: "none",
           title: "操作成功！"
         });
-        setTimeout(() => {
-          uni.redirectTo({
-            url: "/sub_pages/myQuery/myQuery"
-          });
-        }, 100);
+        // setTimeout(() => {
+        //   uni.redirectTo({
+        //     url: "/sub_pages/myQuery/myQuery"
+        //   });
+        // }, 100);
       } else {
         uni.showToast({
           icon: "none",
@@ -399,6 +394,13 @@ export default {
 
     handleFormChange(key, value) {
       this.$set(this.form, key, value);
+    },
+    async handleCreateQr() {
+      const res = await this.$api.getQrImg({
+        id: this.id,
+        page: "pages/zhibao/zhibao"
+      });
+      console.log("🚀 ~ .then ~ res:", res);
     }
   }
 };

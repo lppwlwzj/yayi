@@ -12,7 +12,7 @@ let uploadFolder = "../public/images"; // 设定存储文件夹为当前目录�
 let storage = multer.diskStorage({
   // 3.1 存储路径
   destination: function (req, file, cb) {
-     console.log("~ file:", file)
+
 
     // 3.1.1 允许图片上传
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype ==='video/mp4')  {
