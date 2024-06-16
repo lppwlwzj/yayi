@@ -148,7 +148,7 @@ export default {
     async jiemi(params) {
       const res = await this.$api.jiemi(params);
       uni.showToast({
-        title: "解密结果..."+that.login_code
+        title: "解密结果..."
       });
       if (+res.code === 0) {
         this.form.usercount = res.re.phoneNumber; // 手机号
@@ -176,9 +176,9 @@ export default {
       }
     },
     getPhoneNumber(res) {
-      uni.showToast({
-        title: "加载中..."+that.login_code
-      });
+      // uni.showToast({
+      //   title: "加载中..."+this.login_code
+      // });
 
       const that = this;
       if (!that.login_code) {
