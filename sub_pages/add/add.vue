@@ -374,7 +374,7 @@
                 </u-checkbox>
               </u-checkbox-group>
               <image class="icon-image" :src="item.url" />
-     
+
               <view class="u-page__slide-item">
                 <u-slider
                   :value="item.value"
@@ -398,12 +398,12 @@
                   :src="item.img || require('../../static/images/upload.png')"
                 />
                 <image
-                v-show="item.img"
-                @tap.stop="preview(item.img)"
-                :src="require('../../static/images/preview.png')"
-                class="preview"
-                mode="aspectFill"
-              ></image>
+                  v-show="item.img"
+                  @tap.stop="preview(item.img)"
+                  :src="require('../../static/images/preview.png')"
+                  class="preview"
+                  mode="aspectFill"
+                ></image>
               </view>
             </view>
           </view>
@@ -415,9 +415,10 @@
       <text style="color: red; padding-right: 24rpx"> 预计戴牙日期 </text>
       <view class="input" @click="calendarOpen('daiyaTime')">
         <view :disabled="disabled" class="rfa date-btn">
-          <view>
-            {{ `${form.daiyaTime || "日期"}` }}
+          <view v-if="form.daiyaTime" style="color: red;">
+            {{ form.daiyaTime }}
           </view>
+          <view v-else> 日期 </view>
           <u-icon size="19" name="edit-pen" color="#dd524d63"></u-icon>
         </view>
       </view>
@@ -1309,7 +1310,7 @@ page {
 .problem-text {
   height: 100%;
 }
-.slide-img{
+.slide-img {
   position: relative;
 }
 </style>
