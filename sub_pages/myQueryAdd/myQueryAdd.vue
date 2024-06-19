@@ -40,9 +40,10 @@
           class="rfa date-btn"
           :disabled="disabled"
         >
-          <view>
-            {{ `${form.dateTime || "日期"}` }}
+          <view v-if="form.dateTime" style="color: #000">
+            {{ form.dateTime }}
           </view>
+          <view v-else> 日期 </view>
           <u-icon size="19" name="edit-pen" color="#4c789b69"></u-icon>
         </view>
       </view>
@@ -67,9 +68,11 @@
           class="rfa date-btn"
           :disabled="disabled"
         >
-          <view>
-            {{ `${form.zhibaoDate || "质保日期"}` }}
+          <view v-if="form.zhibaoDate" style="color: #000">
+            {{ form.zhibaoDate }}
           </view>
+          <view v-else> 质保日期 </view>
+
           <u-icon size="19" name="edit-pen" color="#4c789b69"></u-icon>
         </view>
       </view>
@@ -218,8 +221,6 @@
         suffixIconStyle=" color: #4c789b69 !important;"
       ></u--input>
     </view>
-
-    <view class="rfa" style="margin: 18rpx 0; height: 160rpx"> </view>
     <uni-calendar
       ref="myCalendar"
       class="uni-calendar--hook"
@@ -232,7 +233,13 @@
       @confirm="handleDaiYaTime"
       @close="canceltime"
     />
-
+    <image
+      v-if="form.imgQr"
+      :src="form.imgQr"
+      mode="aspectFill"
+      class="qr-img"
+      :show-menu-by-longpress="true"
+    ></image>
     <!-- <view
       class="btn afc"
       @tap.stop="handleEdit"
@@ -247,7 +254,7 @@
     >
       确认
     </view>
-    <view class="btn afc" @tap.stop="handleCreateQr" v-show="id">
+    <view class="btn afc" @tap.stop="handleCreateQr" v-show="id && !form.imgQr">
       生成二维码
     </view>
     <u-modal
@@ -327,6 +334,7 @@ export default {
     this.endDate = getDate(new Date(), 30).fullDate;
   },
   onLoad: function (option) {
+    console.log("= this.$mp.page.route", this.$mp.page.route);
     if (option.id) {
       this.id = option.id;
       this.getZhibaoDetailById(option.id);
@@ -336,6 +344,13 @@ export default {
   computed: {
     disabled() {
       return this.operateType === "view";
+    },
+    dateTimeClass() {
+      return {
+        rfa: true,
+        "date-btn": true,
+        "date-time": !!this.form.dateTime
+      };
     }
   },
 
@@ -359,7 +374,10 @@ export default {
       });
       if (!res.code) {
         const data = res.data;
-        this.form = data;
+        this.form = {
+          imgQr: "",
+          ...data
+        };
       }
     },
     async submit() {
@@ -379,11 +397,6 @@ export default {
           icon: "none",
           title: "操作成功！"
         });
-        // setTimeout(() => {
-        //   uni.redirectTo({
-        //     url: "/sub_pages/myQuery/myQuery"
-        //   });
-        // }, 100);
       } else {
         uni.showToast({
           icon: "none",
@@ -400,7 +413,7 @@ export default {
         id: this.id,
         page: "pages/zhibao/zhibao"
       });
-      console.log("🚀 ~ .then ~ res:", res);
+      this.form.imgQr = res?.re.img || "";
     }
   }
 };
@@ -452,11 +465,20 @@ export default {
     font-size: 16px;
   }
 }
+.qr-img {
+  width: 60vw;
+  height: 60vw;
+  margin: 32rpx 20vw;
+}
+
 .date-btn {
   padding: 18rpx;
   color: #4c789b69;
   justify-content: space-between;
   font-size: 30rpx;
+}
+.date-time {
+  color: #000;
 }
 .active {
   border: 2rpx solid red;

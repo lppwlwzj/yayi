@@ -57,65 +57,8 @@
 export default {
   data() {
     return {
-      //   statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       search: "",
-      result: [
-        {
-          key: "dateTime",
-          label: "日期",
-          value: ""
-        },
-        {
-          key: "patient",
-          label: "患者",
-          value: ""
-        },
-        {
-          key: "orderNo",
-          label: "产品序列号",
-          value: ""
-        },
-        {
-          key: "zhibaoDate",
-          label: "质保期",
-          value: ""
-        },
-        {
-          key: "hospital",
-          label: "医院、诊所",
-          value: ""
-        },
-        {
-          key: "top",
-          label: "上牙位",
-          value: ""
-        },
-        {
-          key: "bottom",
-          label: "下牙位",
-          value: ""
-        },
-        {
-          key: "colorNo",
-          label: "色号",
-          value: ""
-        },
-        {
-          key: "liscens",
-          label: "生产许可证",
-          value: ""
-        },
-        {
-          key: "certificate",
-          label: "注册证",
-          value: ""
-        }
-        // {
-        // 	key: "business",
-        // 	label: "营业执照",
-        // 	value: ""
-        // }
-      ],
+      result: [],
       data: null
     };
   },
@@ -135,7 +78,63 @@ export default {
       });
       if (!res.code) {
         this.data = res.data;
-        const result = this.result.map((item) => ({
+        const result = [
+          {
+            key: "dateTime",
+            label: "日期",
+            value: ""
+          },
+          {
+            key: "patient",
+            label: "患者",
+            value: ""
+          },
+          {
+            key: "orderNo",
+            label: "产品序列号",
+            value: ""
+          },
+          {
+            key: "zhibaoDate",
+            label: "质保期",
+            value: ""
+          },
+          {
+            key: "hospital",
+            label: "医院、诊所",
+            value: ""
+          },
+          {
+            key: "top",
+            label: "上牙位",
+            value: ""
+          },
+          {
+            key: "bottom",
+            label: "下牙位",
+            value: ""
+          },
+          {
+            key: "colorNo",
+            label: "色号",
+            value: ""
+          },
+          {
+            key: "liscens",
+            label: "生产许可证",
+            value: ""
+          },
+          {
+            key: "certificate",
+            label: "注册证",
+            value: ""
+          }
+          // {
+          // 	key: "business",
+          // 	label: "营业执照",
+          // 	value: ""
+          // }
+        ].map((item) => ({
           ...item,
           value: res.data[item.key] || ""
         }));
@@ -145,10 +144,7 @@ export default {
           return !!item.value;
         });
       } else {
-        this.result.map((item) => ({
-          ...item,
-          value: ""
-        }));
+        this.result = [];
       }
     }
   }

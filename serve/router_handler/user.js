@@ -129,35 +129,36 @@ exports.jiemi = (req, res) => {
 
 const getQrCode = (token, params) => {
   const { page, id } = params;
-  console.log("🚀 ~ getQrCode ~ page:", page)
-  axios
+  return axios
     .post(
       `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${token}`,
       {
-        page:page, // 需要打开的页面路径
+        page: page, // 需要打开的页面路径
         scene: `${id}`, // 这个是需要传递的参数
         width: 280,
-        check_path:false
+        check_path: false
       },
       {
         responseType: "arraybuffer"
       }
     )
     .then((res) => {
-      console.log("🚀 ~ .then ~ res:", res.data);
+      // res.data:<Buffer ff d8 ff e0 00 10 4a 46 49 46 00 01 01 00 00 01 00> ....
       let src =
         path.dirname(__dirname).replace(/\\/g, "/") +
         `/public/images/zhibao/${id}.png`;
-      fs.writeFile(src, res.data, function (err) {
-        if (err) {
-          console.log(err);
-        }
-        return `https://gdcasa.cn:3010/img/images/zhibao/${id}.png`;
+      return new Promise((resolve) => {
+        fs.writeFile(src, res.data, function (err) {
+          if (err) {
+            console.log("生二维码图片失败", err);
+          }
+          resolve(`https://gdcasa.cn:3010/img/images/zhibao/${id}.png`);
+          // resolve(`http://127.0.01:3010/img/images/zhibao/${id}.png`);
+        });
       });
     })
     .catch((err) => {
-      console.log("🚀 ~ getQrCode ~ err:", err);
-      // return res.cc(err);
+      console.log("生二维码图片失败", err);
     });
 };
 
@@ -174,12 +175,17 @@ exports.getAccessToken = (req, res) => {
       const access_token = _res.data.access_token;
       if (access_token) {
         const img = await getQrCode(_res.data.access_token, req.body);
-        res.send({
-          code: 0,
-          message: "成功！",
-          re: {
-            img
-          }
+        const sql = `update  zhibao set imgQr='${img}' where id=${req.body.id}`;
+        // 更新参数表
+        db.query(sql, (err) => {
+          if (err) return res.cc(err);
+          res.send({
+            code: 0,
+            message: "成功！",
+            re: {
+              img
+            }
+          });
         });
       }
     })

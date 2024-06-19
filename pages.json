@@ -19,19 +19,18 @@
       }
     },
     {
-    	"path" : "pages/zhibao/zhibao",
-    	"style" : 
-    	{
-    		"navigationBarTitleText" : "",
-    		"enablePullDownRefresh" : false
-    	}
+      "path": "pages/zhibao/zhibao",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
     }
   ],
   "subPackages": [
     {
       "root": "sub_pages",
       "pages": [
-
         {
           "path": "preUpload/preUpload",
           "style": {

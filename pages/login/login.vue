@@ -176,9 +176,6 @@ export default {
       }
     },
     getPhoneNumber(res) {
-      // uni.showToast({
-      //   title: "加载中..."+this.login_code
-      // });
 
       const that = this;
       if (!that.login_code) {

@@ -412,7 +412,7 @@
     </u-collapse>
 
     <view class="rfc">
-      <text style="color: #ccc; padding-right: 24rpx"> 预计戴牙日期 </text>
+      <text style="color: red; padding-right: 24rpx"> 预计戴牙日期 </text>
       <view class="input" @click="calendarOpen('daiyaTime')">
         <view :disabled="disabled" class="rfa date-btn">
           <view>
