@@ -45,7 +45,7 @@
             mode="aspectFill"
             style="width: 16px; height: 16px; margin-top: 8px; z-index: 9999"
           ></image>
-          <text style="color: #fff; font-size: 12px">点击上传</text>
+          <text style="color: #fff; font-size: 12px">{{ placeholder }}</text>
         </view>
       </Upload>
     </view>
@@ -60,10 +60,9 @@
       closeIconPos="top-left"
       bgColor="#000000"
     >
-      <view class="fc  img_wrapper">
+      <view class="fc img_wrapper">
         <video :src="previewImg" v-if="previewImg.indexOf('mp4') > -1"></video>
-        <!-- <image :src="previewImg" v-else mode="widthFix"></image> -->
-        <TouchScaleImg :img_url="previewImg" v-else/>
+        <TouchScaleImg :img_url="previewImg" v-else />
       </view>
     </u-popup>
   </view>
@@ -89,6 +88,10 @@ export default {
     customClass: {
       type: String,
       default: "image"
+    },
+    placeholder: {
+      type: String,
+      default: "点击上传"
     }
   },
   components: {
@@ -169,7 +172,7 @@ export default {
   position: relative;
 }
 .preview {
-  width:  28px;
+  width: 28px;
   height: 28px;
   position: absolute;
   left: 10rpx;
@@ -179,9 +182,9 @@ export default {
   // width: 100vw;
   // margin-top: 6vh;
 
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 .img-block {
   width: 100vw;

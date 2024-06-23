@@ -311,8 +311,16 @@
           <MultiUpload
             :list="form.designList"
             activeKey="designList"
-            @delete="deleteDesignImg"
-            @add="handleAddDesignImg"
+            @delete="
+              (index) => {
+                deleteImg(index, 'designList');
+              }
+            "
+            @add="
+              (value) => {
+                handleImage(value, 'designList');
+              }
+            "
           />
         </view>
       </view>
@@ -411,11 +419,20 @@
       </u-collapse-item>
     </u-collapse>
 
+    <view class="rfsw" style="margin: 20rpx 0 30rpx 100rpx">
+      <text style="color: #ccc; padding-right: 24rpx"> 是否做过矫正 </text>
+      <u-switch
+        v-model="form.adjust"
+        size="30"
+        activeColor="#f56c6c"
+      ></u-switch>
+    </view>
+
     <view class="rfc">
-      <text style="color: red; padding-right: 24rpx"> 预计戴牙日期 </text>
+      <text style="color: #eb2b24e3; padding-right: 24rpx"> 预计戴牙日期 </text>
       <view class="input" @click="calendarOpen('daiyaTime')">
         <view :disabled="disabled" class="rfa date-btn">
-          <view v-if="form.daiyaTime" style="color: red;">
+          <view v-if="form.daiyaTime" style="color: #eb2b24e3">
             {{ form.daiyaTime }}
           </view>
           <view v-else> 日期 </view>
@@ -439,49 +456,23 @@
 
     <!-- 设计图 -->
     <view class="rfa" style="margin: 18rpx 0">
-      <Upload
-        name="CADImg"
-        :id="`${userInfo.usercount}${customer_id}`"
-        :img_url="form.CADImg"
-        :disabled="disabled"
-        customClass="image-2"
-        @change="
-          (value) => {
-            handleFormChange('CADImg', value);
-          }
-        "
-      >
-        <view class="image-2 fc">
-          <image
-            :src="require('../../static/images/add.png')"
-            mode="aspectFill"
-            style="width: 20px; height: 20px; margin-bottom: 4px"
-          ></image>
-          <text style="color: #fff; font-size: 14px">CAD设计图</text>
-        </view>
-      </Upload>
-      <Upload
-        :id="`${userInfo.usercount}${customer_id}`"
-        name="checiImg"
-        :disabled="disabled"
-        :img_url="form.checiImg"
-        customClass="image-2"
-        class="fc"
-        @change="
-          (value) => {
-            handleFormChange('checiImg', value);
-          }
-        "
-      >
-        <view class="image-2 fc">
-          <image
-            :src="require('../../static/images/add.png')"
-            mode="aspectFill"
-            style="width: 20px; height: 20px; margin-bottom: 4px"
-          ></image>
-          <text style="color: #fff; font-size: 14px">车瓷设计图</text>
-        </view>
-      </Upload>
+      <view class="image-list">
+        <MultiUpload
+          placeholder="CAD设计图"
+          :list="form.CADImg"
+          activeKey="CADImg"
+          @delete="
+            (index) => {
+              deleteImg(index, 'CADImg');
+            }
+          "
+          @add="
+            (value) => {
+              handleImage(value, 'CADImg');
+            }
+          "
+        />
+      </view>
     </view>
     <!-- 设计师 -->
     <view class="rfaw" style="margin: 18rpx 0">
@@ -507,9 +498,9 @@
             padding: '20rpx 12rpx'
           }"
           placeholderStyle="color:#dd524d63"
-          placeholder="车瓷设计师"
+          placeholder="图纸备注留言"
           disabledColor="#fff"
-          v-model="form.checi"
+          v-model="form.CADRemark"
           border="none"
           :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
@@ -518,49 +509,75 @@
     </view>
 
     <view class="rfa" style="margin: 18rpx 0">
-      <Upload
-        name="shangyouImg"
-        :id="`${userInfo.usercount}${customer_id}`"
-        :img_url="form.shangyouImg"
-        :disabled="disabled"
-        customClass="image-2"
-        @change="
-          (value) => {
-            handleFormChange('shangyouImg', value);
-          }
-        "
-      >
-        <view class="image-2 fc">
-          <image
-            :src="require('../../static/images/add.png')"
-            mode="aspectFill"
-            style="width: 20px; height: 20px; margin-bottom: 4px"
-          ></image>
-          <text style="color: #fff; font-size: 14px">上釉</text>
-        </view>
-      </Upload>
-      <Upload
-        :id="`${userInfo.usercount}${customer_id}`"
-        name="shangciImg"
-        :disabled="disabled"
-        :img_url="form.shangciImg"
-        customClass="image-2"
-        class="fc"
-        @change="
-          (value) => {
-            handleFormChange('shangciImg', value);
-          }
-        "
-      >
-        <view class="image-2 fc">
-          <image
-            :src="require('../../static/images/add.png')"
-            mode="aspectFill"
-            style="width: 20px; height: 20px; margin-bottom: 4px"
-          ></image>
-          <text style="color: #fff; font-size: 14px">上瓷</text>
-        </view>
-      </Upload>
+      <view class="image-list">
+        <MultiUpload
+          placeholder="车瓷设计图"
+          :list="form.checiImg"
+          activeKey="checiImg"
+          @delete="
+            (index) => {
+              deleteImg(index, 'checiImg');
+            }
+          "
+          @add="
+            (value) => {
+              handleImage(value, 'checiImg');
+            }
+          "
+        />
+      </view>
+    </view>
+    <view class="rfaw" style="margin: 18rpx 0">
+      <view class="input">
+        <u--input
+          :disabled="disabled"
+          :customStyle="{
+            padding: '20rpx 12rpx'
+          }"
+          placeholderStyle="color:#dd524d63"
+          placeholder="车瓷设计师"
+          disabledColor="#fff"
+          v-model="form.checi"
+          border="none"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+      <view class="input">
+        <u--input
+          :disabled="disabled"
+          :customStyle="{
+            padding: '20rpx 12rpx'
+          }"
+          placeholderStyle="color:#dd524d63"
+          placeholder="车瓷备注留言"
+          disabledColor="#fff"
+          v-model="form.checiRemark"
+          border="none"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+    </view>
+
+    <view class="rfa" style="margin: 18rpx 0">
+      <view class="image-list">
+        <MultiUpload
+          placeholder="上釉"
+          :list="form.shangyouImg"
+          activeKey="shangyouImg"
+          @delete="
+            (index) => {
+              deleteImg(index, 'shangyouImg');
+            }
+          "
+          @add="
+            (value) => {
+              handleImage(value, 'shangyouImg');
+            }
+          "
+        />
+      </view>
     </view>
     <view class="rfaw" style="margin: 18rpx 0">
       <view class="input">
@@ -585,16 +602,67 @@
             padding: '20rpx 12rpx'
           }"
           placeholderStyle="color:#dd524d63"
-          placeholder="上瓷"
+          placeholder="上釉备注留言"
           disabledColor="#fff"
-          v-model="form.shangci"
+          v-model="form.shangyouRemark"
           border="none"
           :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
     </view>
-    <!-- <view class="rfa" style="margin: 18rpx 0; font-size: 18px;font-weight: 600;"> 生产问题 </view> -->
+
+    <view class="rfa" style="margin: 18rpx 0">
+      <view class="image-list">
+        <MultiUpload
+          placeholder="上瓷"
+          :list="form.shangciImg"
+          activeKey="shangciImg"
+          @delete="
+            (index) => {
+              deleteImg(index, 'shangciImg');
+            }
+          "
+          @add="
+            (value) => {
+              handleImage(value, 'shangciImg');
+            }
+          "
+        />
+      </view>
+    </view>
+    <view class="rfaw" style="margin: 18rpx 0">
+      <view class="input">
+        <u--input
+          :disabled="disabled"
+          placeholder="上瓷"
+          disabledColor="#fff"
+          placeholderStyle="color:#dd524d63"
+          v-model="form.shangci"
+          border="none"
+          :customStyle="{
+            padding: '20rpx 12rpx'
+          }"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+      <view class="input">
+        <u--input
+          :disabled="disabled"
+          :customStyle="{
+            padding: '20rpx 12rpx'
+          }"
+          placeholderStyle="color:#dd524d63"
+          placeholder="上瓷备注留言"
+          disabledColor="#fff"
+          v-model="form.shangciRemark"
+          border="none"
+          :suffixIcon="disabled ? '' : 'edit-pen'"
+          suffixIconStyle=" color: #dd524dab !important;"
+        ></u--input>
+      </view>
+    </view>
     <view class="rfa" style="margin: 18rpx 0; height: 160rpx">
       <u--textarea
         class="problem-text"
@@ -713,15 +781,6 @@
       <view class="fc img_wrapper">
         <video :src="previewImg" v-if="previewImg.indexOf('mp4') > -1"></video>
         <TouchScaleImg :img_url="previewImg" v-else />
-        <!-- <image
-          :src="previewImg"
-          v-else
-          mode="aspectFill"
-          class="img-block"
-          @touchstart="touchStart"
-          @touchmove="touchMove"
-          @touchend="touchEnd"
-        ></image> -->
       </view>
     </u-popup>
   </view>
@@ -775,20 +834,25 @@ export default {
       statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       form: {
         isPrivacy: false,
+        adjust: false,
         customer: "",
         dateTime: "",
         daiyaTime: "",
         doctor: "",
         proxy: "",
         tiepianColor: "",
-        CADImg: "",
+        CADImg: [],
         problem: "",
         shangyou: "",
+        shangyouRemark: "",
         shangci: "",
-        shangyouImg: "",
-        shangciImg: "",
-        checiImg: "",
+        shangciRemark: "",
+        shangyouImg: [],
+        shangciImg: [],
+        checiImg: [],
         CAD: "",
+        checiRemark: "",
+        CADRemark: "",
         checi: "",
         porcelain: "",
         frontPhoto: "",
@@ -999,9 +1063,7 @@ export default {
       this.previewImg = "";
       this.popupShow = false;
     },
-    handleAddDesignImg(img_url) {
-      this.form.designList.push(img_url);
-    },
+
     async getPreinstall() {
       const res = await this.$api.getPreinstall();
       if (!res.code) {
@@ -1065,7 +1127,12 @@ export default {
         this.service_id = data.service_id;
 
         this.form.isPrivacy = this.form.isPrivacy ? true : false;
+        this.form.adjust = this.form.adjust ? true : false;
         this.form.designList = JSON.parse(data.designList);
+        this.form.checiImg = JSON.parse(data.checiImg);
+        this.form.shangciImg = JSON.parse(data.shangciImg);
+        this.form.shangyouImg = JSON.parse(data.shangyouImg);
+        this.form.CADImg = JSON.parse(data.CADImg);
 
         this.dentistList = this.dentistList.map((item) => {
           return {
@@ -1104,8 +1171,14 @@ export default {
         customer_id: this.customer_id,
         id: this.id || "",
         ...this.form,
-        isPrivacy: this.form.isPrivacy ? 1 : 0
+        shangyouImg: JSON.stringify(this.form.shangyouImg),
+        shangciImg: JSON.stringify(this.form.shangciImg),
+        CADImg: JSON.stringify(this.form.CADImg),
+        checiImg: JSON.stringify(this.form.checiImg),
+        isPrivacy: this.form.isPrivacy ? 1 : 0,
+        adjust: this.form.adjust ? 1 : 0
       });
+      console.log("this.form,", this.form);
       if (!res.code) {
         uni.showToast({
           icon: "none",
@@ -1129,11 +1202,13 @@ export default {
     handleFormChange(key, value) {
       this.$set(this.form, key, value);
     },
-    handleDesignImage(value) {
-      this.form.designList.push(value);
+    handleImage(value, key) {
+      const list = this.form[key];
+      list.push(value);
     },
-    deleteDesignImg(index) {
-      this.$set(this.form.designList, index, "");
+    deleteImg(index, key) {
+      const list = this.form[key];
+      this.$set(list, index, "");
     }
   }
 };

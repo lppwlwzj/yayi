@@ -90,6 +90,11 @@ export default {
             value: ""
           },
           {
+            key: "product",
+            label: "产品名称",
+            value: ""
+          },
+          {
             key: "orderNo",
             label: "产品序列号",
             value: ""
