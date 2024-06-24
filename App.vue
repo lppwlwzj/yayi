@@ -1,15 +1,17 @@
 <script>
 export default {
   onLaunch: function (options) {
-    const userInfo = uni.getStorageSync("userInfo"); //设置缓存
-    if (userInfo) {
-      uni.redirectTo({
-        url: "/pages/index/index"
-      });
-    } else {
-      uni.redirectTo({
-        url: "/pages/login/login"
-      });
+    if (options.path !== "pages/zhibao/zhibao") {
+      const userInfo = uni.getStorageSync("userInfo"); //设置缓存
+      if (userInfo) {
+        uni.redirectTo({
+          url: "/pages/index/index"
+        });
+      } else {
+        uni.redirectTo({
+          url: "/pages/login/login"
+        });
+      }
     }
   }
 };

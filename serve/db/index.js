@@ -19,12 +19,14 @@ const mysql = require('mysql')
 const db = mysql.createPool({
 	// host:'192.168.4.117',
 	host:'127.0.0.1',
-
-	// user:'root',
-	// // password:'password',
+    //Mac
+	user:'root',
+	password:'password',
+	//window
 	// password:'9699lppwl',
-	user:'yayi_root',
-	password:'123456',
+	//宝塔面板
+	// user:'yayi_root',
+	// password:'123456',
 	port:'3306',
 	database:'yayi'
 })

@@ -14,6 +14,10 @@ const user_handler = require('../router_handler/user')
 router.post('/login',user_handler.login)
 router.post('/list',user_handler.list)
 router.post('/getmiyao',user_handler.getMiyao)
+router.post('/jiemi',user_handler.jiemi)
+router.post('/getQrImg',user_handler.getAccessToken)
+
+
 
 router.post('/log',user_handler.log)
 
