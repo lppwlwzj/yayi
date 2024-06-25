@@ -426,6 +426,8 @@
         size="30"
         activeColor="#f56c6c"
       ></u-switch>
+      <text style="color: #f56c6c; padding-left: 12rpx"> {{form.adjust ? '是': '否'}} </text>
+
     </view>
 
     <view class="rfc">
@@ -475,39 +477,31 @@
       </view>
     </view>
     <!-- 设计师 -->
-    <view class="rfaw" style="margin: 18rpx 0">
-      <view class="input">
-        <u--input
-          :disabled="disabled"
-          placeholder="CAD设计师"
-          disabledColor="#fff"
-          placeholderStyle="color:#dd524d63"
-          v-model="form.CAD"
-          border="none"
-          :customStyle="{
-            padding: '20rpx 12rpx'
-          }"
-          :suffixIcon="disabled ? '' : 'edit-pen'"
-          suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
-      </view>
-      <view class="input">
-        <u--input
-          :disabled="disabled"
-          :customStyle="{
-            padding: '20rpx 12rpx'
-          }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="图纸备注留言"
-          disabledColor="#fff"
-          v-model="form.CADRemark"
-          border="none"
-          :suffixIcon="disabled ? '' : 'edit-pen'"
-          suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
-      </view>
+    <view class="cad-name">
+      <u--input
+        :disabled="disabled"
+        placeholder="CAD设计师"
+        disabledColor="#fff"
+        placeholderStyle="color:#dd524d63"
+        v-model="form.CAD"
+        border="none"
+        :customStyle="{
+          padding: '12rpx 12rpx'
+        }"
+        :suffixIcon="disabled ? '' : 'edit-pen'"
+        suffixIconStyle=" color: #dd524dab !important;"
+      ></u--input>
     </view>
-
+    <view class="cad-remark">
+      <u--textarea
+        autoHeight
+        :disabled="disabled"
+        placeholderStyle="color:#dd524d63"
+        v-model="form.CADRemark"
+        border="none"
+        placeholder="图纸备注留言"
+      ></u--textarea>
+    </view>
     <view class="rfa" style="margin: 18rpx 0">
       <view class="image-list">
         <MultiUpload
@@ -527,8 +521,7 @@
         />
       </view>
     </view>
-    <view class="rfaw" style="margin: 18rpx 0">
-      <view class="input">
+    <view class="cad-name">
         <u--input
           :disabled="disabled"
           :customStyle="{
@@ -543,22 +536,17 @@
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
-      <view class="input">
-        <u--input
-          :disabled="disabled"
-          :customStyle="{
-            padding: '20rpx 12rpx'
-          }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="车瓷备注留言"
-          disabledColor="#fff"
-          v-model="form.checiRemark"
-          border="none"
-          :suffixIcon="disabled ? '' : 'edit-pen'"
-          suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
-      </view>
+      <view class="cad-remark">
+      <u--textarea
+        autoHeight
+        :disabled="disabled"
+        placeholderStyle="color:#dd524d63"
+        v-model="form.checiRemark"
+        border="none"
+        placeholder="车瓷备注留言"
+      ></u--textarea>
     </view>
+    
 
     <view class="rfa" style="margin: 18rpx 0">
       <view class="image-list">
@@ -579,38 +567,32 @@
         />
       </view>
     </view>
-    <view class="rfaw" style="margin: 18rpx 0">
-      <view class="input">
+    <view class="cad-name">
         <u--input
           :disabled="disabled"
+          :customStyle="{
+            padding: '12rpx'
+          }"
+          placeholderStyle="color:#dd524d63"
           placeholder="上釉"
           disabledColor="#fff"
-          placeholderStyle="color:#dd524d63"
           v-model="form.shangyou"
           border="none"
-          :customStyle="{
-            padding: '20rpx 12rpx'
-          }"
           :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
-      <view class="input">
-        <u--input
-          :disabled="disabled"
-          :customStyle="{
-            padding: '20rpx 12rpx'
-          }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="上釉备注留言"
-          disabledColor="#fff"
-          v-model="form.shangyouRemark"
-          border="none"
-          :suffixIcon="disabled ? '' : 'edit-pen'"
-          suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
-      </view>
+      <view class="cad-remark">
+      <u--textarea
+        autoHeight
+        :disabled="disabled"
+        placeholderStyle="color:#dd524d63"
+        v-model="form.shangyouRemark"
+        border="none"
+        placeholder="上釉备注留言"
+      ></u--textarea>
     </view>
+    
 
     <view class="rfa" style="margin: 18rpx 0">
       <view class="image-list">
@@ -631,38 +613,32 @@
         />
       </view>
     </view>
-    <view class="rfaw" style="margin: 18rpx 0">
-      <view class="input">
+    <view class="cad-name">
         <u--input
           :disabled="disabled"
+          :customStyle="{
+            padding: '12rpx'
+          }"
+          placeholderStyle="color:#dd524d63"
           placeholder="上瓷"
           disabledColor="#fff"
-          placeholderStyle="color:#dd524d63"
           v-model="form.shangci"
           border="none"
-          :customStyle="{
-            padding: '20rpx 12rpx'
-          }"
           :suffixIcon="disabled ? '' : 'edit-pen'"
           suffixIconStyle=" color: #dd524dab !important;"
         ></u--input>
       </view>
-      <view class="input">
-        <u--input
-          :disabled="disabled"
-          :customStyle="{
-            padding: '20rpx 12rpx'
-          }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="上瓷备注留言"
-          disabledColor="#fff"
-          v-model="form.shangciRemark"
-          border="none"
-          :suffixIcon="disabled ? '' : 'edit-pen'"
-          suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
-      </view>
+      <view class="cad-remark">
+      <u--textarea
+        autoHeight
+        :disabled="disabled"
+        placeholderStyle="color:#dd524d63"
+        v-model="form.shangciRemark"
+        border="none"
+        placeholder="上瓷备注留言"
+      ></u--textarea>
     </view>
+    
     <view class="rfa" style="margin: 18rpx 0; height: 160rpx">
       <u--textarea
         class="problem-text"
@@ -1387,5 +1363,19 @@ page {
 }
 .slide-img {
   position: relative;
+}
+.cad-name {
+  width: 220rpx;
+  box-shadow: 2px 2px 5px #33333340;
+  margin: 12rpx 0;
+  border-radius: 40rpx;
+  background-color: #fff;
+}
+.cad-remark {
+  width: 100%;
+  box-shadow: 2px 2px 5px #33333340;
+  margin: 18rpx 0;
+  border-radius: 40rpx;
+  background-color: #fff;
 }
 </style>
