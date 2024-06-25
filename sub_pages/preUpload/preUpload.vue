@@ -29,6 +29,30 @@
       ></uni-data-select>
     </view> -->
     <uni-collapse :show-arrow="true">
+      <uni-collapse-item title="贴面细节">
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.tiemianDetail"
+            activeKey="tiemianDetail"
+            @delete="(index) => deleteImg(index, 'tiemianDetail')"
+            @add="(value) => handleAddImg(value, 'tiemianDetail')"
+          />
+        </div>
+      </uni-collapse-item>
+    </uni-collapse>
+    <uni-collapse :show-arrow="true">
+      <uni-collapse-item title="贴面颜色">
+        <div style="margin: 20rpx 0">
+          <MultiUpload
+            :list="form.tiemianColor"
+            activeKey="tiemianColor"
+            @delete="(index) => deleteImg(index, 'tiemianColor')"
+            @add="(value) => handleAddImg(value, 'tiemianColor')"
+          />
+        </div>
+      </uni-collapse-item>
+    </uni-collapse>
+    <uni-collapse :show-arrow="true">
       <uni-collapse-item title="客户意向图">
         <div style="margin: 20rpx 0">
           <MultiUpload
@@ -190,6 +214,8 @@ export default {
   data() {
     return {
       form: {
+        tiemianDetail:[],
+        tiemianColor:[],
         intentList: [],
         bianyuan: [],
         round: [],
