@@ -43,7 +43,10 @@ exports.submit = async (req, res) => {
     if (err) {
       return res.cc(err);
     }
-    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `编辑客户完工档案`);
+    req.app.logger(
+      req.headers.authorization.replace(/Bearer\s/g, ""),
+      `编辑客户完工档案`
+    );
 
     res.send({
       code: 0,
@@ -64,7 +67,10 @@ exports.detail = (req, res) => {
     if (err) {
       return res.cc(err);
     }
-    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `查看客户档案、售后服务`);
+    req.app.logger(
+      req.headers.authorization.replace(/Bearer\s/g, ""),
+      `查看客户档案、售后服务`
+    );
     res.send({
       code: 0,
       message: "操作成功！",
@@ -75,6 +81,8 @@ exports.detail = (req, res) => {
 
 exports.editPreinstall = (req, res) => {
   const {
+    tiemianDetail,
+    tiemianColor,
     bianyuan,
     round,
     luocha,
@@ -92,6 +100,8 @@ exports.editPreinstall = (req, res) => {
   } = req.body;
   // // 定义sql语句id
   const insertSql = `insert into preinstall (
+     tiemianDetail,
+    tiemianColor,
     bianyuan,
     round,
     luocha,
@@ -105,7 +115,7 @@ exports.editPreinstall = (req, res) => {
     thickness,
     root,
     intentList
-    ) values ('${bianyuan}','${round}','${luocha}','${angle}','${jiandun}','${qieduan}','${texture}','${dot}','${touliang}','${qieduanLinears}','${thickness}','${root}','${intentList}') `;
+    ) values ('${tiemianDetail}','${tiemianColor}','${bianyuan}','${round}','${luocha}','${angle}','${jiandun}','${qieduan}','${texture}','${dot}','${touliang}','${qieduanLinears}','${thickness}','${root}','${intentList}') `;
 
   // const insertSql = `insert into preinstall set ?`;
   const updateSql = `update preinstall set  bianyuan = '${bianyuan}',  bianyuan = '${bianyuan}', round = '${round}',  luocha = '${luocha}',  angle = '${angle}', jiandun = '${jiandun}',
@@ -119,7 +129,10 @@ exports.editPreinstall = (req, res) => {
     if (err) {
       return res.cc(err);
     }
-    req.app.logger(req.headers.authorization.replace(/Bearer\s/g,''), `编辑预设信息`);
+    req.app.logger(
+      req.headers.authorization.replace(/Bearer\s/g, ""),
+      `编辑预设信息`
+    );
     res.send({
       code: 0,
       message: "操作成功！",

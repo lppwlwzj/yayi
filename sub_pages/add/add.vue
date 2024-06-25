@@ -357,6 +357,68 @@
         ></u--input>
       </view>
     </view>
+    <view class="rfa">
+      <view class="upload-img-el fc" @click="handleChoseImg('tiemianDetail')" style="margin:16rpx;">
+        <image
+          :src="
+            !form.tiemianDetail
+              ? '../../static/images/upload.png'
+              : getImg(form.tiemianDetail)
+          "
+          mode="aspectFill"
+          class="upload-img"
+          :show-menu-by-longpress="true"
+        ></image>
+        <image
+          v-show="form.tiemianDetail"
+          @tap.stop="preview(getImg(form.tiemianDetail))"
+          :src="require('../../static//images/preview.png')"
+          class="preview"
+          mode="aspectFill"
+        ></image>
+        <image
+          v-show="!form.tiemianDetail"
+          :src="require('../../static/images/add.png')"
+          mode="aspectFill"
+          style="width: 30px; height: 30px; margin-bottom: 8px; z-index: 9999"
+        ></image>
+        <text
+          v-show="!form.tiemianDetail"
+          style="color: #fff; font-size: 12px; z-index: 9999"
+          >贴片细节</text
+        >
+      </view>
+      <view class="upload-img-el fc" @click="handleChoseImg('tiemianColor')">
+        <image
+          :src="
+            !form.tiemianColor
+              ? '../../static/images/upload.png'
+              : getImg(form.tiemianColor)
+          "
+          mode="aspectFill"
+          class="upload-img"
+          :show-menu-by-longpress="true"
+        ></image>
+        <image
+          v-show="form.tiemianColor"
+          @tap.stop="preview(getImg(form.tiemianColor))"
+          :src="require('../../static//images/preview.png')"
+          class="preview"
+          mode="aspectFill"
+        ></image>
+        <image
+          v-show="!form.tiemianColor"
+          :src="require('../../static/images/add.png')"
+          mode="aspectFill"
+          style="width: 30px; height: 30px; margin-bottom: 8px; z-index: 9999"
+        ></image>
+        <text
+          v-show="!form.tiemianColor"
+          style="color: #fff; font-size: 12px; z-index: 9999"
+          >贴片颜色</text
+        >
+      </view>
+    </view>
     <!-- 进度条 -->
     <u-collapse>
       <u-collapse-item title="形态设计" name="guide">
@@ -426,8 +488,9 @@
         size="30"
         activeColor="#f56c6c"
       ></u-switch>
-      <text style="color: #f56c6c; padding-left: 12rpx"> {{form.adjust ? '是': '否'}} </text>
-
+      <text style="color: #f56c6c; padding-left: 12rpx">
+        {{ form.adjust ? "是" : "否" }}
+      </text>
     </view>
 
     <view class="rfc">
@@ -522,21 +585,21 @@
       </view>
     </view>
     <view class="cad-name">
-        <u--input
-          :disabled="disabled"
-          :customStyle="{
-            padding: '20rpx 12rpx'
-          }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="车瓷设计师"
-          disabledColor="#fff"
-          v-model="form.checi"
-          border="none"
-          :suffixIcon="disabled ? '' : 'edit-pen'"
-          suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
-      </view>
-      <view class="cad-remark">
+      <u--input
+        :disabled="disabled"
+        :customStyle="{
+          padding: '20rpx 12rpx'
+        }"
+        placeholderStyle="color:#dd524d63"
+        placeholder="车瓷设计师"
+        disabledColor="#fff"
+        v-model="form.checi"
+        border="none"
+        :suffixIcon="disabled ? '' : 'edit-pen'"
+        suffixIconStyle=" color: #dd524dab !important;"
+      ></u--input>
+    </view>
+    <view class="cad-remark">
       <u--textarea
         autoHeight
         :disabled="disabled"
@@ -546,7 +609,6 @@
         placeholder="车瓷备注留言"
       ></u--textarea>
     </view>
-    
 
     <view class="rfa" style="margin: 18rpx 0">
       <view class="image-list">
@@ -568,21 +630,21 @@
       </view>
     </view>
     <view class="cad-name">
-        <u--input
-          :disabled="disabled"
-          :customStyle="{
-            padding: '12rpx'
-          }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="上釉"
-          disabledColor="#fff"
-          v-model="form.shangyou"
-          border="none"
-          :suffixIcon="disabled ? '' : 'edit-pen'"
-          suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
-      </view>
-      <view class="cad-remark">
+      <u--input
+        :disabled="disabled"
+        :customStyle="{
+          padding: '12rpx'
+        }"
+        placeholderStyle="color:#dd524d63"
+        placeholder="上釉"
+        disabledColor="#fff"
+        v-model="form.shangyou"
+        border="none"
+        :suffixIcon="disabled ? '' : 'edit-pen'"
+        suffixIconStyle=" color: #dd524dab !important;"
+      ></u--input>
+    </view>
+    <view class="cad-remark">
       <u--textarea
         autoHeight
         :disabled="disabled"
@@ -592,7 +654,6 @@
         placeholder="上釉备注留言"
       ></u--textarea>
     </view>
-    
 
     <view class="rfa" style="margin: 18rpx 0">
       <view class="image-list">
@@ -614,21 +675,21 @@
       </view>
     </view>
     <view class="cad-name">
-        <u--input
-          :disabled="disabled"
-          :customStyle="{
-            padding: '12rpx'
-          }"
-          placeholderStyle="color:#dd524d63"
-          placeholder="上瓷"
-          disabledColor="#fff"
-          v-model="form.shangci"
-          border="none"
-          :suffixIcon="disabled ? '' : 'edit-pen'"
-          suffixIconStyle=" color: #dd524dab !important;"
-        ></u--input>
-      </view>
-      <view class="cad-remark">
+      <u--input
+        :disabled="disabled"
+        :customStyle="{
+          padding: '12rpx'
+        }"
+        placeholderStyle="color:#dd524d63"
+        placeholder="上瓷"
+        disabledColor="#fff"
+        v-model="form.shangci"
+        border="none"
+        :suffixIcon="disabled ? '' : 'edit-pen'"
+        suffixIconStyle=" color: #dd524dab !important;"
+      ></u--input>
+    </view>
+    <view class="cad-remark">
       <u--textarea
         autoHeight
         :disabled="disabled"
@@ -638,7 +699,7 @@
         placeholder="上瓷备注留言"
       ></u--textarea>
     </view>
-    
+
     <view class="rfa" style="margin: 18rpx 0; height: 160rpx">
       <u--textarea
         class="problem-text"

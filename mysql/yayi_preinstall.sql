@@ -36,6 +36,8 @@ CREATE TABLE `preinstall` (
   `thickness` longtext DEFAULT NULL COMMENT '厚度',
   `root` varchar(255)  DEFAULT NULL COMMENT '超级管理员',
   `intentList` longtext  DEFAULT NULL COMMENT '客户意向图',
+    `tiemianDetail` longtext  DEFAULT NULL COMMENT 'tiemianDetail',
+	  `tiemianColor` longtext  DEFAULT NULL COMMENT 'tiemianColor'
 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='用户表';
