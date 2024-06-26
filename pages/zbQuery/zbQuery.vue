@@ -16,6 +16,24 @@
     >
     </image>
 
+    <view class="search">
+      <u--input
+        :customStyle="{
+          width: '680rpx !important',
+          border: 'solid 1px #396990b3 !important',
+          margin: '12rpx auto !important',
+          padding: '16rpx 20rpx !important'
+        }"
+        placeholderStyle="color:#396990b3"
+        placeholder="请输入订单编号查询"
+        disabledColor="#fff"
+        v-model="search"
+        border="surround"
+        suffixIcon="search"
+        suffixIconStyle=" color: #396990b3 !important;"
+        @confirm="handleSearch"
+      ></u--input>
+    </view>
     <view class="query-result-info fc" v-if="data">
       <p>尊敬的女士/先生</p>
       <p>
@@ -57,6 +75,7 @@
 export default {
   data() {
     return {
+      //   statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
       search: "",
       result: [],
       data: null
@@ -65,15 +84,10 @@ export default {
   options: {
     styleIsolation: "shared"
   }, //这样deep的样式在微信小程序上才可以显示
-  onLoad(options) {
-    if (options.scene) {
-      this.getZhibaoDetailById(options.scene);
-    }
-  },
   methods: {
-    async getZhibaoDetailById(id) {
-      const res = await this.$api.getZhibaoDetailById({
-        id
+    async handleSearch() {
+      const res = await this.$api.getZhibaoInfo({
+        search: this.search
       });
       if (!res.code) {
         this.data = res.data;
@@ -86,11 +100,6 @@ export default {
           {
             key: "patient",
             label: "患者",
-            value: ""
-          },
-          {
-            key: "product",
-            label: "产品名称",
             value: ""
           },
           {

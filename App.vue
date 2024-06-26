@@ -1,7 +1,9 @@
 <script>
 export default {
   onLaunch: function (options) {
-    if (options.path !== "pages/zhibao/zhibao") {
+    if (
+      !["pages/zhibao/zhibao", "pages/zbQuery/zbQuery"].includes(options.path)
+    ) {
       const userInfo = uni.getStorageSync("userInfo"); //设置缓存
       if (userInfo) {
         uni.redirectTo({
