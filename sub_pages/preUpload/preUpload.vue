@@ -267,7 +267,7 @@ export default {
         Object.keys(this.form).map((key) => {
           params[key] =
             res.re[key] && key !== "id" && key !== "root"
-              ? JSON.parse(res.re[key])
+              ? JSON.parse(res.re?.[key] || [])
               : [];
         });
         this.form = {

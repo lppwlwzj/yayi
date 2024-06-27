@@ -118,7 +118,7 @@ exports.editPreinstall = (req, res) => {
     ) values ('${tiemianDetail}','${tiemianColor}','${bianyuan}','${round}','${luocha}','${angle}','${jiandun}','${qieduan}','${texture}','${dot}','${touliang}','${qieduanLinears}','${thickness}','${root}','${intentList}') `;
 
   // const insertSql = `insert into preinstall set ?`;
-  const updateSql = `update preinstall set  bianyuan = '${bianyuan}',  bianyuan = '${bianyuan}', round = '${round}',  luocha = '${luocha}',  angle = '${angle}', jiandun = '${jiandun}',
+  const updateSql = `update preinstall set  bianyuan = '${bianyuan}',   tiemianDetail = '${tiemianDetail}',  tiemianColor = '${tiemianColor}', bianyuan = '${bianyuan}', round = '${round}',  luocha = '${luocha}',  angle = '${angle}', jiandun = '${jiandun}',
   qieduan = '${qieduan}', texture = '${texture}', dot = '${dot}',touliang = '${touliang}',qieduanLinears = '${qieduanLinears}',thickness = '${thickness}',root = '${root}',intentList = '${intentList}'
   where id='${id}'`;
 
