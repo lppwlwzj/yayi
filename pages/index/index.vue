@@ -37,7 +37,6 @@
         </navigator>
       </view>
     </view>
-    
 
     <view class="list-area">
       <block v-if="list.length">
@@ -70,12 +69,18 @@
             </navigator>
           </view>
           <navigator :url="`/sub_pages/add/add?id=${item.id}&type=edit`">
-            <view class="list-item-right"> {{ item.proxy }} </view>
+            <view
+              :class="
+               item._imgList.length ? 'list-item-btn list-item-right' : 'list-item-btn list-item-right-gray'
+              "
+            >
+              {{ item.proxy }}
+            </view>
           </navigator>
         </view>
       </block>
     </view>
-    <view class="list-item fc" v-show="!list.length">
+    <view class="list-item fc" v-if="!list.length">
       <image
         :src="require('../../static//images/empty.png')"
         mode="aspectFill"
@@ -193,45 +198,6 @@ export default {
   },
   options: { styleIsolation: "shared" }, //这样deep的样式在微信小程序上才可以显示
   methods: {
-//     getUserPhone(e) {
-//     // 获取code 小程序专有，用户登录凭证。
-//     uni.login({
-//             provider: 'weixin',
-//             success(login) {
-//                 console.log(login);
-//             }
-//     })    
-//     //手机号加密数据
-//     if (e.detail.errMsg == 'getPhoneNumber:ok') {
-//         // 获取 encryptedData 与 iv 传给后台进行解析
-//         console.log(e)
-//         //传给后端的参数
-//     } else {
-//         this.$operate.toast({
-//             title: '授权失败无法登录！'
-//         })
-//     }
-// },
-
-//     appLoginWx(){
-//     // 获取用户信息
-//     uni.getUserInfo({
-//         provider: 'weixin',
-//         lang:'zh_CN',
-//         success: userInfo=> {
-//             console.log(userInfo,'userInfo');
-//             uni.login({
-//                 provider: 'weixin',
-//                 success: loginInfo=> {
-//                     console.log(loginInfo,'loginInfo');     
-//                 }
-//             });
-//          },
-//         fail:err=>{
-//             console.log(err,'err')
-//         }
-//     });
-// },
     async getInfo() {
       const res = await this.$api.getPreinstall();
       if (!res.code) {
@@ -287,9 +253,11 @@ export default {
             doctor,
             CAD,
             checi,
-            service_id
+            service_id,
+            imgList
           } = item;
           let _recoverInfo = [],
+            _imgList = [],
             _tryInfo = [];
           if (recoverInfo) {
             _recoverInfo = JSON.parse(recoverInfo);
@@ -297,7 +265,9 @@ export default {
           if (tryInfo) {
             _tryInfo = JSON.parse(tryInfo);
           }
-
+          if (imgList) {
+            _imgList = JSON.parse(imgList);
+          }
           return {
             id,
             customer_id,
@@ -309,6 +279,7 @@ export default {
             CAD,
             checi,
             service_id,
+            _imgList,
             recoverVisible: !!_recoverInfo?.length,
             tryVisible: !!_tryInfo?.length
           };
@@ -375,8 +346,7 @@ export default {
         overflow: hidden;
         margin-right: 10rpx;
       }
-
-      .list-item-right {
+      .list-item-btn {
         width: 140rpx;
         height: 80rpx;
         line-height: 80rpx;
@@ -386,11 +356,16 @@ export default {
         border-top-right-radius: 50rpx;
         border-bottom-right-radius: 50rpx;
         text-align: center;
-        background: $uni-color-theme;
 
         overflow: hidden; //超出的文本隐藏
         text-overflow: ellipsis; //溢出用省略号显示
         white-space: nowrap; //溢出不换行
+      }
+      .list-item-right {
+        background: $uni-color-theme;
+      }
+      .list-item-right-gray {
+        background: #ccc;
       }
     }
   }

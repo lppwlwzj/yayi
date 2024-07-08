@@ -333,7 +333,7 @@ const unique = (arr, val) => {
 const getServiceInfo = (customer_id) => {
   return new Promise((resolve, reject) => {
     db.query(
-      `select  tryInfo,recoverInfo ,id as service_id  from  service  where customer_id = ${customer_id}`,
+      `select  tryInfo,recoverInfo ,id as service_id ,imgList from  service  where customer_id = ${customer_id}`,
       (err, results) => {
         if (err) return reject(err);
         if (!results.length) {

@@ -7,7 +7,10 @@
         @click="back"
       ></u-icon>
 
-      <u-icon size="40" :name="require('../../static/images/ECO-UI-02.png')"></u-icon>
+      <u-icon
+        size="40"
+        :name="require('../../static/images/ECO-UI-02.png')"
+      ></u-icon>
     </view>
 
     <view class="fc" style="margin: 18rpx 0; font-size: 40rpx">
@@ -72,9 +75,12 @@
 
     <view class="btn afc" @click="submit"> 确认 </view>
     <view class="footer rfa">
-      <u-icon size="26" :name="require('../../static/images/ECO-UI-22.png')"></u-icon>
+      <u-icon
+        size="26"
+        :name="require('../../static/images/ECO-UI-22.png')"
+      ></u-icon>
 
-      <navigator
+      <!-- <navigator
         :url="
           !service_id
             ? ''
@@ -82,6 +88,14 @@
         "
       >
         <u-icon size="26" :name="require('../../static/images/ECO-UI-04.png')"></u-icon>
+      </navigator> -->
+      <navigator
+        :url="`/sub_pages/afterSalesLogin/afterSalesLogin?service_id=${service_id }&customer_id=${customer_id}&operateType=${operateType}`"
+      >
+        <u-icon
+          size="26"
+          :name="require('../../static/images/ECO-UI-04.png')"
+        ></u-icon>
       </navigator>
     </view>
   </view>
@@ -149,7 +163,7 @@ export default {
 
   methods: {
     handleImg(url) {
-      this.imgList.push(url)
+      this.imgList.push(url);
     },
     back() {
       uni.navigateBack({
