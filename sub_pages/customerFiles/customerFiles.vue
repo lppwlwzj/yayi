@@ -57,7 +57,14 @@
         />
       </view>
     </view>
-
+    <view class="cad-remark">
+      <u--textarea
+        autoHeight
+        v-model="docterSummary"
+        border="none"
+        placeholder="医生戴牙调颔总结"
+      ></u--textarea>
+    </view>
     <view class="rfaw" style="margin: 18rpx 0">
       <view class="input" v-for="(item, index) in infoList" :key="index">
         <u--input
@@ -80,15 +87,7 @@
         :name="require('../../static/images/ECO-UI-22.png')"
       ></u-icon>
 
-      <!-- <navigator
-        :url="
-          !service_id
-            ? ''
-            : `/sub_pages/afterSalesLogin/afterSalesLogin?service_id=${service_id}&customer_id=${customer_id}&operateType=${operateType}`
-        "
-      >
-        <u-icon size="26" :name="require('../../static/images/ECO-UI-04.png')"></u-icon>
-      </navigator> -->
+   
       <navigator
         :url="`/sub_pages/afterSalesLogin/afterSalesLogin?service_id=${service_id }&customer_id=${customer_id}&operateType=${operateType}`"
       >
@@ -113,6 +112,7 @@ export default {
       service_id: "",
       customer_id: "",
       previewImg: "",
+      docterSummary:'',
       popupShow: false,
       form: {},
       imgList: [],
@@ -174,6 +174,7 @@ export default {
       const form = {
         tryInfo: "",
         recoverInfo: "",
+        docterSummary:this.docterSummary,
         imgList: JSON.stringify(this.imgList),
         customer_id: this.customer_id,
         service_id: this.service_id
@@ -194,8 +195,9 @@ export default {
         service_id
       });
       if (!res.code) {
-        const { imgList } = res.re;
+        const { imgList,} = res.re;
         this.imgList = JSON.parse(imgList);
+        this.docterSummary = res.re.docterSummary || ''
       }
     },
 
@@ -303,5 +305,13 @@ page {
 }
 /deep/.u-collapse-item__content {
   height: auto !important;
+}
+
+.cad-remark {
+  width: 100%;
+  box-shadow: 2px 2px 5px #33333340;
+  margin: 18rpx 0;
+  border-radius: 40rpx;
+  background-color: #fff;
 }
 </style>

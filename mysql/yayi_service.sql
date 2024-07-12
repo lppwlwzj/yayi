@@ -27,6 +27,8 @@ CREATE TABLE `service` (
   `tryInfo`longtext NOT NULL COMMENT '试戴次数',
   `recoverInfo` longtext NOT NULL COMMENT '修改次数',
   `imgList` longtext DEFAULT NULL COMMENT '牙齿列表',
+  `docterSummary` longtext DEFAULT NULL COMMENT '医生总结'
+
  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='售后表';

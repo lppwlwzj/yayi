@@ -7,33 +7,20 @@ to:处理首页操作
 // 导入数据库操作模块
 const db = require("../db/index");
 
-// const findService = (customer_id) => {
-//   return new Promise((resolve, reject) => {
-//     db.query(
-//       `select * from service where customer_id='${customer_id}'`,
-//       (_err, result) => {
-//         if (_err) {
-//           return reject(_err);
-//         }
-//         resolve(result);
-//       }
-//     );
-//   });
-// };
-
 exports.submit = async (req, res) => {
   //customer_id 是customer表的主键id
-  const { customer_id, service_id, tryInfo, recoverInfo, imgList } = req.body;
+  const { customer_id, service_id, tryInfo, recoverInfo, imgList,docterSummary } = req.body;
 
   // // 定义sql语句id
   const insertSql = `insert into service (
       customer_id,
       tryInfo,
       recoverInfo,
-      imgList
-    ) values ('${customer_id}','${tryInfo}','${recoverInfo}','${imgList}') `;
+      imgList,
+      docterSummary
+    ) values ('${customer_id}','${tryInfo}','${recoverInfo}','${imgList}','${docterSummary}') `;
   const updateSql = imgList
-    ? `update service set  imgList = '${imgList}' where id='${service_id}'`
+    ? `update service set  imgList = '${imgList}' , docterSummary = '${docterSummary}'  where id='${service_id}'`
     : `update service set  recoverInfo = '${recoverInfo}',tryInfo='${tryInfo}'  where id='${service_id}' `;
 
   const sql = service_id ? updateSql : insertSql;
