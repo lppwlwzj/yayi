@@ -816,8 +816,11 @@
       bgColor="#000000"
     >
       <view class="fc img_wrapper">
-        <video :src="previewImg" v-if="previewImg.indexOf('mp4') > -1"></video>
-        <TouchScaleImg :img_url="previewImg" v-else />
+        <TouchScaleVideo
+        :video_url="previewImg"
+        v-if="previewImg.indexOf('mp4') > -1"
+      />
+      <TouchScaleImg :img_url="previewImg" v-else />
       </view>
     </u-popup>
   </view>
@@ -851,6 +854,8 @@ import TiXing from "../components/tixing";
 import Upload from "../components/my-upload/my-upload.vue";
 import MultiUpload from "../components/multi-upload";
 import TouchScaleImg from "../components/touchScaleImg/index.vue";
+import TouchScaleVideo from "../components/TouchScaleVideo/index.vue";
+
 
 export default {
   data() {
@@ -1050,7 +1055,8 @@ export default {
     TiXing,
     Upload,
     MultiUpload,
-    TouchScaleImg
+    TouchScaleImg,
+    TouchScaleVideo
   },
 
   onReady() {

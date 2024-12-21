@@ -43,8 +43,11 @@
       bgColor="#000000"
     >
       <view class="fc img_wrapper">
-        <video :src="img_url" v-if="img_url.indexOf('mp4') > -1"></video>
-        <TouchScaleImg :img_url="img_url" v-else/>
+        <TouchScaleVideo
+        :video_url="img_url"
+        v-if="img_url.indexOf('mp4') > -1"
+      />
+      <TouchScaleImg :img_url="img_url" v-else />
       </view>
     </u-popup>
   </view>
@@ -52,6 +55,8 @@
 
 <script>
 import TouchScaleImg from "../touchScaleImg/index.vue";
+import TouchScaleVideo from "../TouchScaleVideo/index.vue";
+
 export default {
   name: "my-upload",
   props: {
@@ -128,7 +133,8 @@ export default {
     };
   },
   components: {
-    TouchScaleImg
+    TouchScaleImg,
+    TouchScaleVideo
   },
   watch: {
     fileList: {
