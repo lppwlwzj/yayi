@@ -1,24 +1,11 @@
 <template>
   <view class="content">
-    <view
-      class="rfb"
-      :style="{ paddingTop: statusBarHeight, marginBottom: '24rpx ' }"
-    >
-      <navigator
-        url="/pages/index/index"
-        hover-class="navigator-hover"
-        open-type="navigate"
-      >
-        <u-icon
-          size="30"
-          :name="require('../../static/images/ECO-UI-03.png')"
-        ></u-icon>
+    <view class="rfb" :style="{ paddingTop: statusBarHeight, marginBottom: '24rpx ' }">
+      <navigator url="/pages/index/index" hover-class="navigator-hover" open-type="navigate">
+        <u-icon size="30" :name="require('../../static/images/ECO-UI-03.png')"></u-icon>
       </navigator>
 
-      <u-icon
-        size="30"
-        :name="require('../../static/images/ECO-UI-02.png')"
-      ></u-icon>
+      <u-icon size="30" :name="require('../../static/images/ECO-UI-02.png')"></u-icon>
     </view>
     <!-- 
     <view class="user-select">
@@ -34,8 +21,8 @@
           <MultiUpload
             :list="form.tiemianDetail"
             activeKey="tiemianDetail"
-            @delete="(index) => deleteImg(index, 'tiemianDetail')"
-            @add="(value) => handleAddImg(value, 'tiemianDetail')"
+            @delete="index => deleteImg(index, 'tiemianDetail')"
+            @add="value => handleAddImg(value, 'tiemianDetail')"
           />
         </div>
       </uni-collapse-item>
@@ -46,8 +33,8 @@
           <MultiUpload
             :list="form.tiemianColor"
             activeKey="tiemianColor"
-            @delete="(index) => deleteImg(index, 'tiemianColor')"
-            @add="(value) => handleAddImg(value, 'tiemianColor')"
+            @delete="index => deleteImg(index, 'tiemianColor')"
+            @add="value => handleAddImg(value, 'tiemianColor')"
           />
         </div>
       </uni-collapse-item>
@@ -58,8 +45,8 @@
           <MultiUpload
             :list="form.intentList"
             activeKey="intentList"
-            @delete="(index) => deleteImg(index, 'intentList')"
-            @add="(value) => handleAddImg(value, 'intentList')"
+            @delete="index => deleteImg(index, 'intentList')"
+            @add="value => handleAddImg(value, 'intentList')"
           />
         </div>
       </uni-collapse-item>
@@ -71,8 +58,8 @@
           <MultiUpload
             :list="form.bianyuan"
             activeKey="bianyuan"
-            @delete="(index) => deleteImg(index, 'bianyuan')"
-            @add="(value) => handleAddImg(value, 'bianyuan')"
+            @delete="index => deleteImg(index, 'bianyuan')"
+            @add="value => handleAddImg(value, 'bianyuan')"
           />
         </div>
       </uni-collapse-item>
@@ -84,8 +71,8 @@
           <MultiUpload
             :list="form.round"
             activeKey="round"
-            @delete="(index) => deleteImg(index, 'round')"
-            @add="(value) => handleAddImg(value, 'round')"
+            @delete="index => deleteImg(index, 'round')"
+            @add="value => handleAddImg(value, 'round')"
           />
         </div>
       </uni-collapse-item>
@@ -96,8 +83,8 @@
           <MultiUpload
             :list="form.luocha"
             activeKey="luocha"
-            @delete="(index) => deleteImg(index, 'luocha')"
-            @add="(value) => handleAddImg(value, 'luocha')"
+            @delete="index => deleteImg(index, 'luocha')"
+            @add="value => handleAddImg(value, 'luocha')"
           />
         </div>
       </uni-collapse-item>
@@ -109,8 +96,8 @@
           <MultiUpload
             :list="form.angle"
             activeKey="angle"
-            @delete="(index) => deleteImg(index, 'angle')"
-            @add="(value) => handleAddImg(value, 'angle')"
+            @delete="index => deleteImg(index, 'angle')"
+            @add="value => handleAddImg(value, 'angle')"
           />
         </div>
       </uni-collapse-item>
@@ -121,8 +108,8 @@
           <MultiUpload
             :list="form.jiandun"
             activeKey="jiandun"
-            @delete="(index) => deleteImg(index, 'jiandun')"
-            @add="(value) => handleAddImg(value, 'jiandun')"
+            @delete="index => deleteImg(index, 'jiandun')"
+            @add="value => handleAddImg(value, 'jiandun')"
           />
         </div>
       </uni-collapse-item>
@@ -133,8 +120,8 @@
           <MultiUpload
             :list="form.qieduan"
             activeKey="qieduan"
-            @delete="(index) => deleteImg(index, 'qieduan')"
-            @add="(value) => handleAddImg(value, 'qieduan')"
+            @delete="index => deleteImg(index, 'qieduan')"
+            @add="value => handleAddImg(value, 'qieduan')"
           />
         </div>
       </uni-collapse-item>
@@ -145,8 +132,8 @@
           <MultiUpload
             :list="form.texture"
             activeKey="texture"
-            @delete="(index) => deleteImg(index, 'texture')"
-            @add="(value) => handleAddImg(value, 'texture')"
+            @delete="index => deleteImg(index, 'texture')"
+            @add="value => handleAddImg(value, 'texture')"
           />
         </div>
       </uni-collapse-item>
@@ -157,8 +144,8 @@
           <MultiUpload
             :list="form.dot"
             activeKey="dot"
-            @delete="(index) => deleteImg(index, 'dot')"
-            @add="(value) => handleAddImg(value, 'dot')"
+            @delete="index => deleteImg(index, 'dot')"
+            @add="value => handleAddImg(value, 'dot')"
           />
         </div>
       </uni-collapse-item>
@@ -169,8 +156,8 @@
           <MultiUpload
             :list="form.touliang"
             activeKey="touliang"
-            @delete="(index) => deleteImg(index, 'touliang')"
-            @add="(value) => handleAddImg(value, 'touliang')"
+            @delete="index => deleteImg(index, 'touliang')"
+            @add="value => handleAddImg(value, 'touliang')"
           />
         </div>
       </uni-collapse-item>
@@ -182,8 +169,8 @@
           <MultiUpload
             :list="form.qieduanLinears"
             activeKey="qieduanLinears"
-            @delete="(index) => deleteImg(index, 'qieduanLinears')"
-            @add="(value) => handleAddImg(value, 'qieduanLinears')"
+            @delete="index => deleteImg(index, 'qieduanLinears')"
+            @add="value => handleAddImg(value, 'qieduanLinears')"
           />
         </div>
       </uni-collapse-item>
@@ -194,8 +181,8 @@
           <MultiUpload
             :list="form.thickness"
             activeKey="thickness"
-            @delete="(index) => deleteImg(index, 'thickness')"
-            @add="(value) => handleAddImg(value, 'thickness')"
+            @delete="index => deleteImg(index, 'thickness')"
+            @add="value => handleAddImg(value, 'thickness')"
           />
         </div>
       </uni-collapse-item>
@@ -206,16 +193,16 @@
 </template>
 
 <script>
-import MultiUpload from "../components/multi-upload";
+import MultiUpload from '../components/multi-upload'
 export default {
   components: {
-    MultiUpload
+    MultiUpload,
   },
   data() {
     return {
       form: {
-        tiemianDetail:[],
-        tiemianColor:[],
+        tiemianDetail: [],
+        tiemianColor: [],
         intentList: [],
         bianyuan: [],
         round: [],
@@ -228,81 +215,78 @@ export default {
         touliang: [],
         qieduanLinears: [],
         thickness: [],
-        root: ""
+        root: '',
       },
-      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + "px",
-      userList: []
-    };
+      statusBarHeight: +(+uni.getSystemInfoSync().statusBarHeight + 10) + 'px',
+      userList: [],
+    }
   },
-  options: { styleIsolation: "shared" },
+  options: { styleIsolation: 'shared' },
 
   onLoad: function () {
-    this.getInfo();
-    this.getUserList();
+    this.getInfo()
+    this.getUserList()
   },
   methods: {
     getUserList() {
-      this.$api.getUserList().then((res) => {
+      this.$api.getUserList().then(res => {
         if (!res.code) {
-          this.userList = res.re.list;
+          this.userList = res.re.list
         }
-      });
+      })
     },
     deleteImg(index, activeKey) {
-      this.form[activeKey][index] = "";
-      const imgList = this.form[activeKey];
-      const newList = imgList.map((item, idx) => (idx === index ? "" : item));
-      this.$set(this.form, activeKey, newList);
+      this.form[activeKey][index] = ''
+      const imgList = this.form[activeKey]
+      const newList = imgList.map((item, idx) => (idx === index ? '' : item))
+      this.$set(this.form, activeKey, newList)
     },
     handleAddImg(img_url, activeKey) {
-      this.form[activeKey].push(img_url);
-      const imgList = this.form[activeKey];
-      this.$set(this.form, activeKey, imgList);
+      this.form[activeKey].push(img_url)
+      const imgList = this.form[activeKey]
+      this.$set(this.form, activeKey, imgList)
     },
     async getInfo() {
-      const res = await this.$api.getPreinstall();
+      const res = await this.$api.getPreinstall()
       if (!res.code) {
-        if (!res.re) return;
-        const params = {};
-        Object.keys(this.form).map((key) => {
-          params[key] =
-            res.re[key] && key !== "id" && key !== "root"
-              ? JSON.parse(res.re?.[key] || [])
-              : [];
-        });
+        if (!res.re) return
+        const params = {}
+        Object.keys(this.form).map(key => {
+          params[key] = res.re[key] && key !== 'id' && key !== 'root' ? JSON.parse(res.re?.[key] || []) : []
+        })
         this.form = {
           ...params,
-          id: res.re?.id || "",
-          root: res.re?.root || ""
-        };
+          id: res.re?.id || '',
+          root: res.re?.root || '',
+        }
       }
     },
     async handleSubmit() {
-      const params = {};
-      Object.keys(this.form).map((key) => {
-        params[key] =
-          this.form[key].length && key !== "id" && key !== "root"
-            ? JSON.stringify(this.form[key])
-            : "";
-      });
+      const params = {}
+      Object.keys(this.form).map(key => {
+        if (this.form[key].length && key !== 'id' && key !== 'root') {
+          this.form[key] = this.form[key].filter(Boolean)
+        }
+        params[key] = this.form[key].length && key !== 'id' && key !== 'root' ? JSON.stringify(this.form[key]) : ''
+      })
       const res = await this.$api.editPreinstall({
         ...params,
-        id: this.form?.id || "",
-        root: this.form?.root
-      });
-      this.form.id == res.re?.id;
+        id: this.form?.id || '',
+        root: this.form?.root,
+      })
+      this.form.id == res.re?.id
       uni.showToast({
         title: res.message,
-        icon: "none"
-      });
+        icon: 'none',
+      })
       setTimeout(() => {
         uni.navigateTo({
-          url: "/pages/index/index"
-        });
-      }, 100);
-    }
-  }
-};
+          url: '/pages/index/index',
+        })
+      }, 100)
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 .content {

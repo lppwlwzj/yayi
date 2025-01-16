@@ -177,7 +177,7 @@ export default {
       uni.uploadFile({
         url: "https://gdcasa.cn:3010/api/upload",
         // url: "http://127.0.0.1:3010/api/upload",
-        // url: "http://fa:3010/api/upload",
+        // url: "http://192.168.4.244:3010/api/upload",
 
         filePath: event.file.url, //文件路径
         name: "file",

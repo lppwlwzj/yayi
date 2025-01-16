@@ -1,51 +1,37 @@
 const COS = require("cos-nodejs-sdk-v5");
+const fs = require("fs");
 var config = require("../cos_config");
 var cos = new COS({
   // 必选参数
   SecretId: config.SecretId,
   SecretKey: config.SecretKey,
-  Bucket: "yayi-1325314533",
-  Region: "ap-shanghai",
-  // 可选参数
-  // FileParallelLimit: 3, // 控制文件上传并发数
-  // ChunkParallelLimit: 8, // 控制单个文件下分片上传并发数，在同园区上传可以设置较大的并发数
-  // ChunkSize: 1024 * 1024 * 8, // 控制分片大小，单位 B，在同园区上传可以设置较大的分片大小
-  // Proxy: '',
-  Protocol: "https:",
-  Timeout: 10000
+  // Bucket: "yayi-1325314533",
+  // Region: "ap-shanghai",
+  // // 可选参数
+  // // FileParallelLimit: 3, // 控制文件上传并发数
+  // // ChunkParallelLimit: 8, // 控制单个文件下分片上传并发数，在同园区上传可以设置较大的并发数
+  // // ChunkSize: 1024 * 1024 * 8, // 控制分片大小，单位 B，在同园区上传可以设置较大的分片大小
+  // // Proxy: '',
+  // Protocol: "https:",
+  // Timeout: 10000
 });
 
-const uploadFile = (file, filename) => {
+function uploadFileToCOS(buffer, fileKey,fileMimeType) {
   return new Promise((resolve, reject) => {
-    cos.putObject(
-      {
-        SecretId: config.SecretId,
-        SecretKey: config.SecretKey,
-        Key: filename /* 文件名，也是文件在桶里唯一的标识 */,
-        StorageClass: "STANDARD",
-        Body: file, // 上传文件对象
-        onProgress: function (progressData) {
-          // console.log(JSON.stringify(progressData));
-        }
-      },
-      function (err, data) {
-        //回调函数
-        if (!err) {
-          //成功返回data对象
-          if (data.statusCode === 200 && data.Location) {
-            console.log("cos putObject data----", data);
-            // 拿到了腾讯云返回的地址
-            // 通过input自定义事件将地址传出去
-            resolve("http://" + data.Location);
-          } else {
-            reject("报错了");
-            // this.$message.error(err.Message); // 上传失败提示消息
-          }
-        } else {
-          //失败返回error信息
-          reject(err);
-        }
+    cos.putObject({
+      Bucket: config.Bucket,
+      Region: config.Region,
+      Key: fileKey,                    // COS 中的文件名
+      Body: buffer, // 文件流 fs.createReadStream(filePath)：<Buffer 00 00 00 14 66 74 79 70 71 74 20 20 00 00 00 00 71 74 20 20 00 00 00 08 77 69 64 65 00 56 e8 17 6d 64 61 74 00 00 00 00 00 00 00 00 00 00 00 0
+      ContentType: fileMimeType, // 设置正确的 MIME 类型 
+    }, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data.Location);  // 返回文件在 COS 中的访问路径
       }
-    );
+    });
   });
-};
+}
+
+module.exports = uploadFileToCOS;
